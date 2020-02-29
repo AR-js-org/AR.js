@@ -12,11 +12,11 @@ threex.artoolkit is composed of 3 classes
 - ```THREEx.ArToolkitContext```: It is the main engine. It will actually find the marker position
   in the image source.
 - ```THREEx.ArMarkerControls```: it controls the position of the marker
-  It use the classical [three.js controls API](https://github.com/mrdoob/three.js/tree/master/examples/js/controls). 
-  It will make sure to position your content right on top of the marker. 
+  It use the classical [three.js controls API](https://github.com/mrdoob/three.js/tree/master/examples/js/controls).
+  It will make sure to position your content right on top of the marker.
 
 
-### THREEx.ArMarkerControls 
+### THREEx.ArMarkerControls
 
 ```javascript
 var parameters = {
@@ -53,7 +53,9 @@ var parameters = {
 	matrixCodeType: '3x3',
 	// Pattern ratio for custom markers
 	patternRatio: 0.5
-	
+	// Labeling mode for markers - ['black_region', 'white_region']
+	// black_region: Black bordered markers on a white background, white_region: White bordered markers on a black background
+	labelingMode: 'black_region',
 	// url of the camera parameters
 	cameraParametersUrl: 'parameters/camera_para.dat',
 
@@ -62,7 +64,7 @@ var parameters = {
 	// resolution of at which we detect pose in the source image
 	canvasWidth: 640,
 	canvasHeight: 480,
-	
+
 	// enable image smoothing or not for canvas copy - default to true
 	// https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/imageSmoothingEnabled
 	imageSmoothingEnabled : true,
@@ -77,11 +79,11 @@ var parameters = {
 	sourceType : 'webcam',
 	// url of the source - valid if sourceType = image|video
 	sourceUrl : null,
-	
+
 	// resolution of at which we initialize the source image
 	sourceWidth: 640,
 	sourceHeight: 480,
-	// resolution displayed for the source 
+	// resolution displayed for the source
 	displayWidth: 640,
 	displayHeight: 480,
 }
