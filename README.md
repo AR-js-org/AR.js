@@ -102,6 +102,18 @@ Otherwise, as default, the script searches for places of interest near the user 
 
 You can also use GeoAR.js **without** the script, adding `gps-entity-place` entities directly on the `index.html` file.as documentated [here](https://github.com/jeromeetienne/AR.js/blob/master/aframe/README.md).
 
+# What "NFT" means
+
+ Natural Feature Tracking or NFT is a technology that enables the use of images instead of markers like QR Codes or the Hiro. 
+ 
+ **Now you can use any image you want!**
+
+
+<img height="400" width="250" src="data/images/trackingGif.gif">
+
+The software tracks interesting points in the image and from that it estimates the position of the camera. These interesting points are created using the `NFT Marker Creator`, a tool available to you for creating NFT markers, it has two versions the [WEB APP](https://carnaux.github.io/NFT-Marker-Creator/)(recommended), and the [NODE APP](https://github.com/Carnaux/NFT-Marker-Creator).
+
+If you want to understand the creation of markers in more depth, check out the  NFT Marker Creator [wiki](https://github.com/Carnaux/NFT-Marker-Creator/wiki/Creating-good-markers).
 
 # Index
 * [Get Started](#Get-Started)
@@ -127,7 +139,7 @@ You can also use GeoAR.js **without** the script, adding `gps-entity-place` enti
 <!doctype HTML>
 <html>
 <script src="https://aframe.io/releases/1.0.0/aframe.min.js"></script>
-<script src="https://raw.githack.com/jeromeetienne/AR.js/3.0.0/aframe/build/aframe-ar.js"></script>
+<script src="https://raw.githack.com/jeromeetienne/AR.js/2.1.8/aframe/build/aframe-ar.js"></script>
   <body style='margin : 0px; overflow: hidden;'>
     <a-scene embedded arjs>
       <a-marker preset="hiro">
@@ -209,6 +221,9 @@ The service is available [webxr.io/augmented-website](https://webxr.io/augmented
 - [ARCode Generator](https://jeromeetienne.github.io/AR.js/three.js/examples/arcode.html):
   Generator of AR-Code
   ([source](https://github.com/jeromeetienne/AR.js/blob/master/three.js/examples/arcode.html))
+- NFT Marker Creator:
+    - [WEB APP](https://carnaux.github.io/NFT-Marker-Creator/): The easier to use and recommended version.
+    - [NODE APP](https://carnaux.github.io/NFT-Marker-Creator/): The developer version.
 
 # Performance
 
