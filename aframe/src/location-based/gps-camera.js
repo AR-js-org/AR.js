@@ -83,7 +83,7 @@ AFRAME.registerComponent('gps-camera', {
         window.addEventListener(eventName, this._onDeviceOrientation, false);
 
         this._watchPositionId = this._initWatchGPS(function (position) {
-            if(this.data.simulateLatitude !== 0 && this.data.simulateLongitude !== 0) {
+            if (this.data.simulateLatitude !== 0 && this.data.simulateLongitude !== 0) {
                 localPosition = Object.assign({}, position.coords);
                 localPosition.longitude = this.data.simulateLongitude;
                 localPosition.latitude = this.data.simulateLatitude;
@@ -93,7 +93,6 @@ AFRAME.registerComponent('gps-camera', {
             else {
                 this.currentCoords = position.coords;
             }
-
 
             this._updatePosition();
         }.bind(this));
@@ -233,7 +232,7 @@ AFRAME.registerComponent('gps-camera', {
         this.el.setAttribute('position', position);
 
 
-        window.dispatchEvent(new CustomEvent('gps-camera-update-position', { detail: { position: this.currentCoords, origin: this.originCoords }}));
+        window.dispatchEvent(new CustomEvent('gps-camera-update-position', { detail: { position: this.currentCoords, origin: this.originCoords } }));
     },
     /**
      * Returns distance in meters between source and destination inputs.

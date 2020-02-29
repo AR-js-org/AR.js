@@ -96,7 +96,8 @@ AFRAME.registerComponent('gps-entity-place', {
         position.z *= this.data.latitude > this._cameraGps.originCoords.latitude ? -1 : 1;
 
         if (position.y !== 0) {
-            position.y = position.y - this._cameraGps.originCoords.altitude;
+            var altitude = this._cameraGps.originCoords.altitude !== undefined ? this._cameraGps.originCoords.altitude : 0;
+            position.y = position.y - altitude;
         }
 
         if (hideEntity) {
