@@ -1,0 +1,40 @@
+{
+  "name": "ar.js",
+  "version": "2.1.8",
+  "description": "Efficient Augmented Reality for the Web",
+  "main": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "make minify"
+  },
+  "files": [
+    "three.js/build",
+    "aframe/build",
+    "data",
+    "three.js/examples/basic.html",
+    "three.js/examples/vendor/three.js/build/three.min.js",
+    "aframe/examples/basic.html",
+    "aframe/examples/vendor/aframe/build/aframe.min.js"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jeromeetienne/AR.js.git"
+  },
+  "keywords": [
+    "AR",
+    "VR",
+    "three.js",
+    "aframe",
+    "augmented reality",
+    "location based"
+  ],
+  "author": "jerome.etienne@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jeromeetienne/AR.js/issues"
+  },
+  "homepage": "https://github.com/jeromeetienne/AR.js#readme",
+  "devDependencies": {
+    "uglify-js": "^3.7.5"
+  }
+}

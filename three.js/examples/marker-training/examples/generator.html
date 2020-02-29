@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<title>AR.js Marker Training</title>
+<!-- include mdl -->
+<link rel='stylesheet' href='https://fonts.googleapis.com/icon?family=Material+Icons'>
+<link rel='stylesheet' href='https://code.getmdl.io/1.3.0/material.indigo-pink.min.css'>
+<script defer src='https://code.getmdl.io/1.3.0/material.min.js'></script>
+<link href='https://fonts.googleapis.com/icon?family=Material+Icons' rel='stylesheet'>
+
+<!-- Include pdfMake - http://pdfmake.org/ -->
+<script src='../../vendor/pdfMake/pdfmake.min.js'></script>
+<script src='../../vendor/pdfMake/vfs_fonts.js'></script>
+
+<!-- include THREEx.ArPatternFile -->
+<script src='../threex-arpatternfile.js'></script>
+
+<style media='screen'>
+	body {
+		font-family: arial;
+		background-color: #eee;
+	}
+	h1 {
+		text-align: center;
+		font-size: 500%;
+	}
+	div.mdl-cell {
+		text-align: center;
+	}
+
+	h1 a {
+		text-decoration: none;
+	}
+	h1 a:hover {
+		text-decoration: underline;
+	}
+
+	#imageContainer img {
+		width: 100%;
+		max-width: 512px;
+	}
+
+	#topRightButtons {
+		position: fixed;
+		top: 1em;
+		right: 1em;
+	}
+</style>
+<body>
+
+<h1><a href='https://github.com/jeromeetienne/ar.js' target='_blank'>AR.js</a> Marker Training</h1>
+
+
+
+<!-- *********************************************************************** -->
+<!-- *********************************************************************** -->
+<!-- *********************************************************************** -->
+<div id='topRightButtons'>
+	<button id="show-info" class="mdl-button mdl-js-button mdl-button--fab mdl-button--colored">
+		<i class="material-icons">info_outline</i>
+	</button>
+</div>
+<dialog style='width:400px' id='dialog-info' class="mdl-dialog">
+	<h4 class="mdl-dialog__title">Welcome!</h4>
+	<div class="mdl-dialog__content">
+		Details on how to pick the inner image can be found <a target='_blank' href='https://artoolkit.org/documentation/doku.php?id=3_Marker_Training:marker_training'>here</a>
+	</div>
+	<div class="mdl-dialog__actions">
+		<button type="button" class="mdl-button">OK</button>
+	</div>
+</dialog>
+<script>
+	var dialogElement = document.querySelector('#dialog-info')
+	if (! dialogElement.showModal) {
+		dialogElementPolyfill.registerDialog(dialogElement)
+	}
+	dialogElement.querySelector('.mdl-dialog__actions button').addEventListener('click', function() {
+		dialogElement.close()
+	})
+
+	var showDialogButton = document.querySelector('#show-info')
+	showDialogButton.addEventListener('click', function() {
+		dialogElement.showModal()
+	})
+</script>
+
+<!-- *********************************************************************** -->
+<!-- *********************************************************************** -->
+<!-- *********************************************************************** -->
+<div class='mdl-grid'>
+	<div class='mdl-cell mdl-cell--4-col'>
+		<label id='buttonUpload' for='fileinput' class='mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent'>
+			<input type='file' id='fileinput' style='display: none'>
+			Upload
+		</label>
+		<div class='mdl-tooltip' for='buttonUpload'>
+			Upload the image to put inside the marker
+		</div>
+
+		<div style="justify-content: center" class='mdl-grid'>
+				<div class='mdl-cell mdl-cell--12-col'>
+				<label class="mdl-js-ripple-effect" for="patternRatioSlider">
+					<span class="">Pattern Ratio 0.50</span>
+					<input id='patternRatioSlider' class="mdl-slider mdl-js-slider" type="range" min="10" max="90" value="50" >
+				</label>
+				<div class='mdl-tooltip' for='patternRatioSlider'>
+					Set size of inner image vs black border
+				</div>
+			</div>
+		</div>
+
+		<div style="justify-content: center" class='mdl-grid'>
+			<div class='mdl-cell mdl-cell--12-col'>
+				<label class="mdl-js-ripple-effect" for="imageSize">
+					<span class="">Image size 512px</span>
+					<input id='imageSize' class="mdl-slider mdl-js-slider" type="range" min="150" max="2500" value="512" >
+				</label>
+				<div class='mdl-tooltip' for='patternRatioSlider'>
+					Set the pixel width/height of the image.
+				</div>
+			</div>
+		</div>
+
+		<div style="justify-content: center" class='mdl-grid'>
+				<div class='mdl-cell mdl-cell--12-col'>
+				<label class="mdl-js-ripple-effect" for="borderColor">
+					<span class="">Border color. Please choose a dark one.</span>
+					<input id='borderColor' type="text" value="black">
+				</label>
+				<div class='mdl-tooltip' for='borderColor'>
+					Set the marker border color, using hexa code or color name.
+				</div>
+			</div>
+		</div>
+
+	</div>
+	<div class='mdl-cell mdl-cell--4-col'>
+		<button id='buttonDownloadEncoded' class='mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent'>
+			Download Marker
+		</button>
+		<div class='mdl-tooltip' for='buttonDownloadEncoded'>
+			Download marker encoded from the uploaded image
+		</div>
+		<br/>
+		<br/>
+		<button id='buttonDownloadFullImage' class='mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent'>
+			Download Image
+		</button>
+		<div class='mdl-tooltip' for='buttonDownloadFullImage'>
+			Download marker image
+		</div>
+	</div>
+	<div class='mdl-cell mdl-cell--4-col'>
+		<button id='buttonDownloadPDFOnePerPage' class='mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent'>
+			PDF One per Page
+		</button>
+		<div class='mdl-tooltip' for='buttonDownloadPDFOnePerPage'>
+			Download markers as PDF
+			<br/>
+			One marker per page
+		</div>
+		<br/>
+		<br/>
+		<button id='buttonDownloadPDFTwoPerPage' class='mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent'>
+			PDF Two per Page
+		</button>
+		<div class='mdl-tooltip' for='buttonDownloadPDFTwoPerPage'>
+			Download markers as PDF
+			<br/>
+			Two marker per page
+		</div>
+		<br/>
+		<br/>
+		<button id='buttonDownloadPDFSixPerPage' class='mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent'>
+			PDF Six per Page
+		</button>
+		<div class='mdl-tooltip' for='buttonDownloadPDFSixPerPage'>
+			Download markers as PDF.
+			<br/>
+			Six marker per page
+		</div>
+	</div>
+</div>
+
+<div class='mdl-grid'>
+
+	<div class='mdl-cell mdl-cell--3-col'></div>
+	<div class='mdl-cell mdl-cell--6-col'>
+		<div id='imageContainer'></div>
+	</div>
+	<div class='mdl-cell mdl-cell--3-col'></div>
+</div>
+
+
+
+<script>
+	var innerImageURL = null
+	var fullMarkerURL = null
+	var imageName = null
+
+	innerImageURL = 'inner-images/inner-arjs.png'
+	updateFullMarkerImage()
+
+	document.querySelector('#buttonDownloadEncoded').addEventListener('click', function(){
+		if( innerImageURL === null ){
+			alert('upload a file first')
+			return
+		}
+		console.assert(innerImageURL)
+		THREEx.ArPatternFile.encodeImageURL(innerImageURL, function onComplete(patternFileString){
+			THREEx.ArPatternFile.triggerDownload(patternFileString, "pattern-" + (imageName || "marker") + ".patt")
+		})
+	})
+
+
+	document.querySelector('#buttonDownloadFullImage').addEventListener('click', function(){
+		// debugger
+		if( innerImageURL === null ){
+			alert('upload a file first')
+			return
+		}
+
+		// tech from https://stackoverflow.com/questions/3665115/create-a-file-in-memory-for-user-to-download-not-through-server
+		var domElement = window.document.createElement('a');
+		domElement.href = fullMarkerURL;
+		domElement.download = "pattern-" + (imageName || 'marker') + '.png';
+		document.body.appendChild(domElement)
+		domElement.click();
+		document.body.removeChild(domElement)
+	})
+
+
+
+	document.querySelector('#patternRatioSlider').addEventListener('input', function(){
+		// update the patternRatio number
+		var patternRatio = document.querySelector('#patternRatioSlider').value/100
+		var domElement = document.querySelector('[for=patternRatioSlider] span')
+		domElement.innerHTML = `Pattern Ratio ${patternRatio.toFixed(2)}`
+
+		// update fullMarkerImage
+		updateFullMarkerImage()
+	})
+
+	document.querySelector('#imageSize').addEventListener('input', function(){
+		// update the patternRatio number
+		var imageSize = document.querySelector('#imageSize').value
+		var domElement = document.querySelector('[for=imageSize] span')
+		domElement.innerHTML = `Image size ${imageSize}px`
+
+		// update fullMarkerImage
+		updateFullMarkerImage()
+	})
+
+	document.querySelector('#borderColor').addEventListener('input', function(){
+		var imageSize = document.querySelector('#borderColor').value
+		var domElement = document.querySelector('[for=borderColor] span')
+
+		// update fullMarkerImage
+		updateFullMarkerImage()
+	})
+
+
+	document.querySelector('#fileinput').addEventListener('change', function(){
+		var file = this.files[0];
+		imageName = file.name
+		// remove file extension
+		imageName = imageName.substring(0, imageName.lastIndexOf('.')) || imageName
+		
+		// debugger
+
+		var reader = new FileReader();
+		reader.onload = function(event){
+			innerImageURL = event.target.result
+			updateFullMarkerImage()
+		};
+		reader.readAsDataURL(file);
+	})
+
+	function updateFullMarkerImage(){
+		// get patternRatio
+		var patternRatio = document.querySelector('#patternRatioSlider').value/100
+		var imageSize = document.querySelector('#imageSize').value
+		var borderColor = document.querySelector('#borderColor').value
+
+		function hexaColor(color) {
+			return /^#[0-9A-F]{6}$/i.test(color);
+		};
+
+		var s = new Option().style;
+		s.color = borderColor;
+  		if (borderColor === '' || (s.color != borderColor && !hexaColor(borderColor))) {
+			// if color not valid, use black
+			borderColor = 'black';
+		}
+
+		THREEx.ArPatternFile.buildFullMarker(innerImageURL, patternRatio, imageSize, borderColor, function onComplete(markerUrl){
+			fullMarkerURL = markerUrl
+
+			var fullMarkerImage = document.createElement('img')
+			fullMarkerImage.src = fullMarkerURL
+
+			// put fullMarkerImage into #imageContainer
+			var container = document.querySelector('#imageContainer')
+			while (container.firstChild) container.removeChild(container.firstChild);
+			container.appendChild(fullMarkerImage)
+		})
+	}
+
+	//////////////////////////////////////////////////////////////////////////////
+	//		Handle PDF
+	//////////////////////////////////////////////////////////////////////////////
+	document.querySelector('#buttonDownloadPDFOnePerPage').addEventListener('click', generatePdfOnePerPage)
+	document.querySelector('#buttonDownloadPDFTwoPerPage').addEventListener('click', generatePdfTwoPerPage)
+	document.querySelector('#buttonDownloadPDFSixPerPage').addEventListener('click', generatePdfSixPerPage)
+
+	function generatePdfOnePerPage(){
+	        var docDefinition = {
+			content: [
+				{
+					image: fullMarkerURL,
+					width: 600,
+					alignment: 'center',
+				},
+			]
+	        }
+	        pdfMake.createPdf(docDefinition).open();
+	}
+	function generatePdfTwoPerPage(){
+	        var docDefinition = {
+			content: [
+				{
+					image: fullMarkerURL,
+					width: 300,
+					alignment: 'center',
+				},
+				{
+					image: fullMarkerURL,
+					width: 300,
+					alignment: 'center',
+				},
+			]
+	        }
+	        pdfMake.createPdf(docDefinition).open();
+	}
+	function generatePdfSixPerPage(){
+	        var docDefinition = {
+	                content: [
+				{
+					columns: [
+			                        {
+			                                image: fullMarkerURL,
+			                                width: 250,
+			                        },
+			                        {
+			                                image: fullMarkerURL,
+			                                width: 250,
+			                        },
+					]
+				},
+				{
+					columns: [
+			                        {
+			                                image: fullMarkerURL,
+			                                width: 250,
+			                        },
+			                        {
+			                                image: fullMarkerURL,
+			                                width: 250,
+			                        },
+					]
+				},
+				{
+					columns: [
+			                        {
+			                                image: fullMarkerURL,
+			                                width: 250,
+			                        },
+			                        {
+			                                image: fullMarkerURL,
+			                                width: 250,
+			                        },
+					]
+				},
+	                ],
+	        }
+	        pdfMake.createPdf(docDefinition).open();
+	}
+</script>
+
+</body>
