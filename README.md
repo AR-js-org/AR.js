@@ -6,16 +6,13 @@ Logo by [Simon Poulter](https://twitter.com/viralinfo)
 
 ---
 
-[![npm](https://img.shields.io/npm/v/ar.js.svg)](https://www.npmjs.com/package/ar.js)
-[![npm](https://img.shields.io/npm/dt/ar.js.svg)](https://www.npmjs.com/package/ar.js)
 [![Build Status](https://travis-ci.org/jeromeetienne/AR.js.svg?branch=master)](https://travis-ci.org/jeromeetienne/AR.js)
 <br class="badge-separator" />
 [![Gitter chat](https://badges.gitter.im/AR-js/Lobby.png)](https://gitter.im/AR-js/Lobby)
-<span class="badge-patreon"><a href="https://patreon.com/jerome_etienne" title="Donate to this project using Patreon"><img src="https://img.shields.io/badge/patreon-donate-yellow.svg" alt="Patreon donate button" /></a></span>
 [![Twitter Follow](https://img.shields.io/twitter/follow/nicolocarp.svg?style=plastic&label=nicolocarpignoli-twitter&style=plastic)](https://twitter.com/nicolocarp)
 [![Twitter Follow](https://img.shields.io/twitter/follow/jerome_etienne.svg?style=plastic&label=jeromeetienne-twitter&style=plastic)](https://twitter.com/jerome_etienne)
 
-AR.js is a lightweight library for Augmented Reality on the Web, coming with features like Marker based and Location based AR.
+AR.js is a lightweight library for Augmented Reality on the Web, coming with features like Image Tracking, Location based AR and Marker tracking.
 
 Welcome to the official repository!
 
@@ -25,10 +22,45 @@ This project has been created by [@jeromeetienne](https://github.com/jeromeetien
 
 **Key points**:
 
-- **Very Fast** : it runs efficiently even on phones - [60 fps on my 2 year-old phone](https://twitter.com/jerome_etienne/status/831333879810236421)!
+- **Very Fast** : It runs efficiently even on phones - [60 fps on my 2 year-old phone](https://twitter.com/jerome_etienne/status/831333879810236421)!
 - **Web-based** : It is a pure web solution, so no installation required. Full javascript based on three.js + jsartoolkit5
 - **Open Source** : It is completely open source and free of charge!
 - **Standards** : It works on any phone with [webgl](http://caniuse.com/#feat=webgl) and [webrtc](http://caniuse.com/#feat=stream)
+- **Features** : It features Image Tracking, Location Based AR and Marker Tracking.
+
+// TODO GIF FOR Image Tracking with 3D model
+// TODO GIF FOR Image tracking with Video
+
+```html
+<script src="https://cdn.jsdelivr.net/gh/aframevr/aframe@1c2407b26c61958baa93967b5412487cd94b290b/dist/aframe-master.min.js"></script>
+<script src="https://raw.githack.com/donmccurdy/aframe-extras/master/dist/aframe-extras.loaders.min.js"></script>
+
+<script src='../../../build/aframe-ar-nft.js'></script>
+<script>ARjs.Context.baseURL = '../../../../../three.js/'</script>
+
+<body style='margin : 0px; overflow: hidden;'>
+    <a-scene
+        vr-mode-ui="enabled: false;"
+        renderer='antialias: true; alpha: true; precision: mediump;'
+        embedded arjs='trackingMethod: best; sourceType: webcam; debugUIEnabled: false;'>
+
+        <a-nft
+            type="nft" url='../../../../../../data/dataNFT/pinball'
+            smooth="true" smoothCount="10" smoothTolerance="0.01" smoothThreshold="5"
+        >
+            <a-entity
+                gltf-model="./Flamingo.glb"
+                position="50 150 0"
+                animation-mixer
+                >
+            </a-entity>
+        </a-nft>
+		<a-entity camera></a-entity>
+    </a-scene>
+</body>
+
+```
+
 
 # AR.js v2.0.0 is out!🌍
 
