@@ -126,7 +126,6 @@ Activate GPS on your phone and run the example. Look around. You should see the 
 
 Scan [this marker](https://rawcdn.githack.com/AR-js-org/AR.js/a5619a021e6ff40427ff8f9c62169e99a390f56b/data/images/hiro.png) to see the content over it.
 
-````html
 ```html
 <!DOCTYPE html>
 <html>
@@ -142,7 +141,7 @@ Scan [this marker](https://rawcdn.githack.com/AR-js-org/AR.js/a5619a021e6ff40427
     </a-scene>
   </body>
 </html>
-````
+```
 
 
 # Index
