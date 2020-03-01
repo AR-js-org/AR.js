@@ -59,13 +59,16 @@
 	})
 
 	arToolkitSource.init(function onReady(){
-		onResize()
+        setTimeout(() => {
+            onResize()
+        }, 2000);
 	})
 
 	// handle resize
 	window.addEventListener('resize', function(){
 		onResize()
-	})
+    })
+
 	function onResize(){
 		arToolkitSource.onResizeElement()
 		arToolkitSource.copyElementSizeTo(renderer.domElement)
