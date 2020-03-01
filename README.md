@@ -28,61 +28,172 @@ This project has been created by [@jeromeetienne](https://github.com/jeromeetien
 - **Standards** : It works on any phone with [webgl](http://caniuse.com/#feat=webgl) and [webrtc](http://caniuse.com/#feat=stream)
 - **Features** : It features Image Tracking, Location Based AR and Marker Tracking.
 
+## ⚠️ AR.js is coming in two, different build. They are both maintained. They are exclusive.
+
+Please import the one you need for your project, not both:
+
+- **AR.js with Image Tracking + Location Based AR:**
+
+  - AFRAME version: https://rawcdn.githack.com/AR-js-org/AR.js/a5619a021e6ff40427ff8f9c62169e99a390f56b/aframe/build/aframe-ar-nft.min.js
+  - three.js version: https://rawcdn.githack.com/AR-js-org/AR.js/a5619a021e6ff40427ff8f9c62169e99a390f56b/three.js/build/ar-nft.min.js
+
+- **AR.js with Marker Tracking + Location Based AR:**
+  - AFRAME version: https://rawcdn.githack.com/AR-js-org/AR.js/a5619a021e6ff40427ff8f9c62169e99a390f56b/aframe/build/aframe-ar.min.js
+  - three.js version: https://rawcdn.githack.com/AR-js-org/AR.js/a5619a021e6ff40427ff8f9c62169e99a390f56b/aframe/build/aframe-ar.min.js
+
+## Get started
+
+### 🖼Image Tracking:
+
 // TODO GIF FOR Image Tracking with 3D model
 // TODO GIF FOR Image tracking with Video
+
+Run the following code and scan [this picture](https://rawcdn.githack.com/AR-js-org/AR.js/a5619a021e6ff40427ff8f9c62169e99a390f56b/data/images/pinball.jpg) to see content over it.
 
 ```html
 <script src="https://cdn.jsdelivr.net/gh/aframevr/aframe@1c2407b26c61958baa93967b5412487cd94b290b/dist/aframe-master.min.js"></script>
 <script src="https://raw.githack.com/donmccurdy/aframe-extras/master/dist/aframe-extras.loaders.min.js"></script>
 
-<script src='../../../build/aframe-ar-nft.js'></script>
-<script>ARjs.Context.baseURL = '../../../../../three.js/'</script>
+<script src="https://rawcdn.githack.com/AR-js-org/AR.js/a5619a021e6ff40427ff8f9c62169e99a390f56b/aframe/build/aframe-ar-nft.min.js"></script>
+<!-- <script src="https://raw.githack.com/jeromeetienne/AR.js/3.0.0/aframe/build/aframe-ar-nft.min.js"></script> -->
 
-<body style='margin : 0px; overflow: hidden;'>
-    <a-scene
-        vr-mode-ui="enabled: false;"
-        renderer='antialias: true; alpha: true; precision: mediump;'
-        embedded arjs='trackingMethod: best; sourceType: webcam; debugUIEnabled: false;'>
+<!-- <script>ARjs.Context.baseURL = '../../../../../three.js/'</script> -->
 
-        <a-nft
-            type="nft" url='../../../../../../data/dataNFT/pinball'
-            smooth="true" smoothCount="10" smoothTolerance="0.01" smoothThreshold="5"
-        >
-            <a-entity
-                gltf-model="./Flamingo.glb"
-                position="50 150 0"
-                animation-mixer
-                >
-            </a-entity>
-        </a-nft>
-		<a-entity camera></a-entity>
-    </a-scene>
+<body style="margin : 0px; overflow: hidden;">
+  <a-scene
+    vr-mode-ui="enabled: false;"
+    renderer="antialias: true; alpha: true; precision: mediump;"
+    embedded
+    arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;"
+  >
+    <a-nft
+      type="nft"
+      url="https://rawcdn.githack.com/AR-js-org/AR.js/tree/master/data/dataNFT/pinball"
+      smooth="true"
+      smoothCount="10"
+      smoothTolerance="0.01"
+      smoothThreshold="5"
+    >
+      <a-entity gltf-model="./Flamingo.glb" position="50 150 0" animation-mixer>
+      </a-entity>
+    </a-nft>
+    <a-entity camera></a-entity>
+  </a-scene>
 </body>
-
 ```
 
+### 🌍Location Based
 
-# AR.js v2.0.0 is out!🌍
+// TODO GIF location based ar
 
-AR.js v2.0.0 introduces, for the first time, another type of Augmented Reality: **Location Based**.
+Try the following snippet, and instead of `add-your-latitude` and `add-your-longitude` add the required values, without the `<>`.
+Activate GPS on your phone and run the example. Look around. You should see the text looking at you, appearing in the requested position, even if you look around and move.
 
-AR.js can now be used with its default Marker Based feature, with Location Based or both combined.
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>GeoAR.js demo</title>
+    <script src="https://cdn.jsdelivr.net/gh/aframevr/aframe@1c2407b26c61958baa93967b5412487cd94b290b/dist/aframe-master.min.js"></script>
+    <script src="https://unpkg.com/aframe-look-at-component@0.8.0/dist/aframe-look-at-component.min.js"></script>
+    <script src="https://rawcdn.githack.com/AR-js-org/AR.js/a5619a021e6ff40427ff8f9c62169e99a390f56b/aframe/build/aframe-ar-nft.min.js"></script>
+    <!-- <script src="https://raw.githack.com/jeromeetienne/AR.js/3.0.0/aframe/build/aframe-ar-nft.min.js"></script> -->
 
-See the project that has been integrated into AR.js: [GeoAR.js](https://github.com/nicolocarpignoli/GeoAR.js).
+    <!-- <script>ARjs.Context.baseURL = '../../../../../three.js/'</script> -->
+  </head>
 
-You can find additional details below.
+  <body style="margin: 0; overflow: hidden;">
+    <a-scene
+      vr-mode-ui="enabled: false"
+      embedded
+      arjs="sourceType: webcam; debugUIEnabled: false;"
+    >
+      <a-text
+        value="This content will always face the user."
+        look-at="[gps-camera]"
+        scale="120 120 120"
+        gps-entity-place="latitude: <add-your-latitude>; longitude: <add-your-longitude>;"
+      ></a-text>
+      <a-camera gps-camera rotation-reader> </a-camera>
+    </a-scene>
+  </body>
+</html>
+```
 
-# Try it on Mobile
+### Marker tracking
 
-It works on all platforms. Android, IOS and window phone. It runs on **any browser with WebGL and WebRTC** (for iOS, you need to update to iOS11),
+Scan [this marker](https://rawcdn.githack.com/AR-js-org/AR.js/a5619a021e6ff40427ff8f9c62169e99a390f56b/data/images/hiro.png) to see the content over it.
 
-To try it on your phone, it is only 2 easy steps, check it out!
+````html
+```html
+<!DOCTYPE html>
+<html>
+  <script src="https://aframe.io/releases/1.0.0/aframe.min.js"></script>
+  <!-- <script src="https://raw.githack.com/jeromeetienne/AR.js/3.0.0/aframe/build/aframe-ar.js"></script> -->
+  <script src="https://raw.githack.com/jeromeetienne/AR.js/2.2.2/aframe/build/aframe-ar.min.js"></script>
+  <body style="margin : 0px; overflow: hidden;">
+    <a-scene embedded arjs>
+      <a-marker preset="hiro">
+        <a-entity position="0 0.5 0" gltf-model="https://rawcdn.githack.com/nicolocarpignoli/nicolocarpignoli.github.io/0c3112919b0f27ef508bf1d9e354adf15c0a94d7/roma/models/scene.gltf"></a-entity>
+      </a-marker>
+      <a-entity camera></a-entity>
+    </a-scene>
+  </body>
+</html>
+````
 
-1. Open this [hiro marker image](https://jeromeetienne.github.io/AR.js/data/images/HIRO.jpg) in your desktop browser.
-1. Open this [augmented reality webapps](https://codepen.io/nicolocarpignoli/full/vMBgob) in your phone browser, and point it at your screen.
 
-**You are done!** It will open a webpage which read the phone webcam, localize a hiro marker and add a 3D model on top of it!
+# Index
+* [Image Tracking documentation](./ImageTracking.md)
+* [Location Based documentation](./aframe/LocationBased.md)
+* [Marker Tracking documentation](./aframe/MarkerTracking.md)
+* [Browser Support](#Browser-Support)
+* [Licenses](#Licenses)
+* [Learn more](#Learn-More)
 
+⚠️ *Please always give a look for new undocumented features on the [Changelog](https://github.com/jeromeetienne/AR.js/blob/master/CHANGELOG.md) until the documentation has been updated.*
+
+
+# Browser Support
+
+Demo tested on the following browser setups:
+
+- **Desktop Chrome with webcam and 2 tabs** (one for Hero, one for result) (works!)
+- **Android native 4.4.2** (doesn't work, doesn't ask for permission to use camera. I see white background and text)
+- **Android native 5.0** (doesn't work, doesn't ask for permission, I see white background and text)
+- **Chrome on Android 4.4.2** (works!)
+- **Chrome on Android 5.0** (doesn't work, asks for permission, I see black background, text and a chart)
+- **Safari and Chrome on iOS < 11** (doesn't work, doesn't ask for permission, I see white background and text)
+- **Microsoft Edge on Windows 10** (Chrome on Google Pixel phone to view hologram)
+
+To see the full compatibility list and contribute to it yourself go to this google spreadsheet:
+[AR.js platform and browser compatibility](https://docs.google.com/spreadsheets/d/1e5YimbF_D1Sou2bx2vdBH58s1WdB_LgzBVYYD_uQLJk/edit#gid=318398375)
+
+Credits: @HelloDeadline, @sorianog
+
+# Licenses
+
+It is **all open source**! jsartoolkit5 is under LGPLv3 license and additional permission.
+And All my code in AR.js repository is under MIT license. :)
+
+For legal details, be sure to check [jsartoolkit5 license](https://github.com/artoolkit/jsartoolkit5/blob/master/LICENSE.txt)
+and [AR.js license](https://github.com/jeromeetienne/AR.js/blob/master/LICENSE.txt).
+
+# Learn More
+
+- [AR.js changelog](https://github.com/jeromeetienne/AR.js/blob/master/CHANGELOG.md)
+
+- [Future plans](https://trello.com/b/63F7JlvD/arjs)
+
+- [FAQ](https://jeromeetienne.github.io/AR.js-docs/misc/FAQ.html)
+
+- [How to Release](https://github.com/jeromeetienne/AR.js/blob/master/HOW_TO_RELEASE.md)
+
+
+
+//////////// TO MOVE ////////////
 # What "Marker Based" means
 AR.js uses `artoolkit`, and so it is marker based.
 `artoolkit` is a software with years of experience doing augmented reality. It is able to do a lot!
@@ -135,41 +246,8 @@ Otherwise, as default, the script searches for places of interest near the user 
 You can also use GeoAR.js **without** the script, adding `gps-entity-place` entities directly on the `index.html` file.as documentated [here](https://github.com/jeromeetienne/AR.js/blob/master/aframe/README.md).
 
 
-# Index
-* [Get Started](#Get-Started)
-* [Guides for Beginners](#Guides-for-beginners)
-* [Advanced Guides](#Advanced-Guides)
-* [Examples](#Examples)
-* [Augmented Website](#Augmented-Website)
-* [Tools](#Tools)
-* [Performance](#Performance)
-* [Status](#Status)
-* [Folders](#Folders)
-* [Browser Support](#Browser-Support)
-* [Licenses](#Licenses)
-
-⚠️ *Please always give a look for new undocumented features on the [Changelog](https://github.com/jeromeetienne/AR.js/blob/master/CHANGELOG.md) until the documentation has been updated.*
 
 
-#  Get Started
-
-## Augmented Reality for the Web in less than 10 lines of HTML
-
-```html
-<!doctype HTML>
-<html>
-<script src="https://aframe.io/releases/1.0.0/aframe.min.js"></script>
-<script src="https://raw.githack.com/jeromeetienne/AR.js/3.0.0/aframe/build/aframe-ar.js"></script>
-  <body style='margin : 0px; overflow: hidden;'>
-    <a-scene embedded arjs>
-      <a-marker preset="hiro">
-          <a-box position='0 0.5 0' material='color: yellow;'></a-box>
-      </a-marker>
-      <a-entity camera></a-entity>
-    </a-scene>
-  </body>
-</html>
-```
 
 See on [codepen](https://codepen.io/nicolocarpignoli/pen/vMBgob)
 
@@ -178,10 +256,10 @@ A-Frame magic :) All details are explained in this super post
 by
 [@AndraConnect](https://twitter.com/AndraConnect).
 
-
 ## Guides for beginners
 
 ### Marker Based
+
 - [AR.js introduction and insight on markers](https://medium.com/@nicolcarpignoli/ar-js-the-simplest-way-to-get-cross-browser-augmented-reality-on-the-web-10cbc721debc)
 - [Details about 3D models that can be used with AR.js](https://medium.com/@akashkuttappa/using-3d-models-with-ar-js-and-a-frame-84d462efe498)
 - ["WebVR for Augmented Reality - Using WebVR to write cross-platform AR applications"](https://medium.com/arjs/webvr-for-augmented-reality-f1e69a505902)
@@ -190,26 +268,28 @@ by
   by [@jerome_etienne](https://twitter.com/jerome_etienne)
 
 ### Location Based
+
 - [Location Based (GPS) Augmented Reality on the Web](https://medium.com/@nicolcarpignoli/location-based-gps-augmented-reality-on-the-web-7a540c515b3c)
 - [Tutorial for Location Based Augmented Reality on the Web](https://medium.com/chialab-open-source/build-your-location-based-augmented-reality-web-app-c2442e716564)
 
 ## Advanced guides
 
 ### Marker Based
+
 - [How to deliver AR.js only with a QR Code](https://medium.com/@nicolcarpignoli/how-to-deliver-ar-on-the-web-only-with-a-qr-code-139bb90e82f1)
 - [How to handle click with AR.js](https://medium.com/@nicolcarpignoli/how-to-handle-click-events-on-ar-js-f397ea5994d)
 - [10 tips to enhance your AR.js app performances](https://medium.com/@nicolcarpignoli/10-tips-to-enhance-your-ar-js-app-8b44c6faffca)
 - ["Area Learning with Multi-Markers in AR.js - For a Larger & More Stable Augmented Reality"](https://medium.com/arjs/area-learning-with-multi-markers-in-ar-js-1ff03a2f9fbe)
   by [@AndraConnect](https://twitter.com/AndraConnect)
 - Great post about [WebAR for designer](http://www.nexusinteractivearts.com/webar/)
-by [nexus interactive arts](http://www.nexusinteractivearts.com/)
-
+  by [nexus interactive arts](http://www.nexusinteractivearts.com/)
 
 # Examples
 
 Try to get inspired by this great works:
 
 ### Marker Based
+
 - [Examples from official AR.js doc](https://jeromeetienne.github.io/AR.js-docs/misc/EXAMPLES.html)
 
 ### Location Based
@@ -220,10 +300,11 @@ Try to get inspired by this great works:
 - [Only HTML](./aframe/examples/always-face-user) - like only-html but here content always face the user (`index.html` file)
 
 # Related Projects
+
 - [Examples inspired from AR.js - not AR.js based](https://github.com/stemkoski/AR-Examples) from [@stemkoski](https://github.com/stemkoski)
 - [AR-gif](https://github.com/rodrigocam/ar-gif):
-   Easy to use web components to do web augmented reality. Currently supporting gifs, but open for contributions to
-   add 3d objects, videos and so on.
+  Easy to use web components to do web augmented reality. Currently supporting gifs, but open for contributions to
+  add 3d objects, videos and so on.
 
 ## Augmented Website
 
@@ -231,6 +312,7 @@ Try to get inspired by this great works:
 The service is available [webxr.io/augmented-website](https://webxr.io/augmented-website/)
 
 # Community
+
 - AR.js on gitter: https://gitter.im/AR-js/Lobby
 - Trello board for ongoing work: https://trello.com/b/63F7JlvD/arjs
 
@@ -270,7 +352,7 @@ So I would like to thanks :
 Only thanks to all of them, I could do my part : Optimizing performance from 5fps on high-end
 phone, to 60fps on 2years old phone.
 
-After all this work done by a lot of people, we have a *web-based augmented reality solution fast enough for mobile*!
+After all this work done by a lot of people, we have a _web-based augmented reality solution fast enough for mobile_!
 
 Now, many people got a phone powerful enough to do web AR in their pocket.
 I think this performance improvement makes web AR a reality.
@@ -279,6 +361,7 @@ i am all exited by what people are gonna with it :)
 ![screenshot](https://cloud.githubusercontent.com/assets/252962/23068128/40343608-f51a-11e6-8cb3-900e37a7f658.jpg)
 
 ## What’s New?
+
 Recently, we’ve been getting creative and working on developing new things with AR.js. One of them is playing around with [shadows](https://twitter.com/jerome_etienne/status/837240034847764480), syncing the position of virtual lights with reality for a more life-like finish:
 ![screen shot 2017-03-16 at 21 06 24](https://cloud.githubusercontent.com/assets/6317076/24018623/7f787ba8-0a8c-11e7-8088-fea4799b5d09.png)
 
@@ -292,16 +375,18 @@ Other crazy ideas we’ve been working on include a [hole in the wall](https://t
 ![screen shot 2017-03-07 at 10 08 39](https://cloud.githubusercontent.com/assets/6317076/23833015/947f6abe-0737-11e7-9a0d-1ea919f6ffbe.png)
 
 # Status
+
 - At the three.js level is the main one. It is working well and efficiently
-- a-frame component - it export ```<a-marker>``` tag. It becomes real easy to use.
+- a-frame component - it export `<a-marker>` tag. It becomes real easy to use.
   It allows the things three.js extension does. Here are some slides
   [aframe-artoolkit](http://jeromeetienne.github.io/slides/artoolkit-aframe/)
 - webvr-polyfill: it is kind of working - still a work-in-progress
 
 # Folders
-- ```/three.js``` is the extension to use it with [pure three.js](https://threejs.org)
-- ```/aframe``` is the extension to use it with [a-frame](https://aframe.io)
-- ```/webvr-polyfill``` is the WebVR polyfill so you can reuse your #AR / #VR content easily
+
+- `/three.js` is the extension to use it with [pure three.js](https://threejs.org)
+- `/aframe` is the extension to use it with [a-frame](https://aframe.io)
+- `/webvr-polyfill` is the WebVR polyfill so you can reuse your #AR / #VR content easily
 
 # What's Next ?
 
@@ -320,36 +405,3 @@ Augmented reality on phone have applications in many fields:
 , [science](https://www.youtube.com/watch?v=gMxdBdLpVgc)
 or [gaming](https://www.youtube.com/watch?v=kEMDgvfFUcI).
 I exited to see what people will do with AR.js :)
-
-
-# Browser Support
-Demo tested on the following browser setups:
-- **Desktop Chrome with webcam and 2 tabs** (one for Hero, one for result) (works!)
-- **Android native 4.4.2** (doesn't work, doesn't ask for permission to use camera. I see white background and text)
-- **Android native 5.0** (doesn't work, doesn't ask for permission, I see white background and text)
-- **Chrome on Android 4.4.2** (works!)
-- **Chrome on Android 5.0** (doesn't work, asks for permission, I see black background, text and a chart)
-- **Safari and Chrome on iOS < 11** (doesn't work, doesn't ask for permission, I see white background and text)
-- **Microsoft Edge on Windows 10** (Chrome on Google Pixel phone to view hologram)
-
-To see the full compatibility list and contribute to it yourself go to this google spreadsheet:
-[AR.js platform and browser compatibility](https://docs.google.com/spreadsheets/d/1e5YimbF_D1Sou2bx2vdBH58s1WdB_LgzBVYYD_uQLJk/edit#gid=318398375)
-
-Credits: @HelloDeadline, @sorianog
-
-# Licenses
-It is **all open source**! jsartoolkit5 is under LGPLv3 license and additional permission.
-And All my code in AR.js repository is under MIT license. :)
-
-For legal details, be sure to check [jsartoolkit5 license](https://github.com/artoolkit/jsartoolkit5/blob/master/LICENSE.txt)
-and [AR.js license](https://github.com/jeromeetienne/AR.js/blob/master/LICENSE.txt).
-
-# Last but not least
-
-* [AR.js changelog](https://github.com/jeromeetienne/AR.js/blob/master/CHANGELOG.md)
-
-* [Future plans](https://trello.com/b/63F7JlvD/arjs)
-
-* [FAQ](https://jeromeetienne.github.io/AR.js-docs/misc/FAQ.html)
-
-* [How to Release](https://github.com/jeromeetienne/AR.js/blob/master/HOW_TO_RELEASE.md)
