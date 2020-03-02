@@ -46,7 +46,6 @@ Please import the one you need for your project, not both:
 ### 🖼Image Tracking:
 
 // TODO GIF FOR Image Tracking with 3D model
-// TODO GIF FOR Image tracking with Video
 
 Run the following code and scan [this picture](https://rawcdn.githack.com/AR-js-org/AR.js/a5619a021e6ff40427ff8f9c62169e99a390f56b/data/images/pinball.jpg) to see content over it.
 
