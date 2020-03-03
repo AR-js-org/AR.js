@@ -151,6 +151,8 @@ Scan [this marker](https://rawcdn.githack.com/AR-js-org/AR.js/a5619a021e6ff40427
 * [Licenses](#Licenses)
 * [Learn more](#Learn-More)
 
+**You can find a lot of help on the old AR.js repositories issues. Please search on open/closed issues, you may find a interesting stuff.**
+
 ⚠️ *Please always give a look for new undocumented features on the [Changelog](https://github.com/jeromeetienne/AR.js/blob/master/CHANGELOG.md) until the documentation has been updated.*
 
 
