@@ -611,6 +611,10 @@ ARjs.MarkerControls.prototype._initArtoolkit = function () {
         var workerBlobUrl = URL.createObjectURL(workerBlob);
         var worker = new Worker(workerBlobUrl);
 
+        var importUrl = 'artoolkit-nft.min.js';
+
+        worker.postMessage({ type: 'scriptUrl', url: importUrl, });
+
         window.addEventListener('arjs-video-loaded', function (ev) {
             var video = ev.detail.component;
             var vw = video.clientWidth;
@@ -701,7 +705,8 @@ ARjs.MarkerControls.prototype._initArtoolkit = function () {
 
     function workerRunner() {
       if ('function' === typeof importScripts) {
-          importScripts('./../../three.js/vendor/jsartoolkit5/build/artoolkit-nft.min.js');
+        console.log(self.origin);
+        var _url = null;
 
           self.onmessage = function (e) {
               var msg = e.data;
@@ -715,8 +720,17 @@ ARjs.MarkerControls.prototype._initArtoolkit = function () {
                       process();
                       return;
                   }
+                  case "scriptUrl": {
+                    _url = msg.url;
+                    impScript(_url);
+                    return;
+                  }
               }
           };
+
+          function impScript(_url){
+            importScripts(_url);
+          }
 
           var next = null;
 
