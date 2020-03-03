@@ -14,15 +14,15 @@ if ('function' === typeof importScripts) {
                 return;
             }
            case "scriptUrl": {
-              _url = msg.url;
-              impScript(_url);
+              _path = msg.path;
+              impScript(_path);
               return;
             }
         }
     };
 
-   function impScript(_url){
-      importScripts(_url + 'build/artoolkit-nft.min.js');
+   function impScript(_path){
+      importScripts(_path + 'build/artoolkit-nft.min.js');
    }
 
 
