@@ -22,8 +22,7 @@ build-main:
 
 build-main-nft:
 	echo	> build/ar-nft.js
-	cat vendor/jsartoolkit5/build/artoolkit-nft.min.js	\
-		vendor/jsartoolkit5/js/artoolkit.worker.js		>> build/ar-nft.js
+	cat vendor/jsartoolkit5/build/artoolkit-nft.min.js		>> build/ar-nft.js
 	cat	src/threex/threex-arbasecontrols.js					\
 		src/threex/threex-arclickability.js					\
 		src/threex/threex-armarkercloak.js					\

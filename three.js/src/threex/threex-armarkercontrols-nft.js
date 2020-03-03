@@ -19,6 +19,8 @@ ARjs.MarkerControls = THREEx.ArMarkerControls = function (context, object3d, par
         barcodeValue: null,
         // url of the descriptors of image - IIF type='nft'
         descriptorsUrl: null,
+        // path for artoolkit.worker and artoolkit-nft.min.js
+        artoolkitPath: null,
         // change matrix mode - [modelViewMatrix, cameraTransformMatrix]
         changeMatrixMode: 'modelViewMatrix',
         // minimal confidence in the marke recognition - between [0, 1] - default to 1
@@ -237,7 +239,7 @@ ARjs.MarkerControls.prototype._initArtoolkit = function () {
             arController.trackBarcodeMarkerId(artoolkitMarkerId, _this.parameters.size);
         } else if (_this.parameters.type === 'nft') {
             // use workers as default
-            handleNFT(_this.parameters.descriptorsUrl, arController);
+            handleNFT(_this.parameters.descriptorsUrl, _this.parameters.artoolkitPath, arController);
         } else if (_this.parameters.type === 'unknown') {
             artoolkitMarkerId = null
         } else {
@@ -270,10 +272,12 @@ ARjs.MarkerControls.prototype._initArtoolkit = function () {
         }
     };
 
-    function handleNFT(descriptorsUrl, arController) {
+    function handleNFT(descriptorsUrl, artoolkitPath, arController) {
         // create a Worker to handle loading of NFT marker and tracking of it
 
-        var worker = new Worker(THREEx.ArToolkitContext.baseURL + 'vendor/jsartoolkit5/js/artoolkit.worker.js');
+        var worker = new Worker( artoolkitPath + 'js/artoolkit.worker.js');
+
+        worker.postMessage({ type: 'scriptUrl', path: artoolkitPath, });
 
         window.addEventListener('arjs-video-loaded', function (ev) {
             var video = ev.detail.component;
