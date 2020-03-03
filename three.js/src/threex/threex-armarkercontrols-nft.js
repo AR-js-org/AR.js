@@ -273,7 +273,7 @@ ARjs.MarkerControls.prototype._initArtoolkit = function () {
     function handleNFT(descriptorsUrl, arController) {
         // create a Worker to handle loading of NFT marker and tracking of it
 
-        var worker = new Worker(THREEx.ArToolkitContext.baseURL + 'vendor/jsartoolkit5/js/artoolkit.worker.js');
+        var worker = new Worker('https://rawcdn.githack.com/AR-js-org/AR.js/6d80d74e48ce2423cafc2deb06f7ce1e417aba5f/three.js/vendor/jsartoolkit5/js/artoolkit.worker.js');
 
         window.addEventListener('arjs-video-loaded', function (ev) {
             var video = ev.detail.component;
