@@ -1,5 +1,5 @@
 if ('function' === typeof importScripts) {
-    importScripts('https://rawcdn.githack.com/AR-js-org/AR.js/6d80d74e48ce2423cafc2deb06f7ce1e417aba5f/three.js/vendor/jsartoolkit5/js/artoolkit.worker.js');
+    importScripts('../build/artoolkit-nft.min.js');
 
     self.onmessage = function (e) {
         var msg = e.data;
