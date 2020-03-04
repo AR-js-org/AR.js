@@ -2594,65 +2594,72 @@ ARjs.Context.prototype._initArtoolkit = function (onCompleted) {
     this._artoolkitProjectionAxisTransformMatrix.multiply(new THREE.Matrix4().makeRotationY(Math.PI))
     this._artoolkitProjectionAxisTransformMatrix.multiply(new THREE.Matrix4().makeRotationZ(Math.PI))
 
+    var onError = function(err) {
+        console.error(err);
+    };
+
     // get cameraParameters
-    var cameraParameters = new ARCameraParam(_this.parameters.cameraParametersUrl, function () {
-        // init controller
-        var arController = new ARController(_this.parameters.canvasWidth, _this.parameters.canvasHeight, cameraParameters);
-        _this.arController = arController
+    var cameraParameters = new ARCameraParam(_this.parameters.cameraParametersUrl,
+        function () {
+            // init controller
+            var arController = new ARController(_this.parameters.canvasWidth, _this.parameters.canvasHeight, cameraParameters);
+            _this.arController = arController
 
-        // honor this.parameters.imageSmoothingEnabled
-        arController.ctx.mozImageSmoothingEnabled = _this.parameters.imageSmoothingEnabled;
-        arController.ctx.webkitImageSmoothingEnabled = _this.parameters.imageSmoothingEnabled;
-        arController.ctx.msImageSmoothingEnabled = _this.parameters.imageSmoothingEnabled;
-        arController.ctx.imageSmoothingEnabled = _this.parameters.imageSmoothingEnabled;
+            // honor this.parameters.imageSmoothingEnabled
+            arController.ctx.mozImageSmoothingEnabled = _this.parameters.imageSmoothingEnabled;
+            arController.ctx.webkitImageSmoothingEnabled = _this.parameters.imageSmoothingEnabled;
+            arController.ctx.msImageSmoothingEnabled = _this.parameters.imageSmoothingEnabled;
+            arController.ctx.imageSmoothingEnabled = _this.parameters.imageSmoothingEnabled;
 
-        // honor this.parameters.debug
-        if (_this.parameters.debug === true) {
-            arController.debugSetup();
-            arController.canvas.style.position = 'absolute'
-            arController.canvas.style.top = '0px'
-            arController.canvas.style.opacity = '0.6'
-            arController.canvas.style.pointerEvents = 'none'
-            arController.canvas.style.zIndex = '-1'
-        }
+            // honor this.parameters.debug
+            if (_this.parameters.debug === true) {
+                arController.debugSetup();
+                arController.canvas.style.position = 'absolute'
+                arController.canvas.style.top = '0px'
+                arController.canvas.style.opacity = '0.6'
+                arController.canvas.style.pointerEvents = 'none'
+                arController.canvas.style.zIndex = '-1'
+            }
 
-        // setPatternDetectionMode
-        var detectionModes = {
-            'color': artoolkit.AR_TEMPLATE_MATCHING_COLOR,
-            'color_and_matrix': artoolkit.AR_TEMPLATE_MATCHING_COLOR_AND_MATRIX,
-            'mono': artoolkit.AR_TEMPLATE_MATCHING_MONO,
-            'mono_and_matrix': artoolkit.AR_TEMPLATE_MATCHING_MONO_AND_MATRIX,
-        }
-        var detectionMode = detectionModes[_this.parameters.detectionMode]
-        console.assert(detectionMode !== undefined)
-        arController.setPatternDetectionMode(detectionMode);
+            // setPatternDetectionMode
+            var detectionModes = {
+                'color': artoolkit.AR_TEMPLATE_MATCHING_COLOR,
+                'color_and_matrix': artoolkit.AR_TEMPLATE_MATCHING_COLOR_AND_MATRIX,
+                'mono': artoolkit.AR_TEMPLATE_MATCHING_MONO,
+                'mono_and_matrix': artoolkit.AR_TEMPLATE_MATCHING_MONO_AND_MATRIX,
+            }
+            var detectionMode = detectionModes[_this.parameters.detectionMode]
+            console.assert(detectionMode !== undefined)
+            arController.setPatternDetectionMode(detectionMode);
 
-        // setMatrixCodeType
-        var matrixCodeTypes = {
-            '3x3': artoolkit.AR_MATRIX_CODE_3x3,
-            '3x3_HAMMING63': artoolkit.AR_MATRIX_CODE_3x3_HAMMING63,
-            '3x3_PARITY65': artoolkit.AR_MATRIX_CODE_3x3_PARITY65,
-            '4x4': artoolkit.AR_MATRIX_CODE_4x4,
-            '4x4_BCH_13_9_3': artoolkit.AR_MATRIX_CODE_4x4_BCH_13_9_3,
-            '4x4_BCH_13_5_5': artoolkit.AR_MATRIX_CODE_4x4_BCH_13_5_5,
-        }
-        var matrixCodeType = matrixCodeTypes[_this.parameters.matrixCodeType]
-        console.assert(matrixCodeType !== undefined)
-        arController.setMatrixCodeType(matrixCodeType);
+            // setMatrixCodeType
+            var matrixCodeTypes = {
+                '3x3': artoolkit.AR_MATRIX_CODE_3x3,
+                '3x3_HAMMING63': artoolkit.AR_MATRIX_CODE_3x3_HAMMING63,
+                '3x3_PARITY65': artoolkit.AR_MATRIX_CODE_3x3_PARITY65,
+                '4x4': artoolkit.AR_MATRIX_CODE_4x4,
+                '4x4_BCH_13_9_3': artoolkit.AR_MATRIX_CODE_4x4_BCH_13_9_3,
+                '4x4_BCH_13_5_5': artoolkit.AR_MATRIX_CODE_4x4_BCH_13_5_5,
+            }
+            var matrixCodeType = matrixCodeTypes[_this.parameters.matrixCodeType]
+            console.assert(matrixCodeType !== undefined)
+            arController.setMatrixCodeType(matrixCodeType);
 
-        // set the patternRatio for artoolkit
-        arController.setPattRatio(_this.parameters.patternRatio);
+            // set the patternRatio for artoolkit
+            arController.setPattRatio(_this.parameters.patternRatio);
 
-        // set thresholding in artoolkit
-        // this seems to be the default
-        // arController.setThresholdMode(artoolkit.AR_LABELING_THRESH_MODE_MANUAL)
-        // adatative consume a LOT of cpu...
-        // arController.setThresholdMode(artoolkit.AR_LABELING_THRESH_MODE_AUTO_ADAPTIVE)
-        // arController.setThresholdMode(artoolkit.AR_LABELING_THRESH_MODE_AUTO_OTSU)
+            // set thresholding in artoolkit
+            // this seems to be the default
+            // arController.setThresholdMode(artoolkit.AR_LABELING_THRESH_MODE_MANUAL)
+            // adatative consume a LOT of cpu...
+            // arController.setThresholdMode(artoolkit.AR_LABELING_THRESH_MODE_AUTO_ADAPTIVE)
+            // arController.setThresholdMode(artoolkit.AR_LABELING_THRESH_MODE_AUTO_OTSU)
 
-        // notify
-        onCompleted()
-    })
+            // notify
+            onCompleted()
+        },
+        onError
+    )
     return this
 }
 
