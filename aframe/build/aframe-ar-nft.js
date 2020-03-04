@@ -45,14 +45,17 @@ if ('function' === typeof importScripts) {
     var markerResult = null;
 
     function load(msg) {
-        var path = '../../';
+        var corsAnyway = 'https://cors-anywhere.herokuapp.com/';
+        var markerPath = corsAnyway + msg.marker;
+
+        console.debug('Loading marker at: ', markerPath);
 
         var onLoad = function () {
             ar = new ARController(msg.pw, msg.ph, param);
             var cameraMatrix = ar.getCameraMatrix();
 
             // after the ARController is set up, we load the NFT Marker
-            ar.loadNFTMarker(path + msg.marker, function (markerId) {
+            ar.loadNFTMarker(markerPath, function (markerId) {
                 ar.trackNFTMarkerId(markerId);
                 postMessage({ type: 'endLoading' })
             }, function (err) {
@@ -76,7 +79,7 @@ if ('function' === typeof importScripts) {
         };
 
         // we cannot pass the entire ARController, so we re-create one inside the Worker, starting from camera_param
-        var param = new ARCameraParam(path + msg.param, onLoad, onError);
+        var param = new ARCameraParam(msg.param, onLoad, onError);
     }
 
     function process() {
@@ -680,8 +683,7 @@ ARjs.MarkerControls.prototype._initArtoolkit = function () {
 
     function handleNFT(descriptorsUrl, arController) {
         // create a Worker to handle loading of NFT marker and tracking of it
-
-        var worker = new Worker(THREEx.ArToolkitContext.baseURL + 'vendor/jsartoolkit5/js/artoolkit.worker.js');
+        var worker = new Worker(THREEx.ArToolkitContext.baseURL + '../three.js/vendor/jsartoolkit5/js/artoolkit.worker.js');
 
         window.addEventListener('arjs-video-loaded', function (ev) {
             var video = ev.detail.component;
@@ -1049,9 +1051,7 @@ ARjs.Context = THREEx.ArToolkitContext = function (parameters, sourceParameters)
 
 Object.assign(ARjs.Context.prototype, THREE.EventDispatcher.prototype);
 
-// ARjs.Context.baseURL = '../'
-// default to github page
-ARjs.Context.baseURL = 'https://ar-js-org.github.io/AR.js/three.js/'
+ARjs.Context.baseURL = '../../../';
 ARjs.Context.REVISION = '3.0.0';
 
 /**

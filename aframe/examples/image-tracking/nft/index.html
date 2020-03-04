@@ -1,21 +1,22 @@
-<script src="https://cdn.jsdelivr.net/gh/aframevr/aframe@1c2407b26c61958baa93967b5412487cd94b290b/dist/aframe-master.min.js"></script>
+<script src='https://cdn.jsdelivr.net/gh/aframevr/aframe@1c2407b26c61958baa93967b5412487cd94b290b/dist/aframe-master.min.js'></script>
 
-<script src='../../../build/aframe-ar-nft.min.js'></script>
+<!-- rawgithack development URL -->
+<script src='https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.min.js'></script>
 
 <body style='margin : 0px; overflow: hidden;'>
     <a-scene
-        vr-mode-ui="enabled: false;"
+        vr-mode-ui='enabled: false;'
         embedded arjs='trackingMethod: best; sourceType: webcam; debugUIEnabled: false;'>
 
+        <!-- use rawgithack to retrieve the correct url for nft marker (see 'pinball' below) -->
         <a-nft
-            type="nft" url='./trex-image/trex'
-            smooth="true" smoothCount="10" smoothTolerance="0.01" smoothThreshold="5"
-        >
+            type='nft' url='https://raw.githack.com/AR-js-org/AR.js/master/data/dataNFT/pinball'
+            smooth='true' smoothCount='10' smoothTolerance='0.01' smoothThreshold='5'>
             <a-entity
-                gltf-model="./trex/scene.gltf"
-                position="75 150 0"
-                rotation="90 90 90"
-                scale="30 30 30"
+                gltf-model='./trex/scene.gltf'
+                position='75 150 0'
+                rotation='90 90 90'
+                scale='30 30 30'
                 >
             </a-entity>
         </a-nft>

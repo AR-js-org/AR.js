@@ -22,14 +22,17 @@ if ('function' === typeof importScripts) {
     var markerResult = null;
 
     function load(msg) {
-        var path = '../../';
+        var corsAnyway = 'https://cors-anywhere.herokuapp.com/';
+        var markerPath = corsAnyway + msg.marker;
+
+        console.debug('Loading marker at: ', markerPath);
 
         var onLoad = function () {
             ar = new ARController(msg.pw, msg.ph, param);
             var cameraMatrix = ar.getCameraMatrix();
 
             // after the ARController is set up, we load the NFT Marker
-            ar.loadNFTMarker(path + msg.marker, function (markerId) {
+            ar.loadNFTMarker(markerPath, function (markerId) {
                 ar.trackNFTMarkerId(markerId);
                 postMessage({ type: 'endLoading' })
             }, function (err) {
@@ -53,7 +56,7 @@ if ('function' === typeof importScripts) {
         };
 
         // we cannot pass the entire ARController, so we re-create one inside the Worker, starting from camera_param
-        var param = new ARCameraParam(path + msg.param, onLoad, onError);
+        var param = new ARCameraParam(msg.param, onLoad, onError);
     }
 
     function process() {
