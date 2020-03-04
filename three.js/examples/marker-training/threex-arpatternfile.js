@@ -26,44 +26,54 @@ THREEx.ArPatternFile.encodeImage = function(image){
 	canvas.width = 16;
 	canvas.height = 16;
 
-	// document.body.appendChild(canvas)
-	// canvas.style.width = '200px'
+	context.clearRect(0, 0, canvas.width, canvas.height);
+	context.translate(canvas.width / 2, canvas.height / 2);
+	context.drawImage(image, -canvas.width / 2, -canvas.height / 2, canvas.width, canvas.height);
 
+	// get imageData
+	var imageData = context.getImageData(0, 0, canvas.width, canvas.height)
+	var rotationIndex, channelIndex, x, y;
 
-	var patternFileString = ''
-	for(var orientation = 0; orientation > -2*Math.PI; orientation -= Math.PI/2){
-		// draw on canvas - honor orientation
-		context.save();
- 		context.clearRect(0,0,canvas.width,canvas.height);
-		context.translate(canvas.width/2,canvas.height/2);
-		context.rotate(orientation);
-		context.drawImage(image, -canvas.width/2,-canvas.height/2, canvas.width, canvas.height);
-		context.restore();
-
-		// get imageData
-		var imageData = context.getImageData(0, 0, canvas.width, canvas.height)
-
-		// generate the patternFileString for this orientation
-		if( orientation !== 0 )	patternFileString += '\n'
-		// NOTE bgr order and not rgb!!! so from 2 to 0
-		for(var channelOffset = 2; channelOffset >= 0; channelOffset--){
-			// console.log('channelOffset', channelOffset)
-			for(var y = 0; y < imageData.height; y++){
-				for(var x = 0; x < imageData.width; x++){
-
-					if( x !== 0 ) patternFileString += ' '
-
-					var offset = (y*imageData.width*4) + (x * 4) + channelOffset
-					var value = imageData.data[offset]
-
-					patternFileString += String(value).padStart(3);
-				}
-				patternFileString += '\n'
+	// pre generate arrays
+	var patternFileArray = new Array(4)
+	for(rotationIndex=0; rotationIndex < 4; rotationIndex++){
+		patternFileArray[rotationIndex] = new Array(3) // 3 channels
+		for(channelIndex=0; channelIndex < 3; channelIndex++){
+			patternFileArray[rotationIndex][channelIndex] = new Array(imageData.height)
+			for(y = 0; y < imageData.height; y++){
+				patternFileArray[rotationIndex][channelIndex][y] = new Array(imageData.width)
 			}
 		}
 	}
 
-	return patternFileString
+	// NOTE bgr order and not rgb!!! so from 2 to 0
+	for(var channelOffset = 2; channelOffset >= 0; channelOffset--){
+		channelIndex = 2-channelOffset
+
+		for(y = 0; y < imageData.height; y++){
+			for(x = 0; x < imageData.width; x++){
+				var offset = (y * imageData.width * 4) + (x * 4) + channelOffset
+				var value = String(imageData.data[offset]).padStart(3)
+
+				// 0
+				patternFileArray[0][channelIndex][y][x] = value
+				// -90
+				patternFileArray[1][channelIndex][imageData.width - 1 - x][y] = value
+				// -180
+				patternFileArray[2][channelIndex][imageData.width - 1 - y][imageData.width - 1 - x] = value
+				// -270
+				patternFileArray[3][channelIndex][x][imageData.width - 1 - y] = value
+			}
+		}
+	}
+
+	return patternFileArray.map(function(r){
+		return r.map(function(c){
+			return c.map(function(l){
+				return l.join(' ')
+			}).join('\n') // line end
+		}).join('\n') // channel end
+	}).join('\n\n') // rotation block end
 }
 
 //////////////////////////////////////////////////////////////////////////////
