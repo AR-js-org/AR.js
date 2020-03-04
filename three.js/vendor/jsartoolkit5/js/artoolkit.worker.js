@@ -56,7 +56,7 @@ if ('function' === typeof importScripts) {
         };
 
         // we cannot pass the entire ARController, so we re-create one inside the Worker, starting from camera_param
-        var param = new ARCameraParam(msg.param, onLoad, onError);
+        var param = new ARCameraParam('../../' + msg.param, onLoad, onError);
     }
 
     function process() {
