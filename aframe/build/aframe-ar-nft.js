@@ -57,7 +57,10 @@ if ('function' === typeof importScripts) {
             // after the ARController is set up, we load the NFT Marker
             ar.loadNFTMarker(markerPath, function (markerId) {
                 ar.trackNFTMarkerId(markerId);
-                postMessage({ type: 'endLoading' })
+                postMessage({
+                    type: 'endLoading',
+                    id: markerId,
+                })
             }, function (err) {
                 console.log('Error in loading marker on Worker', err)
             });
@@ -68,6 +71,7 @@ if ('function' === typeof importScripts) {
                 markerResult = {
                     type: 'found',
                     matrix: JSON.stringify(ev.data.matrix),
+                    id: ev.data.marker.id,
                 };
             });
 
@@ -687,6 +691,8 @@ ARjs.MarkerControls.prototype._initArtoolkit = function () {
         // create a Worker to handle loading of NFT marker and tracking of it
         var worker = new Worker(THREEx.ArToolkitContext.baseURL + '../three.js/vendor/jsartoolkit5/js/artoolkit.worker.js');
 
+        var markerId;
+
         window.addEventListener('arjs-video-loaded', function (ev) {
             var video = ev.detail.component;
             var vw = video.clientWidth;
@@ -732,6 +738,8 @@ ARjs.MarkerControls.prototype._initArtoolkit = function () {
                     if (loader) {
                         loader.remove();
                     }
+
+                    markerId = ev.data.id;
                 }
 
                 if (ev && ev.data && ev.data.type === 'loaded') {
@@ -753,13 +761,16 @@ ARjs.MarkerControls.prototype._initArtoolkit = function () {
                 if (ev && ev.data && ev.data.type === 'found') {
                     var matrix = JSON.parse(ev.data.matrix);
 
-                    onMarkerFound({
-                        data: {
-                            type: artoolkit.NFT_MARKER,
-                            matrix: matrix,
-                            msg: ev.data.type,
-                        }
-                    });
+                    if (ev.data.id === markerId) {
+                        onMarkerFound({
+                            data: {
+                                type: artoolkit.NFT_MARKER,
+                                matrix: matrix,
+                                msg: ev.data.type,
+                                id: markerId,
+                            }
+                        });
+                    }
 
                     _this.context.arController.showObject = true;
                 } else {
@@ -770,9 +781,6 @@ ARjs.MarkerControls.prototype._initArtoolkit = function () {
             };
 
         })
-
-
-
     }
 
     function onMarkerFound(event) {
@@ -994,7 +1002,7 @@ ARjs.Context = THREEx.ArToolkitContext = function (parameters, sourceParameters)
         matrixCodeType: '3x3',
 
         // url of the camera parameters
-        cameraParametersUrl: 'https://cors-anywhere.herokuapp.com/https://rawcdn.githack.com/AR-js-org/AR.js/05a2295fe37a296d4c639e84d0128c84dcb501c8/data/data/camera_para.dat',
+        cameraParametersUrl: ARjs.Context.baseURL + 'parameters/camera_para.dat',
 
         // tune the maximum rate of pose detection in the source image
         maxDetectionRate: 60,
