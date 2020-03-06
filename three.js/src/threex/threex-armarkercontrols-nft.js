@@ -274,8 +274,6 @@ ARjs.MarkerControls.prototype._initArtoolkit = function () {
         // create a Worker to handle loading of NFT marker and tracking of it
         var worker = new Worker(THREEx.ArToolkitContext.baseURL + '../three.js/vendor/jsartoolkit5/js/artoolkit.worker.js');
 
-        var markerId;
-
         window.addEventListener('arjs-video-loaded', function (ev) {
             var video = ev.detail.component;
             var vw = video.clientWidth;
@@ -321,8 +319,6 @@ ARjs.MarkerControls.prototype._initArtoolkit = function () {
                     if (loader) {
                         loader.remove();
                     }
-
-                    markerId = ev.data.id;
                 }
 
                 if (ev && ev.data && ev.data.type === 'loaded') {
@@ -344,16 +340,13 @@ ARjs.MarkerControls.prototype._initArtoolkit = function () {
                 if (ev && ev.data && ev.data.type === 'found') {
                     var matrix = JSON.parse(ev.data.matrix);
 
-                    if (ev.data.id === markerId) {
-                        onMarkerFound({
-                            data: {
-                                type: artoolkit.NFT_MARKER,
-                                matrix: matrix,
-                                msg: ev.data.type,
-                                id: markerId,
-                            }
-                        });
-                    }
+                    onMarkerFound({
+                        data: {
+                            type: artoolkit.NFT_MARKER,
+                            matrix: matrix,
+                            msg: ev.data.type,
+                        }
+                    });
 
                     _this.context.arController.showObject = true;
                 } else {
@@ -364,6 +357,9 @@ ARjs.MarkerControls.prototype._initArtoolkit = function () {
             };
 
         })
+
+
+
     }
 
     function onMarkerFound(event) {
