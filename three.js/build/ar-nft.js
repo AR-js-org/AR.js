@@ -994,7 +994,7 @@ ARjs.Context = THREEx.ArToolkitContext = function (parameters, sourceParameters)
         matrixCodeType: '3x3',
 
         // url of the camera parameters
-        cameraParametersUrl: 'https://cors-anywhere.herokuapp.com/https://rawcdn.githack.com/AR-js-org/AR.js/05a2295fe37a296d4c639e84d0128c84dcb501c8/data/data/camera_para.dat',
+        cameraParametersUrl: ARjs.Context.baseURL + 'parameters/camera_para.dat',
 
         // tune the maximum rate of pose detection in the source image
         maxDetectionRate: 60,
