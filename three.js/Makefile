@@ -26,7 +26,9 @@ build-main-nft:
 	cat	src/threex/threex-arbasecontrols.js					\
 		src/threex/threex-arclickability.js					\
 		src/threex/threex-armarkercloak.js					\
-		src/threex/threex-armarkercontrols-nft.js					\
+		src/threex/threex-armarkercontrols-nft-start.js					\
+		vendor/jsartoolkit5/build/artoolkit-nft.min.js          \
+		src/threex/threex-armarkercontrols-nft-end.js					\
 		src/threex/threex-armarkerhelper.js					\
 		src/threex/threex-arsmoothedcontrols.js					\
 		src/threex/threex-artoolkitcontext-nft.js					\
