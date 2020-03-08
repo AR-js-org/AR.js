@@ -1,4 +1,3 @@
-            //}, 50);
             self.onmessage = function (e) {
                 var msg = e.data;
                 switch (msg.type) {
@@ -20,22 +19,30 @@
           var markerResult = null;
 
           function load(msg) {
-              //var path = '../../';
-              var path = '';
+              var camUrl
+              var basePath = self.origin;
+              console.log('base path:', basePath);
+              // test if the msg.param (the incoming url) is an http or https path
+              var regex = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#()?&//=]*)/igm
+              console.log(regex.test(msg.param));
+              var re = regex.test(msg.param)
+              if (re == true){
+                camUrl = msg.param;
+              } else {
+                camUrl = basePath + '/' + msg.param;
+              }
               // this code si only for testing pourpose, it will be removed: only for checking if the path is right or not.
               var req = new XMLHttpRequest;
-              var testCamUrl = "http://127.0.0.1:3000/data/data/camera_para.dat";
-              req.open("GET",testCamUrl,true);
+              console.log('camera_para url: ', msg.param);
+              console.log('camUrl is: ', camUrl);
+              req.open("GET",camUrl,true);
               console.log(req);
               var onLoad = function () {
-                  //var interval = setTimeout(function() {
-                    ar = new ARController(msg.pw, msg.ph, param);
-                  //}, 120);
+                  ar = new ARController(msg.pw, msg.ph, param);
                   var cameraMatrix = ar.getCameraMatrix();
 
                   // after the ARController is set up, we load the NFT Marker
-                  var nftMarkerurl = 'http://127.0.0.1:3000/data/dataNFT/pinball'
-                  //ar.loadNFTMarker(path + msg.marker, function (markerId) {
+                  var nftMarkerurl = basePath + '/' + msg.marker;
                   ar.loadNFTMarker(nftMarkerurl, function (markerId) {
                       ar.trackNFTMarkerId(markerId);
                       postMessage({ type: 'endLoading' })
@@ -60,8 +67,7 @@
               };
               console.log(msg.param);
               // we cannot pass the entire ARController, so we re-create one inside the Worker, starting from camera_param
-              //var param = new ARCameraParam(path + msg.param, onLoad, onError);
-              var param = new ARCameraParam(path + testCamUrl, onLoad, onError);
+              var param = new ARCameraParam(camUrl, onLoad, onError);
           }
 
           function process() {

@@ -372,4 +372,3 @@ ARjs.MarkerControls.prototype._initArtoolkit = function () {
     }
 
     function workerRunner() {
-      //var interval = setTimeout(function() {
