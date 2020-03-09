@@ -19,7 +19,7 @@
           var markerResult = null;
 
           function load(msg) {
-              var camUrl
+              var camUrl, nftMarkerUrl;
               var basePath = self.origin;
               console.log('base path:', basePath);
               // test if the msg.param (the incoming url) is an http or https path
@@ -36,8 +36,12 @@
                   var cameraMatrix = ar.getCameraMatrix();
 
                   // after the ARController is set up, we load the NFT Marker
-                  var nftMarkerurl = basePath + '/' + msg.marker;
-                  ar.loadNFTMarker(nftMarkerurl, function (markerId) {
+                  if (re == true){
+                    nftMarkerUrl = msg.marker;
+                  } else if (re == false){
+                    nftMarkerUrl = basePath + '/' + msg.marker;
+                  }
+                  ar.loadNFTMarker(nftMarkerUrl, function (markerId) {
                       ar.trackNFTMarkerId(markerId);
                       postMessage({ type: 'endLoading' })
                   }, function (err) {
