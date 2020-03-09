@@ -31,12 +31,6 @@
               } else if (re == false){
                 camUrl = basePath + '/' + msg.param;
               }
-              // this code si only for testing pourpose, it will be removed: only for checking if the path is right or not.
-              var req = new XMLHttpRequest;
-              console.log('camera_para url: ', msg.param);
-              console.log('camUrl is: ', camUrl);
-              req.open("GET",camUrl,true);
-              console.log(req);
               var onLoad = function () {
                   ar = new ARController(msg.pw, msg.ph, param);
                   var cameraMatrix = ar.getCameraMatrix();

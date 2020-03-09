@@ -608,7 +608,6 @@ ARjs.MarkerControls.prototype._initArtoolkit = function () {
           [workerRunner.toString().replace(/^function .+\{?|\}$/g, '')],
           { type:'text/js-worker' }
         );
-        //workerBlob.type = "text/js-worker"
         var workerBlobUrl = URL.createObjectURL(workerBlob);
         var worker = new Worker(workerBlobUrl);
 
@@ -756,12 +755,6 @@ var Db=[AP,pr,sr,Cr];var Eb=[BP,ss];var Fb=[CP,lr];var Gb=[DP,pj,kx,rx,_A,ND,OD,
               } else if (re == false){
                 camUrl = basePath + '/' + msg.param;
               }
-              // this code si only for testing pourpose, it will be removed: only for checking if the path is right or not.
-              var req = new XMLHttpRequest;
-              console.log('camera_para url: ', msg.param);
-              console.log('camUrl is: ', camUrl);
-              req.open("GET",camUrl,true);
-              console.log(req);
               var onLoad = function () {
                   ar = new ARController(msg.pw, msg.ph, param);
                   var cameraMatrix = ar.getCameraMatrix();
