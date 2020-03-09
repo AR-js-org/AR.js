@@ -276,12 +276,9 @@ ARjs.MarkerControls.prototype._initArtoolkit = function () {
           [workerRunner.toString().replace(/^function .+\{?|\}$/g, '')],
           { type:'text/javascript' }
         );
+        workerBlob.type = "text/js-worker"
         var workerBlobUrl = URL.createObjectURL(workerBlob);
         var worker = new Worker(workerBlobUrl);
-
-        //var importUrl = 'localhost:3000/three.js/vendor/jsartoolkit5/build/artoolkit-nft.min.js';
-
-        //worker.postMessage({ type: 'scriptUrl', url: importUrl, });
 
         window.addEventListener('arjs-video-loaded', function (ev) {
             var video = ev.detail.component;
