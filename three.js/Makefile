@@ -1,5 +1,3 @@
-TERSER=../node_modules/.bin/terser
-
 watch: build
 	fswatch -0 src/*/*.js | xargs -0 -n 1 -I {} make build
 
@@ -42,15 +40,4 @@ build-main-nft:
 
 .PHONY: build
 
-minify-main: build-main
-	$(TERSER) build/ar.js > build/ar.min.js
-
-minify-main-nft: build-main-nft
-	$(TERSER) build/ar-nft.js > build/ar-nft.min.js
-
 build: build-main build-main-nft
-
-minify: minify-main minify-main-nft
-
-watchMinify: minify
-	fswatch -0 three.js/*.js | xargs -0 -n 1 -I {} make minify

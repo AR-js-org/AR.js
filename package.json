@@ -33,8 +33,5 @@
   "bugs": {
     "url": "https://github.com/jeromeetienne/AR.js/issues"
   },
-  "homepage": "https://github.com/jeromeetienne/AR.js#readme",
-  "dependencies": {
-    "terser": "^4.6.6"
-  }
+  "homepage": "https://github.com/jeromeetienne/AR.js#readme"
 }
