@@ -1,0 +1,76 @@
+<script src="https://cdn.jsdelivr.net/gh/aframevr/aframe@1c2407b26c61958baa93967b5412487cd94b290b/dist/aframe-master.min.js"></script>
+<script src="https://raw.githack.com/donmccurdy/aframe-extras/master/dist/aframe-extras.loaders.min.js"></script>
+
+<script src='https://rawcdn.githack.com/AR-js-org/AR.js/a5619a021e6ff40427ff8f9c62169e99a390f56b/aframe/build/aframe-ar-nft.min.js'></script>
+
+<script>ARjs.Context.baseURL = '../../../../../three.js/'</script>
+
+<script>
+    AFRAME.registerComponent('registerevents', {
+		init: function () {
+			var marker = this.el;
+
+			marker.addEventListener('markerFound', function() {
+				alert(marker.getAttribute('name'));
+			});
+		}
+	});
+</script>
+
+<body style='margin : 0px; overflow: hidden;'>
+    <a-scene
+        vr-mode-ui="enabled: false;"
+        renderer='antialias: true; alpha: true; precision: mediump;'
+        embedded arjs='trackingMethod: best; sourceType: webcam; debugUIEnabled: false;'>
+
+        <a-nft
+            registerevents
+            name="fig"
+            type="nft" url='../../../../../aframe/examples/image-tracking/nft/trackables/fig'
+            smooth="true" smoothCount="10" smoothTolerance="0.01" smoothThreshold="5"
+        >
+        </a-nft>
+
+        <a-nft
+            registerevents
+            name="piantina"
+            type="nft" url='../../../../../aframe/examples/image-tracking/nft/trackables/piantina'
+            smooth="true" smoothCount="10" smoothTolerance="0.01" smoothThreshold="5"
+        >
+        </a-nft>
+
+        <a-nft
+            registerevents
+            name="pinball"
+            type="nft" url='../../../../../aframe/examples/image-tracking/nft/trackables/pinball'
+            smooth="true" smoothCount="10" smoothTolerance="0.01" smoothThreshold="5"
+        >
+        </a-nft>
+
+        <a-nft
+            registerevents
+            name="ricca"
+            type="nft" url='../../../../../aframe/examples/image-tracking/nft/trackables/ricca'
+            smooth="true" smoothCount="10" smoothTolerance="0.01" smoothThreshold="5"
+        >
+        </a-nft>
+
+        <a-nft
+            registerevents
+            name="rna"
+            type="nft" url='../../../../../aframe/examples/image-tracking/nft/trackables/rna'
+            smooth="true" smoothCount="10" smoothTolerance="0.01" smoothThreshold="5"
+        >
+        </a-nft>
+
+        <a-nft
+            registerevents
+            name="timeline"
+            type="nft" url='../../../../../aframe/examples/image-tracking/nft/trackables/timeline'
+            smooth="true" smoothCount="10" smoothTolerance="0.01" smoothThreshold="5"
+        >
+        </a-nft>
+
+		<a-entity camera></a-entity>
+    </a-scene>
+</body>
