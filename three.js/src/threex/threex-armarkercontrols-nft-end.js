@@ -24,11 +24,11 @@
               console.log('base path:', basePath);
               // test if the msg.param (the incoming url) is an http or https path
               var regex = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#()?&//=]*)/igm
-              var re = regex.test(msg.param);
-              console.log(re);
-              if (re == true){
+              var reC = regex.test(msg.param);
+              console.log(reC);
+              if (reC == true){
                 camUrl = msg.param;
-              } else if (re == false){
+              } else if (reC == false){
                 camUrl = basePath + '/' + msg.param;
               }
               var onLoad = function () {
@@ -36,9 +36,10 @@
                   var cameraMatrix = ar.getCameraMatrix();
 
                   // after the ARController is set up, we load the NFT Marker
-                  if (re == true){
+                  var reM = regex.test(msg.marker);
+                  if (reM == true){
                     nftMarkerUrl = msg.marker;
-                  } else if (re == false){
+                  } else if (reM == false){
                     nftMarkerUrl = basePath + '/' + msg.marker;
                   }
                   ar.loadNFTMarker(nftMarkerUrl, function (markerId) {
@@ -84,7 +85,7 @@
               }
               next = null;
           }
-    }
+    };
 
     function onMarkerFound(event) {
         if (event.data.type === artoolkit.PATTERN_MARKER && event.data.marker.cfPatt < _this.parameters.minConfidence) return

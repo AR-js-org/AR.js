@@ -361,10 +361,10 @@ ARjs.MarkerControls.prototype._initArtoolkit = function () {
                 process();
             };
 
-        })
+        });
 
 
 
-    }
+    };
 
     function workerRunner() {
