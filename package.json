@@ -30,7 +30,19 @@
     "image tracking",
     "marker based"
   ],
-  "author": "nicolocarpignoli@gmail.com",
+  "author": "jeromeetienne@gmail.com",
+  "contributors": [
+    {
+      "name": "Nicolò Carpignoli",
+      "email": "nicolocarpignoli@gmail.com",
+      "url": "https://nicolocarpignoli.github.io/me"
+    },
+    {
+      "name": "Walter Perdan",
+      "email": "info@walterperdan.com",
+      "url": "https://www.walterperdan.com/"
+    }
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/AR-js-org/AR.js/issues"
