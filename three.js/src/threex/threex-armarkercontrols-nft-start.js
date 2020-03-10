@@ -208,7 +208,7 @@ ARjs.MarkerControls.prototype._initArtoolkit = function () {
 
     var artoolkitMarkerId = null
 
-    var delayedInitTimerId = setInterval(function () {
+    var delayedInitTimerId = setInterval(() => {
         // check if arController is init
         var arController = _this.context.arController
         if (arController === null) return
@@ -273,8 +273,8 @@ ARjs.MarkerControls.prototype._initArtoolkit = function () {
     function handleNFT(descriptorsUrl, arController) {
         // create a Worker to handle loading of NFT marker and tracking of it
         var workerBlob = new Blob(
-          [workerRunner.toString().replace(/^function .+\{?|\}$/g, '')],
-          { type:'text/js-worker' }
+            [workerRunner.toString().replace(/^function .+\{?|\}$/g, '')],
+            { type: 'text/js-worker' }
         );
         var workerBlobUrl = URL.createObjectURL(workerBlob);
         var worker = new Worker(workerBlobUrl);
@@ -368,3 +368,6 @@ ARjs.MarkerControls.prototype._initArtoolkit = function () {
     };
 
     function workerRunner() {
+    // continuing 'workerRunner' function at treex-armarkercontrols-nft-end.js file
+    // see the makefile of three.js folder to better understand the division of this function between two files
+

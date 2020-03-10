@@ -1,4 +1,4 @@
-UGLIFY=../node_modules/.bin/uglifyjs
+TERSER=../node_modules/.bin/terser
 
 watch: build
 	fswatch -0 src/*.js ../three.js/src/*/*.js | xargs -0 -n 1 -I {} make build
@@ -26,9 +26,9 @@ build-nft:
 build: build-default build-nft
 
 minify-default: build-default
-	$(UGLIFY) build/aframe-ar.js > build/aframe-ar.min.js
+	$(TERSER) build/aframe-ar.js > build/aframe-ar.min.js
 
 minify-nft: build-nft
-	$(UGLIFY) build/aframe-ar-nft.js > build/aframe-ar-nft.min.js
+	$(TERSER) build/aframe-ar-nft.js > build/aframe-ar-nft.min.js
 
 minify: minify-default minify-nft

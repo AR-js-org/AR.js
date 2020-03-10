@@ -34,7 +34,7 @@
     "url": "https://github.com/jeromeetienne/AR.js/issues"
   },
   "homepage": "https://github.com/jeromeetienne/AR.js#readme",
-  "devDependencies": {
-    "uglify-js": "^3.7.5"
+  "dependencies": {
+    "terser": "^4.6.6"
   }
 }

@@ -1,4 +1,5 @@
-UGLIFY=../node_modules/.bin/uglifyjs
+TERSER=../node_modules/.bin/terser
+
 watch: build
 	fswatch -0 src/*/*.js | xargs -0 -n 1 -I {} make build
 
@@ -42,10 +43,10 @@ build-main-nft:
 .PHONY: build
 
 minify-main: build-main
-	$(UGLIFY) build/ar.js > build/ar.min.js
+	$(TERSER) build/ar.js > build/ar.min.js
 
 minify-main-nft: build-main-nft
-	$(UGLIFY) build/ar-nft.js > build/ar-nft.min.js
+	$(TERSER) build/ar-nft.js > build/ar-nft.min.js
 
 build: build-main build-main-nft
 
