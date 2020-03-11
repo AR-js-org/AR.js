@@ -208,7 +208,7 @@ ARjs.MarkerControls.prototype._initArtoolkit = function () {
 
     var artoolkitMarkerId = null
 
-    var delayedInitTimerId = setInterval(function () {
+    var delayedInitTimerId = setInterval(() => {
         // check if arController is init
         var arController = _this.context.arController
         if (arController === null) return
@@ -272,7 +272,12 @@ ARjs.MarkerControls.prototype._initArtoolkit = function () {
 
     function handleNFT(descriptorsUrl, arController) {
         // create a Worker to handle loading of NFT marker and tracking of it
-        var worker = new Worker(THREEx.ArToolkitContext.baseURL + '../three.js/vendor/jsartoolkit5/js/artoolkit.worker.js');
+        var workerBlob = new Blob(
+            [workerRunner.toString().replace(/^function .+\{?|\}$/g, '')],
+            { type: 'text/js-worker' }
+        );
+        var workerBlobUrl = URL.createObjectURL(workerBlob);
+        var worker = new Worker(workerBlobUrl);
 
         window.addEventListener('arjs-video-loaded', function (ev) {
             var video = ev.detail.component;
@@ -315,7 +320,7 @@ ARjs.MarkerControls.prototype._initArtoolkit = function () {
 
             worker.onmessage = function (ev) {
                 if (ev && ev.data && ev.data.type === 'endLoading') {
-                    var loader = document.querySelector('.arjs-nft-loader');
+                    var loader = document.querySelector('.arjs-loader');
                     if (loader) {
                         loader.remove();
                     }
@@ -356,17 +361,13 @@ ARjs.MarkerControls.prototype._initArtoolkit = function () {
                 process();
             };
 
-        })
+        });
 
 
 
-    }
+    };
 
-    function onMarkerFound(event) {
-        if (event.data.type === artoolkit.PATTERN_MARKER && event.data.marker.cfPatt < _this.parameters.minConfidence) return
-        if (event.data.type === artoolkit.BARCODE_MARKER && event.data.marker.cfMatt < _this.parameters.minConfidence) return
+    function workerRunner() {
+    // continuing 'workerRunner' function at treex-armarkercontrols-nft-end.js file
+    // see the makefile of three.js folder to better understand the division of this function between two files
 
-        var modelViewMatrix = new THREE.Matrix4().fromArray(event.data.matrix)
-        _this.updateWithModelViewMatrix(modelViewMatrix)
-    }
-}

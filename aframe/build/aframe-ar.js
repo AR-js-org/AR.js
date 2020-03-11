@@ -5627,7 +5627,7 @@ AFRAME.registerComponent('gps-camera', {
 
             var loader = document.querySelector('.arjs-loader');
             if (loader) {
-                document.body.removeChild(loader)
+                loader.remove();
             }
             window.dispatchEvent(new CustomEvent('gps-camera-origin-coord-set'));
             console.debug('gps-camera-origin-coord-set');

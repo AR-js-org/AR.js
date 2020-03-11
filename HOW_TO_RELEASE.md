@@ -7,8 +7,8 @@ three.js/src/threex/threex-artoolkitcontext.js
 package.json
 README.md
 
-# Rebuild and minify everything - aka a-frame and three.js
-make minify
+# Build everything - aka a-frame and three.js
+make build
 
 # Commit everything
 git add . && git commit -a -m 'Last commit before release' && git push

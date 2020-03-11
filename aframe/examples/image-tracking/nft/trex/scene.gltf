@@ -3,74 +3,253 @@
     {
       "bufferView": 2,
       "componentType": 5126,
-      "count": 9993,
+      "count": 3428,
       "max": [
-        4.0614166259765625,
-        3.392916202545166,
-        3.817439079284668
+        72.838134765625,
+        143.69198608398438,
+        258.82000732421875
       ],
       "min": [
-        0,
-        0,
-        0
+        -72.838134765625,
+        -395.850830078125,
+        -1.2295242547988892
       ],
       "type": "VEC3"
     },
     {
       "bufferView": 2,
-      "byteOffset": 119916,
+      "byteOffset": 41136,
       "componentType": 5126,
-      "count": 9993,
+      "count": 3428,
       "max": [
-        0.99987310171127319,
-        0.99992263317108154,
-        0.99923336505889893
+        0.99943608045578003,
+        0.99604237079620361,
+        0.99995923042297363
       ],
       "min": [
-        -0.99990212917327881,
-        -0.99961173534393311,
-        -0.99999988079071045
+        -0.99943608045578003,
+        -0.99999535083770752,
+        -0.99951648712158203
       ],
       "type": "VEC3"
     },
     {
       "bufferView": 3,
       "componentType": 5126,
-      "count": 9993,
+      "count": 3428,
       "max": [
-        0.99998617172241211,
-        0.99996435642242432,
-        0.99741274118423462,
+        0.9997742772102356,
+        0.99985200166702271,
+        0.97316241264343262,
         1
       ],
       "min": [
-        -0.99966323375701904,
-        -0.99974679946899414,
-        -0.99952173233032227,
+        -0.99977433681488037,
+        -0.99995803833007812,
+        -0.99999535083770752,
         -1
+      ],
+      "type": "VEC4"
+    },
+    {
+      "bufferView": 3,
+      "byteOffset": 54848,
+      "componentType": 5126,
+      "count": 3428,
+      "max": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "min": [
+        1,
+        1,
+        1,
+        1
       ],
       "type": "VEC4"
     },
     {
       "bufferView": 1,
       "componentType": 5126,
-      "count": 9993,
+      "count": 3428,
       "max": [
-        0.99950999021530151,
-        0.93031001091003418
+        0.98388671875,
+        0.99784630537033081
       ],
       "min": [
-        0.00047999998787418008,
-        0.00047999998787418008
+        0.0035965079441666603,
+        0.00564928213134408
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 27424,
+      "componentType": 5126,
+      "count": 3428,
+      "max": [
+        0.98388671875,
+        0.99784630537033081
+      ],
+      "min": [
+        0.0035965079441666603,
+        0.00564928213134408
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 54848,
+      "componentType": 5126,
+      "count": 3428,
+      "max": [
+        0.98388671875,
+        0.99784630537033081
+      ],
+      "min": [
+        0.0035965079441666603,
+        0.00564928213134408
       ],
       "type": "VEC2"
     },
     {
       "bufferView": 0,
       "componentType": 5125,
-      "count": 56700,
+      "count": 15606,
       "max": [
-        9992
+        3427
+      ],
+      "min": [
+        0
+      ],
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 82272,
+      "componentType": 5126,
+      "count": 3874,
+      "max": [
+        3.8580482006072998,
+        29.504856109619141,
+        26.907831192016602
+      ],
+      "min": [
+        -3.8580431938171387,
+        17.73493766784668,
+        10.970193862915039
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 128760,
+      "componentType": 5126,
+      "count": 3874,
+      "max": [
+        0.99997752904891968,
+        0.99936181306838989,
+        0.99540138244628906
+      ],
+      "min": [
+        -0.99997752904891968,
+        -0.99999278783798218,
+        -0.9998893141746521
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 3,
+      "byteOffset": 109696,
+      "componentType": 5126,
+      "count": 3874,
+      "max": [
+        0.99983894824981689,
+        0.99540144205093384,
+        0.99992924928665161,
+        1
+      ],
+      "min": [
+        -0.99983888864517212,
+        -0.99988925457000732,
+        -0.99999451637268066,
+        -1
+      ],
+      "type": "VEC4"
+    },
+    {
+      "bufferView": 3,
+      "byteOffset": 171680,
+      "componentType": 5126,
+      "count": 3874,
+      "max": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "min": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "type": "VEC4"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 82272,
+      "componentType": 5126,
+      "count": 3874,
+      "max": [
+        0.99175125360488892,
+        0.99390029907226562
+      ],
+      "min": [
+        0.0076292529702186584,
+        0.005859375
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 113264,
+      "componentType": 5126,
+      "count": 3874,
+      "max": [
+        0.99175125360488892,
+        0.99390029907226562
+      ],
+      "min": [
+        0.0076292529702186584,
+        0.005859375
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 144256,
+      "componentType": 5126,
+      "count": 3874,
+      "max": [
+        0.99175125360488892,
+        0.99390029907226562
+      ],
+      "min": [
+        0.0076292529702186584,
+        0.005859375
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 62424,
+      "componentType": 5125,
+      "count": 14484,
+      "max": [
+        3873
       ],
       "min": [
         0
@@ -80,42 +259,42 @@
   ],
   "asset": {
     "extras": {
-      "author": "Nick G. Gizelis (https://sketchfab.com/aumakua)",
+      "author": "Abner Wu (https://sketchfab.com/dashdu)",
       "license": "CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)",
-      "source": "https://sketchfab.com/3d-models/t-rex-photogrammetry-test-62d4edfad75d4ec5848a53fe441a69ef",
-      "title": "T-Rex Photogrammetry test"
+      "source": "https://sketchfab.com/3d-models/tyrannosaurus-rex-8ca1f4a7ff7041b5b4aa663634934f4c",
+      "title": "Tyrannosaurus Rex"
     },
-    "generator": "Sketchfab-6.3.0",
+    "generator": "Sketchfab-5.68.0",
     "version": "2.0"
   },
   "bufferViews": [
     {
       "buffer": 0,
-      "byteLength": 226800,
+      "byteLength": 120360,
       "byteOffset": 0,
       "name": "floatBufferViews",
       "target": 34963
     },
     {
       "buffer": 0,
-      "byteLength": 79944,
-      "byteOffset": 226800,
+      "byteLength": 175248,
+      "byteOffset": 120360,
       "byteStride": 8,
       "name": "floatBufferViews",
       "target": 34962
     },
     {
       "buffer": 0,
-      "byteLength": 239832,
-      "byteOffset": 306744,
+      "byteLength": 175248,
+      "byteOffset": 295608,
       "byteStride": 12,
       "name": "floatBufferViews",
       "target": 34962
     },
     {
       "buffer": 0,
-      "byteLength": 159888,
-      "byteOffset": 546576,
+      "byteLength": 233664,
+      "byteOffset": 470856,
       "byteStride": 16,
       "name": "floatBufferViews",
       "target": 34962
@@ -123,22 +302,22 @@
   ],
   "buffers": [
     {
-      "byteLength": 706464,
+      "byteLength": 704520,
       "uri": "scene.bin"
     }
   ],
-  "extensionsRequired": [
-    "KHR_materials_pbrSpecularGlossiness"
-  ],
-  "extensionsUsed": [
-    "KHR_materials_pbrSpecularGlossiness"
-  ],
   "images": [
     {
-      "uri": "textures/Scene_-_Root_diffuse.jpeg"
+      "uri": "textures/Material_21_baseColor.png"
     },
     {
-      "uri": "textures/Scene_-_Root_normal.png"
+      "uri": "textures/Material_21_normal.png"
+    },
+    {
+      "uri": "textures/Material_22_baseColor.png"
+    },
+    {
+      "uri": "textures/Material_22_normal.png"
     }
   ],
   "materials": [
@@ -149,46 +328,91 @@
         0,
         0
       ],
-      "extensions": {
-        "KHR_materials_pbrSpecularGlossiness": {
-          "diffuseFactor": [
-            1,
-            1,
-            1,
-            1
-          ],
-          "diffuseTexture": {
-            "index": 0,
-            "texCoord": 0
-          },
-          "glossinessFactor": 0.59999999999999998,
-          "specularFactor": [
-            0.02,
-            0.02,
-            0.02
-          ]
-        }
-      },
-      "name": "Scene_-_Root",
+      "name": "Material_21",
       "normalTexture": {
         "index": 1,
         "scale": 1,
         "texCoord": 0
+      },
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "baseColorTexture": {
+          "index": 0,
+          "texCoord": 0
+        },
+        "metallicFactor": 0,
+        "roughnessFactor": 0.50085746949999999
+      }
+    },
+    {
+      "doubleSided": true,
+      "emissiveFactor": [
+        0,
+        0,
+        0
+      ],
+      "name": "Material_22",
+      "normalTexture": {
+        "index": 3,
+        "scale": 1,
+        "texCoord": 0
+      },
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "baseColorTexture": {
+          "index": 2,
+          "texCoord": 0
+        },
+        "metallicFactor": 0,
+        "roughnessFactor": 0.37109375
       }
     }
   ],
   "meshes": [
     {
+      "name": "polySurface55_Material #21_0",
       "primitives": [
         {
           "attributes": {
+            "COLOR_0": 3,
             "NORMAL": 1,
             "POSITION": 0,
             "TANGENT": 2,
-            "TEXCOORD_0": 3
+            "TEXCOORD_0": 4,
+            "TEXCOORD_1": 5,
+            "TEXCOORD_2": 6
           },
-          "indices": 4,
+          "indices": 7,
           "material": 0,
+          "mode": 4
+        }
+      ]
+    },
+    {
+      "name": "polySurface58_Material #22_0",
+      "primitives": [
+        {
+          "attributes": {
+            "COLOR_0": 11,
+            "NORMAL": 9,
+            "POSITION": 8,
+            "TANGENT": 10,
+            "TEXCOORD_0": 12,
+            "TEXCOORD_1": 13,
+            "TEXCOORD_2": 14
+          },
+          "indices": 15,
+          "material": 1,
           "mode": 4
         }
       ]
@@ -223,29 +447,136 @@
         0,
         0,
         0,
-        1,
-        0,
-        0,
-        0,
         0,
         1,
         0,
-        -2.0735669136047363,
-        -1.7820240259170532,
-        -0.034618999809026718,
+        0,
+        -1,
+        0,
+        0,
+        0,
+        0,
+        0,
         1
       ],
-      "name": "T-REX_CAGE_MODEL.OBJ.cleaner.materialmerger.gles"
+      "name": "trex-finish.FBX"
     },
     {
       "children": [
-        4
+        4,
+        9
       ],
-      "name": ""
+      "name": "RootNode"
+    },
+    {
+      "children": [
+        5
+      ],
+      "matrix": [
+        -0.10000000149011498,
+        -1.224647135531628e-17,
+        1.5099580490056353e-08,
+        0,
+        1.5099580490056353e-08,
+        -6.6613382470126127e-17,
+        0.10000000149011498,
+        0,
+        -1.2246460767404281e-17,
+        0.10000000149011612,
+        6.6613382470126127e-17,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "name": "CH_trex"
+    },
+    {
+      "children": [
+        6
+      ],
+      "matrix": [
+        1,
+        0,
+        4.8655591971495782e-33,
+        0,
+        -2.3989058954186466e-64,
+        1,
+        4.9303806576313227e-32,
+        0,
+        -4.8655591971495782e-33,
+        -4.9303806576313227e-32,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "name": "polySurface49"
+    },
+    {
+      "children": [
+        7
+      ],
+      "matrix": [
+        1,
+        2.646977960169688e-23,
+        2.9517462485306193e-32,
+        0,
+        -2.646977960169688e-23,
+        1,
+        0,
+        0,
+        -2.9517462485306193e-32,
+        -7.8132072638741078e-55,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "name": "polySurface52"
+    },
+    {
+      "children": [
+        8
+      ],
+      "matrix": [
+        1,
+        0,
+        2.9517474240249701e-32,
+        0,
+        0,
+        1,
+        0,
+        0,
+        -2.9517474240249701e-32,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "name": "polySurface55"
     },
     {
       "mesh": 0,
-      "name": ""
+      "name": "polySurface55_Material #21_0"
+    },
+    {
+      "children": [
+        10
+      ],
+      "name": "polySurface58"
+    },
+    {
+      "mesh": 1,
+      "name": "polySurface58_Material #22_0"
     }
   ],
   "samplers": [
@@ -273,6 +604,14 @@
     {
       "sampler": 0,
       "source": 1
+    },
+    {
+      "sampler": 0,
+      "source": 2
+    },
+    {
+      "sampler": 0,
+      "source": 3
     }
   ]
 }
