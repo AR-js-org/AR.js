@@ -1,12 +1,11 @@
 <script src="https://cdn.jsdelivr.net/gh/aframevr/aframe@1c2407b26c61958baa93967b5412487cd94b290b/dist/aframe-master.min.js"></script>
-<script src="https://raw.githack.com/donmccurdy/aframe-extras/master/dist/aframe-extras.loaders.min.js"></script>
 
 <script src='../../../../aframe/build/aframe-ar-nft.js'></script>
 
 <body style='margin : 0px; overflow: hidden;'>
     <a-scene
         vr-mode-ui="enabled: false;"
-        renderer='antialias: true; alpha: true; precision: medium;'
+        renderer='logarithmicDepthBuffer: true;'
         embedded arjs='trackingMethod: best; sourceType: webcam; debugUIEnabled: false;'>
 
         <a-nft
@@ -15,8 +14,8 @@
         >
             <a-entity
                 gltf-model="./trex/scene.gltf"
+                scale="5 5 5"
                 position="50 150 0"
-                animation-mixer
                 >
             </a-entity>
         </a-nft>
