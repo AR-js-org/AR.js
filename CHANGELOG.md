@@ -1,3 +1,8 @@
+# 3.0.0-beta-2
+
+- Fixed some path issues to make NFT work with remote sites
+- Updated HOW_TO_RELEASE.md for new structure
+
 # 3.0.0-beta
 
 - Added Image Tracking (NFT) support

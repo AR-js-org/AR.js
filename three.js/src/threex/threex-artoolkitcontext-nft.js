@@ -77,8 +77,9 @@ ARjs.Context = THREEx.ArToolkitContext = function (parameters, sourceParameters)
 
 Object.assign(ARjs.Context.prototype, THREE.EventDispatcher.prototype);
 
-ARjs.Context.baseURL = '../../../';
-ARjs.Context.REVISION = '3.0.0';
+// default to github page
+ARjs.Context.baseURL = 'https://ar-js-org.github.io/AR.js/three.js/'
+ARjs.Context.REVISION = '3.0.0-beta2';
 
 /**
  * Create a default camera for this trackingBackend

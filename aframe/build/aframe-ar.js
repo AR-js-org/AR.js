@@ -2436,7 +2436,7 @@ ARjs.Context = THREEx.ArToolkitContext = function (parameters) {
         matrixCodeType: '3x3',
 
         // url of the camera parameters
-        cameraParametersUrl: ARjs.Context.baseURL + 'parameters/camera_para.dat',
+        cameraParametersUrl: THREEx.ArToolkitContext.baseURL + '../data/data/camera_para.dat',
 
         // tune the maximum rate of pose detection in the source image
         maxDetectionRate: 60,
@@ -2490,10 +2490,9 @@ ARjs.Context = THREEx.ArToolkitContext = function (parameters) {
 
 Object.assign(ARjs.Context.prototype, THREE.EventDispatcher.prototype);
 
-// ARjs.Context.baseURL = '../'
 // default to github page
 ARjs.Context.baseURL = 'https://ar-js-org.github.io/AR.js/three.js/'
-ARjs.Context.REVISION = '3.0.0-beta';
+ARjs.Context.REVISION = '3.0.0-beta2';
 
 /**
  * Create a default camera for this trackingBackend

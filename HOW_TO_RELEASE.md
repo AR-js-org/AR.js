@@ -4,6 +4,7 @@
 # Update following files:
 CHANGELOG.md
 three.js/src/threex/threex-artoolkitcontext.js
+three.js/src/threex/threex-artoolkitcontext-nft.js
 package.json
 README.md
 
@@ -34,8 +35,6 @@ npm publish
 # Come back to dev branch
 git checkout dev
 
-# Update CHANGELOG.md - start new dev version
-atom CHANGELOG.md
 
 # update the a-frame codepen if needed
 open "https://codepen.io/jeromeetienne/pen/mRqqzb?editors=1000#0"
