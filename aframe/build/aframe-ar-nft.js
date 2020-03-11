@@ -652,7 +652,7 @@ ARjs.MarkerControls.prototype._initArtoolkit = function () {
 
             worker.onmessage = function (ev) {
                 if (ev && ev.data && ev.data.type === 'endLoading') {
-                    var loader = document.querySelector('.arjs-nft-loader');
+                    var loader = document.querySelector('.arjs-loader');
                     if (loader) {
                         loader.remove();
                     }
@@ -4263,7 +4263,7 @@ AFRAME.registerComponent('gps-camera', {
 
             var loader = document.querySelector('.arjs-loader');
             if (loader) {
-                document.body.removeChild(loader)
+                loader.remove();
             }
             window.dispatchEvent(new CustomEvent('gps-camera-origin-coord-set'));
             console.debug('gps-camera-origin-coord-set');

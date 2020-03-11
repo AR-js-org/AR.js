@@ -320,7 +320,7 @@ ARjs.MarkerControls.prototype._initArtoolkit = function () {
 
             worker.onmessage = function (ev) {
                 if (ev && ev.data && ev.data.type === 'endLoading') {
-                    var loader = document.querySelector('.arjs-nft-loader');
+                    var loader = document.querySelector('.arjs-loader');
                     if (loader) {
                         loader.remove();
                     }
