@@ -75,7 +75,7 @@ Object.assign(ARjs.Context.prototype, THREE.EventDispatcher.prototype);
 // ARjs.Context.baseURL = '../'
 // default to github page
 ARjs.Context.baseURL = 'https://ar-js-org.github.io/AR.js/three.js/'
-ARjs.Context.REVISION = '3.0.0';
+ARjs.Context.REVISION = '3.0.0-beta';
 
 /**
  * Create a default camera for this trackingBackend

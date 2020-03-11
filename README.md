@@ -6,6 +6,8 @@ Logo by [Simon Poulter](https://twitter.com/viralinfo)
 
 ---
 
+## ⚠️ Readme is heavily in WIP until v3.0.0 is released. Please use old repository until we make the switch.
+
 [![Build Status](https://travis-ci.org/jeromeetienne/AR.js.svg?branch=master)](https://travis-ci.org/jeromeetienne/AR.js)
 <br class="badge-separator" />
 [![Gitter chat](https://badges.gitter.im/AR-js/Lobby.png)](https://gitter.im/AR-js/Lobby)

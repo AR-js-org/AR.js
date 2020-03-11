@@ -1,3 +1,23 @@
+# 3.0.0-beta
+
+- Added Image Tracking (NFT) support
+- New structure: 2 alternative versions (A-Frame/Three.js image tracking+location based, A-Frame/Three.js markers+location based)
+- Added a Web Worker for Image Tracking performances (as Blob object to be used cross-domain)
+- New examples structure, divided by features
+- Added examples for Image Tracking
+- Removed minified versions
+- Removed UglifyJS dependency
+- ES6 support
+- Move to new organization
+- Move to new repository
+- Change package.json info
+- Cleaned code from some examples/experiments
+- Removed obsolete code of Aruco markers and Google Tango
+
+# 2.2.2
+
+- Restored old camera constraints, was giving better performances for some devices but worst for others.
+
 # 2.2.0
 
 - it's now possible to track markers with white background and black shapes, using `labelingMode: white_region;` property on `arjs` component (thanks to @umutto)
