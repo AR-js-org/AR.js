@@ -1,11 +1,10 @@
 # AR.js - Augmented Reality on the Web
 
-<img src="https://github.com/jeromeetienne/AR.js/blob/master/AR.js-1920-1080-HD.png?raw=true" height="200" />
+<img src="https://github.com/jeromeetienne/AR.js/blob/master/logo.png?raw=true" height="200" />
 
 Logo by [Simon Poulter](https://twitter.com/viralinfo)
 
 ---
-
 
 [![Build Status](https://travis-ci.org/jeromeetienne/AR.js.svg?branch=master)](https://travis-ci.org/jeromeetienne/AR.js)
 [![Gitter chat](https://badges.gitter.im/AR-js/Lobby.png)](https://gitter.im/AR-js/Lobby)
@@ -39,6 +38,7 @@ Please import the one you need for your project, not both:
   - three.js version: https://raw.githack.com/AR-js-org/AR.js/master/three.js/build/ar-nft.js
 
 - **AR.js with Marker Tracking + Location Based AR:**
+
   - AFRAME version: https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js
 
   - three.js version: https://raw.githack.com/AR-js-org/AR.js/master/three.js/build/ar.js
@@ -49,58 +49,64 @@ Please import the one you need for your project, not both:
 
 // TODO add gif of trex
 
-Run the following code and scan [this picture](https://raw.githack.com/AR-js-org/AR.js/master/aframe/examples/image-tracking/nft/trex-image.jpg) to see content over it.
+### Instructions:
+Create a simple project with the code below. Run it on your phone.
+Scan [this picture](https://raw.githack.com/AR-js-org/AR.js/master/aframe/examples/image-tracking/nft/trex-image.jpg) to see content through the camera.
 
 ```html
-<script src='https://cdn.jsdelivr.net/gh/aframevr/aframe@1c2407b26c61958baa93967b5412487cd94b290b/dist/aframe-master.min.js'></script>
-
-<script src='https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js'></script>
+<script src="https://cdn.jsdelivr.net/gh/aframevr/aframe@1c2407b26c61958baa93967b5412487cd94b290b/dist/aframe-master.min.js"></script>
+<script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js"></script>
 
 <style>
-    .arjs-loader {
-        height: 100%;
-        width: 100%;
-        position: absolute;
-        top: 0;
-        left: 0;
-        background-color: rgba(0, 0, 0, 0.8);
-        z-index: 9999;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
+  .arjs-loader {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 
-    .arjs-loader div {
-        text-align: center;
-        font-size: 1.25em;
-        color: white;
-    }
+  .arjs-loader div {
+    text-align: center;
+    font-size: 1.25em;
+    color: white;
+  }
 </style>
 
-<body style='margin : 0px; overflow: hidden;'>
+<body style="margin : 0px; overflow: hidden;">
   <!-- minimal loader shown until image descriptors are loaded -->
-    <div class="arjs-loader">
-        <div>Loading, please wait...</div>
-    </div>
-    <a-scene
-      vr-mode-ui="enabled: false;"
-      renderer='logarithmicDepthBuffer: true;'
-      embedded arjs='trackingMethod: best; sourceType: webcam;debugUIEnabled: false;'>
-
-      <!-- we use cors-anywhere proxy to avoid cross-origin problems -->
-      <a-nft
-        type='nft'
-        url='https://cors-anywhere.herokuapp.com/https:/raw.githack.com/AR-js-org/AR.js/master/afram/examples/image-tracking/nft/trex/trex-image/trex' smooth='true' smoothCount='10'
-        smoothTolerance='.01'
-        smoothThreshold='5'>
-          <a-entity
-            gltf-model='https://cors-anywhere.herokuapp.com/https://raw.githack.com/AR-js-org/AR.js/master/aframe/examples/image-tracking/nft/trex/scene.gltf' scale="5 5 5"
-            position="50 150 0"
-          >
-          </a-entity>
-        </a-nft>
-		  <a-entity camera></a-entity>
-    </a-scene>
+  <div class="arjs-loader">
+    <div>Loading, please wait...</div>
+  </div>
+  <a-scene
+    vr-mode-ui="enabled: false;"
+    renderer="logarithmicDepthBuffer: true;"
+    embedded
+    arjs="trackingMethod: best; sourceType: webcam;debugUIEnabled: false;"
+  >
+    <!-- we use cors-anywhere proxy to avoid cross-origin problems -->
+    <a-nft
+      type="nft"
+      url="https://cors-anywhere.herokuapp.com/https:/raw.githack.com/AR-js-org/AR.js/master/afram/examples/image-tracking/nft/trex/trex-image/trex"
+      smooth="true"
+      smoothCount="10"
+      smoothTolerance=".01"
+      smoothThreshold="5"
+    >
+      <a-entity
+        gltf-model="https://cors-anywhere.herokuapp.com/https://raw.githack.com/AR-js-org/AR.js/master/aframe/examples/image-tracking/nft/trex/scene.gltf"
+        scale="5 5 5"
+        position="50 150 0"
+      >
+      </a-entity>
+    </a-nft>
+    <a-entity camera></a-entity>
+  </a-scene>
 </body>
 ```
 
@@ -110,8 +116,10 @@ Run the following code and scan [this picture](https://raw.githack.com/AR-js-org
 
 <img height="569" width="320" src="https://github.com/nicolocarpignoli/GeoAR.js/blob/master/docs/places-name.gif?raw=true">
 
-Try the following snippet, and instead of `add-your-latitude` and `add-your-longitude` add the required values, without the `<>`.
-Activate GPS on your phone and run the example. Look around. You should see the text looking at you, appearing in the requested position, even if you look around and move.
+### Instructions:
+Try the following snippet, and change `add-your-latitude` and `add-your-longitude` with your latitude and longitude, without the `<>`.
+Activate GPS on your phone and run the example.
+Look around. You should see the text looking at you, appearing in the requested position, even if you look around and move.
 
 ```html
 <!DOCTYPE html>
@@ -120,12 +128,10 @@ Activate GPS on your phone and run the example. Look around. You should see the 
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>GeoAR.js demo</title>
-    <script src="https://cdn.jsdelivr.net/gh/aframevr/aframe@1c2407b26c61958baa93967b5412487cd94b290b/dist/aframe-master.min.js"></script>
+    <!-- with location based, aframe v0.9.2 behaves better -->
+    <script src="https://aframe.io/releases/0.9.2/aframe.min.js"></script>
     <script src="https://unpkg.com/aframe-look-at-component@0.8.0/dist/aframe-look-at-component.min.js"></script>
-    <script src="https://rawcdn.githack.com/AR-js-org/AR.js/a5619a021e6ff40427ff8f9c62169e99a390f56b/aframe/build/aframe-ar-nft.min.js"></script>
-    <!-- <script src="https://raw.githack.com/jeromeetienne/AR.js/3.0.0/aframe/build/aframe-ar-nft.min.js"></script> -->
-
-    <!-- <script>ARjs.Context.baseURL = '../../../../../three.js/'</script> -->
+    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js"></script>
   </head>
 
   <body style="margin: 0; overflow: hidden;">
@@ -135,7 +141,7 @@ Activate GPS on your phone and run the example. Look around. You should see the 
       arjs="sourceType: webcam; debugUIEnabled: false;"
     >
       <a-text
-        value="This content will always face the user."
+        value="This content will always face you."
         look-at="[gps-camera]"
         scale="120 120 120"
         gps-entity-place="latitude: <add-your-latitude>; longitude: <add-your-longitude>;"
@@ -146,20 +152,25 @@ Activate GPS on your phone and run the example. Look around. You should see the 
 </html>
 ```
 
-### Marker tracking
+### 🔲 Marker tracking
 
-Scan [this marker](https://rawcdn.githack.com/AR-js-org/AR.js/a5619a021e6ff40427ff8f9c62169e99a390f56b/data/images/hiro.png) to see the content over it.
+### Instructions:
+Create a simple project with the code below. Run it on your phone.
+Scan [this marker](https://rawcdn.githack.com/AR-js-org/AR.js/a5619a021e6ff40427ff8f9c62169e99a390f56b/data/images/hiro.png) to see the content through the camera.
 
 ```html
 <!DOCTYPE html>
 <html>
   <script src="https://aframe.io/releases/1.0.0/aframe.min.js"></script>
-  <!-- <script src="https://raw.githack.com/jeromeetienne/AR.js/3.0.0/aframe/build/aframe-ar.js"></script> -->
-  <script src="https://raw.githack.com/jeromeetienne/AR.js/2.2.2/aframe/build/aframe-ar.min.js"></script>
+  <!-- we imprort arjs builded version without NFT but with marker + location based support -->
+  <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
   <body style="margin : 0px; overflow: hidden;">
     <a-scene embedded arjs>
       <a-marker preset="hiro">
-        <a-entity position="0 0.5 0" gltf-model="https://rawcdn.githack.com/nicolocarpignoli/nicolocarpignoli.github.io/0c3112919b0f27ef508bf1d9e354adf15c0a94d7/roma/models/scene.gltf"></a-entity>
+        <a-entity
+          position="0 0.5 0"
+          gltf-model="https://cors-anywhere.herokuapp.com/https://raw.githack.com/AR-js-org/AR.js/master/aframe/examples/image-tracking/nft/trex/scene.gltf"
+        ></a-entity>
       </a-marker>
       <a-entity camera></a-entity>
     </a-scene>
@@ -167,19 +178,18 @@ Scan [this marker](https://rawcdn.githack.com/AR-js-org/AR.js/a5619a021e6ff40427
 </html>
 ```
 
+# Documentation Index
 
-# Index
-* [Image Tracking documentation](./ImageTracking.md)
-* [Location Based documentation](./aframe/LocationBased.md)
-* [Marker Tracking documentation](./aframe/MarkerTracking.md)
-* [Browser Support](#Browser-Support)
-* [Licenses](#Licenses)
-* [Learn more](#Learn-More)
+- [Image Tracking documentation](./ImageTracking.md)
+- [Location Based documentation](./aframe/LocationBased.md)
+- [Marker Tracking documentation](./aframe/MarkerTracking.md)
+- [Browser Support](#Browser-Support)
+- [Licenses](#Licenses)
+- [Learn more](#Learn-More)
 
 **You can find a lot of help on the old AR.js repositories issues. Please search on open/closed issues, you may find a interesting stuff.**
 
-⚠️ *Please always give a look for new undocumented features on the [Changelog](https://github.com/jeromeetienne/AR.js/blob/master/CHANGELOG.md) until the documentation has been updated.*
-
+⚠️ _Please always give a look for new undocumented features on the [Changelog](https://github.com/jeromeetienne/AR.js/blob/master/CHANGELOG.md) until the documentation has been updated._
 
 # Browser Support
 
@@ -216,10 +226,10 @@ and [AR.js license](https://github.com/jeromeetienne/AR.js/blob/master/LICENSE.t
 
 - [How to Release](https://github.com/jeromeetienne/AR.js/blob/master/HOW_TO_RELEASE.md)
 
-
-
 //////////// TO MOVE ////////////
+
 # What "Marker Based" means
+
 AR.js uses `artoolkit`, and so it is marker based.
 `artoolkit` is a software with years of experience doing augmented reality. It is able to do a lot!
 
@@ -228,8 +238,8 @@ multiple independent markers at the same time, or [multiple markers acting as a 
 
 More details about markers:
 
-* [Artoolkit Open Doc](https://github.com/artoolkit/artoolkit-docs/tree/master/3_Marker_Training)
-* [Detailed Article about markers](https://medium.com/@nicolcarpignoli/ar-js-the-simplest-way-to-get-cross-browser-augmented-reality-on-the-web-10cbc721debc) by [@nicolocarpignoli](https://twitter.com/nicolocarp)
+- [Artoolkit Open Doc](https://github.com/artoolkit/artoolkit-docs/tree/master/3_Marker_Training)
+- [Detailed Article about markers](https://medium.com/@nicolcarpignoli/ar-js-the-simplest-way-to-get-cross-browser-augmented-reality-on-the-web-10cbc721debc) by [@nicolocarpignoli](https://twitter.com/nicolocarp)
 
 # What "Location Based" means
 
@@ -254,13 +264,13 @@ Learn more with [this article](https://medium.com/@nicolcarpignoli/location-base
 
 - [Click Places](https://nicolo-carpignoli.herokuapp.com/examples/basic.html)
 
-    Show place icon for every place. Clicking on the icon will show the place name.
+  Show place icon for every place. Clicking on the icon will show the place name.
 
     <img height="569" width="320" src="https://github.com/nicolocarpignoli/GeoAR.js/blob/master/docs/click-places.gif?raw=true">
 
 - [Places Name](https://nicolo-carpignoli.herokuapp.com/examples/places-name)
 
-    Show icon and place name above. Clicking on places will redirect to a certain URL (now mocked up).
+  Show icon and place name above. Clicking on places will redirect to a certain URL (now mocked up).
 
   <img height="569" width="320" src="https://github.com/nicolocarpignoli/GeoAR.js/blob/master/docs/places-name.gif?raw=true">
 
@@ -269,10 +279,6 @@ Every example uses the `places.js` script to load places. You set your places us
 Otherwise, as default, the script searches for places of interest near the user using Foursquare APIs. Please retrieve valid API credentials [here](https://developer.foursquare.com/) in order to use it. Place credentials (replace both Client Secret and Client Id) on `places.js`.
 
 You can also use GeoAR.js **without** the script, adding `gps-entity-place` entities directly on the `index.html` file.as documentated [here](https://github.com/jeromeetienne/AR.js/blob/master/aframe/README.md).
-
-
-
-
 
 See on [codepen](https://codepen.io/nicolocarpignoli/pen/vMBgob)
 
