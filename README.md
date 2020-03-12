@@ -190,7 +190,7 @@ Scan [this marker](https://rawcdn.githack.com/AR-js-org/AR.js/a5619a021e6ff40427
 
 **You can find a lot of help on the old AR.js repositories issues. Please search on open/closed issues, you may find a interesting stuff.**
 
-⚠️ _Please always give a look for new undocumented features on the [Changelog](https://github.com/jeromeetienne/AR.js/blob/master/CHANGELOG.md) until the documentation has been updated._
+⚠️ _Please always give a look for new undocumented features on the [Changelog](https://github.com/AR-js-org/AR.js/blob/master/CHANGELOG.md) until the documentation has been updated._
 
 # Browser Support
 
@@ -214,18 +214,18 @@ Credits: @HelloDeadline, @sorianog
 It is **all open source**! jsartoolkit5 is under LGPLv3 license and additional permission.
 And All my code in AR.js repository is under MIT license. :)
 
-For legal details, be sure to check [jsartoolkit5 license](https://github.com/artoolkit/jsartoolkit5/blob/master/LICENSE.txt)
-and [AR.js license](https://github.com/jeromeetienne/AR.js/blob/master/LICENSE.txt).
+For legal details, be sure to check [jsartoolkit5 license](https://github.com/artoolkitx/jsartoolkit5/blob/master/LICENSE.txt)
+and [AR.js license](https://github.com/AR-js-org/AR.js/blob/master/LICENSE).
 
 # Learn More
 
-- [AR.js changelog](https://github.com/jeromeetienne/AR.js/blob/master/CHANGELOG.md)
+- [AR.js changelog](https://github.com/AR-js-org/AR.js/blob/master/CHANGELOG.md)
 
 - [Future plans](https://trello.com/b/63F7JlvD/arjs)
 
 - [FAQ](https://jeromeetienne.github.io/AR.js-docs/misc/FAQ.html)
 
-- [How to Release](https://github.com/jeromeetienne/AR.js/blob/master/HOW_TO_RELEASE.md)
+- [How to Release](https://github.com/AR-js-org/AR.js/blob/master/HOW_TO_RELEASE.md)
 
 //////////// TO MOVE ////////////
 
@@ -234,17 +234,17 @@ and [AR.js license](https://github.com/jeromeetienne/AR.js/blob/master/LICENSE.t
 AR.js uses `artoolkit`, and so it is marker based.
 `artoolkit` is a software with years of experience doing augmented reality. It is able to do a lot!
 
-It supports a wide range of markers: multiple types of markers [pattern](https://github.com/artoolkit/artoolkit5/tree/master/doc/patterns)/[barcode](https://github.com/artoolkit/artoolkit-docs/blob/master/3_Marker_Training/marker_barcode.md)
-multiple independent markers at the same time, or [multiple markers acting as a single marker](https://github.com/artoolkit/artoolkit-docs/blob/master/3_Marker_Training/marker_multi.md) up to you to choose.
+It supports a wide range of markers: multiple types of markers [pattern](https://github.com/artoolkitx/artoolkit5/tree/master/doc/patterns)/[barcode](https://github.com/AR-js-org/artoolkit-docs/blob/master/3_Marker_Training/marker_barcode.md)
+multiple independent markers at the same time, or [multiple markers acting as a single marker](https://github.com/AR-js-org/artoolkit-docs/blob/master/3_Marker_Training/marker_multi.md) up to you to choose.
 
 More details about markers:
 
-- [Artoolkit Open Doc](https://github.com/artoolkit/artoolkit-docs/tree/master/3_Marker_Training)
+- [Artoolkit Open Doc](https://github.com/AR-js-org/artoolkit-docs/blob/master/3_Marker_Training)
 - [Detailed Article about markers](https://medium.com/@nicolcarpignoli/ar-js-the-simplest-way-to-get-cross-browser-augmented-reality-on-the-web-10cbc721debc) by [@nicolocarpignoli](https://twitter.com/nicolocarp)
 
 # What "Location Based" means
 
-### Check out the Location Based documentation: [here](https://github.com/jeromeetienne/AR.js/blob/master/aframe/README.md#location-based).
+### Check out the Location Based documentation: [here](https://github.com/AR-js-org/AR.js/blob/master/aframe/LocationBased.md).
 
 AR.js, on its `aframe` implementation, comes with few custom components that make possible to integrate data from GPS sensors.
 
@@ -279,7 +279,7 @@ Every example uses the `places.js` script to load places. You set your places us
 
 Otherwise, as default, the script searches for places of interest near the user using Foursquare APIs. Please retrieve valid API credentials [here](https://developer.foursquare.com/) in order to use it. Place credentials (replace both Client Secret and Client Id) on `places.js`.
 
-You can also use GeoAR.js **without** the script, adding `gps-entity-place` entities directly on the `index.html` file.as documentated [here](https://github.com/jeromeetienne/AR.js/blob/master/aframe/README.md).
+You can also use GeoAR.js **without** the script, adding `gps-entity-place` entities directly on the `index.html` file.as documentated [here](https://github.com/AR-js-org/AR.js/blob/master/aframe/LocationBased.md#gps-entity-place).
 
 See on [codepen](https://codepen.io/nicolocarpignoli/pen/vMBgob)
 
@@ -350,7 +350,7 @@ The service is available [webxr.io/augmented-website](https://webxr.io/augmented
 
 # Tools
 
-- [Pattern Marker Generator](https://jeromeetienne.github.io/AR.js/three.js/examples/marker-training/examples/generator.html):
+- [Pattern Marker Generator](https://ar-js-org.github.io/AR.js/three.js/examples/marker-training/examples/generator.html):
   Generate a pattern marker with your own image.
 - [ARCode Generator](https://jeromeetienne.github.io/AR.js/three.js/examples/arcode.html):
   Generator of AR-Code
