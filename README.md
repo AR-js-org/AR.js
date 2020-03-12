@@ -1,4 +1,4 @@
-# AR.js - Augmented Reality for the Web
+# AR.js - Augmented Reality on the Web
 
 <img src="https://github.com/jeromeetienne/AR.js/blob/master/AR.js-1920-1080-HD.png?raw=true" height="200" />
 
@@ -6,10 +6,8 @@ Logo by [Simon Poulter](https://twitter.com/viralinfo)
 
 ---
 
-## ⚠️ Readme is heavily in WIP until v3.0.0 is released. Please use old repository until we make the switch.
 
 [![Build Status](https://travis-ci.org/jeromeetienne/AR.js.svg?branch=master)](https://travis-ci.org/jeromeetienne/AR.js)
-<br class="badge-separator" />
 [![Gitter chat](https://badges.gitter.im/AR-js/Lobby.png)](https://gitter.im/AR-js/Lobby)
 [![Twitter Follow](https://img.shields.io/twitter/follow/nicolocarp.svg?style=plastic&label=nicolocarpignoli-twitter&style=plastic)](https://twitter.com/nicolocarp)
 [![Twitter Follow](https://img.shields.io/twitter/follow/jerome_etienne.svg?style=plastic&label=jeromeetienne-twitter&style=plastic)](https://twitter.com/jerome_etienne)
@@ -36,56 +34,81 @@ Please import the one you need for your project, not both:
 
 - **AR.js with Image Tracking + Location Based AR:**
 
-  - AFRAME version: https://rawcdn.githack.com/AR-js-org/AR.js/a5619a021e6ff40427ff8f9c62169e99a390f56b/aframe/build/aframe-ar-nft.min.js
-  - three.js version: https://rawcdn.githack.com/AR-js-org/AR.js/a5619a021e6ff40427ff8f9c62169e99a390f56b/three.js/build/ar-nft.min.js
+  - AFRAME version: https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js
+
+  - three.js version: https://raw.githack.com/AR-js-org/AR.js/master/three.js/build/ar-nft.js
 
 - **AR.js with Marker Tracking + Location Based AR:**
-  - AFRAME version: https://rawcdn.githack.com/AR-js-org/AR.js/a5619a021e6ff40427ff8f9c62169e99a390f56b/aframe/build/aframe-ar.min.js
-  - three.js version: https://rawcdn.githack.com/AR-js-org/AR.js/a5619a021e6ff40427ff8f9c62169e99a390f56b/aframe/build/aframe-ar.min.js
+  - AFRAME version: https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js
+
+  - three.js version: https://raw.githack.com/AR-js-org/AR.js/master/three.js/build/ar.js
 
 ## Get started
 
-### 🖼Image Tracking:
+### 🖼 **Image Tracking**
 
-// TODO GIF FOR Image Tracking with 3D model
+// TODO add gif of trex
 
-Run the following code and scan [this picture](https://rawcdn.githack.com/AR-js-org/AR.js/a5619a021e6ff40427ff8f9c62169e99a390f56b/data/images/pinball.jpg) to see content over it.
+Run the following code and scan [this picture](https://raw.githack.com/AR-js-org/AR.js/master/aframe/examples/image-tracking/nft/trex-image.jpg) to see content over it.
 
 ```html
-<script src="https://cdn.jsdelivr.net/gh/aframevr/aframe@1c2407b26c61958baa93967b5412487cd94b290b/dist/aframe-master.min.js"></script>
-<script src="https://raw.githack.com/donmccurdy/aframe-extras/master/dist/aframe-extras.loaders.min.js"></script>
+<script src='https://cdn.jsdelivr.net/gh/aframevr/aframe@1c2407b26c61958baa93967b5412487cd94b290b/dist/aframe-master.min.js'></script>
 
-<script src="https://rawcdn.githack.com/AR-js-org/AR.js/a5619a021e6ff40427ff8f9c62169e99a390f56b/aframe/build/aframe-ar-nft.min.js"></script>
-<!-- <script src="https://raw.githack.com/jeromeetienne/AR.js/3.0.0/aframe/build/aframe-ar-nft.min.js"></script> -->
+<script src='https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js'></script>
 
-<!-- <script>ARjs.Context.baseURL = '../../../../../three.js/'</script> -->
+<style>
+    .arjs-loader {
+        height: 100%;
+        width: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-color: rgba(0, 0, 0, 0.8);
+        z-index: 9999;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 
-<body style="margin : 0px; overflow: hidden;">
-  <a-scene
-    vr-mode-ui="enabled: false;"
-    renderer="antialias: true; alpha: true; precision: mediump;"
-    embedded
-    arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;"
-  >
-    <a-nft
-      type="nft"
-      url="https://rawcdn.githack.com/AR-js-org/AR.js/tree/master/data/dataNFT/pinball"
-      smooth="true"
-      smoothCount="10"
-      smoothTolerance="0.01"
-      smoothThreshold="5"
-    >
-      <a-entity gltf-model="./Flamingo.glb" position="50 150 0" animation-mixer>
-      </a-entity>
-    </a-nft>
-    <a-entity camera></a-entity>
-  </a-scene>
+    .arjs-loader div {
+        text-align: center;
+        font-size: 1.25em;
+        color: white;
+    }
+</style>
+
+<body style='margin : 0px; overflow: hidden;'>
+  <!-- minimal loader shown until image descriptors are loaded -->
+    <div class="arjs-loader">
+        <div>Loading, please wait...</div>
+    </div>
+    <a-scene
+      vr-mode-ui="enabled: false;"
+      renderer='logarithmicDepthBuffer: true;'
+      embedded arjs='trackingMethod: best; sourceType: webcam;debugUIEnabled: false;'>
+
+      <!-- we use cors-anywhere proxy to avoid cross-origin problems -->
+      <a-nft
+        type='nft'
+        url='https://cors-anywhere.herokuapp.com/https:/raw.githack.com/AR-js-org/AR.js/master/afram/examples/image-tracking/nft/trex/trex-image/trex' smooth='true' smoothCount='10'
+        smoothTolerance='.01'
+        smoothThreshold='5'>
+          <a-entity
+            gltf-model='https://cors-anywhere.herokuapp.com/https://raw.githack.com/AR-js-org/AR.js/master/aframe/examples/image-tracking/nft/trex/scene.gltf' scale="5 5 5"
+            position="50 150 0"
+          >
+          </a-entity>
+        </a-nft>
+		  <a-entity camera></a-entity>
+    </a-scene>
 </body>
 ```
 
 ### 🌍Location Based
 
-// TODO GIF location based ar
+<img height="569" width="320" src="https://github.com/nicolocarpignoli/GeoAR.js/blob/master/docs/click-places.gif?raw=true">
+
+<img height="569" width="320" src="https://github.com/nicolocarpignoli/GeoAR.js/blob/master/docs/places-name.gif?raw=true">
 
 Try the following snippet, and instead of `add-your-latitude` and `add-your-longitude` add the required values, without the `<>`.
 Activate GPS on your phone and run the example. Look around. You should see the text looking at you, appearing in the requested position, even if you look around and move.
