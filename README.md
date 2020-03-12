@@ -223,8 +223,6 @@ and [AR.js license](https://github.com/AR-js-org/AR.js/blob/master/LICENSE).
 
 - [Future plans](https://trello.com/b/63F7JlvD/arjs)
 
-- [FAQ](https://jeromeetienne.github.io/AR.js-docs/misc/FAQ.html)
-
 - [How to Release](https://github.com/AR-js-org/AR.js/blob/master/HOW_TO_RELEASE.md)
 
 //////////// TO MOVE ////////////
@@ -352,9 +350,6 @@ The service is available [webxr.io/augmented-website](https://webxr.io/augmented
 
 - [Pattern Marker Generator](https://ar-js-org.github.io/AR.js/three.js/examples/marker-training/examples/generator.html):
   Generate a pattern marker with your own image.
-- [ARCode Generator](https://jeromeetienne.github.io/AR.js/three.js/examples/arcode.html):
-  Generator of AR-Code
-  ([source](https://github.com/jeromeetienne/AR.js/blob/master/three.js/examples/arcode.html))
 
 # Performance
 
