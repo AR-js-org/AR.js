@@ -18,6 +18,7 @@
 - Change package.json info
 - Cleaned code from some examples/experiments
 - Removed obsolete code of Aruco markers and Google Tango
+- Reduced repository size by ~36%
 
 # 2.2.2
 
