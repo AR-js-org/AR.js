@@ -1,6 +1,6 @@
 # AR.js - Augmented Reality on the Web
 
-<img src="https://github.com/jeromeetienne/AR.js/blob/master/logo.png?raw=true" height="200" />
+<img src="./logo.png" height="200" />
 
 Logo by [Simon Poulter](https://twitter.com/viralinfo)
 
@@ -47,11 +47,12 @@ Please import the one you need for your project, not both:
 
 ### 🖼 **Image Tracking**
 
-// TODO add gif of trex
+<img height="569" width="320" src="./data/images/trex.gif">
 
 ### Instructions:
-Create a simple project with the code below. Run it on your phone.
-Scan [this picture](https://raw.githack.com/AR-js-org/AR.js/master/aframe/examples/image-tracking/nft/trex-image.jpg) to see content through the camera.
+* Create a simple project with the code below (or [**try this codepen**](https://codepen.io/nicolocarpignoli/pen/vYOeYKd))
+* Run it on your phone.
+* Scan [this picture](https://raw.githack.com/AR-js-org/AR.js/master/aframe/examples/image-tracking/nft/trex-image.jpg) to see content through the camera.
 
 ```html
 <script src="https://cdn.jsdelivr.net/gh/aframevr/aframe@1c2407b26c61958baa93967b5412487cd94b290b/dist/aframe-master.min.js"></script>
@@ -92,7 +93,7 @@ Scan [this picture](https://raw.githack.com/AR-js-org/AR.js/master/aframe/exampl
     <!-- we use cors-anywhere proxy to avoid cross-origin problems -->
     <a-nft
       type="nft"
-      url="https://cors-anywhere.herokuapp.com/https:/raw.githack.com/AR-js-org/AR.js/master/afram/examples/image-tracking/nft/trex/trex-image/trex"
+      url="https://cors-anywhere.herokuapp.com/https://raw.githack.com/AR-js-org/AR.js/master/aframe/examples/image-tracking/nft/trex/trex-image/trex"
       smooth="true"
       smoothCount="10"
       smoothTolerance=".01"
