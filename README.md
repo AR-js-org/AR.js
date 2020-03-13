@@ -2,8 +2,6 @@
 
 <img src="./logo.png" height="200" />
 
-Logo by [Simon Poulter](https://twitter.com/viralinfo)
-
 ---
 
 [![Build Status](https://travis-ci.org/jeromeetienne/AR.js.svg?branch=master)](https://travis-ci.org/jeromeetienne/AR.js)
