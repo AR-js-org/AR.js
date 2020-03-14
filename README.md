@@ -91,7 +91,7 @@ Please follow this simple steps:
     embedded
     arjs="trackingMethod: best; sourceType: webcam;debugUIEnabled: false;"
   >
-    <!-- we use cors-anywhere proxy to avoid cross-origin problems -->
+    <!-- we use cors proxy to avoid cross-origin problems -->
     <a-nft
       type="nft"
       url="https://arjs-cors-proxy.herokuapp.com/https://raw.githack.com/AR-js-org/AR.js/master/aframe/examples/image-tracking/nft/trex/trex-image/trex"
@@ -184,9 +184,9 @@ Please follow this simple steps:
 
 Learn more on the [AR.js Official Documentation](https://ar-js-org.github.io/AR.js-Docs/).
 
-**You can find a lot of help on the old AR.js repositories issues. Please search on open/closed issues, you may find a interesting stuff.**
-
 ## Troubleshooting, feature requests, community
+
+**You can find a lot of help on the old [AR.js repositories issues](https://github.com/jeromeetienne/AR.js/issues). Please search on open/closed issues, you may find a interesting stuff.**
 
 ### Contributing
 
