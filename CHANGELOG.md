@@ -1,3 +1,9 @@
+# 3.0.0-beta-3
+
+- cleaned location based examples
+- removed `gps-camera-debug` component
+- enhanced Custom Events payloads
+
 # 3.0.0-beta-2
 
 - Fixed some path issues to make NFT work with remote sites

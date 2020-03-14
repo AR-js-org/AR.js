@@ -5,7 +5,7 @@
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <title>GeoAR.js demo</title>
     <script src="https://aframe.io/releases/0.9.2/aframe.min.js"></script>
-    <script src='../../../build/aframe-ar.js'></script>
+    <script src='../../../build/aframe-ar-nft.js'></script>
     <script>ARjs.Context.baseURL = '../../../../../three.js/'</script>
 
 </head>
@@ -16,7 +16,7 @@
 		embedded
 		arjs='sourceType: webcam; debugUIEnabled: false;'>
 
-        <a-box scale="15 15 15" position="0 200 0" gps-entity-place="latitude: 44.493271; longitude: 11.326040;"></a-box>
+        <a-box scale="15 15 15" position="0 200 0" gps-entity-place="latitude: your-latitude>; longitude: your-longitude;"></a-box>
         <a-camera gps-camera rotation-reader>
 		</a-camera>
 	</a-scene>
