@@ -163,6 +163,7 @@ Please follow this simple steps:
 
 ```html
 <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
     <script src="https://aframe.io/releases/1.0.0/aframe.min.js"></script>
     <!-- we import arjs version without NFT but with marker + location based support -->
@@ -171,7 +172,8 @@ Please follow this simple steps:
         <a-scene embedded arjs>
         <a-marker preset="hiro">
             <a-entity
-            position="0 0.5 0"
+            position="0 -1 0"
+            scale="0.05 0.05 0.05"
             gltf-model="https://arjs-cors-proxy.herokuapp.com/https://raw.githack.com/AR-js-org/AR.js/master/aframe/examples/image-tracking/nft/trex/scene.gltf"
             ></a-entity>
         </a-marker>
