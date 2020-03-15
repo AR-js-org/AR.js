@@ -44,6 +44,13 @@ Please import the one you need for your project, not both:
 
   - three.js version: https://raw.githack.com/AR-js-org/AR.js/master/three.js/build/ar.js
 
+
+You can also import a specific version replacing `master` keyword with version tag:
+
+```html
+  <script src="https://raw.githack.com/AR-js-org/AR.js/3.0.0/aframe/build/aframe-ar-nft.js">
+```
+
 ## Get started
 
 ### 🖼 **Image Tracking**
@@ -91,7 +98,7 @@ Please follow this simple steps:
     embedded
     arjs="trackingMethod: best; sourceType: webcam;debugUIEnabled: false;"
   >
-    <!-- we use cors-anywhere proxy to avoid cross-origin problems -->
+    <!-- we use cors proxy to avoid cross-origin problems -->
     <a-nft
       type="nft"
       url="https://arjs-cors-proxy.herokuapp.com/https://raw.githack.com/AR-js-org/AR.js/master/aframe/examples/image-tracking/nft/trex/trex-image/trex"
@@ -159,7 +166,7 @@ Please follow this simple steps:
 - Create a new project with the code below (or [**try this codepen**](https://codepen.io/nicolocarpignoli/pen/vMBgob) and go directly to the last step)
 - Run it on a server
 - Open the website on your phone
-- Scan [this picture](https://raw.githack.com/AR-js-org/AR.js/master/aframe/examples/image-tracking/nft/trex-image.jpg) to see content through the camera.
+- Scan [this picture](https://raw.githubusercontent.com/AR-js-org/AR.js/master/data/images/hiro.png) to see content through the camera.
 
 ```html
 <!DOCTYPE html>
@@ -185,9 +192,9 @@ Please follow this simple steps:
 
 Learn more on the [AR.js Official Documentation](https://ar-js-org.github.io/AR.js-Docs/).
 
-**You can find a lot of help on the old AR.js repositories issues. Please search on open/closed issues, you may find a interesting stuff.**
-
 ## Troubleshooting, feature requests, community
+
+**You can find a lot of help on the old [AR.js repositories issues](https://github.com/jeromeetienne/AR.js/issues). Please search on open/closed issues, you may find a interesting stuff.**
 
 ### Contributing
 

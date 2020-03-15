@@ -44,15 +44,8 @@ AFRAME.registerComponent('gps-entity-place', {
 
         this._positionXDebug = 0;
 
-        window.dispatchEvent(new CustomEvent('gps-entity-place-added'));
+        window.dispatchEvent(new CustomEvent('gps-entity-place-added', { detail: { component: this.el }}));
         console.debug('gps-entity-place-added');
-
-        this.debugUIAddedHandler = function () {
-            this.setDebugData(this.el);
-            window.removeEventListener('debug-ui-added', this.debugUIAddedHandler.bind(this));
-        };
-
-        window.addEventListener('debug-ui-added', this.debugUIAddedHandler.bind(this));
     },
 
     /**
@@ -108,20 +101,6 @@ AFRAME.registerComponent('gps-entity-place', {
 
         // update element's position in 3D world
         this.el.setAttribute('position', position);
-    },
-
-    /**
-     * Set places distances from user on debug UI
-     * @returns {void}
-     */
-    setDebugData: function (element) {
-        var elements = document.querySelectorAll('.debug-distance');
-        elements.forEach(function (el) {
-            var distance = formatDistance(this._positionXDebug);
-            if (element.getAttribute('value') == el.getAttribute('value')) {
-                el.innerHTML = el.getAttribute('value') + ': ' + distance + 'far';
-            }
-        });
     },
 });
 

@@ -88,7 +88,7 @@ function renderPlaces(places) {
         text.setAttribute('scale', '15 15 15');
 
         text.addEventListener('loaded', () => {
-            window.dispatchEvent(new CustomEvent('gps-entity-place-loaded'))
+            window.dispatchEvent(new CustomEvent('gps-entity-place-loaded', { detail: { component: this.el }}))
         });
 
         scene.appendChild(text);
