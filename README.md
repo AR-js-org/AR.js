@@ -159,7 +159,7 @@ Please follow this simple steps:
 - Create a new project with the code below (or [**try this codepen**](https://codepen.io/nicolocarpignoli/pen/vMBgob) and go directly to the last step)
 - Run it on a server
 - Open the website on your phone
-- Scan [this picture](https://raw.githack.com/AR-js-org/AR.js/master/aframe/examples/image-tracking/nft/trex-image.jpg) to see content through the camera.
+- Scan [this picture](https://raw.githubusercontent.com/AR-js-org/AR.js/master/data/images/hiro.png) to see content through the camera.
 
 ```html
 <!DOCTYPE html>
