@@ -1,3 +1,7 @@
+# 3.0.0
+
+- fix minor Readme paths/typos
+
 # 3.0.0-beta-3
 
 - cleaned location based examples

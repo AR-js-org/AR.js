@@ -44,6 +44,13 @@ Please import the one you need for your project, not both:
 
   - three.js version: https://raw.githack.com/AR-js-org/AR.js/master/three.js/build/ar.js
 
+
+You can also import a specific version replacing `master` keyword with version tag:
+
+```html
+  <script src="https://raw.githack.com/AR-js-org/AR.js/3.0.0/aframe/build/aframe-ar-nft.js">
+```
+
 ## Get started
 
 ### 🖼 **Image Tracking**
