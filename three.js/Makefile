@@ -3,8 +3,7 @@ watch: build
 
 build-main:
 	echo	> build/ar.js
-	cat vendor/jsartoolkit5/build/artoolkit.min.js \
-	vendor/jsartoolkit5/js/artoolkit.api.js >> build/ar.js
+	cat vendor/jsartoolkit5/build/artoolkit.min.js >> build/ar.js
 	cat	src/threex/threex-arbasecontrols.js					\
 		src/threex/threex-arclickability.js					\
 		src/threex/threex-armarkercloak.js					\
@@ -21,12 +20,12 @@ build-main:
 
 build-main-nft:
 	echo	> build/ar-nft.js
-	cat vendor/jsartoolkit5/build/artoolkit-nft.min.js	>> build/ar-nft.js
+	cat vendor/jsartoolkit5/build/artoolkit.min.js	>> build/ar-nft.js
 	cat	src/threex/threex-arbasecontrols.js					\
 		src/threex/threex-arclickability.js					\
 		src/threex/threex-armarkercloak.js					\
 		src/threex/threex-armarkercontrols-nft-start.js					\
-		vendor/jsartoolkit5/build/artoolkit-nft.min.js          \
+		vendor/jsartoolkit5/build/artoolkit.min.js          \
 		src/threex/threex-armarkercontrols-nft-end.js					\
 		src/threex/threex-armarkerhelper.js					\
 		src/threex/threex-arsmoothedcontrols.js					\
