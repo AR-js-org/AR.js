@@ -5,7 +5,6 @@
 <script src='vendor/three.js/examples/js/libs/stats.min.js'></script>
 <!-- jsartookit -->
 <script src='../vendor/jsartoolkit5/build/artoolkit.min.js'></script>
-<script src='../vendor/jsartoolkit5/js/artoolkit.api.js'></script>
 <!-- include threex.artoolkit -->
 <script src='../src/threex/threex-artoolkitsource.js'></script>
 <script src='../src/threex/threex-artoolkitcontext.js'></script>
@@ -64,11 +63,11 @@
 
 	var arToolkitSource = new THREEx.ArToolkitSource({
 		// to read from the webcam
-		sourceType : 'webcam',
+		//sourceType : 'webcam',
 
 		// // to read from an image
-		// sourceType : 'image',
-		// sourceUrl : THREEx.ArToolkitContext.baseURL + '../data/images/img.jpg',
+		 sourceType : 'image',
+		 sourceUrl : THREEx.ArToolkitContext.baseURL + '../data/images/img.jpg',
 		// sourceUrl : THREEx.ArToolkitContext.baseURL + '../data/images/armchair.jpg',
 
 		// to read from a video
@@ -179,14 +178,14 @@
 		side: THREE.DoubleSide
 	})
 	var mesh	= new THREE.Mesh( geometry, material );
-	mesh.position.z	= geometry.parameters.height/2
+	mesh.position.y	= geometry.parameters.height/2
 	// markerRoot.add( mesh );
 	arWorldRoot.add(mesh)
 
 	var geometry	= new THREE.TorusKnotGeometry(0.3,0.1,64,16);
 	var material	= new THREE.MeshNormalMaterial();
 	var mesh	= new THREE.Mesh( geometry, material );
-	mesh.position.z	= 0.5
+	mesh.position.y	= 0.5
 	// markerRoot.add( mesh );
 	arWorldRoot.add( mesh );
 
