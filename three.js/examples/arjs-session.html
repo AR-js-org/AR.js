@@ -3,7 +3,7 @@
 <!-- three.js library -->
 <script src='../examples/vendor/three.js/build/three.js'></script>
 <!-- include for artoolkit trackingBackend -->
-<script src='../vendor/jsartoolkit5/build/artoolkit.min.js'></script>
+<script src='../vendor/jsartoolkit5/build/artoolkit-nft.min.js'></script>
 <!-- include ar.js -->
 <script src='../src/threex/threex-artoolkitsource.js'></script>
 <script src='../src/threex/threex-artoolkitcontext.js'></script>
@@ -136,13 +136,13 @@
                     side: THREE.DoubleSide
                 });
                 var mesh = new THREE.Mesh(geometry, material);
-                mesh.position.z = geometry.parameters.height / 2
+                mesh.position.y = geometry.parameters.height / 2
                 arWorldRoot.add(mesh);
 
                 var geometry = new THREE.TorusKnotGeometry(0.3, 0.1, 64, 16);
                 var material = new THREE.MeshNormalMaterial();
                 var mesh = new THREE.Mesh(geometry, material);
-                mesh.position.z = 0.5
+                mesh.position.y = 0.5
                 arWorldRoot.add(mesh);
 
                 onRenderFcts.push(function (delta) {

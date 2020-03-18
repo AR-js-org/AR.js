@@ -4,8 +4,7 @@
 <script src='vendor/three.js/build/three.js'></script>
 <script src="vendor/three.js/examples/js/libs/stats.min.js"></script>
 <!-- jsartookit -->
-<script src="../vendor/jsartoolkit5/build/artoolkit.min.js"></script>
-<script src="../vendor/jsartoolkit5/js/artoolkit.api.js"></script>
+<script src="../vendor/jsartoolkit5/build/artoolkit-nft.min.js"></script>
 <!-- include threex.artoolkit -->
 <script src="../src/threex/threex-artoolkitsource.js"></script>
 <script src="../src/threex/threex-artoolkitcontext.js"></script>
@@ -164,13 +163,13 @@
 		side: THREE.DoubleSide
 	});
 	var mesh	= new THREE.Mesh( geometry, material );
-	mesh.position.z	= geometry.parameters.height/2
+	mesh.position.y	= geometry.parameters.height/2
 	markerRoot.add( mesh );
 
 	var geometry	= new THREE.TorusKnotGeometry(0.3,0.1,64,16);
 	var material	= new THREE.MeshNormalMaterial();
 	var mesh	= new THREE.Mesh( geometry, material );
-	mesh.position.z	= 0.5
+	mesh.position.y	= 0.5
 	markerRoot.add( mesh );
 
 	onRenderFcts.push(function(){
