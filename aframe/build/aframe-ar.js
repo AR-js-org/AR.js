@@ -1045,7 +1045,6 @@ ARjs.Context.prototype.getProjectionMatrix = function (srcElement) {
     console.assert(this.arController, 'arController MUST be initialized to call this function')
     // get projectionMatrixArr from artoolkit
     var projectionMatrixArr = this.arController.getCameraMatrix();
-    console.log(projectionMatrixArr);
     var projectionMatrix = new THREE.Matrix4().fromArray(projectionMatrixArr)
 
     // apply context._axisTransformMatrix - change artoolkit axis to match usual webgl one
