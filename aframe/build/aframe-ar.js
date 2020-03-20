@@ -5347,6 +5347,10 @@ AFRAME.registerComponent('gps-camera', {
         this.loader.classList.add('arjs-loader');
         document.body.appendChild(this.loader);
 
+        this.el.addEventListener('componentchanged', () => {
+            window.dispatchEvent(new CustomEvent('gps-camera-origin-coord-set'));
+        });
+
         window.addEventListener('gps-entity-place-added', function () {
             // if places are added after camera initialization is finished
             if (this.originCoords) {
@@ -5746,9 +5750,9 @@ AFRAME.registerComponent('gps-entity-place', {
         }
 
         if (hideEntity) {
-            this.el.setAttribute('visible', false);
+            this.el.setAttribute('visible', 'false');
         } else {
-            this.el.setAttribute('visible', true);
+            this.el.setAttribute('visible', 'true');
         }
 
         // update element's position in 3D world

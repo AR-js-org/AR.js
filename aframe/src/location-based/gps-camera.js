@@ -40,6 +40,10 @@ AFRAME.registerComponent('gps-camera', {
         this.loader.classList.add('arjs-loader');
         document.body.appendChild(this.loader);
 
+        this.el.addEventListener('componentchanged', () => {
+            window.dispatchEvent(new CustomEvent('gps-camera-origin-coord-set'));
+        });
+
         window.addEventListener('gps-entity-place-added', function () {
             // if places are added after camera initialization is finished
             if (this.originCoords) {

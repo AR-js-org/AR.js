@@ -94,9 +94,9 @@ AFRAME.registerComponent('gps-entity-place', {
         }
 
         if (hideEntity) {
-            this.el.setAttribute('visible', false);
+            this.el.setAttribute('visible', 'false');
         } else {
-            this.el.setAttribute('visible', true);
+            this.el.setAttribute('visible', 'true');
         }
 
         // update element's position in 3D world
