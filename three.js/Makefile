@@ -3,7 +3,8 @@ watch: build
 
 build-main:
 	echo	> build/ar.js
-	cat vendor/jsartoolkit5/build/artoolkit-nft.min.js >> build/ar.js
+	cat vendor/jsartoolkit5/build/artoolkit.min.js \
+	vendor/jsartoolkit5/js/artoolkit.api.js >> build/ar.js
 	cat	src/threex/threex-arbasecontrols.js					\
 		src/threex/threex-arclickability.js					\
 		src/threex/threex-armarkercloak.js					\
