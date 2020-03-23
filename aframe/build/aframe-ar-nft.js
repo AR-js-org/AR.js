@@ -3985,7 +3985,17 @@ AFRAME.registerComponent('gps-camera', {
             default: 0,
         }
     },
-
+    update: function() {
+        if (this.data.simulateLatitude !== 0 && this.data.simulateLongitude !== 0) {
+            localPosition = Object.assign({}, position.coords);
+            localPosition.longitude = this.data.simulateLongitude;
+            localPosition.latitude = this.data.simulateLatitude;
+            localPosition.altitude = this.data.simulateAltitude;
+            this.currentCoords = localPosition;
+            console.log('updating gps-camera')
+            this._setPosition();
+        }
+    },
     init: function () {
         if (!this.el.components['look-controls']) {
             return;
@@ -3994,10 +4004,6 @@ AFRAME.registerComponent('gps-camera', {
         this.loader = document.createElement('DIV');
         this.loader.classList.add('arjs-loader');
         document.body.appendChild(this.loader);
-
-        this.el.addEventListener('componentchanged', () => {
-            window.dispatchEvent(new CustomEvent('gps-camera-origin-coord-set'));
-        });
 
         window.addEventListener('gps-entity-place-added', function () {
             // if places are added after camera initialization is finished
