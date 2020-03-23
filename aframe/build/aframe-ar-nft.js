@@ -4003,7 +4003,6 @@ AFRAME.registerComponent('gps-camera', {
             // if places are added after camera initialization is finished
             if (this.originCoords) {
                 window.dispatchEvent(new CustomEvent('gps-camera-origin-coord-set'));
-                console.debug('gps-camera-origin-coord-set');
             }
             if (this.loader && this.loader.parentElement) {
                 document.body.removeChild(this.loader)
@@ -4161,7 +4160,6 @@ AFRAME.registerComponent('gps-camera', {
                 loader.remove();
             }
             window.dispatchEvent(new CustomEvent('gps-camera-origin-coord-set'));
-            console.debug('gps-camera-origin-coord-set');
         } else {
             this._setPosition();
         }
@@ -4349,7 +4347,6 @@ AFRAME.registerComponent('gps-entity-place', {
         this._positionXDebug = 0;
 
         window.dispatchEvent(new CustomEvent('gps-entity-place-added', { detail: { component: this.el }}));
-        console.debug('gps-entity-place-added');
     },
 
     /**
