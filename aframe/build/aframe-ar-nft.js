@@ -4312,11 +4312,11 @@ AFRAME.registerComponent('gps-entity-place', {
         }
     },
     remove: function() {
-        window.removeEventListener('gps-camera-origin-coord-set', this.coordSetListener.bind(this));
-        window.removeEventListener('gps-camera-update-position', this.updatePositionListener.bind(this));
+        window.removeEventListener('gps-camera-origin-coord-set', this.coordSetListener);
+        window.removeEventListener('gps-camera-update-position', this.updatePositionListener);
     },
     init: function() {
-        this.coordSetListener = () => {
+        this.coordSetListener = () =>  {
             if (!this._cameraGps) {
                 var camera = document.querySelector('[gps-camera]');
                 if (!camera.components['gps-camera']) {
@@ -4329,7 +4329,7 @@ AFRAME.registerComponent('gps-entity-place', {
             this._updatePosition();
         };
 
-        window.addEventListener('gps-camera-origin-coord-set', this.coordSetListener.bind(this));
+        window.addEventListener('gps-camera-origin-coord-set', this.coordSetListener);
 
         this.updatePositionListener = (ev) => {
             if (!this.data || !this._cameraGps) {
@@ -4349,7 +4349,7 @@ AFRAME.registerComponent('gps-entity-place', {
             this.el.dispatchEvent(new CustomEvent('gps-entity-place-update-positon', { detail: { distance: distance } }));
         };
 
-        window.addEventListener('gps-camera-update-position', this.updatePositionListener.bind(this));
+        window.addEventListener('gps-camera-update-position', this.updatePositionListener);
 
         this._positionXDebug = 0;
 
