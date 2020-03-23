@@ -4188,7 +4188,6 @@ AFRAME.registerComponent('gps-camera', {
         // update position
         this.el.setAttribute('position', position);
 
-
         window.dispatchEvent(new CustomEvent('gps-camera-update-position', { detail: { position: this.currentCoords, origin: this.originCoords } }));
     },
     /**
@@ -4312,8 +4311,12 @@ AFRAME.registerComponent('gps-entity-place', {
             default: 0,
         }
     },
-    init: function () {
-        window.addEventListener('gps-camera-origin-coord-set', function () {
+    remove: function() {
+        window.removeEventListener('gps-camera-origin-coord-set', this.coordSetListener.bind(this));
+        window.removeEventListener('gps-camera-update-position', this.updatePositionListener.bind(this));
+    },
+    init: function() {
+        this.coordSetListener = () => {
             if (!this._cameraGps) {
                 var camera = document.querySelector('[gps-camera]');
                 if (!camera.components['gps-camera']) {
@@ -4324,9 +4327,11 @@ AFRAME.registerComponent('gps-entity-place', {
             }
 
             this._updatePosition();
-        }.bind(this));
+        };
 
-        window.addEventListener('gps-camera-update-position', function (ev) {
+        window.addEventListener('gps-camera-origin-coord-set', this.coordSetListener.bind(this));
+
+        this.updatePositionListener = (ev) => {
             if (!this.data || !this._cameraGps) {
                 return;
             }
@@ -4342,18 +4347,20 @@ AFRAME.registerComponent('gps-entity-place', {
             this.el.setAttribute('distance', distance);
             this.el.setAttribute('distanceMsg', formatDistance(distance));
             this.el.dispatchEvent(new CustomEvent('gps-entity-place-update-positon', { detail: { distance: distance } }));
-        }.bind(this));
+        };
+
+        window.addEventListener('gps-camera-update-position', this.updatePositionListener.bind(this));
 
         this._positionXDebug = 0;
 
-        window.dispatchEvent(new CustomEvent('gps-entity-place-added', { detail: { component: this.el }}));
+        window.dispatchEvent(new CustomEvent('gps-entity-place-added', { detail: { component: this.el } }));
     },
 
     /**
      * Update place position
      * @returns {void}
      */
-    _updatePosition: function () {
+    _updatePosition: function() {
         var position = { x: 0, y: this.el.getAttribute('position').y || 0, z: 0 }
         var hideEntity = false;
 
@@ -4365,7 +4372,7 @@ AFRAME.registerComponent('gps-entity-place', {
 
         position.x = this._cameraGps.computeDistanceMeters(this._cameraGps.originCoords, dstCoords, true);
 
-        // place has to be hide
+        // place has to be hidden
         if (position.x === Number.MAX_SAFE_INTEGER) {
             hideEntity = true;
         }
@@ -4382,7 +4389,7 @@ AFRAME.registerComponent('gps-entity-place', {
 
         position.z = this._cameraGps.computeDistanceMeters(this._cameraGps.originCoords, dstCoords, true);
 
-        // place has to be hide
+        // place has to be hidden
         if (position.z === Number.MAX_SAFE_INTEGER) {
             hideEntity = true;
         }

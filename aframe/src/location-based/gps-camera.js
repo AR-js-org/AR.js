@@ -233,7 +233,6 @@ AFRAME.registerComponent('gps-camera', {
         // update position
         this.el.setAttribute('position', position);
 
-
         window.dispatchEvent(new CustomEvent('gps-camera-update-position', { detail: { position: this.currentCoords, origin: this.originCoords } }));
     },
     /**
