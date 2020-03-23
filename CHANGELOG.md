@@ -1,3 +1,8 @@
+# 3.0.1
+
+- fixed `minDistance` property updating on location based
+- enhanced Image tracking examples
+
 # 3.0.0
 
 - fix minor Readme paths/typos
