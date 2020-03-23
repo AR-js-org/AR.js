@@ -45,7 +45,6 @@ AFRAME.registerComponent('gps-entity-place', {
         this._positionXDebug = 0;
 
         window.dispatchEvent(new CustomEvent('gps-entity-place-added', { detail: { component: this.el }}));
-        console.debug('gps-entity-place-added');
     },
 
     /**
