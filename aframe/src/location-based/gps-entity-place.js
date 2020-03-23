@@ -16,15 +16,13 @@ AFRAME.registerComponent('gps-entity-place', {
     },
     init: function() {
         this.coordSetListener = () =>  {
-            if (!this._cameraGps) {
-                var camera = document.querySelector('[gps-camera]');
-                if (!camera.components['gps-camera']) {
-                    console.error('gps-camera not initialized')
-                    return;
-                }
-                this._cameraGps = camera.components['gps-camera'];
+            var camera = document.querySelector('[gps-camera]');
+            if (!camera.components['gps-camera']) {
+                console.error('gps-camera not initialized')
+                return;
             }
 
+            this._cameraGps = camera.components['gps-camera'];
             this._updatePosition();
         };
 
