@@ -37,8 +37,10 @@ AFRAME.registerComponent('gps-camera', {
             localPosition.latitude = this.data.simulateLatitude;
             localPosition.altitude = this.data.simulateAltitude;
             this.currentCoords = localPosition;
-            console.log('updating gps-camera')
-            this._setPosition();
+
+            // re-trigger initialization for new origin
+            this.originCoords = null;
+            this._updatePosition();
         }
     },
     init: function () {

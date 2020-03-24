@@ -3992,8 +3992,10 @@ AFRAME.registerComponent('gps-camera', {
             localPosition.latitude = this.data.simulateLatitude;
             localPosition.altitude = this.data.simulateAltitude;
             this.currentCoords = localPosition;
-            console.log('updating gps-camera')
-            this._setPosition();
+
+            // re-trigger initialization for new origin
+            this.originCoords = null;
+            this._updatePosition();
         }
     },
     init: function () {
@@ -4318,22 +4320,22 @@ AFRAME.registerComponent('gps-entity-place', {
         }
     },
     remove: function() {
+        // cleaning listeners when the entity is removed from the DOM
         window.removeEventListener('gps-camera-origin-coord-set', this.coordSetListener);
         window.removeEventListener('gps-camera-update-position', this.updatePositionListener);
     },
     init: function() {
-        this.coordSetListener = () =>  {
-            var camera = document.querySelector('[gps-camera]');
-            if (!camera.components['gps-camera']) {
-                console.error('gps-camera not initialized')
-                return;
+        this.coordSetListener = () => {
+            if (!this._cameraGps) {
+                var camera = document.querySelector('[gps-camera]');
+                if (!camera.components['gps-camera']) {
+                    console.error('gps-camera not initialized')
+                    return;
+                }
+                this._cameraGps = camera.components['gps-camera'];
             }
-
-            this._cameraGps = camera.components['gps-camera'];
             this._updatePosition();
         };
-
-        window.addEventListener('gps-camera-origin-coord-set', this.coordSetListener);
 
         this.updatePositionListener = (ev) => {
             if (!this.data || !this._cameraGps) {
@@ -4346,20 +4348,39 @@ AFRAME.registerComponent('gps-entity-place', {
             };
 
             // it's actually a 'distance place', but we don't call it with last param, because we want to retrieve distance even if it's < minDistance property
-            var distance = this._cameraGps.computeDistanceMeters(ev.detail.position, dstCoords);
+            var distanceForMsg = this._cameraGps.computeDistanceMeters(ev.detail.position, dstCoords);
 
-            this.el.setAttribute('distance', distance);
-            this.el.setAttribute('distanceMsg', formatDistance(distance));
-            this.el.dispatchEvent(new CustomEvent('gps-entity-place-update-positon', { detail: { distance: distance } }));
+            this.el.setAttribute('distance', distanceForMsg);
+            this.el.setAttribute('distanceMsg', formatDistance(distanceForMsg));
+            this.el.dispatchEvent(new CustomEvent('gps-entity-place-update-positon', { detail: { distance: distanceForMsg } }));
+
+            var actualDistance = this._cameraGps.computeDistanceMeters(ev.detail.position, dstCoords, true);
+
+            if (actualDistance === Number.MAX_SAFE_INTEGER) {
+                this.hideForMinDistance(this.el, true);
+            } else {
+                this.hideForMinDistance(this.el, false);
+            }
         };
 
+        window.addEventListener('gps-camera-origin-coord-set', this.coordSetListener);
         window.addEventListener('gps-camera-update-position', this.updatePositionListener);
 
         this._positionXDebug = 0;
 
         window.dispatchEvent(new CustomEvent('gps-entity-place-added', { detail: { component: this.el } }));
     },
-
+    /**
+     * Hide entity according to minDistance property
+     * @returns {void}
+     */
+    hideForMinDistance: function(el, hideEntity) {
+        if (hideEntity) {
+            el.setAttribute('visible', 'false');
+        } else {
+            el.setAttribute('visible', 'true');
+        }
+    },
     /**
      * Update place position
      * @returns {void}
@@ -4374,12 +4395,7 @@ AFRAME.registerComponent('gps-entity-place', {
             latitude: this._cameraGps.originCoords.latitude,
         };
 
-        position.x = this._cameraGps.computeDistanceMeters(this._cameraGps.originCoords, dstCoords, true);
-
-        // place has to be hidden
-        if (position.x === Number.MAX_SAFE_INTEGER) {
-            hideEntity = true;
-        }
+        position.x = this._cameraGps.computeDistanceMeters(this._cameraGps.originCoords, dstCoords);
 
         this._positionXDebug = position.x;
 
@@ -4391,24 +4407,13 @@ AFRAME.registerComponent('gps-entity-place', {
             latitude: this.data.latitude,
         };
 
-        position.z = this._cameraGps.computeDistanceMeters(this._cameraGps.originCoords, dstCoords, true);
-
-        // place has to be hidden
-        if (position.z === Number.MAX_SAFE_INTEGER) {
-            hideEntity = true;
-        }
+        position.z = this._cameraGps.computeDistanceMeters(this._cameraGps.originCoords, dstCoords);
 
         position.z *= this.data.latitude > this._cameraGps.originCoords.latitude ? -1 : 1;
 
         if (position.y !== 0) {
             var altitude = this._cameraGps.originCoords.altitude !== undefined ? this._cameraGps.originCoords.altitude : 0;
             position.y = position.y - altitude;
-        }
-
-        if (hideEntity) {
-            this.el.setAttribute('visible', 'false');
-        } else {
-            this.el.setAttribute('visible', 'true');
         }
 
         // update element's position in 3D world
