@@ -1,3 +1,7 @@
+# 3.0.2
+
+- update documentation using latest aframe version on every example
+
 # 3.0.1
 
 - fixed `minDistance` property updating on location based
