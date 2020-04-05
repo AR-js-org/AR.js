@@ -47,5 +47,14 @@
   "bugs": {
     "url": "https://github.com/AR-js-org/AR.js/issues"
   },
-  "homepage": "https://github.com/AR-js-org/AR.js/"
+  "homepage": "https://github.com/AR-js-org/AR.js/",
+  "devDependencies": {
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11"
+  },
+  "dependencies": {
+    "aframe": "^1.0.4",
+    "jsartoolkit": "git+https://git@github.com/artoolkitx/jsartoolkit5.git",
+    "three": "^0.115.0"
+  }
 }
