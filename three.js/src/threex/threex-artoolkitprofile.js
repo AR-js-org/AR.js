@@ -1,3 +1,4 @@
+import Profile from './arjs-profile';
 /**
  * ArToolkitProfile helps you build parameters for artoolkit
  * - it is fully independent of the rest of the code
@@ -6,10 +7,6 @@
  * - it is made to help people to build parameters without understanding all the underlying details.
  */
 
-const ArToolkitProfile = function () {
-    this.reset()
-
-    this.performance('default')
-}
+const ArToolkitProfile = Profile;
 
 export default ArToolkitProfile;

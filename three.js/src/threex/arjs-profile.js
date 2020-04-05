@@ -1,5 +1,3 @@
-import ArToolkitProfile from './threex-artoolkitprofile';
-
 /**
  * ArToolkitProfile helps you build parameters for artoolkit
  * - it is fully independent of the rest of the code
@@ -7,7 +5,11 @@ import ArToolkitProfile from './threex-artoolkitprofile';
  * - you can use this class to understand how to tune your specific usecase
  * - it is made to help people to build parameters without understanding all the underlying details.
  */
-const Profile = ArToolkitProfile;
+const Profile = function () {
+    this.reset()
+
+    this.performance('default')
+}
 
 Profile.prototype._guessPerformanceLabel = function () {
     var isMobile = navigator.userAgent.match(/Android/i)
