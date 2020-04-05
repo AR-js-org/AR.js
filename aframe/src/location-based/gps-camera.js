@@ -1,3 +1,6 @@
+import * as AFRAME from 'aframe';
+import * as THREE from 'three';
+
 AFRAME.registerComponent('gps-camera', {
     _watchPositionId: null,
     originCoords: null,
