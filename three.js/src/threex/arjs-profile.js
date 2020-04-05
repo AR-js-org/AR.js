@@ -1,3 +1,5 @@
+import Utils from '../new-api/arjs-utils';
+
 /**
  * ArToolkitProfile helps you build parameters for artoolkit
  * - it is fully independent of the rest of the code
@@ -40,12 +42,12 @@ Profile.prototype.reset = function () {
     }
 
     this.contextParameters = {
-        cameraParametersUrl: ArToolkitContext.baseURL + '../data/data/camera_para.dat',
+        cameraParametersUrl: ArToolkitContext.baseURL + '../data/data/camera_para.dat', // TODO dependent of build?
         detectionMode: 'mono',
     }
     this.defaultMarkerParameters = {
         type: 'pattern',
-        patternUrl: ArToolkitContext.baseURL + '../data/data/patt.hiro',
+        patternUrl: ArToolkitContext.baseURL + '../data/data/patt.hiro', // TODO dependent of build?
         changeMatrixMode: 'modelViewMatrix',
     }
     return this
@@ -100,7 +102,7 @@ Profile.prototype.defaultMarker = function (trackingBackend) {
     if (trackingBackend === 'artoolkit') {
         this.contextParameters.detectionMode = 'mono'
         this.defaultMarkerParameters.type = 'pattern'
-        this.defaultMarkerParameters.patternUrl = ArToolkitContext.baseURL + '../data/data/patt.hiro'
+        this.defaultMarkerParameters.patternUrl = ArToolkitContext.baseURL + '../data/data/patt.hiro' // TODO dependent of build?
     } else console.assert(false)
 
     return this
@@ -147,7 +149,7 @@ Profile.prototype.changeMatrixMode = function (changeMatrixMode) {
 //		trackingBackend
 //////////////////////////////////////////////////////////////////////////////
 Profile.prototype.trackingMethod = function (trackingMethod) {
-    var data = ARjs.Utils.parseTrackingMethod(trackingMethod)
+    var data = Utils.parseTrackingMethod(trackingMethod)
     this.defaultMarkerParameters.markersAreaEnabled = data.markersAreaEnabled
     this.contextParameters.trackingBackend = data.trackingBackend
     return this
