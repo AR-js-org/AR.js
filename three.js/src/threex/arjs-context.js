@@ -178,9 +178,9 @@ Context.prototype._initArtoolkit = function (onCompleted) {
     this._artoolkitProjectionAxisTransformMatrix.multiply(new THREE.Matrix4().makeRotationZ(Math.PI))
 
     // get cameraParameters
-    var cameraParameters = new ARCameraParam(_this.parameters.cameraParametersUrl, function () {
+    var cameraParameters = new ARCameraParam(_this.parameters.cameraParametersUrl, function () { // From artoolkit.api.js
         // init controller
-        var arController = new ARController(_this.parameters.canvasWidth, _this.parameters.canvasHeight, cameraParameters);
+        var arController = new ARController(_this.parameters.canvasWidth, _this.parameters.canvasHeight, cameraParameters); // From artoolkit.api.js
         _this.arController = arController
 
         // honor this.parameters.imageSmoothingEnabled
