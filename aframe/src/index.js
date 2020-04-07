@@ -1,10 +1,10 @@
 // Components
-import './component-anchor.js';
-import './component-hit-testing.js';
+import './component-anchor';
+import './component-hit-testing';
 
 // Location-based components
-import './location-based/gps-camers.js';
-import './location-based/gps-entity-place.js';
+import './location-based/gps-camera';
+import './location-based/gps-entity-place';
 
 // System
-import './system-arjs.js';
+import './system-arjs';
