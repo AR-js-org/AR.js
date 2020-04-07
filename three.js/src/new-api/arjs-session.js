@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import Source from '../threex/arjs-source';
+import Context from '../threex/arjs-context'; // TODO context build-dependent
 
 /**
  *  * define a Session
@@ -63,7 +64,7 @@ const Session = function(parameters){
 
 
 	// log the version
-	console.log('AR.js', ARjs.Context.REVISION, '- trackingBackend:', parameters.contextParameters.trackingBackend) // TODO context dependent of build?
+	console.log('AR.js', Context.REVISION, '- trackingBackend:', parameters.contextParameters.trackingBackend)
 
 	//////////////////////////////////////////////////////////////////////////////
 	//		init arSource
@@ -84,7 +85,7 @@ const Session = function(parameters){
 	//////////////////////////////////////////////////////////////////////////////
 
 	// create atToolkitContext
-	var arContext = _this.arContext = new ARjs.Context(parameters.contextParameters) // TODO context dependent of build?
+	var arContext = _this.arContext = new Context(parameters.contextParameters)
 
 	// initialize it
 	_this.arContext.init()

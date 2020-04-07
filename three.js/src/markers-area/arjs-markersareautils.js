@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import Context from '../threex/arjs-context'; // TODO context build-dependent
 
 const MarkersAreaUtils = {};
 
@@ -49,13 +50,13 @@ MarkersAreaUtils.createDefaultMultiMarkerFile = function(trackingBackend){
 
 	// create absoluteBaseURL
 	var link = document.createElement('a')
-	link.href = ARjs.Context.baseURL // TODO Context depending on build
+	link.href = Context.baseURL
 	var absoluteBaseURL = link.href
 
 	// create the base file
 	var file = {
 		meta : {
-			createdBy : 'AR.js ' + ARjs.Context.REVISION + ' - Default Marker', // TODO Context depending on build
+			createdBy : 'AR.js ' + Context.REVISION + ' - Default Marker',
 			createdAt : new Date().toJSON(),
 		},
 		trackingBackend : trackingBackend,
@@ -90,7 +91,7 @@ MarkersAreaUtils.createDefaultMultiMarkerFile = function(trackingBackend){
 MarkersAreaUtils.createDefaultMarkersControlsParameters = function(trackingBackend){
 	// create absoluteBaseURL
 	var link = document.createElement('a')
-	link.href = ARjs.Context.baseURL // TODO Context depending on build
+	link.href = Context.baseURL
 	var absoluteBaseURL = link.href
 
 
@@ -213,7 +214,7 @@ MarkersAreaUtils.buildMarkersAreaFileFromResolution = function(trackingBackend, 
 	function layout2MarkerParametersArtoolkit(parameters, layout){
 		// create absoluteBaseURL
 		var link = document.createElement('a')
-		link.href = ARjs.Context.baseURL // TODO Context depending on build
+		link.href = Context.baseURL
 		var absoluteBaseURL = link.href
 
 		var layout2PatternUrl = {

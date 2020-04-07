@@ -1,4 +1,5 @@
 import MarkersAreaUtils from '../markers-area/arjs-markersareautils';
+import Context from '../threex/arjs-context'; // TODO context build-dependent
 
 /**
  * Create an debug UI for an ARjs.Anchor
@@ -111,7 +112,7 @@ const AnchorDebugUI = function (arAnchor) {
             if (AnchorDebugUI.MarkersAreaLearnerURL !== null) {
                 var learnerURL = AnchorDebugUI.MarkersAreaLearnerURL
             } else {
-                var learnerURL = ARjs.Context.baseURL + 'examples/multi-markers/examples/learner.html' // TODO context dependent of build?
+                var learnerURL = Context.baseURL + 'examples/multi-markers/examples/learner.html'
             }
             MarkersAreaUtils.navigateToLearnerPage(learnerURL, trackingBackend)
         })
