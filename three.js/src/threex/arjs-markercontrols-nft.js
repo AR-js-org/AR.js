@@ -1,10 +1,11 @@
-var ARjs = ARjs || {}
-var THREEx = THREEx || {}
+import * as THREE from 'three';
+import { artoolkit, ARController, ARCameraParam } from 'jsartoolkit';
+import ArBaseControls from './threex-arbasecontrols';
 
-ARjs.MarkerControls = THREEx.ArMarkerControls = function (context, object3d, parameters) {
+const MarkerControls = function (context, object3d, parameters) {
     var _this = this
 
-    THREEx.ArBaseControls.call(this, object3d)
+    ArBaseControls.call(this, object3d)
 
     this.context = context
     // handle default parameters
@@ -54,14 +55,14 @@ ARjs.MarkerControls = THREEx.ArMarkerControls = function (context, object3d, par
             var newValue = parameters[key]
 
             if (newValue === undefined) {
-                console.warn("THREEx.ArMarkerControls: '" + key + "' parameter is undefined.")
+                console.warn("ArMarkerControls: '" + key + "' parameter is undefined.")
                 continue
             }
 
             var currentValue = _this.parameters[key]
 
             if (currentValue === undefined) {
-                console.warn("THREEx.ArMarkerControls: '" + key + "' is not a property of this material.")
+                console.warn("ArMarkerControls: '" + key + "' is not a property of this material.")
                 continue
             }
 
@@ -85,10 +86,10 @@ ARjs.MarkerControls = THREEx.ArMarkerControls = function (context, object3d, par
     } else console.assert(false)
 }
 
-ARjs.MarkerControls.prototype = Object.create(THREEx.ArBaseControls.prototype);
-ARjs.MarkerControls.prototype.constructor = THREEx.ArMarkerControls;
+MarkerControls.prototype = Object.create(ArBaseControls.prototype);
+MarkerControls.prototype.constructor = MarkerControls;
 
-ARjs.MarkerControls.prototype.dispose = function () {
+MarkerControls.prototype.dispose = function () {
     this.context.removeMarker(this)
 }
 
@@ -100,7 +101,7 @@ ARjs.MarkerControls.prototype.dispose = function () {
  * When you actually got a new modelViewMatrix, you need to perfom a whole bunch
  * of things. it is done here.
  */
-ARjs.MarkerControls.prototype.updateWithModelViewMatrix = function (modelViewMatrix) {
+MarkerControls.prototype.updateWithModelViewMatrix = function (modelViewMatrix) {
     var markerObject3D = this.object3d;
 
     // mark object as visible
@@ -179,7 +180,7 @@ ARjs.MarkerControls.prototype.updateWithModelViewMatrix = function (modelViewMat
 //		utility functions
 //////////////////////////////////////////////////////////////////////////////
 
-ARjs.MarkerControls.prototype.name = function () {
+MarkerControls.prototype.name = function () {
     var name = '';
     name += this.parameters.type;
 
@@ -203,7 +204,7 @@ ARjs.MarkerControls.prototype.name = function () {
 //////////////////////////////////////////////////////////////////////////////
 //		init for Artoolkit
 //////////////////////////////////////////////////////////////////////////////
-ARjs.MarkerControls.prototype._initArtoolkit = function () {
+MarkerControls.prototype._initArtoolkit = function () {
     var _this = this
 
     var artoolkitMarkerId = null
@@ -368,6 +369,102 @@ ARjs.MarkerControls.prototype._initArtoolkit = function () {
     };
 
     function workerRunner() {
-    // continuing 'workerRunner' function at treex-armarkercontrols-nft-end.js file
-    // see the makefile of three.js folder to better understand the division of this function between two files
+        this.onmessage = function (e) {
+            var msg = e.data;
+            switch (msg.type) {
+                case "init": {
+                    load(msg);
+                    return;
+                }
+                case "process": {
+                    next = msg.imagedata;
+                    process();
+                    return;
+                }
+            }
+        };
 
+        var next = null;
+
+        var ar = null;
+        var markerResult = null;
+
+        function load(msg) {
+            var camUrl, nftMarkerUrl;
+            var basePath = self.origin;
+            console.log('base path:', basePath);
+            // test if the msg.param (the incoming url) is an http or https path
+            var regexC = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#()?&//=]*)/igm
+            var reC = regexC.test(msg.param);
+            if (reC == true) {
+                camUrl = msg.param;
+            } else if (reC == false) {
+                camUrl = basePath + '/' + msg.param;
+            }
+            var onLoad = function () {
+                ar = new ARController(msg.pw, msg.ph, param);
+                var cameraMatrix = ar.getCameraMatrix();
+
+                // after the ARController is set up, we load the NFT Marker
+                var regexM = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#()?&//=]*)/igm
+                var reM = regexM.test(msg.marker);
+                if (reM == true) {
+                    nftMarkerUrl = msg.marker;
+                } else if (reM == false) {
+                    nftMarkerUrl = basePath + '/' + msg.marker;
+                }
+                ar.loadNFTMarker(nftMarkerUrl, function (markerId) {
+                    ar.trackNFTMarkerId(markerId);
+                    postMessage({ type: 'endLoading' })
+                }, function (err) {
+                    console.log('Error in loading marker on Worker', err)
+                });
+
+                // ...and we listen for event when marker has been found from camera
+                ar.addEventListener('getNFTMarker', function (ev) {
+                    // let AR.js know that a NFT marker has been found, with its matrix for positioning
+                    markerResult = {
+                        type: 'found',
+                        matrix: JSON.stringify(ev.data.matrix),
+                    };
+                });
+
+                postMessage({ type: "loaded", proj: JSON.stringify(cameraMatrix) });
+            };
+
+            var onError = function (error) {
+                console.error(error);
+            };
+            console.log(msg.param);
+            // we cannot pass the entire ARController, so we re-create one inside the Worker, starting from camera_param
+            var param = new ARCameraParam(camUrl, onLoad, onError);
+        }
+
+        function process() {
+            markerResult = null;
+
+            if (ar && ar.process) {
+                ar.process(next);
+            }
+
+            if (markerResult) {
+                postMessage(markerResult);
+            } else {
+                postMessage({
+                    type: "not found",
+                });
+            }
+            next = null;
+        }
+    }; // workerrunner function up til here
+
+    function onMarkerFound(event) {
+        if (event.data.type === artoolkit.PATTERN_MARKER && event.data.marker.cfPatt < _this.parameters.minConfidence) return
+        if (event.data.type === artoolkit.BARCODE_MARKER && event.data.marker.cfMatt < _this.parameters.minConfidence) return
+
+        var modelViewMatrix = new THREE.Matrix4().fromArray(event.data.matrix)
+        _this.updateWithModelViewMatrix(modelViewMatrix)
+    }
+}
+
+export default MarkerControls;
