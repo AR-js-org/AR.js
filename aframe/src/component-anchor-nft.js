@@ -1,6 +1,6 @@
 import * as AFRAME from 'aframe';
-import { AnchorDebugUI } from '../../three.js/src/new-api/arjs-debugui';
 import Anchor from '../../three.js/src/new-api/arjs-anchor';
+import { AnchorDebugUI } from '../../three.js/src/new-api/arjs-debugui';
 import ArToolkitContext from '../../three.js/src/threex/arjs-toolkitcontext-nft';
 
 // // TODO how to make component registering work @ runtime?
