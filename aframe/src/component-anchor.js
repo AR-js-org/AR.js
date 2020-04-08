@@ -3,8 +3,6 @@ import Anchor from '../../three.js/src/new-api/arjs-anchor';
 import { AnchorDebugUI } from '../../three.js/src/new-api/arjs-debugui';
 import ArToolkitContext from '../../three.js/src/threex/threex-artoolkitcontext';
 
-// // TODO how to make component registering work @ runtime?
-
 // //////////////////////////////////////////////////////////////////////////////
 //		arjs-anchor
 //////////////////////////////////////////////////////////////////////////////

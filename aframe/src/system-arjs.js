@@ -3,8 +3,6 @@ import Profile from '../../three.js/src/threex/arjs-profile';
 import Session from '../../three.js/src/new-api/arjs-session';
 import { SessionDebugUI } from '../../three.js/src/new-api/arjs-debugui';
 
-// // TODO how to make system registering work @ runtime?
-
 AFRAME.registerSystem('arjs', {
     schema: {
         trackingMethod: {
