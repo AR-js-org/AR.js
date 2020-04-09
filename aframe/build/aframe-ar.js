@@ -5739,7 +5739,6 @@ AFRAME.registerComponent('gps-entity-place', {
      */
     _updatePosition: function() {
         var position = { x: 0, y: this.el.getAttribute('position').y || 0, z: 0 }
-        var hideEntity = false;
 
         // update position.x
         var dstCoords = {
@@ -5975,7 +5974,7 @@ AFRAME.registerComponent('gps-projected-camera', {
                 }
 
                 if (err.code === 3) {
-                    console.error('Cannot retrieve GPS position. Signal is absent.');
+                    alert('Cannot retrieve GPS position. Signal is absent.');
                     return;
                 }
             };

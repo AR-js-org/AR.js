@@ -78,7 +78,6 @@ AFRAME.registerComponent('gps-entity-place', {
      */
     _updatePosition: function() {
         var position = { x: 0, y: this.el.getAttribute('position').y || 0, z: 0 }
-        var hideEntity = false;
 
         // update position.x
         var dstCoords = {
