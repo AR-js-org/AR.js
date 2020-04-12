@@ -57,7 +57,7 @@ AFRAME.registerComponent('gps-projected-entity-place', {
                 return;
             }
 
-            var dstCoords = this.getAttribute('position');
+            var dstCoords = this.el.getAttribute('position');
 
             // it's actually a 'distance place', but we don't call it with last param, because we want to retrieve distance even if it's < minDistance property
             // _computeDistanceMeters is now going to use the projected
