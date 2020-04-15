@@ -16,9 +16,9 @@
 <script>THREEx.ArToolkitContext.baseURL = '../'</script>
 
 <body style='margin : 0px; overflow: hidden; font-family: Monospace;'><div style='position: absolute; top: 10px; width:100%; text-align: center;z-index:1';>
-	<a href='https://github.com/jeromeetienne/AR.js/' target='_blank'>AR.js</a> - developement playground
+	<a href='https://github.com/AR-js-org/AR.js/' target='_blank'>AR.js</a> - developement playground
 	<br/>
-	Contact me any time at <a href='https://twitter.com/jerome_etienne' target='_blank'>@jerome_etienne</a>
+	Contact me any time at <a href='https://twitter.com/nicolocarp' target='_blank'>@nicolocarp</a>
 </div><script>
 	//////////////////////////////////////////////////////////////////////////////////
 	//		Init
@@ -67,7 +67,7 @@
 		sourceType : 'webcam',
 
 		// // to read from an image
-		// sourceType : 'image',
+		//  sourceType : 'image',
 		// sourceUrl : THREEx.ArToolkitContext.baseURL + '../data/images/img.jpg',
 		// sourceUrl : THREEx.ArToolkitContext.baseURL + '../data/images/armchair.jpg',
 
@@ -179,14 +179,14 @@
 		side: THREE.DoubleSide
 	})
 	var mesh	= new THREE.Mesh( geometry, material );
-	mesh.position.z	= geometry.parameters.height/2
+	mesh.position.y	= geometry.parameters.height/2
 	// markerRoot.add( mesh );
 	arWorldRoot.add(mesh)
 
 	var geometry	= new THREE.TorusKnotGeometry(0.3,0.1,64,16);
 	var material	= new THREE.MeshNormalMaterial();
 	var mesh	= new THREE.Mesh( geometry, material );
-	mesh.position.z	= 0.5
+	mesh.position.y	= 0.5
 	// markerRoot.add( mesh );
 	arWorldRoot.add( mesh );
 

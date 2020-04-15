@@ -116,6 +116,10 @@ ARjs.MarkerControls.prototype.updateWithModelViewMatrix = function (modelViewMat
         console.assert(false)
     }
 
+    // change axis orientation on marker - artoolkit say Z is normal to the marker - ar.js say Y is normal to the marker
+  	var markerAxisTransformMatrix = new THREE.Matrix4().makeRotationX(Math.PI/2)
+  	modelViewMatrix.multiply(markerAxisTransformMatrix)
+
     var renderReqd = false;
 
     // change markerObject3D.matrix based on parameters.changeMatrixMode
@@ -370,4 +374,3 @@ ARjs.MarkerControls.prototype._initArtoolkit = function () {
     function workerRunner() {
     // continuing 'workerRunner' function at treex-armarkercontrols-nft-end.js file
     // see the makefile of three.js folder to better understand the division of this function between two files
-
