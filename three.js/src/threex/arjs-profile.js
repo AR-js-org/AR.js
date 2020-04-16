@@ -1,4 +1,5 @@
 import Utils from '../new-api/arjs-utils';
+import ArToolkitContext from './threex-artoolkitcontext'; // TODO context build-dependent
 
 /**
  * ArToolkitProfile helps you build parameters for artoolkit
