@@ -1,7 +1,5 @@
 import * as THREE from 'three';
 import ArBaseControls from './threex-arbasecontrols';
-import ArMarkerControls from './threex-armarkercontrols';
-// import ArMarkerControls from './threex-armarkercontrols';
 import jsartoolkit from 'jsartoolkit'; // TODO comment explanation
 const { ARToolkit } = jsartoolkit;
 
@@ -89,7 +87,7 @@ const MarkerControls = function(context, object3d, parameters){
 }
 
 MarkerControls.prototype = Object.create( ArBaseControls.prototype );
-MarkerControls.prototype.constructor = ArMarkerControls;
+MarkerControls.prototype.constructor = MarkerControls;
 
 MarkerControls.prototype.dispose = function(){
 	this.context.removeMarker(this)

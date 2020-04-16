@@ -15,7 +15,7 @@ const ArBaseControls = function(object3d) {
 
 ArBaseControls.id = 0
 
-Object.assign(ArBaseControls.prototype, THREE.EventDispatcher.prototype );
+ArBaseControls.prototype = Object.create(THREE.EventDispatcher.prototype);
 
 //////////////////////////////////////////////////////////////////////////////
 //		Functions

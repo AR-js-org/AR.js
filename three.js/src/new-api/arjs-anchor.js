@@ -26,7 +26,7 @@ const Anchor = function(arSession, markerParameters){
 	// log to debug
 	console.log('ARjs.Anchor -', 'changeMatrixMode:', this.parameters.changeMatrixMode, '/ markersAreaEnabled:', markerParameters.markersAreaEnabled)
 
-	var markerRoot = new THREE.Group
+	var markerRoot = new THREE.Group()
 	scene.add(markerRoot)
 
 	// set controlledObject depending on changeMatrixMode
