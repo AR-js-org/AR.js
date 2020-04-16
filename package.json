@@ -54,7 +54,7 @@
   },
   "dependencies": {
     "aframe": "^1.0.4",
-    "jsartoolkit": "git+https://git@github.com/artoolkitx/jsartoolkit5.git",
+    "artoolkit5-js": "0.0.4",
     "three": "^0.115.0"
   }
 }

@@ -1,6 +1,9 @@
 import * as THREE from 'three';
 import ArBaseControls from './threex-arbasecontrols';
 import ArMarkerControls from './threex-armarkercontrols';
+// import ArMarkerControls from './threex-armarkercontrols';
+import jsartoolkit from 'jsartoolkit'; // TODO comment explanation
+const { ARToolkit } = jsartoolkit;
 
 const MarkerControls = function(context, object3d, parameters){
 	var _this = this
@@ -228,7 +231,7 @@ MarkerControls.prototype._initArtoolkit = function(){
 
 		// start tracking this pattern
 		if( _this.parameters.type === 'pattern' ){
-	                arController.loadMarker(_this.parameters.patternUrl, function(markerId) {
+	                arController.loadMarker(_this.parameters.patternUrl).then(function(markerId) {
 				artoolkitMarkerId = markerId
 	                        arController.trackPatternMarkerId(artoolkitMarkerId, _this.parameters.size);
 	                });
@@ -243,14 +246,14 @@ MarkerControls.prototype._initArtoolkit = function(){
 
 		// listen to the event
 		arController.addEventListener('getMarker', function(event){
-			if( event.data.type === artoolkit.PATTERN_MARKER && _this.parameters.type === 'pattern' ){
+			if( event.data.type === ARToolkit.PATTERN_MARKER && _this.parameters.type === 'pattern' ){
 				if( artoolkitMarkerId === null )	return
 				if( event.data.marker.idPatt === artoolkitMarkerId ) onMarkerFound(event)
-			}else if( event.data.type === artoolkit.BARCODE_MARKER && _this.parameters.type === 'barcode' ){
+			}else if( event.data.type === ARToolkit.BARCODE_MARKER && _this.parameters.type === 'barcode' ){
 				// console.log('BARCODE_MARKER idMatrix', event.data.marker.idMatrix, artoolkitMarkerId )
 				if( artoolkitMarkerId === null )	return
 				if( event.data.marker.idMatrix === artoolkitMarkerId )  onMarkerFound(event)
-			}else if( event.data.type === artoolkit.UNKNOWN_MARKER && _this.parameters.type === 'unknown'){
+			}else if( event.data.type === ARToolkit.UNKNOWN_MARKER && _this.parameters.type === 'unknown'){
 				onMarkerFound(event)
 			}
 		})
@@ -259,8 +262,8 @@ MarkerControls.prototype._initArtoolkit = function(){
 
 	function onMarkerFound(event){
 		// honor his.parameters.minConfidence
-		if( event.data.type === artoolkit.PATTERN_MARKER && event.data.marker.cfPatt < _this.parameters.minConfidence )	return
-		if( event.data.type === artoolkit.BARCODE_MARKER && event.data.marker.cfMatt < _this.parameters.minConfidence )	return
+		if( event.data.type === ARToolkit.PATTERN_MARKER && event.data.marker.cfPatt < _this.parameters.minConfidence )	return
+		if( event.data.type === ARToolkit.BARCODE_MARKER && event.data.marker.cfMatt < _this.parameters.minConfidence )	return
 
 		var modelViewMatrix = new THREE.Matrix4().fromArray(event.data.matrix)
 		_this.updateWithModelViewMatrix(modelViewMatrix)
