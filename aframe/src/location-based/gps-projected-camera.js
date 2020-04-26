@@ -1,9 +1,30 @@
-import * as AFRAME from 'aframe';
-import * as THREE from 'three';
+/** gps-projected-camera
+ *
+ * based on the original gps-camera, modified by nickw 02/04/20
+ *
+ * Rather than keeping track of position by calculating the distance of
+ * entities or the current location to the original location, this version
+ * makes use of the "Google" Spherical Mercactor projection, aka epsg:3857.
+ *
+ * The original position (lat/lon) is projected into Spherical Mercator and
+ * stored.
+ *
+ * Then, when we receive a new position (lat/lon), this new position is
+ * projected into Spherical Mercator and then its world position calculated
+ * by comparing against the original position.
+ *
+ * The same is also the case for 'entity-places'; when these are added, their
+ * Spherical Mercator coords are calculated (see gps-projected-entity-place).
+ *
+ * Spherical Mercator units are close to, but not exactly, metres, and are
+ * heavily distorted near the poles. Nonetheless they are a good approximation
+ * for many areas of the world and appear not to cause unacceptable distortions
+ * when used as the units for AR apps.
+ */
 
-AFRAME.registerComponent('gps-camera', {
+AFRAME.registerComponent('gps-projected-camera', {
     _watchPositionId: null,
-    originCoords: null,
+    originCoordsProjected: null, // original coords now in Spherical Mercator
     currentCoords: null,
     lookControls: null,
     heading: null,
@@ -31,10 +52,6 @@ AFRAME.registerComponent('gps-camera', {
         minDistance: {
             type: 'int',
             default: 0,
-        },
-        maxDistance: {
-            type: 'int',
-            default: 0,
         }
     },
     update: function() {
@@ -46,7 +63,7 @@ AFRAME.registerComponent('gps-camera', {
             this.currentCoords = localPosition;
 
             // re-trigger initialization for new origin
-            this.originCoords = null;
+            this.originCoordsProjected = null;
             this._updatePosition();
         }
     },
@@ -61,7 +78,7 @@ AFRAME.registerComponent('gps-camera', {
 
         window.addEventListener('gps-entity-place-added', function () {
             // if places are added after camera initialization is finished
-            if (this.originCoords) {
+            if (this.originCoordsProjected) {
                 window.dispatchEvent(new CustomEvent('gps-camera-origin-coord-set'));
             }
             if (this.loader && this.loader.parentElement) {
@@ -210,9 +227,11 @@ AFRAME.registerComponent('gps-camera', {
             document.body.removeChild(alertPopup);
         }
 
-        if (!this.originCoords) {
+        if (!this.originCoordsProjected) {
             // first camera initialization
-            this.originCoords = this.currentCoords;
+            // Now store originCoordsProjected as PROJECTED original lat/lon, so that
+            // we can set the world origin to the original position in "metres"
+            this.originCoordsProjected = this._project(this.currentCoords.latitude, this.currentCoords.longitude);
             this._setPosition();
 
             var loader = document.querySelector('.arjs-loader');
@@ -224,67 +243,104 @@ AFRAME.registerComponent('gps-camera', {
             this._setPosition();
         }
     },
+    /**
+     * Set the current position (in world coords, based on Spherical Mercator)
+     *
+     * @returns {void}
+     */
     _setPosition: function () {
         var position = this.el.getAttribute('position');
 
-        // compute position.x
-        var dstCoords = {
-            longitude: this.currentCoords.longitude,
-            latitude: this.originCoords.latitude,
-        };
+        var worldCoords = this.latLonToWorld(this.currentCoords.latitude, this.currentCoords.longitude);
 
-        position.x = this.computeDistanceMeters(this.originCoords, dstCoords);
-        position.x *= this.currentCoords.longitude > this.originCoords.longitude ? 1 : -1;
-
-        // compute position.z
-        var dstCoords = {
-            longitude: this.originCoords.longitude,
-            latitude: this.currentCoords.latitude,
-        }
-
-        position.z = this.computeDistanceMeters(this.originCoords, dstCoords);
-        position.z *= this.currentCoords.latitude > this.originCoords.latitude ? -1 : 1;
+        position.x = worldCoords[0];
+        position.z = worldCoords[1]; 
 
         // update position
         this.el.setAttribute('position', position);
 
-        window.dispatchEvent(new CustomEvent('gps-camera-update-position', { detail: { position: this.currentCoords, origin: this.originCoords } }));
+        // add the sphmerc position to the event (for testing only)
+        window.dispatchEvent(new CustomEvent('gps-camera-update-position', { detail: { position: this.currentCoords, origin: this.originCoordsProjected } }));
     },
     /**
-     * Returns distance in meters between source and destination inputs.
+     * Returns distance in meters between camera and destination input.
      *
-     *  Calculate distance, bearing and more between Latitude/Longitude points
-     *  Details: https://www.movable-type.co.uk/scripts/latlong.html
+     * Assume we are using a metre-based projection. Not all 'metre-based'
+     * projections give exact metres, e.g. Spherical Mercator, but it appears 
+     * close enough to be used for AR at least in middle temperate 
+     * latitudes (40 - 55). It is heavily distorted near the poles, however.
      *
-     * @param {Position} src
      * @param {Position} dest
      * @param {Boolean} isPlace
      *
      * @returns {number} distance | Number.MAX_SAFE_INTEGER
      */
-    computeDistanceMeters: function (src, dest, isPlace) {
-        var dlongitude = THREE.Math.degToRad(dest.longitude - src.longitude);
-        var dlatitude = THREE.Math.degToRad(dest.latitude - src.latitude);
-
-        var a = (Math.sin(dlatitude / 2) * Math.sin(dlatitude / 2)) + Math.cos(THREE.Math.degToRad(src.latitude)) * Math.cos(THREE.Math.degToRad(dest.latitude)) * (Math.sin(dlongitude / 2) * Math.sin(dlongitude / 2));
-        var angle = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-        var distance = angle * 6378160;
+    computeDistanceMeters: function (dest, isPlace) {
+        var src = this.el.getAttribute("position");
+        var dx = dest.x - src.x;
+        var dz = dest.z - src.z;
+        var distance = Math.sqrt(dx * dx + dz * dz);
 
         // if function has been called for a place, and if it's too near and a min distance has been set,
-        // return max distance possible - to be handled by the caller
+        // return max distance possible - to be handled by the  method caller
         if (isPlace && this.data.minDistance && this.data.minDistance > 0 && distance < this.data.minDistance) {
-            return Number.MAX_SAFE_INTEGER;
-        }
-
-        // if function has been called for a place, and if it's too far and a max distance has been set,
-        // return max distance possible - to be handled by the caller
-        if (isPlace && this.data.maxDistance && this.data.maxDistance > 0 && distance > this.data.maxDistance) {
             return Number.MAX_SAFE_INTEGER;
         }
 
         return distance;
     },
+    /**
+     * Converts latitude/longitude to OpenGL world coordinates. 
+     *
+     * First projects lat/lon to absolute Spherical Mercator and then 
+     * calculates the world coordinates by comparing the Spherical Mercator
+     * coordinates with the Spherical Mercator coordinates of the origin point.
+     *
+     * @param {Number} lat 
+     * @param {Number} lon 
+     *
+     * @returns {array} world coordinates 
+     */
+    latLonToWorld: function(lat, lon) {
+        var projected = this._project (lat, lon);
+        // Sign of z needs to be reversed compared to projected coordinates
+        return [ projected[0] - this.originCoordsProjected[0], -(projected[1] - this.originCoordsProjected[1]) ];
+    },
+    /**
+     * Converts latitude/longitude to Spherical Mercator coordinates. 
+     * Algorithm is used in several OpenStreetMap-related applications.
+     *
+     * @param {Number} lat 
+     * @param {Number} lon 
+     *
+     * @returns {array} Spherical Mercator coordinates 
+     */
+    _project: function (lat, lon) {
+        const HALF_EARTH = 20037508.34;
 
+        // Convert the supplied coords to Spherical Mercator (EPSG:3857), also
+        // known as 'Google Projection', using the algorithm used extensively 
+        // in various OpenStreetMap software.
+        var y = Math.log(Math.tan((90 + lat) * Math.PI / 360.0)) / (Math.PI / 180.0);
+        return [ (lon / 180.0) * HALF_EARTH, y * HALF_EARTH / 180.0 ];
+    },
+    /**
+     * Converts Spherical Mercator coordinates to latitude/longitude.
+     * Algorithm is used in several OpenStreetMap-related applications.
+     *
+     * @param {Number} spherical mercator easting 
+     * @param {Number} spherical mercator northing 
+     *
+     * @returns {object} lon/lat
+     */
+    _unproject: function (e, n) {
+        const HALF_EARTH = 20037508.34;
+        var yp = (n / HALF_EARTH) * 180.0;
+        return { 
+            longitude: (e / HALF_EARTH) * 180.0,
+            latitude: 180.0 / Math.PI * (2 * Math.atan(Math.exp(yp * Math.PI / 180.0)) - Math.PI / 2)
+        };
+    },
     /**
      * Compute compass heading.
      *

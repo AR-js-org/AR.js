@@ -1,3 +1,10 @@
+# 3.1.0
+
+- Add video stop on marker being lost (nft-video example)
+- fixed rotation bug on X axis see issue #59, restored shift position on y instead of z
+- removed links to old repository in the examples
+- added `maxDistance` property on location-based
+
 # 3.0.2
 
 - update documentation using latest aframe version on every example

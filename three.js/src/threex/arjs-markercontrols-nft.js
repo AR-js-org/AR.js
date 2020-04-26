@@ -117,6 +117,10 @@ MarkerControls.prototype.updateWithModelViewMatrix = function (modelViewMatrix) 
         console.assert(false)
     }
 
+    // change axis orientation on marker - artoolkit say Z is normal to the marker - ar.js say Y is normal to the marker
+  	var markerAxisTransformMatrix = new THREE.Matrix4().makeRotationX(Math.PI/2)
+  	modelViewMatrix.multiply(markerAxisTransformMatrix)
+
     var renderReqd = false;
 
     // change markerObject3D.matrix based on parameters.changeMatrixMode
