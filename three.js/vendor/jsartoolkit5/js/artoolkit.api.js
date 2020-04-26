@@ -146,7 +146,7 @@
 					this.setMarkerInfoDir(i, markerInfo.dirPatt);
 				}
 
-			} else if (markerInfo.idMatrix > -1) {
+			} else if (markerInfo.idMatrix > -1) { // TODO: why do we end up here for a Kanji marker?
 				visible = this.trackBarcodeMarkerId(markerInfo.idMatrix);
 				markerType = artoolkit.BARCODE_MARKER;
 
