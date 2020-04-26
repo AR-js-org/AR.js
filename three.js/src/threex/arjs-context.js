@@ -258,9 +258,6 @@ Context.prototype.getProjectionMatrix = function (srcElement) {
     var projectionMatrixArr = this.arController.getCameraMatrix();
     var projectionMatrix = new THREE.Matrix4().fromArray(projectionMatrixArr)
 
-    // apply context._axisTransformMatrix - change artoolkit axis to match usual webgl one
-    projectionMatrix.multiply(this._artoolkitProjectionAxisTransformMatrix)
-
     // return the result
     return projectionMatrix
 }
