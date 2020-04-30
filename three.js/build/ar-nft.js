@@ -660,6 +660,8 @@ ARjs.MarkerControls.prototype._initArtoolkit = function () {
                     if (loader) {
                         loader.remove();
                     }
+                    var endLoadingEvent = new Event('arjs-nft-loaded');
+                    window.dispatchEvent(endLoadingEvent);
                 }
 
                 if (ev && ev.data && ev.data.type === 'loaded') {
