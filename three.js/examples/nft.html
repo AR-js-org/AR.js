@@ -114,6 +114,11 @@
             onResize()
         })
 
+        // listener for end loading of NFT marker
+        window.addEventListener('arjs-nft-loaded', function(ev){
+          console.log(ev);
+        })
+
         function onResize(){
             arToolkitSource.onResizeElement()
             arToolkitSource.copyElementSizeTo(renderer.domElement)
