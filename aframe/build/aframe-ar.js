@@ -6253,10 +6253,6 @@ AFRAME.registerComponent('gps-projected-entity-place', {
         latitude: {
             type: 'number',
             default: 0,
-        },
-        elevation: {
-            type: 'number',
-            default: 0
         }
     },
     remove: function() {
@@ -6285,7 +6281,7 @@ AFRAME.registerComponent('gps-projected-entity-place', {
                 return;
             }
 
-            var dstCoords = this.getAttribute('position');
+            var dstCoords = this.el.getAttribute('position');
 
             // it's actually a 'distance place', but we don't call it with last param, because we want to retrieve distance even if it's < minDistance property
             // _computeDistanceMeters is now going to use the projected
@@ -6331,13 +6327,15 @@ AFRAME.registerComponent('gps-projected-entity-place', {
 
     // set position to world coords using the lat/lon 
     _updatePosition: function() {
-        var pos = this._cameraGps.latLonToWorld(this.data.latitude, this.data.longitude);
+        var worldPos = this._cameraGps.latLonToWorld(this.data.latitude, this.data.longitude);
+        var position = this.el.getAttribute('position');
+
         // update element's position in 3D world
         //this.el.setAttribute('position', position);
         this.el.setAttribute('position', {
-            x: pos[0],
-            y: this.data.elevation,
-            z: pos[1]
+            x: worldPos[0],
+            y: position.y, 
+            z: worldPos[1]
         }); 
     },
 });
