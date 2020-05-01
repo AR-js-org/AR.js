@@ -1,6 +1,7 @@
 # 3.1.0
 
-- Add video stop on marker being lost (nft-video example)
+- added new, alternative version for `location-based` using a projected camera based on Spherical Mercator. For this purpose we introduce two new aframe components: `gps-projected-camera` and `gps-projected-entity-place`
+- added video stop on marker being lost (nft-video example)
 - fixed rotation bug on X axis see issue #59, restored shift position on y instead of z
 - removed links to old repository in the examples
 - added `maxDistance` property on location-based
