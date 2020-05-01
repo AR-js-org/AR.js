@@ -4,6 +4,7 @@
 - fixed rotation bug on X axis see issue #59, restored shift position on y instead of z
 - removed links to old repository in the examples
 - added `maxDistance` property on location-based
+- new `arjs-nft-loaded` event listener for **NFT** markers, dispatched when all **NFT** markers are loaded see PR #98 and issue #97
 
 # 3.0.2
 
