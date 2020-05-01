@@ -2076,6 +2076,9 @@ ARjs.MarkerControls.prototype.updateWithModelViewMatrix = function(modelViewMatr
 		modelViewMatrix.copy(tmpMatrix)
 	}else console.assert(false)
 
+	// change axis orientation on marker - artoolkit say Z is normal to the marker - ar.js say Y is normal to the marker
+	var markerAxisTransformMatrix = new THREE.Matrix4().makeRotationX(Math.PI/2)
+	modelViewMatrix.multiply(markerAxisTransformMatrix)
 
 	var renderReqd = false;
 
@@ -5335,6 +5338,10 @@ AFRAME.registerComponent('gps-camera', {
         minDistance: {
             type: 'int',
             default: 0,
+        },
+        maxDistance: {
+            type: 'int',
+            default: 0,
         }
     },
     update: function() {
@@ -5571,8 +5578,14 @@ AFRAME.registerComponent('gps-camera', {
         var distance = angle * 6378160;
 
         // if function has been called for a place, and if it's too near and a min distance has been set,
-        // return max distance possible - to be handled by the  method caller
+        // return max distance possible - to be handled by the caller
         if (isPlace && this.data.minDistance && this.data.minDistance > 0 && distance < this.data.minDistance) {
+            return Number.MAX_SAFE_INTEGER;
+        }
+
+        // if function has been called for a place, and if it's too far and a max distance has been set,
+        // return max distance possible - to be handled by the caller
+        if (isPlace && this.data.maxDistance && this.data.maxDistance > 0 && distance > this.data.maxDistance) {
             return Number.MAX_SAFE_INTEGER;
         }
 

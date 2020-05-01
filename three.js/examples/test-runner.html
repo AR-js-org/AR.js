@@ -28,9 +28,9 @@
 
 <body style='margin : 0px; overflow: hidden; font-family: Monospace;'>
     <div style='position: absolute; top: 10px; width:100%; text-align: center; z-index: 1;'>
-        <a href='https://github.com/jeromeetienne/AR.js/' target='_blank'>AR.js</a> - Session API demo with multi
+        <a href='https://github.com/AR-js-org/AR.js/' target='_blank'>AR.js</a> - Session API demo with multi
         tracking and hit testing
-        - by <a href='https://twitter.com/jerome_etienne' target='_blank'>@jerome_etienne</a>
+        - by <a href='https://twitter.com/nicolocarp' target='_blank'>@nicolocarp</a>
         <br />
         <a href='../../three.js/examples/multi-markers/markers-page/' target='_blank'>Markers page</a>
         <br />
@@ -147,7 +147,7 @@
             side: THREE.DoubleSide
         });
         var mesh = new THREE.Mesh(geometry, material);
-        mesh.position.z = geometry.parameters.height / 2
+        mesh.position.y = geometry.parameters.height / 2
         arWorldRoot.add(mesh);
 
         // var geometry	= new THREE.TorusKnotGeometry(0.3,0.1,64,16);
