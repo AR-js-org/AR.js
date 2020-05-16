@@ -323,6 +323,12 @@ ARjs.MarkerControls.prototype._initArtoolkit = function () {
             });
 
             worker.onmessage = function (ev) {
+                if (ev && ev.data && ev.data.type === 'nftData') {
+                   var nft = JSON.parse(ev.data.nft);
+                   var nftEvent = new CustomEvent('arjs-nft-init-data', { detail: { dpi: nft.dpi, width: nft.width, height: nft.height } });
+                   window.dispatchEvent(nftEvent);
+                }
+
                 if (ev && ev.data && ev.data.type === 'endLoading') {
                     var loader = document.querySelector('.arjs-loader');
                     if (loader) {
@@ -368,8 +374,6 @@ ARjs.MarkerControls.prototype._initArtoolkit = function () {
             };
 
         });
-
-
 
     };
 
