@@ -1,6 +1,8 @@
 import * as THREE from 'three';
-import ArMarkerControls from './threex-armarkercontrols';
-import { artoolkit, ARController, ARCameraParam } from 'jsartoolkit';
+import ArMarkerControls from './threex-armarkercontrols-nft';
+import jsartoolkit from 'jsartoolkit'; // TODO comment explanation
+const { ARToolkit, ARController } = jsartoolkit;
+const artoolkit = new ARToolkit();
 
 const Context = function (parameters, sourceParameters) {
     var _this = this
@@ -189,11 +191,10 @@ Context.prototype._initArtoolkit = function (onCompleted) {
         console.error(err);
     };
 
-    // get cameraParameters
-    var cameraParameters = new ARCameraParam(_this.parameters.cameraParametersUrl,
-        function () {
-            // init controller
-            var arController = new ARController(_this.parameters.canvasWidth, _this.parameters.canvasHeight, cameraParameters);
+    // init ARToolkit
+    artoolkit.init().then(_ => {
+        // init controller
+        ARController.initWithDimensions(_this.parameters.canvasWidth, _this.parameters.canvasHeight, _this.parameters.cameraParametersUrl).then((arController) => {
             _this.arController = arController
 
             // honor this.parameters.imageSmoothingEnabled
@@ -214,10 +215,10 @@ Context.prototype._initArtoolkit = function (onCompleted) {
 
             // setPatternDetectionMode
             var detectionModes = {
-                'color': artoolkit.CONSTANTS.AR_TEMPLATE_MATCHING_COLOR,
-                'color_and_matrix': artoolkit.CONSTANTS.AR_TEMPLATE_MATCHING_COLOR_AND_MATRIX,
-                'mono': artoolkit.CONSTANTS.AR_TEMPLATE_MATCHING_MONO,
-                'mono_and_matrix': artoolkit.CONSTANTS.AR_TEMPLATE_MATCHING_MONO_AND_MATRIX,
+                'color': artoolkit.AR_TEMPLATE_MATCHING_COLOR,
+                'color_and_matrix': artoolkit.AR_TEMPLATE_MATCHING_COLOR_AND_MATRIX,
+                'mono': artoolkit.AR_TEMPLATE_MATCHING_MONO,
+                'mono_and_matrix': artoolkit.AR_TEMPLATE_MATCHING_MONO_AND_MATRIX,
             }
             var detectionMode = detectionModes[_this.parameters.detectionMode]
             console.assert(detectionMode !== undefined)
@@ -225,12 +226,12 @@ Context.prototype._initArtoolkit = function (onCompleted) {
 
             // setMatrixCodeType
             var matrixCodeTypes = {
-                '3x3': artoolkit.CONSTANTS.AR_MATRIX_CODE_3x3,
-                '3x3_HAMMING63': artoolkit.CONSTANTS.AR_MATRIX_CODE_3x3_HAMMING63,
-                '3x3_PARITY65': artoolkit.CONSTANTS.AR_MATRIX_CODE_3x3_PARITY65,
-                '4x4': artoolkit.CONSTANTS.AR_MATRIX_CODE_4x4,
-                '4x4_BCH_13_9_3': artoolkit.CONSTANTS.AR_MATRIX_CODE_4x4_BCH_13_9_3,
-                '4x4_BCH_13_5_5': artoolkit.CONSTANTS.AR_MATRIX_CODE_4x4_BCH_13_5_5,
+                '3x3': artoolkit.AR_MATRIX_CODE_3x3,
+                '3x3_HAMMING63': artoolkit.AR_MATRIX_CODE_3x3_HAMMING63,
+                '3x3_PARITY65': artoolkit.AR_MATRIX_CODE_3x3_PARITY65,
+                '4x4': artoolkit.AR_MATRIX_CODE_4x4,
+                '4x4_BCH_13_9_3': artoolkit.AR_MATRIX_CODE_4x4_BCH_13_9_3,
+                '4x4_BCH_13_5_5': artoolkit.AR_MATRIX_CODE_4x4_BCH_13_5_5,
             }
             var matrixCodeType = matrixCodeTypes[_this.parameters.matrixCodeType]
             console.assert(matrixCodeType !== undefined)
@@ -241,8 +242,8 @@ Context.prototype._initArtoolkit = function (onCompleted) {
 
             // set the labelingMode for artoolkit
             var labelingModeTypes = {
-                "black_region": artoolkit.CONSTANTS.AR_LABELING_BLACK_REGION,
-                "white_region": artoolkit.CONSTANTS.AR_LABELING_WHITE_REGION
+                "black_region": artoolkit.AR_LABELING_BLACK_REGION,
+                "white_region": artoolkit.AR_LABELING_WHITE_REGION
             }
             var labelingModeType = labelingModeTypes[_this.parameters.labelingMode];
             console.assert(labelingModeType !== undefined);
@@ -250,16 +251,15 @@ Context.prototype._initArtoolkit = function (onCompleted) {
 
             // set thresholding in artoolkit
             // this seems to be the default
-            // arController.setThresholdMode(artoolkit.CONSTANTS.AR_LABELING_THRESH_MODE_MANUAL)
+            // arController.setThresholdMode(artoolkit.AR_LABELING_THRESH_MODE_MANUAL)
             // adatative consume a LOT of cpu...
-            // arController.setThresholdMode(artoolkit.CONSTANTS.AR_LABELING_THRESH_MODE_AUTO_ADAPTIVE)
-            // arController.setThresholdMode(artoolkit.CONSTANTS.AR_LABELING_THRESH_MODE_AUTO_OTSU)
+            // arController.setThresholdMode(artoolkit.AR_LABELING_THRESH_MODE_AUTO_ADAPTIVE)
+            // arController.setThresholdMode(artoolkit.AR_LABELING_THRESH_MODE_AUTO_OTSU)
 
             // notify
             onCompleted()
-        },
-        onError
-    );
+        });
+    });
     return this
 }
 

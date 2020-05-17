@@ -1,6 +1,8 @@
 import * as THREE from 'three';
-import { artoolkit, ARController, ARCameraParam } from 'jsartoolkit';
 import ArBaseControls from './threex-arbasecontrols';
+import jsartoolkit from 'jsartoolkit'; // TODO comment explanation
+const { ARToolkit, ARController } = jsartoolkit;
+const artoolkit = new ARToolkit();
 
 const MarkerControls = function (context, object3d, parameters) {
     var _this = this
@@ -233,7 +235,7 @@ MarkerControls.prototype._initArtoolkit = function () {
 
         // start tracking this pattern
         if (_this.parameters.type === 'pattern') {
-            arController.loadMarker(_this.parameters.patternUrl, function (markerId) {
+            arController.loadMarker(_this.parameters.patternUrl).then(function (markerId) {
                 artoolkitMarkerId = markerId
                 arController.trackPatternMarkerId(artoolkitMarkerId, _this.parameters.size);
             });
@@ -406,42 +408,46 @@ MarkerControls.prototype._initArtoolkit = function () {
                 camUrl = basePath + '/' + msg.param;
             }
             var onLoad = function () {
-                ar = new ARController(msg.pw, msg.ph, param);
-                var cameraMatrix = ar.getCameraMatrix();
+                ARController.initWithDimensions(msg.pw, msg.ph, param.camUrl).then((ar) => {
+                    debugger;
+                    param.onLoad();
+                    var cameraMatrix = ar.getCameraMatrix();
 
-                // after the ARController is set up, we load the NFT Marker
-                var regexM = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#()?&//=]*)/igm
-                var reM = regexM.test(msg.marker);
-                if (reM == true) {
-                    nftMarkerUrl = msg.marker;
-                } else if (reM == false) {
-                    nftMarkerUrl = basePath + '/' + msg.marker;
-                }
-                ar.loadNFTMarker(nftMarkerUrl, function (markerId) {
-                    ar.trackNFTMarkerId(markerId);
-                    postMessage({ type: 'endLoading' })
-                }, function (err) {
-                    console.log('Error in loading marker on Worker', err)
+                    // after the ARController is set up, we load the NFT Marker
+                    var regexM = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#()?&//=]*)/igm
+                    var reM = regexM.test(msg.marker);
+                    if (reM == true) {
+                        nftMarkerUrl = msg.marker;
+                    } else if (reM == false) {
+                        nftMarkerUrl = basePath + '/' + msg.marker;
+                    }
+                    ar.loadNFTMarker(nftMarkerUrl, function (markerId) {
+                        ar.trackNFTMarkerId(markerId);
+                        postMessage({ type: 'endLoading' })
+                    }, function (err) {
+                        console.log('Error in loading marker on Worker', err)
+                    });
+
+                    // ...and we listen for event when marker has been found from camera
+                    ar.addEventListener('getNFTMarker', function (ev) {
+                        // let AR.js know that a NFT marker has been found, with its matrix for positioning
+                        markerResult = {
+                            type: 'found',
+                            matrix: JSON.stringify(ev.data.matrix),
+                        };
+                    });
+
+                    postMessage({ type: "loaded", proj: JSON.stringify(cameraMatrix) });
                 });
-
-                // ...and we listen for event when marker has been found from camera
-                ar.addEventListener('getNFTMarker', function (ev) {
-                    // let AR.js know that a NFT marker has been found, with its matrix for positioning
-                    markerResult = {
-                        type: 'found',
-                        matrix: JSON.stringify(ev.data.matrix),
-                    };
-                });
-
-                postMessage({ type: "loaded", proj: JSON.stringify(cameraMatrix) });
             };
 
             var onError = function (error) {
                 console.error(error);
             };
             console.log(msg.param);
-            // we cannot pass the entire ARController, so we re-create one inside the Worker, starting from camera_param
-            var param = new ARCameraParam(camUrl, onLoad, onError);
+            var param = { camUrl, onLoad, onError };
+            // we cannot pass the entire ARController, so we pass the cam url
+            // var param = camUrl;
         }
 
         function process() {
