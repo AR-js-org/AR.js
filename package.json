@@ -51,7 +51,8 @@
   "homepage": "https://github.com/AR-js-org/AR.js/",
   "devDependencies": {
     "webpack": "^4.42.1",
-    "webpack-cli": "^3.3.11"
+    "webpack-cli": "^3.3.11",
+    "worker-loader": "^2.0.0"
   },
   "dependencies": {
     "aframe": "^1.0.4",

@@ -20,6 +20,14 @@ module.exports = (env, argv) => {
       root: 'THREE' // indicates global variable
     }
   };
+  const module = {
+    rules: [
+      {
+        test: /\.worker\.js$/,
+        use: { loader: 'worker-loader' }
+      }
+    ]
+  };
 
   return [{
     name: 'default',
@@ -38,6 +46,7 @@ module.exports = (env, argv) => {
         threexArmarkercontrols$: path.resolve(__dirname, 'three.js/src/threex/threex-armarkercontrols.js')
       }
     },
+    module,
     externals
   },
   {
@@ -57,6 +66,7 @@ module.exports = (env, argv) => {
         threexArmarkercontrols$: path.resolve(__dirname, 'three.js/src/threex/threex-armarkercontrols-nft.js')
       }
     },
+    module,
     externals
   }];
 };
