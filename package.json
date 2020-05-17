@@ -5,8 +5,8 @@
   "main": "./aframe/build/aframe-ar.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "./node_modules/.bin/webpack --env.production",
-    "build:dev": "./node_modules/.bin/webpack  --env.development"
+    "build": "./node_modules/.bin/webpack",
+    "build:dev": "./node_modules/.bin/webpack --mode=development"
   },
   "files": [
     "three.js/build",
