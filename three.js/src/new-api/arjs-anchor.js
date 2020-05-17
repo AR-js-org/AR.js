@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import ArMarkerControls from '../threex/threex-armarkercontrols';
+import ArMarkerControls from 'threexArmarkercontrols';
 import ArMarkerHelper from '../threex/threex-armarkerhelper';
 import ArSmoothedControls from '../threex/threex-arsmoothedcontrols';
 import MarkersAreaControls from '../markers-area/arjs-markersareacontrols';

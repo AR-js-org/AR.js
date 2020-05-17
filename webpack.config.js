@@ -35,6 +35,7 @@ module.exports = (env, argv) => {
     resolve: {
       alias: {
         jsartoolkit: 'artoolkit5-js',
+        threexArmarkercontrols$: path.resolve(__dirname, 'three.js/src/threex/threex-armarkercontrols.js')
       }
     },
     externals
@@ -53,6 +54,7 @@ module.exports = (env, argv) => {
     resolve: {
       alias: {
         jsartoolkit: 'artoolkit5-js',
+        threexArmarkercontrols$: path.resolve(__dirname, 'three.js/src/threex/threex-armarkercontrols-nft.js')
       }
     },
     externals
