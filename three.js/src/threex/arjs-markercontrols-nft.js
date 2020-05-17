@@ -293,12 +293,12 @@ MarkerControls.prototype._initArtoolkit = function () {
 
             var pscale = 320 / Math.max(vw, vh / 3 * 4);
 
-            w = vw * pscale;
-            h = vh * pscale;
-            pw = Math.max(w, h / 3 * 4);
-            ph = Math.max(h, w / 4 * 3);
-            ox = (pw - w) / 2;
-            oy = (ph - h) / 2;
+            const w = vw * pscale;
+            const h = vh * pscale;
+            const pw = Math.max(w, h / 3 * 4);
+            const ph = Math.max(h, w / 4 * 3);
+            const ox = (pw - w) / 2;
+            const oy = (ph - h) / 2;
 
             arController.canvas.style.clientWidth = pw + "px";
             arController.canvas.style.clientHeight = ph + "px";
