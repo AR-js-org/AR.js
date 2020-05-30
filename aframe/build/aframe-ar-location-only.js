@@ -17,9 +17,7 @@ AFRAME.registerComponent('arjs-webcam-texture', {
         this.texScene.add(mesh);
         if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
             const constraints = { video: {
-                width: 1280,
-                height: 720,
-                facingMode: 'user' }
+                facingMode: 'environment' }
             };
             navigator.mediaDevices.getUserMedia(constraints).then( stream=> {
                 video.srcObject = stream;    
