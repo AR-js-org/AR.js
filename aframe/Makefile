@@ -21,4 +21,7 @@ build-nft:
 		src/system-arjs.js	\
 		> build/aframe-ar-nft.js
 
+build-location-only:
+	cat src/location-based/*.js > build/aframe-ar-location-only.js
+
 build: build-default build-nft
