@@ -1,0 +1,19 @@
+p { 
+    color: red;
+}
+
+img {
+    display: block;
+    min-width: 200px;
+    max-width: 1000px;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+#main{
+    vertical-align: auto;
+    text-align: center;
+}

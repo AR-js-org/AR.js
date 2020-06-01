@@ -113,6 +113,10 @@ AFRAME.registerComponent('arjs-anchor', {
                 markerParameters.type = _this.data.type
                 markerParameters.patternUrl = _this.data.patternUrl;
                 markerParameters.markersAreaEnabled = false
+            } else if (_this.data.preset === 'zach') {
+                markerParameters.type = 'pattern'
+                markerParameters.patternUrl = '../myApp/marker.patt' 
+                markerParameters.markersAreaEnabled = false
             }
 
             markerParameters.smooth = _this.data.smooth;

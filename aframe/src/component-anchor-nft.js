@@ -111,7 +111,11 @@ AFRAME.registerComponent('arjs-anchor', {
                     changeMatrixMode: 'modelViewMatrix',
                     barcodeValue: _this.data.barcodeValue,
                     markersAreaEnabled: false
-                }
+                } 
+            } else if (_this.data.preset === 'zach') {
+                markerParameters.type = 'pattern'
+                markerParameters.patternUrl = '../myApp/marker.patt' 
+                markerParameters.markersAreaEnabled = false
             } else if (_this.data.type === 'pattern') {
                 markerParameters.type = _this.data.type
                 markerParameters.patternUrl = _this.data.patternUrl;
