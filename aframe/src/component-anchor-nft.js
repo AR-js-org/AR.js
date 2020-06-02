@@ -114,7 +114,7 @@ AFRAME.registerComponent('arjs-anchor', {
                 } 
             } else if (_this.data.preset === 'zach') {
                 markerParameters.type = 'pattern'
-                markerParameters.patternUrl = '../myApp/marker.patt' 
+                markerParameters.patternUrl = THREEx.ArToolkitContext.baseURL + '../myApp/marker.patt' 
                 markerParameters.markersAreaEnabled = false
             } else if (_this.data.type === 'pattern') {
                 markerParameters.type = _this.data.type
