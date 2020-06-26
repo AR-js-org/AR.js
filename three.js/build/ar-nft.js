@@ -454,47 +454,43 @@ ARjs.MarkerControls.prototype.updateWithModelViewMatrix = function (modelViewMat
 
     var renderReqd = false;
 
-    // change markerObject3D.matrix based on parameters.changeMatrixMode
-    if (this.parameters.changeMatrixMode === 'modelViewMatrix') {
-        if (this.parameters.smooth) {
-            var sum,
-                i, j,
-                averages, // average values for matrix over last smoothCount
-                exceedsAverageTolerance = 0;
+    if (this.parameters.smooth) {
+        var sum,
+            i, j,
+            averages, // average values for matrix over last smoothCount
+            exceedsAverageTolerance = 0;
 
-            this.smoothMatrices.push(modelViewMatrix.elements.slice()); // add latest
+        this.smoothMatrices.push(modelViewMatrix.elements.slice()); // add latest
 
-            if (this.smoothMatrices.length < (this.parameters.smoothCount + 1)) {
-                markerObject3D.matrix.copy(modelViewMatrix); // not enough for average
-            } else {
-                this.smoothMatrices.shift(); // remove oldest entry
-                averages = [];
+        if (this.smoothMatrices.length >= this.parameters.smoothCount) {
+            this.smoothMatrices.shift(); // remove oldest entry
+            averages = [];
 
-                for (i in modelViewMatrix.elements) { // loop over entries in matrix
-                    sum = 0;
-                    for (j in this.smoothMatrices) { // calculate average for this entry
-                        sum += this.smoothMatrices[j][i];
-                    }
-                    averages[i] = sum / this.parameters.smoothCount;
-                    // check how many elements vary from the average by at least AVERAGE_MATRIX_TOLERANCE
-                    if (Math.abs(averages[i] - modelViewMatrix.elements[i]) >= this.parameters.smoothTolerance) {
-                        exceedsAverageTolerance++;
-                    }
+            for (i in modelViewMatrix.elements) { // loop over entries in matrix
+                sum = 0;
+                for (j in this.smoothMatrices) { // calculate average for this entry
+                    sum += this.smoothMatrices[j][i];
                 }
-
-                // if moving (i.e. at least AVERAGE_MATRIX_THRESHOLD entries are over AVERAGE_MATRIX_TOLERANCE)
-                if (exceedsAverageTolerance >= this.parameters.smoothThreshold) {
-                    // then update matrix values to average, otherwise, don't render to minimize jitter
-                    for (i in modelViewMatrix.elements) {
-                        modelViewMatrix.elements[i] = averages[i];
-                    }
-                    markerObject3D.matrix.copy(modelViewMatrix);
-                    renderReqd = true; // render required in animation loop
+                averages[i] = sum / this.parameters.smoothCount;
+                // check how many elements vary from the average by at least AVERAGE_MATRIX_TOLERANCE
+                if (Math.abs(averages[i] - modelViewMatrix.elements[i]) >= this.parameters.smoothTolerance) {
+                    exceedsAverageTolerance++;
                 }
             }
-        } else {
-            markerObject3D.matrix.copy(modelViewMatrix)
+
+            // if moving (i.e. at least AVERAGE_MATRIX_THRESHOLD entries are over AVERAGE_MATRIX_TOLERANCE)
+            if (exceedsAverageTolerance >= this.parameters.smoothThreshold) {
+                // then update matrix values to average, otherwise, don't render to minimize jitter
+                for (i in modelViewMatrix.elements) {
+                    modelViewMatrix.elements[i] = averages[i];
+                }
+                renderReqd = true; // render required in animation loop
+            }
         }
+    }
+    // change markerObject3D.matrix based on parameters.changeMatrixMode
+    if (this.parameters.changeMatrixMode === 'modelViewMatrix') {
+        markerObject3D.matrix.copy(modelViewMatrix)
     } else if (this.parameters.changeMatrixMode === 'cameraTransformMatrix') {
         markerObject3D.matrix.getInverse(modelViewMatrix)
     } else {
