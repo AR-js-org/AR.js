@@ -122,6 +122,7 @@ AFRAME.registerComponent('arjs-anchor', {
                 markerParameters.markersAreaEnabled = false
             }
 
+            markerParameters.minConfidence = _this.data.minConfidence;
             markerParameters.smooth = _this.data.smooth;
             markerParameters.smoothCount = _this.data.smoothCount;
             markerParameters.smoothTolerance = _this.data.smoothTolerance;
