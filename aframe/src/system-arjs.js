@@ -20,6 +20,11 @@ AFRAME.registerSystem('arjs', {
             type: 'string',
             default: '',
         },
+        // new video texture mode (location based only)
+        videoTexture: {
+            type: 'boolean',
+            default: false
+        },
         // old parameters
         debug: {
             type: 'boolean',
@@ -90,6 +95,13 @@ AFRAME.registerSystem('arjs', {
     init: function () {
         var _this = this
 
+        // If videoTexture is set, skip the remainder of the setup entirely and just use the arjs-webcam-texture component
+        if(this.data.videoTexture === true && this.data.sourceType === 'webcam') {
+            var webcamEntity = document.createElement("a-entity");
+            webcamEntity.setAttribute("arjs-webcam-texture", true);
+            this.el.sceneEl.appendChild(webcamEntity);
+            return;
+        } 
         //////////////////////////////////////////////////////////////////////////////
         //		setup arProfile
         //////////////////////////////////////////////////////////////////////////////
@@ -214,7 +226,7 @@ AFRAME.registerSystem('arjs', {
 
     tick: function () {
         // skip it if not yet isInitialised
-        if (this.isReady === false) return
+        if (this.isReady === false || this.data.videoTexture === true) return
 
         // update arSession
         this._arSession.update()
