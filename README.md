@@ -169,7 +169,6 @@ Please follow this simple steps:
 
 ```html
 <!DOCTYPE html>
-<!DOCTYPE html>
 <html>
     <script src="https://aframe.io/releases/1.0.0/aframe.min.js"></script>
     <!-- we import arjs version without NFT but with marker + location based support -->

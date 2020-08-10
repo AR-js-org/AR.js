@@ -2222,7 +2222,7 @@ ARjs.MarkerControls.prototype._initArtoolkit = function(){
 	function onMarkerFound(event){
 		// honor his.parameters.minConfidence
 		if( event.data.type === artoolkit.PATTERN_MARKER && event.data.marker.cfPatt < _this.parameters.minConfidence )	return
-		if( event.data.type === artoolkit.BARCODE_MARKER && event.data.marker.cfMatt < _this.parameters.minConfidence )	return
+		if( event.data.type === artoolkit.BARCODE_MARKER && event.data.marker.cfMatrix < _this.parameters.minConfidence )	return
 
 		var modelViewMatrix = new THREE.Matrix4().fromArray(event.data.matrix)
 		_this.updateWithModelViewMatrix(modelViewMatrix)
@@ -5082,7 +5082,8 @@ AFRAME.registerComponent('arjs-anchor', {
                 markerParameters.patternUrl = _this.data.patternUrl;
                 markerParameters.markersAreaEnabled = false
             }
-
+			
+			markerParameters.minConfidence = _this.data.minConfidence;
             markerParameters.smooth = _this.data.smooth;
             markerParameters.smoothCount = _this.data.smoothCount;
             markerParameters.smoothTolerance = _this.data.smoothTolerance;
