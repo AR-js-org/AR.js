@@ -1,3 +1,7 @@
+# 3.2.1
+
+- show camera error alert after dispatching `camera-error` event
+
 # 3.2.0
 
 - support arbitrarily distant places on location-based (thanks to @nickw1, see PR #119)
