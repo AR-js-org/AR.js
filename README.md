@@ -1,6 +1,9 @@
+
 # AR.js - Augmented Reality on the Web
 
-<img src="./logo.png" height="200" />
+<a href="https://xscode.com/nicolocarpignoli/AR.js">
+  <img src="./AR-JS-banner.png" />
+</a>
 
 ---
 
@@ -16,6 +19,12 @@ Welcome to the official repository!
 This project has been created by [@jeromeetienne](https://github.com/jeromeetienne) and it is now maintained by [@nicolocarpignoli](https://github.com/nicolocarpignoli).
 
 🚀For frequent updates on AR.js you can follow [@nicolocarp](https://twitter.com/nicolocarp) and Watch this repo!
+
+Logo is courtesy of <a href="https://twitter.com/viralinfo"> Simon Poulter </a>.
+
+------
+
+<h2>You can get paid support and new features for AR.js. Check <a href="https://xscode.com/nicolocarpignoli/AR.js"> this link. </a></h2>
 
 ------
 
