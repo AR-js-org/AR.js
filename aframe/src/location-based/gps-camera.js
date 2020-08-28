@@ -49,6 +49,10 @@ AFRAME.registerComponent('gps-camera', {
         gpsTimeInterval: {
             type: 'number',
             default: 0
+        },
+        accelerationToMove: {
+            type: 'number',
+            default: 0
         }
     },
     update: function() {
@@ -73,6 +77,17 @@ AFRAME.registerComponent('gps-camera', {
             latitude: 0,
             longitude: 0
         };
+
+        this.maxAcceleration = 0;
+        window.addEventListener('devicemotion', e => {
+            if(e.acceleration) {
+                this.maxAcceleration = Math.max (
+                    Math.abs(e.acceleration.x),
+                    Math.abs(e.acceleration.y),
+                    Math.abs(e.acceleration.z)
+                );
+            }
+        });
 
         this.loader = document.createElement('DIV');
         this.loader.classList.add('arjs-loader');
@@ -135,7 +150,7 @@ AFRAME.registerComponent('gps-camera', {
                     this.currentCoords
                 );
 
-                if(distMoved >= this.data.gpsMinDistance || !this.originCoordsProjected) {
+                if((distMoved >= this.data.gpsMinDistance && this.maxAcceleration >= this.data.accelerationToMove) || !this.originCoordsProjected) {
                     this._updatePosition();
                     this.lastPosition = {
                         longitude: this.currentCoords.longitude,
