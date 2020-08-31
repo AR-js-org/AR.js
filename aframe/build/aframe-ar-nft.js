@@ -4002,9 +4002,9 @@ AFRAME.registerComponent('arjs-webcam-texture', {
 /*
  * UPDATES 28/08/20:
  *
- * - add gpsMinDistance and gpsTimeInterval properties to control how 
- * frequently GPS updates are processed. Aim is to prevent 'stuttering' 
- * effects when close to AR content due to continuous small changes in 
+ * - add gpsMinDistance and gpsTimeInterval properties to control how
+ * frequently GPS updates are processed. Aim is to prevent 'stuttering'
+ * effects when close to AR content due to continuous small changes in
  * location.
  */
 
@@ -4045,15 +4045,15 @@ AFRAME.registerComponent('gps-camera', {
         },
         gpsMinDistance: {
             type: 'number',
-            default: 0
+            default: 5,
         },
         gpsTimeInterval: {
             type: 'number',
-            default: 0
+            default: 0,
         },
         accelerationToMove: {
             type: 'number',
-            default: 0
+            default: 0,
         }
     },
     update: function() {
@@ -4073,7 +4073,7 @@ AFRAME.registerComponent('gps-camera', {
         if (!this.el.components['look-controls']) {
             return;
         }
- 
+
         this.lastPosition = {
             latitude: 0,
             longitude: 0
@@ -4156,7 +4156,7 @@ AFRAME.registerComponent('gps-camera', {
                     this.lastPosition = {
                         longitude: this.currentCoords.longitude,
                         latitude: this.currentCoords.latitude
-                    }; 
+                    };
                 }
             }
 
