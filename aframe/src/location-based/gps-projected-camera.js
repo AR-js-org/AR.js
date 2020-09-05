@@ -118,16 +118,22 @@ AFRAME.registerComponent('gps-projected-camera', {
         window.addEventListener(eventName, this._onDeviceOrientation, false);
 
         this._watchPositionId = this._initWatchGPS(function (position) {
+            var localPosition = {
+                latitude: position.coords.latitude,
+                longitude: position.coords.longitude,
+                altitude: position.coords.altitude,
+                accuracy: position.coords.accuracy,
+                altitudeAccuracy: position.coords.altitudeAccuracy,
+            }
+
             if (this.data.simulateLatitude !== 0 && this.data.simulateLongitude !== 0) {
-                localPosition = Object.assign({}, position.coords);
-                localPosition.longitude = this.data.simulateLongitude;
                 localPosition.latitude = this.data.simulateLatitude;
+                localPosition.longitude = this.data.simulateLongitude;
+            }
+            if (this.data.simulateAltitude !== 0) {
                 localPosition.altitude = this.data.simulateAltitude;
-                this.currentCoords = localPosition;
             }
-            else {
-                this.currentCoords = position.coords;
-            }
+            this.currentCoords = localPosition;
 
             this._updatePosition();
         }.bind(this));
