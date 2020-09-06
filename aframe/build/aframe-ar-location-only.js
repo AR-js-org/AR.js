@@ -753,7 +753,7 @@ AFRAME.registerComponent('gps-camera', {
         }
     },
     init: function () {
-        if (!this.el.components['arjs-look-controls']) {
+        if (!this.el.components['arjs-look-controls'] && !this.el.components['look-controls']) {
             return;
         }
 
@@ -776,7 +776,7 @@ AFRAME.registerComponent('gps-camera', {
             }
         }.bind(this));
 
-        this.lookControls = this.el.components['arjs-look-controls'];
+        this.lookControls = this.el.components['arjs-look-controls'] || this.el.components['look-controls'];
 
         // listen to deviceorientation event
         var eventName = this._getDeviceOrientationEventName();
@@ -1300,7 +1300,7 @@ AFRAME.registerComponent('gps-projected-camera', {
         }
     },
     init: function() {
-        if (!this.el.components['arjs-look-controls']) {
+        if (!this.el.components['arjs-look-controls'] && !this.el.components['look-controls']) {
             return;
         }
 
@@ -1323,7 +1323,7 @@ AFRAME.registerComponent('gps-projected-camera', {
             }
         }.bind(this));
 
-        this.lookControls = this.el.components['arjs-look-controls'];
+        this.lookControls = this.el.components['arjs-look-controls'] || this.el.components['look-controls'];
 
         // listen to deviceorientation event
         var eventName = this._getDeviceOrientationEventName();
