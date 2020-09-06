@@ -83,7 +83,7 @@ AFRAME.registerComponent('gps-projected-camera', {
         }
     },
     init: function() {
-        if (!this.el.components['look-controls']) {
+        if (!this.el.components['arjs-look-controls']) {
             return;
         }
 
@@ -106,7 +106,7 @@ AFRAME.registerComponent('gps-projected-camera', {
             }
         }.bind(this));
 
-        this.lookControls = this.el.components['look-controls'];
+        this.lookControls = this.el.components['arjs-look-controls'];
 
         // listen to deviceorientation event
         var eventName = this._getDeviceOrientationEventName();
