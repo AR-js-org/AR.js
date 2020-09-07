@@ -1,3 +1,4 @@
+
 /**
  * @author richt / http://richt.me
  * @author WestLangley / http://github.com/WestLangley
@@ -11,8 +12,9 @@
  * Modifications Nick Whitelegg (nickw1 github)
  */
 
-ArjsDeviceOrientationControls =  function ( object ) {
-
+ArjsDeviceOrientationControls = function ( object ) {
+ 
+  console.log('this is the correct version with pre-calculated 2PI');
   var scope = this;
 
   this.object = object;
@@ -26,6 +28,9 @@ ArjsDeviceOrientationControls =  function ( object ) {
   this.alphaOffset = 0; // radians
 
   this.smoothingFactor = 1;
+
+  this.TWO_PI = 2 * Math.PI;
+  this.HALF_PI = 0.5 * Math.PI;
 
   var onDeviceOrientationChangeEvent = function ( event ) {
 
@@ -100,63 +105,61 @@ ArjsDeviceOrientationControls =  function ( object ) {
       var gamma = device.gamma ? THREE.Math.degToRad( device.gamma ) : 0; // Y''
 
       var orient = scope.screenOrientation ? THREE.Math.degToRad( scope.screenOrientation ) : 0; // O
-      
-      // NW ORIENTATION SMOOTHING 
+
+      // This code is from THREE.DeviceOrientationControls
+      // NW ORIENTATION SMOOTHING ATTEMPT
+      var k = this.smoothingFactor;
 
       if(this.lastOrientation) {
-        alpha = this._getSmoothedAngle(alpha , this.lastOrientation.alpha, this.smoothingFactor);
-        beta = this._getSmoothedAngle(beta + (beta < 0 ? 360 : 0) , this.lastOrientation.beta, this.smoothingFactor);
-        gamma = this._getSmoothedAngle(gamma + (gamma < 0 ? 180 : 0) , this.lastOrientation.gamma, this.smoothingFactor, 180);
-
+        alpha = this.getSmoothedAngle_(alpha , this.lastOrientation.alpha, k);
+        beta = this.getSmoothedAngle_(beta + (beta < 0 ? this.TWO_PI : 0) , this.lastOrientation.beta, k);
+        gamma = this.getSmoothedAngle_(gamma + (gamma < 0 ? Math.PI : 0) , this.lastOrientation.gamma, k, Math.PI);
         this.lastOrientation = {
           alpha: alpha,
           beta: beta,
           gamma: gamma
         };
+    
       } else {
         this.lastOrientation = {
           alpha: alpha,
-          beta: beta + (beta < 0 ? 360 : 0),
-          gamma: gamma + (gamma < 0 ? 180 :0)
+          beta: beta + (beta<0 ? this.TWO_PI : 0),
+          gamma: gamma + (gamma<0 ? Math.PI : 0)
         };
-      }
       // NW END ADDED CODE
-      setObjectQuaternion( scope.object.quaternion, alpha, beta, gamma, orient );
+      }
+
+      setObjectQuaternion( scope.object.quaternion, alpha, beta > Math.PI ? beta- this.TWO_PI : beta, gamma > this.HALF_PI ? gamma - Math.PI : gamma, orient );
 
     }
-
-
   };
 
-  // NW ADDED 
-  // Orders two angles 
-  this._orderAngle = function (a, b, r = 360) {
+   
+   // NW ADDED THIS METHOD
+  this.orderAngle_ = function(a,b,r = this.TWO_PI) {
     if ((b > a && Math.abs(b - a) < r / 2) || (a > b && Math.abs(b - a) > r / 2)) {
-      return { lesser: a, greater: b };
+      return { left: a, right: b }
     } else { 
-      return { lesser: b, greater: a };
+      return {left: b, right: a }
     }
   };
 
-  // NW ALSO ADDED THIS METHOD
-  // get a smoothed angle
-  this._getSmoothedAngle = function (a, b, k, r = 360) {
-    var angles = this._orderAngle(a,b,r);
-    var angleshift = angles.lesser;
-    var origGreater = angles.greater;
-    angles.lesser = 0;
-    angles.greater -= angleshift;
-    if(angles.greater < 0) angles.greater += r;
-    var newangle = origGreater == b ? (1 - k) * angles.greater + k * angles.lesser : k * angles.greater + (1 - k) * angles.lesser;
+   // NW ALSO ADDED THIS METHOD
+  this.getSmoothedAngle_ = function(a, b, k, r = this.TWO_PI) {
+    const angles = this.orderAngle_(a, b, r);
+    const angleshift = angles.left;
+    const origAnglesRight = angles.right;
+    angles.left = 0;
+    angles.right -= angleshift;
+    if(angles.right < 0) angles.right += r;
+    let newangle = origAnglesRight == b ? (1 - k)*angles.right + k * angles.left : k * angles.right + (1 - k) * angles.left;
     newangle += angleshift;
     if(newangle >= r) newangle -= r;
     return newangle;
   };
 
   this.dispose = function () {
-
     scope.disconnect();
-
   };
 
   this.connect();
