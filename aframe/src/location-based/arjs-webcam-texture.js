@@ -6,22 +6,25 @@ AFRAME.registerComponent('arjs-webcam-texture', {
         this.texScene = new THREE.Scene();
 
         this.scene.renderer.autoClear = false;
-        const video = document.createElement("video");
-        video.setAttribute("autoplay", true);
-        video.setAttribute("display", "none");
-        document.body.appendChild(video);
-        const geom = new THREE.PlaneBufferGeometry(); //0.5, 0.5);
-        const texture = new THREE.VideoTexture(video);
-        const material = new THREE.MeshBasicMaterial( { map: texture } );
-        const mesh = new THREE.Mesh(geom, material);
+        this.video = document.createElement("video");
+        this.video.setAttribute("autoplay", true);
+        this.video.setAttribute("display", "none");
+        document.body.appendChild(this.video);
+        this.geom = new THREE.PlaneBufferGeometry(); //0.5, 0.5);
+        this.texture = new THREE.VideoTexture(this.video);
+        this.material = new THREE.MeshBasicMaterial( { map: this.texture } );
+        const mesh = new THREE.Mesh(this.geom, this.material);
         this.texScene.add(mesh);
+    },
+
+    play: function() {
         if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
             const constraints = { video: {
                 facingMode: 'environment' }
             };
             navigator.mediaDevices.getUserMedia(constraints).then( stream=> {
-                video.srcObject = stream;    
-                video.play();
+                this.video.srcObject = stream;    
+                this.video.play();
             })
             .catch(e => { alert(`Webcam error: ${e}`); });
         } else {
@@ -33,5 +36,17 @@ AFRAME.registerComponent('arjs-webcam-texture', {
         this.scene.renderer.clear();
         this.scene.renderer.render(this.texScene, this.texCamera);
         this.scene.renderer.clearDepth();
+    },
+
+    pause: function() {
+        this.video.srcObject.getTracks().forEach ( track => {
+            track.stop();
+        });
+    },
+
+    remove: function() {
+        this.material.dispose();
+        this.texture.dispose();
+        this.geom.dispose();
     }
 });
