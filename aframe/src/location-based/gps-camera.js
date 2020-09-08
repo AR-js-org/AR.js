@@ -1,3 +1,12 @@
+/*
+ * UPDATES 28/08/20:
+ *
+ * - add gpsMinDistance and gpsTimeInterval properties to control how
+ * frequently GPS updates are processed. Aim is to prevent 'stuttering'
+ * effects when close to AR content due to continuous small changes in
+ * location.
+ */
+
 AFRAME.registerComponent('gps-camera', {
     _watchPositionId: null,
     originCoords: null,
@@ -32,7 +41,15 @@ AFRAME.registerComponent('gps-camera', {
         maxDistance: {
             type: 'int',
             default: 0,
-        }
+        },
+        gpsMinDistance: {
+            type: 'number',
+            default: 5,
+        },
+        gpsTimeInterval: {
+            type: 'number',
+            default: 0,
+        },
     },
     update: function() {
         if (this.data.simulateLatitude !== 0 && this.data.simulateLongitude !== 0) {
@@ -51,6 +68,11 @@ AFRAME.registerComponent('gps-camera', {
         if (!this.el.components['look-controls']) {
             return;
         }
+
+        this.lastPosition = {
+            latitude: 0,
+            longitude: 0
+        };
 
         this.loader = document.createElement('DIV');
         this.loader.classList.add('arjs-loader');
@@ -104,18 +126,32 @@ AFRAME.registerComponent('gps-camera', {
                 altitude: position.coords.altitude,
                 accuracy: position.coords.accuracy,
                 altitudeAccuracy: position.coords.altitudeAccuracy,
-            }
-
-            if (this.data.simulateLatitude !== 0 && this.data.simulateLongitude !== 0) {
-                localPosition.latitude = this.data.simulateLatitude;
-                localPosition.longitude = this.data.simulateLongitude;
-            }
+            };
+          
             if (this.data.simulateAltitude !== 0) {
                 localPosition.altitude = this.data.simulateAltitude;
             }
-            this.currentCoords = localPosition;
+               
+            if (this.data.simulateLatitude !== 0 && this.data.simulateLongitude !== 0) {
+                localPosition.latitude = this.data.simulateLatitude;
+                localPosition.longitude = this.data.simulateLongitude;
+                this.currentCoords = localPosition;
+                this._updatePosition();
+            } else {
+                this.currentCoords = localPosition;
+                var distMoved = this._haversineDist(
+                    this.lastPosition,
+                    this.currentCoords
+                );
 
-            this._updatePosition();
+                if(distMoved >= this.data.gpsMinDistance || !this.originCoordsProjected) {
+                    this._updatePosition();
+                    this.lastPosition = {
+                        longitude: this.currentCoords.longitude,
+                        latitude: this.currentCoords.latitude
+                    };
+                }
+            }
         }.bind(this));
     },
 
@@ -186,7 +222,7 @@ AFRAME.registerComponent('gps-camera', {
         // https://developer.mozilla.org/en-US/docs/Web/API/Geolocation/watchPosition
         return navigator.geolocation.watchPosition(onSuccess, onError, {
             enableHighAccuracy: true,
-            maximumAge: 0,
+            maximumAge: this.data.gpsTimeInterval,
             timeout: 27000,
         });
     },
@@ -266,12 +302,7 @@ AFRAME.registerComponent('gps-camera', {
      * @returns {number} distance | Number.MAX_SAFE_INTEGER
      */
     computeDistanceMeters: function (src, dest, isPlace) {
-        var dlongitude = THREE.Math.degToRad(dest.longitude - src.longitude);
-        var dlatitude = THREE.Math.degToRad(dest.latitude - src.latitude);
-
-        var a = (Math.sin(dlatitude / 2) * Math.sin(dlatitude / 2)) + Math.cos(THREE.Math.degToRad(src.latitude)) * Math.cos(THREE.Math.degToRad(dest.latitude)) * (Math.sin(dlongitude / 2) * Math.sin(dlongitude / 2));
-        var angle = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-        var distance = angle * 6378160;
+        var distance = this._haversineDist (src, dest);
 
         // if function has been called for a place, and if it's too near and a min distance has been set,
         // return max distance possible - to be handled by the caller
@@ -286,6 +317,15 @@ AFRAME.registerComponent('gps-camera', {
         }
 
         return distance;
+    },
+
+    _haversineDist: function (src, dest) {
+        var dlongitude = THREE.Math.degToRad(dest.longitude - src.longitude);
+        var dlatitude = THREE.Math.degToRad(dest.latitude - src.latitude);
+
+        var a = (Math.sin(dlatitude / 2) * Math.sin(dlatitude / 2)) + Math.cos(THREE.Math.degToRad(src.latitude)) * Math.cos(THREE.Math.degToRad(dest.latitude)) * (Math.sin(dlongitude / 2) * Math.sin(dlongitude / 2));
+        var angle = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        return angle * 6371000;
     },
 
     /**
