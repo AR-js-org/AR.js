@@ -5320,22 +5320,25 @@ AFRAME.registerComponent('arjs-webcam-texture', {
         this.texScene = new THREE.Scene();
 
         this.scene.renderer.autoClear = false;
-        const video = document.createElement("video");
-        video.setAttribute("autoplay", true);
-        video.setAttribute("display", "none");
-        document.body.appendChild(video);
-        const geom = new THREE.PlaneBufferGeometry(); //0.5, 0.5);
-        const texture = new THREE.VideoTexture(video);
-        const material = new THREE.MeshBasicMaterial( { map: texture } );
-        const mesh = new THREE.Mesh(geom, material);
+        this.video = document.createElement("video");
+        this.video.setAttribute("autoplay", true);
+        this.video.setAttribute("display", "none");
+        document.body.appendChild(this.video);
+        this.geom = new THREE.PlaneBufferGeometry(); //0.5, 0.5);
+        this.texture = new THREE.VideoTexture(this.video);
+        this.material = new THREE.MeshBasicMaterial( { map: this.texture } );
+        const mesh = new THREE.Mesh(this.geom, this.material);
         this.texScene.add(mesh);
+    },
+
+    play: function() {
         if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
             const constraints = { video: {
                 facingMode: 'environment' }
             };
             navigator.mediaDevices.getUserMedia(constraints).then( stream=> {
-                video.srcObject = stream;    
-                video.play();
+                this.video.srcObject = stream;    
+                this.video.play();
             })
             .catch(e => { alert(`Webcam error: ${e}`); });
         } else {
@@ -5347,6 +5350,18 @@ AFRAME.registerComponent('arjs-webcam-texture', {
         this.scene.renderer.clear();
         this.scene.renderer.render(this.texScene, this.texCamera);
         this.scene.renderer.clearDepth();
+    },
+
+    pause: function() {
+        this.video.srcObject.getTracks().forEach ( track => {
+            track.stop();
+        });
+    },
+
+    remove: function() {
+        this.material.dispose();
+        this.texture.dispose();
+        this.geom.dispose();
     }
 });
 /*
@@ -5429,15 +5444,8 @@ AFRAME.registerComponent('gps-camera', {
         this.loader.classList.add('arjs-loader');
         document.body.appendChild(this.loader);
 
-        window.addEventListener('gps-entity-place-added', function () {
-            // if places are added after camera initialization is finished
-            if (this.originCoords) {
-                window.dispatchEvent(new CustomEvent('gps-camera-origin-coord-set'));
-            }
-            if (this.loader && this.loader.parentElement) {
-                document.body.removeChild(this.loader)
-            }
-        }.bind(this));
+        this.onGpsEntityPlaceAdded = this._onGpsEntityPlaceAdded.bind(this);
+        window.addEventListener('gps-entity-place-added', this.onGpsEntityPlaceAdded);
 
         this.lookControls = this.el.components['look-controls'];
 
@@ -5471,16 +5479,25 @@ AFRAME.registerComponent('gps-camera', {
         window.addEventListener(eventName, this._onDeviceOrientation, false);
 
         this._watchPositionId = this._initWatchGPS(function (position) {
-            if (this.data.simulateLatitude !== 0 && this.data.simulateLongitude !== 0) {
-                localPosition = Object.assign({}, position.coords);
-                localPosition.longitude = this.data.simulateLongitude;
-                localPosition.latitude = this.data.simulateLatitude;
+            var localPosition = {
+                latitude: position.coords.latitude,
+                longitude: position.coords.longitude,
+                altitude: position.coords.altitude,
+                accuracy: position.coords.accuracy,
+                altitudeAccuracy: position.coords.altitudeAccuracy,
+            };
+          
+            if (this.data.simulateAltitude !== 0) {
                 localPosition.altitude = this.data.simulateAltitude;
+            }
+               
+            if (this.data.simulateLatitude !== 0 && this.data.simulateLongitude !== 0) {
+                localPosition.latitude = this.data.simulateLatitude;
+                localPosition.longitude = this.data.simulateLongitude;
                 this.currentCoords = localPosition;
                 this._updatePosition();
-            }
-            else {
-                this.currentCoords = position.coords;
+            } else {
+                this.currentCoords = localPosition;
                 var distMoved = this._haversineDist(
                     this.lastPosition,
                     this.currentCoords
@@ -5494,7 +5511,6 @@ AFRAME.registerComponent('gps-camera', {
                     };
                 }
             }
-
         }.bind(this));
     },
 
@@ -5513,6 +5529,8 @@ AFRAME.registerComponent('gps-camera', {
 
         var eventName = this._getDeviceOrientationEventName();
         window.removeEventListener(eventName, this._onDeviceOrientation, false);
+
+        window.removeEventListener('gps-entity-place-added', this.onGpsEntityPlaceAdded);
     },
 
     /**
@@ -5750,6 +5768,16 @@ AFRAME.registerComponent('gps-camera', {
         var offset = (heading - (cameraRotation - yawRotation)) % 360;
         this.lookControls.yawObject.rotation.y = THREE.Math.degToRad(offset);
     },
+    
+    _onGpsEntityPlaceAdded: function() {
+        // if places are added after camera initialization is finished
+        if (this.originCoords) {
+            window.dispatchEvent(new CustomEvent('gps-camera-origin-coord-set'));
+        }
+        if (this.loader && this.loader.parentElement) {
+            document.body.removeChild(this.loader)
+        }
+    }
 });
 AFRAME.registerComponent('gps-entity-place', {
     _cameraGps: null,
@@ -5976,15 +6004,8 @@ AFRAME.registerComponent('gps-projected-camera', {
         this.loader.classList.add('arjs-loader');
         document.body.appendChild(this.loader);
 
-        window.addEventListener('gps-entity-place-added', function() {
-            // if places are added after camera initialization is finished
-            if (this.originCoordsProjected) {
-                window.dispatchEvent(new CustomEvent('gps-camera-origin-coord-set'));
-            }
-            if (this.loader && this.loader.parentElement) {
-                document.body.removeChild(this.loader)
-            }
-        }.bind(this));
+        this.onGpsEntityPlaceAdded = this._onGpsEntityPlaceAdded.bind(this);
+        window.addEventListener('gps-entity-place-added', this.onGpsEntityPlaceAdded);
 
         this.lookControls = this.el.components['look-controls'];
 
@@ -6016,25 +6037,33 @@ AFRAME.registerComponent('gps-projected-camera', {
         }
 
         window.addEventListener(eventName, this._onDeviceOrientation, false);
-
-        this._watchPositionId = this._initWatchGPS(function(position) {
-            if (this.data.simulateLatitude !== 0 && this.data.simulateLongitude !== 0) {
-                localPosition = Object.assign({}, position.coords);
-                localPosition.longitude = this.data.simulateLongitude;
-                localPosition.latitude = this.data.simulateLatitude;
+      
+        this._watchPositionId = this._initWatchGPS(function (position) {
+           var localPosition = {
+                latitude: position.coords.latitude,
+                longitude: position.coords.longitude,
+                altitude: position.coords.altitude,
+                accuracy: position.coords.accuracy,
+                altitudeAccuracy: position.coords.altitudeAccuracy,
+            };
+          
+            if (this.data.simulateAltitude !== 0) {
                 localPosition.altitude = this.data.simulateAltitude;
+            }
+               
+            if (this.data.simulateLatitude !== 0 && this.data.simulateLongitude !== 0) {
+                localPosition.latitude = this.data.simulateLatitude;
+                localPosition.longitude = this.data.simulateLongitude;
                 this.currentCoords = localPosition;
                 this._updatePosition();
-            }
-            else {
-                this.currentCoords = position.coords;
-
+            } else {
+                this.currentCoords = localPosition;
                 var distMoved = this._haversineDist(
                     this.lastPosition,
                     this.currentCoords
                 );
 
-                if (distMoved >= this.data.gpsMinDistance || !this.originCoordsProjected) {
+                if(distMoved >= this.data.gpsMinDistance || !this.originCoordsProjected) {
                     this._updatePosition();
                     this.lastPosition = {
                         longitude: this.currentCoords.longitude,
@@ -6042,7 +6071,6 @@ AFRAME.registerComponent('gps-projected-camera', {
                     };
                 }
             }
-
         }.bind(this));
     },
 
@@ -6061,6 +6089,7 @@ AFRAME.registerComponent('gps-projected-camera', {
 
         var eventName = this._getDeviceOrientationEventName();
         window.removeEventListener(eventName, this._onDeviceOrientation, false);
+        window.removeEventListener('gps-entity-place-added', this.onGpsEntityPlaceAdded);
     },
 
     /**
@@ -6346,8 +6375,19 @@ AFRAME.registerComponent('gps-projected-camera', {
         var a = (Math.sin(dlatitude / 2) * Math.sin(dlatitude / 2)) + Math.cos(THREE.Math.degToRad(src.latitude)) * Math.cos(THREE.Math.degToRad(dest.latitude)) * (Math.sin(dlongitude / 2) * Math.sin(dlongitude / 2));
         var angle = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
         return angle * 6371000;
+    },
+
+    _onGpsEntityPlaceAdded: function() {
+        // if places are added after camera initialization is finished
+        if (this.originCoords) {
+            window.dispatchEvent(new CustomEvent('gps-camera-origin-coord-set'));
+        }
+        if (this.loader && this.loader.parentElement) {
+            document.body.removeChild(this.loader)
+        }
     }
 });
+
 /** gps-projected-entity-place
  *
  * based on the original gps-entity-place, modified by nickw 02/04/20
