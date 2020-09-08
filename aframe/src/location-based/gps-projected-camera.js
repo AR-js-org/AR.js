@@ -96,15 +96,8 @@ AFRAME.registerComponent('gps-projected-camera', {
         this.loader.classList.add('arjs-loader');
         document.body.appendChild(this.loader);
 
-        window.addEventListener('gps-entity-place-added', function() {
-            // if places are added after camera initialization is finished
-            if (this.originCoordsProjected) {
-                window.dispatchEvent(new CustomEvent('gps-camera-origin-coord-set'));
-            }
-            if (this.loader && this.loader.parentElement) {
-                document.body.removeChild(this.loader)
-            }
-        }.bind(this));
+        this.onGpsEntityPlaceAdded = this._onGpsEntityPlaceAdded.bind(this);
+        window.addEventListener('gps-entity-place-added', this.onGpsEntityPlaceAdded);
 
         this.lookControls = this.el.components['look-controls'];
 
@@ -188,6 +181,7 @@ AFRAME.registerComponent('gps-projected-camera', {
 
         var eventName = this._getDeviceOrientationEventName();
         window.removeEventListener(eventName, this._onDeviceOrientation, false);
+        window.removeEventListener('gps-entity-place-added', this.onGpsEntityPlaceAdded);
     },
 
     /**
@@ -473,6 +467,16 @@ AFRAME.registerComponent('gps-projected-camera', {
         var a = (Math.sin(dlatitude / 2) * Math.sin(dlatitude / 2)) + Math.cos(THREE.Math.degToRad(src.latitude)) * Math.cos(THREE.Math.degToRad(dest.latitude)) * (Math.sin(dlongitude / 2) * Math.sin(dlongitude / 2));
         var angle = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
         return angle * 6371000;
+    },
+
+    _onGpsEntityPlaceAdded: function() {
+        // if places are added after camera initialization is finished
+        if (this.originCoords) {
+            window.dispatchEvent(new CustomEvent('gps-camera-origin-coord-set'));
+        }
+        if (this.loader && this.loader.parentElement) {
+            document.body.removeChild(this.loader)
+        }
     }
 });
 

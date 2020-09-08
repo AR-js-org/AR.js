@@ -78,15 +78,8 @@ AFRAME.registerComponent('gps-camera', {
         this.loader.classList.add('arjs-loader');
         document.body.appendChild(this.loader);
 
-        window.addEventListener('gps-entity-place-added', function () {
-            // if places are added after camera initialization is finished
-            if (this.originCoords) {
-                window.dispatchEvent(new CustomEvent('gps-camera-origin-coord-set'));
-            }
-            if (this.loader && this.loader.parentElement) {
-                document.body.removeChild(this.loader)
-            }
-        }.bind(this));
+        this.onGpsEntityPlaceAdded = this._onGpsEntityPlaceAdded.bind(this);
+        window.addEventListener('gps-entity-place-added', this.onGpsEntityPlaceAdded);
 
         this.lookControls = this.el.components['look-controls'];
 
@@ -170,6 +163,8 @@ AFRAME.registerComponent('gps-camera', {
 
         var eventName = this._getDeviceOrientationEventName();
         window.removeEventListener(eventName, this._onDeviceOrientation, false);
+
+        window.removeEventListener('gps-entity-place-added', this.onGpsEntityPlaceAdded);
     },
 
     /**
@@ -407,4 +402,14 @@ AFRAME.registerComponent('gps-camera', {
         var offset = (heading - (cameraRotation - yawRotation)) % 360;
         this.lookControls.yawObject.rotation.y = THREE.Math.degToRad(offset);
     },
+    
+    _onGpsEntityPlaceAdded: function() {
+        // if places are added after camera initialization is finished
+        if (this.originCoords) {
+            window.dispatchEvent(new CustomEvent('gps-camera-origin-coord-set'));
+        }
+        if (this.loader && this.loader.parentElement) {
+            document.body.removeChild(this.loader)
+        }
+    }
 });
