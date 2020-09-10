@@ -13,8 +13,7 @@
  */
 
 ArjsDeviceOrientationControls = function ( object ) {
- 
-  console.log('this is the correct version with pre-calculated 2PI');
+
   var scope = this;
 
   this.object = object;
@@ -106,55 +105,50 @@ ArjsDeviceOrientationControls = function ( object ) {
 
       var orient = scope.screenOrientation ? THREE.Math.degToRad( scope.screenOrientation ) : 0; // O
 
-      // This code is from THREE.DeviceOrientationControls
-      // NW ORIENTATION SMOOTHING ATTEMPT
+      // NW Added smoothing code
       var k = this.smoothingFactor;
 
       if(this.lastOrientation) {
-        alpha = this.getSmoothedAngle_(alpha , this.lastOrientation.alpha, k);
-        beta = this.getSmoothedAngle_(beta + (beta < 0 ? this.TWO_PI : 0) , this.lastOrientation.beta, k);
-        gamma = this.getSmoothedAngle_(gamma + (gamma < 0 ? Math.PI : 0) , this.lastOrientation.gamma, k, Math.PI);
-        this.lastOrientation = {
-          alpha: alpha,
-          beta: beta,
-          gamma: gamma
-        };
+        alpha = this._getSmoothedAngle(alpha, this.lastOrientation.alpha, k);
+        beta = this._getSmoothedAngle(beta + Math.PI, this.lastOrientation.beta, k);
+        gamma = this._getSmoothedAngle(gamma + this.HALF_PI, this.lastOrientation.gamma, k, Math.PI);
     
       } else {
-        this.lastOrientation = {
-          alpha: alpha,
-          beta: beta + (beta<0 ? this.TWO_PI : 0),
-          gamma: gamma + (gamma<0 ? Math.PI : 0)
-        };
-      // NW END ADDED CODE
+        beta += Math.PI;
+        gamma += this.HALF_PI;
       }
 
-      setObjectQuaternion( scope.object.quaternion, alpha, beta > Math.PI ? beta- this.TWO_PI : beta, gamma > this.HALF_PI ? gamma - Math.PI : gamma, orient );
+      this.lastOrientation = {
+        alpha: alpha,
+        beta: beta,
+        gamma: gamma
+      };
+      setObjectQuaternion( scope.object.quaternion, alpha, beta - Math.PI, gamma - this.HALF_PI, orient );
 
     }
   };
 
    
-   // NW ADDED THIS METHOD
-  this.orderAngle_ = function(a,b,r = this.TWO_PI) {
-    if ((b > a && Math.abs(b - a) < r / 2) || (a > b && Math.abs(b - a) > r / 2)) {
+   // NW Added
+  this._orderAngle = function(a, b, range = this.TWO_PI) {
+    if ((b > a && Math.abs(b - a) < range / 2) || (a > b && Math.abs(b - a) > range / 2)) {
       return { left: a, right: b }
     } else { 
-      return {left: b, right: a }
+      return { left: b, right: a }
     }
   };
 
-   // NW ALSO ADDED THIS METHOD
-  this.getSmoothedAngle_ = function(a, b, k, r = this.TWO_PI) {
-    const angles = this.orderAngle_(a, b, r);
+   // NW Added
+  this._getSmoothedAngle = function(a, b, k, range = this.TWO_PI) {
+    const angles = this._orderAngle(a, b, range);
     const angleshift = angles.left;
     const origAnglesRight = angles.right;
     angles.left = 0;
     angles.right -= angleshift;
-    if(angles.right < 0) angles.right += r;
+    if(angles.right < 0) angles.right += range;
     let newangle = origAnglesRight == b ? (1 - k)*angles.right + k * angles.left : k * angles.right + (1 - k) * angles.left;
     newangle += angleshift;
-    if(newangle >= r) newangle -= r;
+    if(newangle >= range) newangle -= range;
     return newangle;
   };
 
