@@ -5677,7 +5677,7 @@ AFRAME.registerComponent('gps-projected-camera', {
 
     _onGpsEntityPlaceAdded: function() {
         // if places are added after camera initialization is finished
-        if (this.originCoords) {
+        if (this.originCoordsProjected) {
             window.dispatchEvent(new CustomEvent('gps-camera-origin-coord-set'));
         }
         if (this.loader && this.loader.parentElement) {
