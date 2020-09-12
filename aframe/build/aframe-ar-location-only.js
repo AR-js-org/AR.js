@@ -837,7 +837,7 @@ AFRAME.registerComponent('gps-camera', {
                     this.currentCoords
                 );
 
-                if(distMoved >= this.data.gpsMinDistance || !this.originCoordsProjected) {
+                if(distMoved >= this.data.gpsMinDistance || !this.originCoords) {
                     this._updatePosition();
                     this.lastPosition = {
                         longitude: this.currentCoords.longitude,
