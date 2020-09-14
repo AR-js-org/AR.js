@@ -1,3 +1,7 @@
+# 3.3.1
+
+- Fix minor location-based bugs
+
 # 3.3.0
 
 - Fix shaking of far/near entities on location-based using new configurable properties (thanks to @nickw1)
