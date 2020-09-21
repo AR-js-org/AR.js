@@ -129,7 +129,9 @@ AFRAME.registerComponent('gps-projected-camera', {
         }
 
         window.addEventListener(eventName, this._onDeviceOrientation, false);
-      
+    },
+
+    play: function() { 
         this._watchPositionId = this._initWatchGPS(function (position) {
            var localPosition = {
                 latitude: position.coords.latitude,
@@ -173,12 +175,14 @@ AFRAME.registerComponent('gps-projected-camera', {
         this._updateRotation();
     },
 
-    remove: function() {
+    pause: function() {
         if (this._watchPositionId) {
             navigator.geolocation.clearWatch(this._watchPositionId);
         }
         this._watchPositionId = null;
+    },
 
+    remove: function() {
         var eventName = this._getDeviceOrientationEventName();
         window.removeEventListener(eventName, this._onDeviceOrientation, false);
         window.removeEventListener('gps-entity-place-added', this.onGpsEntityPlaceAdded);
