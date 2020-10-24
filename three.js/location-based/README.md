@@ -13,7 +13,7 @@ modules, and assumes you already have three.js locally installed. There is a
 
 ## Full docs
 
-TODO
+Will follow.
 
 ## Example
 
