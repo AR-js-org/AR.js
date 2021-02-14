@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import ArMarkerControls from 'threexArmarkercontrols';
+import ArMarkerControls from 'threexArmarkercontrols'; // Alias for dynamic importing
 import jsartoolkit from 'jsartoolkit'; // TODO comment explanation
 const { ARToolkit, ARController } = jsartoolkit;
 const artoolkit = new ARToolkit();
