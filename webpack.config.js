@@ -68,5 +68,85 @@ module.exports = (env, argv) => {
     },
     module,
     externals
+  },
+  {
+    name: 'threex',
+    devtool,
+    entry: './three.js/src/index-threex.js',
+    output: {
+      library: 'THREEx',
+      path: path.resolve(__dirname, 'three.js/build'),
+      filename: 'ar-threex.js',
+      libraryTarget: 'umd',
+      globalObject: 'this'
+    },
+    resolve: {
+      alias: {
+        jsartoolkit: 'artoolkit5-js',
+        threexArmarkercontrols$: path.resolve(__dirname, 'three.js/src/threex/arjs-markercontrols.js')
+      }
+    },
+    module,
+    externals
+  },
+  {
+    name: 'threex-nft',
+    devtool,
+    entry: './three.js/src/index-threex-nft.js',
+    output: {
+      library: 'THREEx',
+      path: path.resolve(__dirname, 'three.js/build'),
+      filename: 'ar-threex-nft.js',
+      libraryTarget: 'umd',
+      globalObject: 'this'
+    },
+    resolve: {
+      alias: {
+        jsartoolkit: 'artoolkit5-js',
+        threexArmarkercontrols$: path.resolve(__dirname, 'three.js/src/threex/arjs-markercontrols-nft.js')
+      }
+    },
+    module,
+    externals
+  },
+  {
+    name: 'ar.js',
+    devtool,
+    entry: './three.js/src/index-arjs-nft.js',
+    output: {
+      library: 'ARjs',
+      path: path.resolve(__dirname, 'three.js/build'),
+      filename: 'ar.js',
+      libraryTarget: 'umd',
+      globalObject: 'this'
+    },
+    resolve: {
+      alias: {
+        jsartoolkit: 'artoolkit5-js',
+        threexArmarkercontrols$: path.resolve(__dirname, 'three.js/src/threex/arjs-markercontrols.js')
+      }
+    },
+    module,
+    externals
+  },
+  {
+    name: 'ar.js-nft',
+    devtool,
+    entry: './three.js/src/index-arjs-nft.js',
+    output: {
+      library: 'ARjs',
+      path: path.resolve(__dirname, 'three.js/build'),
+      filename: 'ar-nft.js',
+      libraryTarget: 'umd',
+      globalObject: 'this'
+    },
+    resolve: {
+      alias: {
+        jsartoolkit: 'artoolkit5-js',
+        threexArmarkercontrols$: path.resolve(__dirname, 'three.js/src/threex/arjs-markercontrols-nft.js')
+      }
+    },
+    module,
+    externals
   }];
 };
