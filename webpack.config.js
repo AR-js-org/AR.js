@@ -50,7 +50,7 @@ module.exports = (env, argv) => {
     externals
   },
   {
-    name: 'nft',
+    name: 'aframe-nft',
     devtool,
     entry: './aframe/src/index-nft.js',
     output: {
