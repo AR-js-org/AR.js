@@ -112,7 +112,7 @@ module.exports = (env, argv) => {
   {
     name: 'ar.js',
     devtool,
-    entry: './three.js/src/index-arjs-nft.js',
+    entry: './three.js/src/index-arjs.js',
     output: {
       library: 'ARjs',
       path: path.resolve(__dirname, 'three.js/build'),
