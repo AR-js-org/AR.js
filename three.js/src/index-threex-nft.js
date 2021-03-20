@@ -7,7 +7,7 @@ import ArToolkitSource from './threex/arjs-source';
 import ArMultiMarkerControls from './markers-area/threex-armultimarkercontrols';
 import ArMultiMakersLearning from './markers-area/threex-armultimarkerlearning'; // typo is spread over codebase
 
-module.exports = {
+export {
   ArMarkerControls,
   ArMarkerHelper,
   ArSmoothedControls,

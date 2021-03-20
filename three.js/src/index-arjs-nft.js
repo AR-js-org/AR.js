@@ -7,7 +7,7 @@ import Context from './threex/arjs-context-nft'; // nft-specific
 import Profile from './threex/arjs-profile';
 import Source from './threex/arjs-source';
 
-module.exports = {
+export {
   Anchor,
   HitTesting,
   AnchorDebugUI,
