@@ -1,7 +1,7 @@
 import * as AFRAME from 'aframe';
 import Anchor from '../../three.js/src/new-api/arjs-anchor';
 import { AnchorDebugUI } from '../../three.js/src/new-api/arjs-debugui';
-import ArToolkitContext from '../../three.js/src/threex/threex-artoolkitcontext-nft';
+import ArToolkitContext from '../../three.js/src/threex/arjs-context-nft';
 
 ////////////////////////////////////////////////////////////////////////////////
 //		arjs-anchor
