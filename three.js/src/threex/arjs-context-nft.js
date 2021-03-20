@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import ArMarkerControls from './threex-armarkercontrols-nft';
+import ArMarkerControls from './arjs-markercontrols-nft';
 import jsartoolkit from 'jsartoolkit'; // TODO comment explanation
 const { ARToolkit, ARController } = jsartoolkit;
 const artoolkit = new ARToolkit();

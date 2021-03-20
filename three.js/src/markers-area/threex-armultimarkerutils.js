@@ -1,4 +1,4 @@
-import MarkersAreaUtils from './arjs-armultimarkerutils';
+import MarkersAreaUtils from './arjs-markersareautils';
 
 const ArMultiMarkerUtils = MarkersAreaUtils;
 
