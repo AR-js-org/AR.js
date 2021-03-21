@@ -4,7 +4,7 @@ import ArSmoothedControls from './threex/threex-arsmoothedcontrols';
 import ArToolkitContext from './threex/arjs-context-nft'; // nft-specific
 import ArToolkitProfile from './threex/arjs-profile';
 import ArToolkitSource from './threex/arjs-source';
-import ArMultiMarkerControls from './markers-area/threex-armultimarkercontrols';
+import ArMultiMarkerControls from './markers-area/arjs-markersareacontrols';
 import ArMultiMakersLearning from './markers-area/threex-armultimarkerlearning'; // typo is spread over codebase
 
 export {

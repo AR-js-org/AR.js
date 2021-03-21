@@ -1,4 +1,4 @@
-import ArMultiMarkerControls from './threex-armultimarkercontrols';
+import ArMultiMarkerControls from './arjs-markersareacontrols';
 
 const MarkersAreaLearning = function(arToolkitContext, subMarkersControls){
 	var _this = this

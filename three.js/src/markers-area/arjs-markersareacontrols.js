@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import ArBaseControls from '../threex/threex-arbasecontrols';
 import ArMarkerControls from '../threex/arjs-markercontrols';
-import ArMultiMarkerControls from './threex-armultimarkercontrols';
+import ArMultiMarkerControls from './arjs-markersareacontrols';
 
 const MarkersAreaControls = function(arToolkitContext, object3d, parameters){
 	var _this = this
