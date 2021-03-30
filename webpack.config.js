@@ -75,6 +75,26 @@ module.exports = (env, argv) => {
     externals
   },
   {
+    name: 'aframe-location-only',
+    devtool,
+    entry: './aframe/src/location-based/index.js',
+    output: {
+      library: 'ARjs',
+      path: path.resolve(__dirname, 'aframe/build'),
+      filename: 'aframe-ar-location-only.js',
+      libraryTarget: 'umd',
+      globalObject: 'this'
+    },
+    resolve: {
+      alias: {
+        jsartoolkit: 'artoolkit5-js',
+        threexArmarkercontrols$: path.resolve(__dirname, 'three.js/src/threex/arjs-markercontrols-nft.js')
+      }
+    },
+    module,
+    externals
+  },
+  {
     name: 'threex',
     devtool,
     entry: './three.js/src/index-threex.js',

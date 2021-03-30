@@ -1,6 +1,11 @@
+# 3.2.0
+
+- support arbitrarily distant places on location-based (thanks to @nickw1, see PR #119)
+- minor bug fixes
+
 # 3.1.0
 
-- added new, alternative version for `location-based` using a projected camera based on Spherical Mercator. For this purpose we introduce two new aframe components: `gps-projected-camera` and `gps-projected-entity-place`
+- added new, alternative version for `location-based` using a projected camera based on Spherical Mercator. For this purpose we introduce two new aframe components: `gps-projected-camera` and `gps-projected-entity-place` (thanks to @nickw1)
 - added video stop on marker being lost (nft-video example)
 - fixed rotation bug on X axis see issue #59, restored shift position on y instead of z
 - removed links to old repository in the examples

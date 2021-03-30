@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="utf-8" />
+<title>Hikar Webapp</title>
+<script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+<script src="https://unpkg.com/aframe-look-at-component@0.8.0/dist/aframe-look-at-component.min.js"></script>
+<script src="../../..//build/aframe-ar-nft.js"></script>
+<link rel='stylesheet' type='text/css' href='css/webapp.css' />
+</head>
+
+<body>
+    <a-scene vr-mode-ui="enabled: false" renderer='antialias: true; alpha:true'
+        arjs='videoTexture: true; sourceType: webcam; debugUIEnabled: false'>
+        <a-camera id='camera1' near="0.1" far="50000" fov="80"
+            gps-camera='simulateLatitude: 51.049; simulateLongitude: -0.723'
+            rotation-reader vertical-controls wasd-controls="acceleration: 1300">
+        </a-camera>
+
+        <!-- This is perhaps 1.5 kilometres from the starting point.
+             With videoTexture: false it does not appear.
+             With videoTexture: true, it does. -->
+        <a-box gps-entity-place='latitude: 51.0597; longitude: -0.7171' material='color: yellow'
+            position='0 90 0' scale='100 100 100'>
+        </a-box>
+    </a-scene>
+</body>
+
+</html>

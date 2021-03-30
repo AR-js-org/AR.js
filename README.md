@@ -9,7 +9,7 @@
 [![Twitter Follow](https://img.shields.io/twitter/follow/nicolocarp.svg?style=plastic&label=nicolocarpignoli-twitter&style=plastic)](https://twitter.com/nicolocarp)
 [![Twitter Follow](https://img.shields.io/twitter/follow/jerome_etienne.svg?style=plastic&label=jeromeetienne-twitter&style=plastic)](https://twitter.com/jerome_etienne)
 
-AR.js is a lightweight library for Augmented Reality on the Web, coming with features like Image Tracking, Location based AR and Marker tracking.
+AR.js is a lightweight library for Augmented Reality on the Web, coming with features like Image Tracking, Location-based AR and Marker tracking.
 
 Welcome to the official repository!
 
@@ -48,14 +48,14 @@ Please import the one you need for your project, not both:
 You can also import a specific version replacing `master` keyword with version tag:
 
 ```html
-  <script src="https://raw.githack.com/AR-js-org/AR.js/3.0.2/aframe/build/aframe-ar-nft.js">
+  <script src="https://raw.githack.com/AR-js-org/AR.js/3.2.0/aframe/build/aframe-ar-nft.js">
 ```
 
 ## Get started
 
 ### 🖼 **Image Tracking**
 
-Please follow this simple steps:
+Please follow these simple steps:
 
 - Create a new project with the code below (or [open this live example](https://ar-js-org.github.io/AR.js/aframe/examples/image-tracking/nft/) and go directly to the last step)
 - Run it on a server
@@ -121,7 +121,7 @@ Please follow this simple steps:
 
 ### 🌍Location Based Example
 
-Please follow this simple steps:
+Please follow these simple steps:
 
 - Create a new project with the following snippet, and change `add-your-latitude` and `add-your-longitude` with your latitude and longitude, without the `<>`.
 - Run it on a server
@@ -193,7 +193,7 @@ Learn more on the [AR.js Official Documentation](https://ar-js-org.github.io/AR.
 
 ## Troubleshooting, feature requests, community
 
-**You can find a lot of help on the old [AR.js repositories issues](https://github.com/jeromeetienne/AR.js/issues). Please search on open/closed issues, you may find a interesting stuff.**
+**You can find a lot of help on the old [AR.js repositories issues](https://github.com/jeromeetienne/AR.js/issues). Please search on open/closed issues, you may find interesting stuff.**
 
 ### Contributing
 
@@ -206,7 +206,7 @@ work is not in vain.
 
 If you are having configuration or setup problems, please post
 a question to [StackOverflow](https://stackoverflow.com/search?q=ar.js).
-You can also address question to us in our [Gitter chatroom](https://gitter.im/AR-js/Lobby)
+You can also address the question to us in our [Gitter chatroom](https://gitter.im/AR-js/Lobby)
 
 **If you have discovered a bug or have a feature suggestion, feel free to create an issue on Github.**
 
@@ -223,7 +223,7 @@ Some things that will increase the chance that your pull request is accepted:
 
 ## Licenses
 
-It is **all open source**! jsartoolkit5 is under LGPLv3 license and additional permission.
+It is **all open-source**! jsartoolkit5 is under LGPLv3 license and additional permission.
 And All my code in AR.js repository is under MIT license. :)
 
 For legal details, be sure to check [jsartoolkit5 license](https://github.com/artoolkitx/jsartoolkit5/blob/master/LICENSE.txt)
