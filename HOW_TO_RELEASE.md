@@ -10,6 +10,9 @@ README.md
 
 # Build everything - aka a-frame and three.js
 make build
+cd aframe
+make build-location-only
+cd ..
 
 # Commit everything
 git add . && git commit -a -m 'Last commit before release' && git push

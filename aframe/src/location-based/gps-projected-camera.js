@@ -33,7 +33,7 @@ import * as AFRAME from 'aframe'
 
 AFRAME.registerComponent('gps-projected-camera', {
     _watchPositionId: null,
-    originCoordsProjected: null, // original coords now in Spherical Mercator
+    originCoords: null, // original coords now in Spherical Mercator
     currentCoords: null,
     lookControls: null,
     heading: null,
@@ -80,7 +80,7 @@ AFRAME.registerComponent('gps-projected-camera', {
             this.currentCoords = localPosition;
 
             // re-trigger initialization for new origin
-            this.originCoordsProjected = null;
+            this.originCoords = null;
             this._updatePosition();
         }
     },
@@ -157,7 +157,7 @@ AFRAME.registerComponent('gps-projected-camera', {
                     this.currentCoords
                 );
 
-                if(distMoved >= this.data.gpsMinDistance || !this.originCoordsProjected) {
+                if(distMoved >= this.data.gpsMinDistance || !this.originCoords) {
                     this._updatePosition();
                     this.lastPosition = {
                         longitude: this.currentCoords.longitude,
@@ -263,11 +263,11 @@ AFRAME.registerComponent('gps-projected-camera', {
             document.body.removeChild(alertPopup);
         }
 
-        if (!this.originCoordsProjected) {
+        if (!this.originCoords) {
             // first camera initialization
-            // Now store originCoordsProjected as PROJECTED original lat/lon, so that
+            // Now store originCoords as PROJECTED original lat/lon, so that
             // we can set the world origin to the original position in "metres"
-            this.originCoordsProjected = this._project(this.currentCoords.latitude, this.currentCoords.longitude);
+            this.originCoords = this._project(this.currentCoords.latitude, this.currentCoords.longitude);
             this._setPosition();
 
             var loader = document.querySelector('.arjs-loader');
@@ -296,7 +296,7 @@ AFRAME.registerComponent('gps-projected-camera', {
         this.el.setAttribute('position', position);
 
         // add the sphmerc position to the event (for testing only)
-        window.dispatchEvent(new CustomEvent('gps-camera-update-position', { detail: { position: this.currentCoords, origin: this.originCoordsProjected } }));
+        window.dispatchEvent(new CustomEvent('gps-camera-update-position', { detail: { position: this.currentCoords, origin: this.originCoords } }));
     },
     /**
      * Returns distance in meters between camera and destination input.
@@ -340,7 +340,7 @@ AFRAME.registerComponent('gps-projected-camera', {
     latLonToWorld: function(lat, lon) {
         var projected = this._project(lat, lon);
         // Sign of z needs to be reversed compared to projected coordinates
-        return [ projected[0] - this.originCoordsProjected[0], -(projected[1] - this.originCoordsProjected[1])];
+        return [ projected[0] - this.originCoords[0], -(projected[1] - this.originCoords[1])];
     },
     /**
      * Converts latitude/longitude to Spherical Mercator coordinates.
