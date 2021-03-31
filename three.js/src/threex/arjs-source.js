@@ -151,6 +151,10 @@ Source.prototype._initSourceWebcam = function (onReady, onError) {
         alert('Webcam Error\nName: ' + error.name + '\nMessage: ' + error.message)
         var event = new CustomEvent('camera-error', { error: error });
         window.dispatchEvent(event);
+
+        setTimeout(() => {
+            alert('Webcam Error\nName: ' + error.name + '\nMessage: ' + error.message)
+        }, 1000);
     }
 
     var domElement = document.createElement('video');
