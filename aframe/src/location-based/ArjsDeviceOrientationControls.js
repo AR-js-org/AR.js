@@ -14,7 +14,7 @@
 
 import * as THREE from "three";
 
-ArjsDeviceOrientationControls = function ( object ) {
+const ArjsDeviceOrientationControls = function ( object ) {
 
   var scope = this;
 
