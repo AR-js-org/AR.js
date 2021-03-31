@@ -1,4 +1,4 @@
-import './arjs-look-control'
+import './arjs-look-controls'
 import './arjs-webcam-texture'
 import './ArjsDeviceOrientationControls'
 import './gps-camera'
