@@ -234,7 +234,7 @@ Some things that will increase the chance that your pull request is accepted:
 ## Licenses
 
 It is **all open-source**! jsartoolkit5 is under LGPLv3 license and additional permission.
-And All my code in AR.js repository is under MIT license. :)
+And all my code in the AR.js repository is under MIT license. :)
 
 For legal details, be sure to check [jsartoolkit5 license](https://github.com/artoolkitx/jsartoolkit5/blob/master/LICENSE.txt)
 and [AR.js license](https://github.com/AR-js-org/AR.js/blob/master/LICENSE).
