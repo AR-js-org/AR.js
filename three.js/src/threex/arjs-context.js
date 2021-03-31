@@ -130,8 +130,13 @@ Context.prototype.update = function (srcElement) {
     }
     this._updatedAt = present
 
+    var prevVisibleMarkers = []
+
     // mark all markers to invisible before processing this frame
     this._arMarkersControls.forEach(function (markerControls) {
+        if (markerControls.object3d.visible) {
+            prevVisibleMarkers.push(markerControls)
+        }
         markerControls.object3d.visible = false
     })
 
@@ -146,6 +151,22 @@ Context.prototype.update = function (srcElement) {
     this.dispatchEvent({
         type: 'sourceProcessed'
     });
+
+    // After frame is processed, check visibility of each marker to determine if it was found or lost
+    this._arMarkersControls.forEach(function (markerControls) {
+        var wasVisible = prevVisibleMarkers.includes(markerControls);
+        var isVisible = markerControls.object3d.visible;
+    
+        if (isVisible === true && wasVisible === false) {
+            window.dispatchEvent(new CustomEvent('markerFound', {
+                detail: markerControls,
+            }))
+        } else if (isVisible === false && wasVisible === true) {
+            window.dispatchEvent(new CustomEvent('markerLost', {
+                detail: markerControls,
+            }))
+        }
+    })
 
 
     // return true as we processed the frame
