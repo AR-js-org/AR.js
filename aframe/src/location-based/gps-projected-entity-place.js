@@ -19,6 +19,8 @@
  * for many areas of the world and appear not to cause unacceptable distortions
  * when used as the units for AR apps.
  */
+import * as AFRAME from 'aframe'
+
 AFRAME.registerComponent('gps-projected-entity-place', {
     _cameraGps: null,
     schema: {
