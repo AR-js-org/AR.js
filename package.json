@@ -56,7 +56,7 @@
   },
   "dependencies": {
     "aframe": "^1.0.4",
-    "artoolkit5-js": "^0.0.4",
+    "artoolkit5-js": "https://github.com/MikiDi/artoolkit5-js.git#91010390b5ffe176dc53231a813e4025d2b59c85",
     "three": "^0.127.0"
   }
 }
