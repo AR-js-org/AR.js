@@ -3,7 +3,6 @@ import ArBaseControls from './threex-arbasecontrols';
 import Worker from './arjs-markercontrols-nft.worker.js';
 import jsartoolkit from 'jsartoolkit'; // TODO comment explanation
 const { ARToolkit } = jsartoolkit;
-const artoolkit = new ARToolkit();
 
 const MarkerControls = function (context, object3d, parameters) {
     var _this = this
@@ -254,13 +253,13 @@ MarkerControls.prototype._initArtoolkit = function () {
 
         // listen to the event
         arController.addEventListener('getMarker', function (event) {
-            if (event.data.type === artoolkit.PATTERN_MARKER && _this.parameters.type === 'pattern') {
+            if (event.data.type === ARToolkit.PATTERN_MARKER && _this.parameters.type === 'pattern') {
                 if (artoolkitMarkerId === null) return
                 if (event.data.marker.idPatt === artoolkitMarkerId) onMarkerFound(event)
-            } else if (event.data.type === artoolkit.BARCODE_MARKER && _this.parameters.type === 'barcode') {
+            } else if (event.data.type === ARToolkit.BARCODE_MARKER && _this.parameters.type === 'barcode') {
                 if (artoolkitMarkerId === null) return
                 if (event.data.marker.idMatrix === artoolkitMarkerId) onMarkerFound(event)
-            } else if (event.data.type === artoolkit.UNKNOWN_MARKER && _this.parameters.type === 'unknown') {
+            } else if (event.data.type === ARToolkit.UNKNOWN_MARKER && _this.parameters.type === 'unknown') {
                 onMarkerFound(event);
             }
         })
@@ -351,7 +350,7 @@ MarkerControls.prototype._initArtoolkit = function () {
 
                     onMarkerFound({
                         data: {
-                            type: artoolkit.NFT_MARKER,
+                            type: ARToolkit.NFT_MARKER,
                             matrix: matrix,
                             msg: ev.data.type,
                         }
@@ -369,8 +368,8 @@ MarkerControls.prototype._initArtoolkit = function () {
     }
 
     function onMarkerFound(event) {
-        if (event.data.type === artoolkit.PATTERN_MARKER && event.data.marker.cfPatt < _this.parameters.minConfidence) return
-        if (event.data.type === artoolkit.BARCODE_MARKER && event.data.marker.cfMatrix < _this.parameters.minConfidence) return
+        if (event.data.type === ARToolkit.PATTERN_MARKER && event.data.marker.cfPatt < _this.parameters.minConfidence) return
+        if (event.data.type === ARToolkit.BARCODE_MARKER && event.data.marker.cfMatrix < _this.parameters.minConfidence) return
 
         var modelViewMatrix = new THREE.Matrix4().fromArray(event.data.matrix)
         _this.updateWithModelViewMatrix(modelViewMatrix)
