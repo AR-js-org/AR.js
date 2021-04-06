@@ -8,6 +8,7 @@ AFRAME.registerComponent('arjs-webcam-texture', {
         this.scene.renderer.autoClear = false;
         this.video = document.createElement("video");
         this.video.setAttribute("autoplay", true);
+        this.video.setAttribute("playsinline", true);
         this.video.setAttribute("display", "none");
         document.body.appendChild(this.video);
         this.geom = new THREE.PlaneBufferGeometry(); //0.5, 0.5);
