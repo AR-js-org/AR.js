@@ -161,3 +161,5 @@ const ArjsDeviceOrientationControls = function ( object ) {
   this.connect();
 
 };
+
+export default ArjsDeviceOrientationControls;
