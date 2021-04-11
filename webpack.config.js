@@ -112,7 +112,14 @@ module.exports = (env, argv) => {
       }
     },
     module,
-    externals
+    externals: {
+      three: {
+      commonjs: 'three',
+      commonjs2: 'three',
+      amd: 'three',
+      root: 'THREE' // indicates global variable
+      }
+    }
   },
   {
     name: 'threex-nft',
@@ -132,7 +139,14 @@ module.exports = (env, argv) => {
       }
     },
     module,
-    externals
+    externals: {
+      three: {
+      commonjs: 'three',
+      commonjs2: 'three',
+      amd: 'three',
+      root: 'THREE' // indicates global variable
+      }
+    }
   },
   {
     name: 'ar.js',
@@ -152,7 +166,14 @@ module.exports = (env, argv) => {
       }
     },
     module,
-    externals
+    externals: {
+      three: {
+      commonjs: 'three',
+      commonjs2: 'three',
+      amd: 'three',
+      root: 'THREE' // indicates global variable
+      }
+    }
   },
   {
     name: 'ar.js-nft',
@@ -172,6 +193,13 @@ module.exports = (env, argv) => {
       }
     },
     module,
-    externals
+    externals: {
+      three: {
+      commonjs: 'three',
+      commonjs2: 'three',
+      amd: 'three',
+      root: 'THREE' // indicates global variable
+      }
+    }
   }];
 };
