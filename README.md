@@ -189,7 +189,7 @@ Please follow this simple steps:
             <a-entity
             position="0 -1 0"
             scale="0.05 0.05 0.05"
-            gltf-model="your-server//https://raw.githack.com/AR-js-org/AR.js/master/aframe/examples/image-tracking/nft/trex/scene.gltf"
+            gltf-model="your-server/https://raw.githack.com/AR-js-org/AR.js/master/aframe/examples/image-tracking/nft/trex/scene.gltf"
             ></a-entity>
         </a-marker>
         <a-entity camera></a-entity>
