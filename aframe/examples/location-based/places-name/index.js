@@ -1,3 +1,4 @@
+import 'arjs/aframe/build/aframe-ar-nft.js'
 
 window.onload = () => {
     let method = 'dynamic';

@@ -8,7 +8,7 @@ AFRAME.registerComponent('gps-vector-ways', {
                 console.error('gps-projected-camera not initialised');
             } else {
                 if (!this.originSphMerc) {
-                    this.originSphMerc = camera.components['gps-projected-camera'].originCoordsProjected;
+                    this.originSphMerc = camera.components['gps-projected-camera'].originCoords;
                 }
                 ev.detail.objectIds.forEach(k => {
                     this.el.object3DMap[k].geometry.translate(-this.originSphMerc[0], 0, this.originSphMerc[1]);

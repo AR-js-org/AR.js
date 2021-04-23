@@ -1,4 +1,4 @@
-const OsmWay = require('./osmway');
+import OsmWay from './osmway.js';
 
 AFRAME.registerComponent('osm', {
     schema: {
@@ -10,9 +10,6 @@ AFRAME.registerComponent('osm', {
             type: 'number',
             default: 91
         }
-    },
-
-    init: function() {
     },
 
     update: function() {

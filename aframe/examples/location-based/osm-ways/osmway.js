@@ -65,4 +65,4 @@ class OsmWay {
     }
 }
 
-module.exports = OsmWay;
+export default OsmWay;

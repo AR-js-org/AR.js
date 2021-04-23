@@ -1,0 +1,17 @@
+<html>
+    <head>
+        <title>AR.js Basic Projected Camera Example</title>
+		<script src='dist/bundle.js' type='text/javascript'></script>
+		<link rel='stylesheet' type='text/css' href='https://hikar.org/webapp/css/webapp.css' />
+    </head>
+    <body>
+    <a-scene
+        vr-mode-ui="enabled: false"
+        arjs='sourceType: webcam; videoTexture: true; debugUIEnabled: false;'
+        renderer='antialias: true; alpha: true'>
+			<div id='status'></div>
+            <a-camera gps-projected-camera='simulateLatitude: 51.049; simulateLongitude: -0.723' rotation-reader></a-camera>
+			<a-entity terrarium-dem='zoom: 12; url: /webapp/proxy.php?x={x}&y={y}&z={z}' osm3d='url: https://hikar.org/fm/ws/tsvr.php?x={x}&y={y}&z={z}&amp;poi=natural&amp;outProj=4326' peakfinder></a-entity>
+	</a-scene>
+    </body>
+</html>
