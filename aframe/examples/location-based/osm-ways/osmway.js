@@ -65,4 +65,3 @@ class OsmWay {
     }
 }
 
-export default OsmWay;

@@ -1,5 +1,3 @@
-import 'arjs/aframe/build/aframe-ar-nft.js'
-
 window.onload = () => {
     let method = 'dynamic';
 
@@ -52,6 +50,7 @@ function dynamicLoadPlaces(position) {
     };
 
     // CORS Proxy to avoid CORS problems
+    // NOTE this no longer works - please replace with your own proxy
     let corsProxy = 'https://cors-anywhere.herokuapp.com/';
 
     // Foursquare API

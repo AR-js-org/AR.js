@@ -1,9 +1,7 @@
-import 'arjs/aframe/build/aframe-ar-nft.js'
-import 'aframe-look-at-component'
 
 AFRAME.registerComponent('peakfinder', {
     init: function() {
-        const scale = 2000;
+        const scale = 500;
         const longitude = -0.72, latitude = 51.05;
         fetch(`https://www.hikar.org/fm/ws/bsvr.php?bbox=${longitude-0.1},${latitude-0.1},${longitude+0.1},${latitude+0.1}&outProj=4326&format=json&poi=natural`
             )

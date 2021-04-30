@@ -3,7 +3,12 @@
     <head>
         <meta charset='utf-8' />
         <title>AR.js osm example</title>
-		<script src='dist/bundle.js'></script>
+        <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+        <script type='text/javascript' src='../../../build/aframe-ar-nft.js'></script>
+        <script type='text/javascript' src='index.js'></script>
+        <script type='text/javascript' src='osm.js'></script>
+        <script type='text/javascript' src='osmway.js'></script>
+        <script type='text/javascript' src='gps-vector-ways.js'></script>
         <style type='text/css'>
         #status {
             font-family: Roboto, sans-serif;
@@ -17,7 +22,7 @@
         </style>
     </head>
     <body style='margin: 0; overflow: hidden'>
-        <a-scene vr-mode-ui='enabled: false' arjs='sourceType: webcam; videoTexture: true; debugUIEnabled: false' osmapp>
+        <a-scene vr-mode-ui='enabled: false' arjs='sourceType: webcam; videoTexture: true; debugUIEnabled: false'>
             <div id='status'></div>
             <a-camera gps-projected-camera='simulateLatitude: 51.049; simulateLongitude: -0.723' rotation-reader position='0 20 0' wasd-controls='acceleration: 1300'></a-camera>
             <a-entity id='osmElement' osm gps-vector-ways />

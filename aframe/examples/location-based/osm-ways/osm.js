@@ -1,4 +1,3 @@
-import OsmWay from './osmway.js';
 
 AFRAME.registerComponent('osm', {
     schema: {

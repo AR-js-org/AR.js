@@ -4,13 +4,14 @@
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <title>GeoAR.js demo</title>
-    <script type='text/javascript' src='dist/bundle.js'></script>
+    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+    <script type='text/javascript' src='../../../build/aframe-ar-nft.js'></script>
 </head>
 
 <body style='margin: 0; overflow: hidden;'>
     <a-scene
         vr-mode-ui="enabled: false"
-		arjs='sourceType: webcam; videoTexture: true; debugUIEnabled: false;'>
+        arjs='sourceType: webcam; videoTexture: true; debugUIEnabled: false;'>
 
         <!-- too near, is like 2m far -->
         <a-box material="color: red;" scale="15 15 15" gps-entity-place="latitude: 44.504493; longitude: 11.301134;"></a-box>
@@ -25,7 +26,7 @@
             rotation-reader
             gps-camera="simulateLatitude: 44.504348; simulateLongitude: 11.301027; minDistance: 50; maxDistance: 700;"
         >
-		</a-camera>
-	</a-scene>
+        </a-camera>
+    </a-scene>
 </body>
 
