@@ -1,3 +1,15 @@
+# 3.3.2
+
+- Fixed bug in `arjs-webcam-texture component` which caused the webcam stream to freeze on iOS. Thanks to @stevenlybeck for this.
+
+- CORS proxy removed from examples
+
+- Added custom found/lost events to markerControls for three.js core (thanks to @fcor)
+
+- Deactivated GPS listener when AR.js app not in the foreground (thanks to @NVFedorov for raising this issue)
+
+- update license wording (thanks to @chingucoding)
+
 # 3.3.1
 
 - Fix minor location-based bugs
