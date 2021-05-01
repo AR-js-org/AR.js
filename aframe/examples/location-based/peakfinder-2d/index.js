@@ -10,8 +10,8 @@ AFRAME.registerComponent('peakfinder', {
     init: function() {
         const longitude = -0.72, latitude = 51.05, textScale = this.data.scale * 100;
 
-		// Call the Hikar API to get local POIs.
-		// Note that data is only available for Europe and Turkey.
+        // Call the Hikar API (OpenStreetMap-based) to get local POIs.
+        // Note that data is only available for Europe and Turkey.
         fetch(`https://www.hikar.org/fm/ws/bsvr.php?bbox=${longitude-0.1},${latitude-0.1},${longitude+0.1},${latitude+0.1}&outProj=4326&format=json&poi=natural`
             )
         .then(response => response.json())
