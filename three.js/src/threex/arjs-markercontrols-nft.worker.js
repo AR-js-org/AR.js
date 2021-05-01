@@ -24,7 +24,6 @@ var ar = null;
 var markerResult = null;
 
 function load(msg) {
-    console.log("msg:", msg);
     var camUrl, nftMarkerUrl;
     var basePath = self.origin;
     console.log('base path:', basePath);
