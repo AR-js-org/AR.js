@@ -1101,7 +1101,7 @@ Object.assign(ARjs.Context.prototype, THREE.EventDispatcher.prototype);
 
 // default to github page
 ARjs.Context.baseURL = 'https://ar-js-org.github.io/AR.js/three.js/'
-ARjs.Context.REVISION = '3.3.2';
+ARjs.Context.REVISION = '3.3.3';
 
 /**
  * Create a default camera for this trackingBackend
@@ -5132,7 +5132,7 @@ AFRAME.registerComponent('gps-entity-place', {
 
             this.el.setAttribute('distance', distanceForMsg);
             this.el.setAttribute('distanceMsg', formatDistance(distanceForMsg));
-            this.el.dispatchEvent(new CustomEvent('gps-entity-place-update-positon', { detail: { distance: distanceForMsg } }));
+            this.el.dispatchEvent(new CustomEvent('gps-entity-place-update-position', { detail: { distance: distanceForMsg } }));
 
             var actualDistance = this._cameraGps.computeDistanceMeters(ev.detail.position, dstCoords, true);
 
@@ -5771,7 +5771,7 @@ AFRAME.registerComponent('gps-projected-entity-place', {
             this.el.setAttribute('distance', distanceForMsg);
             this.el.setAttribute('distanceMsg', formatDistance(distanceForMsg));
 
-            this.el.dispatchEvent(new CustomEvent('gps-entity-place-update-positon', { detail: { distance: distanceForMsg } }));
+            this.el.dispatchEvent(new CustomEvent('gps-entity-place-update-position', { detail: { distance: distanceForMsg } }));
 
             var actualDistance = this._cameraGps.computeDistanceMeters(dstCoords, true);
 
