@@ -129,6 +129,32 @@
         }
     }
 
+    function disposeARSource() {
+        console.log('disposeARSource()');
+
+        const video = document.querySelector('#arjs-video');
+
+        if (video) {
+            video?.srcObject?.getTracks().map((track) => track.stop());
+            video.remove();
+        }
+
+        arToolkitSource = null;
+    }
+
+    function disposeARContext() {
+        console.log('disposeARContext()');
+
+        if (arToolkitContext?.arController?.cameraParam?.dispose) {
+            arToolkitContext.arController.cameraParam.dispose();
+        }
+
+        if (arToolkitContext?.arController?.dispose) {
+            arToolkitContext.arController.dispose();
+        }
+
+        arToolkitContext = null;
+    }
 
 	// handle resize
 	window.addEventListener('resize', function(){
@@ -136,11 +162,14 @@
     })
 
 	function onResize(){
+        disposeARContext();
+        disposeARSource();
 		arToolkitSource.onResizeElement()
 		arToolkitSource.copyElementSizeTo(renderer.domElement)
 		if( arToolkitContext.arController !== null ){
 			arToolkitSource.copyElementSizeTo(arToolkitContext.arController.canvas)
 		}
+
 	}
 
 
