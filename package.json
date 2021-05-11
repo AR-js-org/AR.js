@@ -55,7 +55,7 @@
     "worker-loader": "^3.0.8"
   },
   "dependencies": {
-    "@ar-js-org/artoolkit5-js": "0.1.0",
+    "@ar-js-org/artoolkit5-js": "https://github.com/AR-js-org/artoolkit5-js.git#4dc7f3e247dbbf4f73c66be2198a9268230a27a0",
     "aframe": "^1.0.4",
     "three": "^0.127.0"
   }
