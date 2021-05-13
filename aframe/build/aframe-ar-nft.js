@@ -1628,7 +1628,12 @@ ARjs.Source.prototype._initSourceWebcam = function (onReady, onError) {
         window.dispatchEvent(event);
 
         setTimeout(() => {
-            alert('Webcam Error\nName: ' + error.name + '\nMessage: ' + error.message)
+            if (!document.getElementById('error-popup')) {
+                var errorPopup = document.createElement('div');
+                errorPopup.innerHTML = 'Webcam Error\nName: ' + error.name + '\nMessage: ' + error.message
+                errorPopup.setAttribute('id', 'error-popup');
+                document.body.appendChild(errorPopup);
+            }
         }, 1000);
     }
 
@@ -1739,7 +1744,12 @@ ARjs.Source.prototype.toggleMobileTorch = function () {
 
     var stream = arToolkitSource.domElement.srcObject
     if (stream instanceof MediaStream === false) {
-        alert('enabling mobile torch is available only on webcam')
+        if (!document.getElementById('error-popup')) {
+            var errorPopup = document.createElement('div');
+            errorPopup.innerHTML = 'enabling mobile torch is available only on webcam'
+            errorPopup.setAttribute('id', 'error-popup');
+            document.body.appendChild(errorPopup);
+        }
         return
     }
 
@@ -1751,7 +1761,12 @@ ARjs.Source.prototype.toggleMobileTorch = function () {
     var capabilities = videoTrack.getCapabilities()
 
     if (!capabilities.torch) {
-        alert('no mobile torch is available on your camera')
+        if (!document.getElementById('error-popup')) {
+            var errorPopup = document.createElement('div');
+            errorPopup.innerHTML = 'no mobile torch is available on your camera'
+            errorPopup.setAttribute('id', 'error-popup');
+            document.body.appendChild(errorPopup);
+        }
         return
     }
 
@@ -4639,9 +4654,20 @@ AFRAME.registerComponent('arjs-webcam-texture', {
                 this.video.srcObject = stream;    
                 this.video.play();
             })
-            .catch(e => { alert(`Webcam error: ${e}`); });
+            .catch(e => {  
+                if (!document.getElementById('error-popup')) {
+                    var errorPopup = document.createElement('div');
+                    errorPopup.innerHTML = `Webcam error: ${e}`
+                    errorPopup.setAttribute('id', 'error-popup');
+                    document.body.appendChild(errorPopup);
+                } });
         } else {
-            alert('sorry - media devices API not supported');
+            if (!document.getElementById('error-popup')) {
+                var errorPopup = document.createElement('div');
+                errorPopup.innerHTML = 'sorry - media devices API not supported'
+                errorPopup.setAttribute('id', 'error-popup');
+                document.body.appendChild(errorPopup);
+            }
         }
     },
 
@@ -4764,10 +4790,20 @@ AFRAME.registerComponent('gps-camera', {
 
                 document.addEventListener('touchend', function () { handler() }, false);
 
-                alert('After camera permission prompt, please tap the screen to activate geolocation.');
+                if (!document.getElementById('error-popup')) {
+                    var errorPopup = document.createElement('div');
+                    errorPopup.innerHTML = 'After camera permission prompt, please tap the screen to activate geolocation.'
+                    errorPopup.setAttribute('id', 'error-popup');
+                    document.body.appendChild(errorPopup);
+                }    
             } else {
                 var timeout = setTimeout(function () {
-                    alert('Please enable device orientation in Settings > Safari > Motion & Orientation Access.')
+                    if (!document.getElementById('error-popup')) {
+                        var errorPopup = document.createElement('div');
+                        errorPopup.innerHTML = 'Please enable device orientation in Settings > Safari > Motion & Orientation Access.'
+                        errorPopup.setAttribute('id', 'error-popup');
+                        document.body.appendChild(errorPopup);
+                    }
                 }, 750);
                 window.addEventListener(eventName, function () {
                     clearTimeout(timeout);
@@ -4869,12 +4905,22 @@ AFRAME.registerComponent('gps-camera', {
 
                 if (err.code === 1) {
                     // User denied GeoLocation, let their know that
-                    alert('Please activate Geolocation and refresh the page. If it is already active, please check permissions for this website.');
+                    if (!document.getElementById('error-popup')) {
+                        var errorPopup = document.createElement('div');
+                        errorPopup.innerHTML = 'Please activate Geolocation and refresh the page. If it is already active, please check permissions for this website.'
+                        errorPopup.setAttribute('id', 'error-popup');
+                        document.body.appendChild(errorPopup);
+                    }
                     return;
                 }
 
                 if (err.code === 3) {
-                    alert('Cannot retrieve GPS position. Signal is absent.');
+                    if (!document.getElementById('error-popup')) {
+                        var errorPopup = document.createElement('div');
+                        errorPopup.innerHTML = 'Cannot retrieve GPS position. Signal is absent.'
+                        errorPopup.setAttribute('id', 'error-popup');
+                        document.body.appendChild(errorPopup);
+                    }
                     return;
                 }
             };
@@ -5330,10 +5376,20 @@ AFRAME.registerComponent('gps-projected-camera', {
 
                 document.addEventListener('touchend', function() { handler() }, false);
 
-                alert('After camera permission prompt, please tap the screen to activate geolocation.');
+                if (!document.getElementById('error-popup')) {
+                    var errorPopup = document.createElement('div');
+                    errorPopup.innerHTML = 'After camera permission prompt, please tap the screen to activate geolocation.'
+                    errorPopup.setAttribute('id', 'error-popup');
+                    document.body.appendChild(errorPopup);
+                }
             } else {
                 var timeout = setTimeout(function() {
-                    alert('Please enable device orientation in Settings > Safari > Motion & Orientation Access.')
+                    if (!document.getElementById('error-popup')) {
+                        var errorPopup = document.createElement('div');
+                        errorPopup.innerHTML = 'Please enable device orientation in Settings > Safari > Motion & Orientation Access.'
+                        errorPopup.setAttribute('id', 'error-popup');
+                        document.body.appendChild(errorPopup);
+                    }
                 }, 750);
                 window.addEventListener(eventName, function() {
                     clearTimeout(timeout);
@@ -5432,12 +5488,22 @@ AFRAME.registerComponent('gps-projected-camera', {
 
                 if (err.code === 1) {
                     // User denied GeoLocation, let their know that
-                    alert('Please activate Geolocation and refresh the page. If it is already active, please check permissions for this website.');
+                    if (!document.getElementById('error-popup')) {
+                        var errorPopup = document.createElement('div');
+                        errorPopup.innerHTML = 'Please activate Geolocation and refresh the page. If it is already active, please check permissions for this website.'
+                        errorPopup.setAttribute('id', 'error-popup');
+                        document.body.appendChild(errorPopup);
+                    }        
                     return;
                 }
 
                 if (err.code === 3) {
-                    alert('Cannot retrieve GPS position. Signal is absent.');
+                    if (!document.getElementById('error-popup')) {
+                        var errorPopup = document.createElement('div');
+                        errorPopup.innerHTML = 'Cannot retrieve GPS position. Signal is absent.'
+                        errorPopup.setAttribute('id', 'error-popup');
+                        document.body.appendChild(errorPopup);
+                    }
                     return;
                 }
             };
