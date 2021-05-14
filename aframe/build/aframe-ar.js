@@ -6127,15 +6127,7 @@ AFRAME.registerComponent('gps-camera', {
         if (!!navigator.userAgent.match(/Version\/[\d.]+.*Safari/)) {
             // iOS 13+
             if (typeof DeviceOrientationEvent.requestPermission === 'function') {
-                var handler = function () {
-                    console.log('Requesting device orientation permissions...')
-                    DeviceOrientationEvent.requestPermission();
-                    document.removeEventListener('touchend', handler);
-                };
-
-                document.addEventListener('touchend', function () { handler() }, false);
-
-                alert('After camera permission prompt, please tap the screen to activate geolocation.');
+                DeviceOrientationEvent.requestPermission();
             } else {
                 var timeout = setTimeout(function () {
                     alert('Please enable device orientation in Settings > Safari > Motion & Orientation Access.')
@@ -6688,6 +6680,7 @@ AFRAME.registerComponent('gps-projected-camera', {
 
         this.lookControls = this.el.components['arjs-look-controls'] || this.el.components['look-controls'];
 
+    
         // listen to deviceorientation event
         var eventName = this._getDeviceOrientationEventName();
         this._onDeviceOrientation = this._onDeviceOrientation.bind(this);
@@ -6696,15 +6689,7 @@ AFRAME.registerComponent('gps-projected-camera', {
         if (!!navigator.userAgent.match(/Version\/[\d.]+.*Safari/)) {
             // iOS 13+
             if (typeof DeviceOrientationEvent.requestPermission === 'function') {
-                var handler = function() {
-                    console.log('Requesting device orientation permissions...')
-                    DeviceOrientationEvent.requestPermission();
-                    document.removeEventListener('touchend', handler);
-                };
-
-                document.addEventListener('touchend', function() { handler() }, false);
-
-                alert('After camera permission prompt, please tap the screen to activate geolocation.');
+                DeviceOrientationEvent.requestPermission();
             } else {
                 var timeout = setTimeout(function() {
                     alert('Please enable device orientation in Settings > Safari > Motion & Orientation Access.')
