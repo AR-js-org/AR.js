@@ -295,7 +295,7 @@ Context.prototype.dispose = function () {
     // markers
     this._arMarkersControls.forEach(function (markerControls) {
     	console.assert(arMarkerControls instanceof ArMarkerControls);
-    	// markerControls.dispose();
+    	console.log( 'markerControls', markerControls );
 	} );
     this._arMarkersControls = [];
 
