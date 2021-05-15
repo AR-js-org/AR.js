@@ -140,7 +140,7 @@ Source.prototype._initSourceVideo = function (onReady) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-//          handle webcam source
+//          init webcam source
 ////////////////////////////////////////////////////////////////////////////////
 
 Source.prototype._initSourceWebcam = function (onReady, onError) {
@@ -231,6 +231,78 @@ Source.prototype._initSourceWebcam = function (onReady, onError) {
     });
 
     return domElement
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//          dispose source
+////////////////////////////////////////////////////////////////////////////////
+
+Source.prototype.dispose = function () {
+    switch (this.parameters.sourceType) {
+        case 'image':
+            this._disposeSourceImage();
+		  break;
+
+        case 'video':
+            this._disposeSourceVideo();
+            break;
+
+        case 'webcam':
+            this._disposeSourceWebcam();
+            break;
+    }
+}	
+
+////////////////////////////////////////////////////////////////////////////////
+//          dispose image source
+////////////////////////////////////////////////////////////////////////////////
+
+Source.prototype._disposeSourceImage = function () {
+    var domElement = document.querySelector('#arjs-video');
+
+    if( !domElement ) {
+        return;
+    }
+
+    domElement.remove();
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//          dispose video source
+////////////////////////////////////////////////////////////////////////////////
+
+Source.prototype._disposeSourceVideo = function () {
+    var domElement = document.querySelector('#arjs-video');
+    
+    if( !domElement ) {
+        return;
+    }
+
+    // https://html.spec.whatwg.org/multipage/media.html#best-practices-for-authors-using-media-elements
+    domElement.pause();
+    domElement.removeAttribute('src'); 
+    domElement.load();    
+
+    domElement.remove();
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//          dispose webcam source
+////////////////////////////////////////////////////////////////////////////////
+
+Source.prototype._disposeSourceWebcam = function () {
+    var domElement = document.querySelector('#arjs-video');
+
+    if( !domElement ) {
+        return;
+    }
+
+    // https://stackoverflow.com/a/12436772
+    if( domElement.srcObject && domElement.srcObject.getTracks ) {
+        domElement.srcObject.getTracks().map((track) => track.stop());    
+    }	
+
+    domElement.remove();	
 }
 
 //////////////////////////////////////////////////////////////////////////////
