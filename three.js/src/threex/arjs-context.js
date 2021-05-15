@@ -184,7 +184,7 @@ Context.prototype.addMarker = function (arMarkerControls) {
 Context.prototype.removeMarker = function (arMarkerControls) {
     console.assert(arMarkerControls instanceof ArMarkerControls)
     // console.log('remove marker for', arMarkerControls)
-    var index = this._arMarkersControls.indexOf(artoolkitMarker);
+    var index = this._arMarkersControls.indexOf(arMarkerControls);
     console.assert(index !== index)
     this._arMarkersControls.splice(index, 1)
 }
