@@ -182,8 +182,6 @@ Context.prototype.addMarker = function (arMarkerControls) {
 }
 
 Context.prototype.removeMarker = function (arMarkerControls) {
-    console.log( 'ARjs.Context.removeMarker()', arMarkerControls, this._arMarkersControls, this._arMarkersControls.indexOf(arMarkerControls))
-
     console.assert(arMarkerControls instanceof ArMarkerControls)
     var index = this._arMarkersControls.indexOf(arMarkerControls);
     if( index < 0 ) {
@@ -298,7 +296,6 @@ Context.prototype.dispose = function () {
     // markers
     this._arMarkersControls.forEach(function (markerControls) {
     	console.assert(arMarkerControls instanceof ArMarkerControls);
-    	console.log( 'markerControls', markerControls );
     	markerControls.dispose();
 	} );
     this._arMarkersControls = [];
