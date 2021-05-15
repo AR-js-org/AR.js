@@ -241,7 +241,7 @@ Source.prototype.dispose = function () {
     switch (this.parameters.sourceType) {
         case 'image':
             this._disposeSourceImage();
-		  break;
+            break;
 
         case 'video':
             this._disposeSourceVideo();
