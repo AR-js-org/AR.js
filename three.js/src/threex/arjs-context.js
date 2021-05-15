@@ -286,4 +286,32 @@ Context.prototype._updateArtoolkit = function (srcElement) {
     this.arController.process(srcElement)
 }
 
+//////////////////////////////////////////////////////////////////////////////
+//		dispose function
+//////////////////////////////////////////////////////////////////////////////
+Context.prototype.dispose = function () {
+    this.initialized = false;
+
+    // markers
+    this._arMarkersControls.forEach(function (markerControls) {
+    	console.assert(arMarkerControls instanceof ArMarkerControls);
+    	markerControls.dispose();
+	} );
+    this._arMarkersControls = [];
+
+    // cameraParam
+    if (this.arController && this.arController.cameraParam && this.arController.cameraParam.dispose) {
+        this.arController.cameraParam.dispose();
+    }
+    // ARController
+	if( this.arController && this.arController.dispose ) {
+		this.arController.dispose();
+	}
+    this.arController = null;
+
+    // artoolkit
+    // NOTE: since the instance of ARToolkit is created globally 
+    // we should probably do not call .teardown() ... ?
+ }
+
 export default Context;
