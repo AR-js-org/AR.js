@@ -32,6 +32,9 @@ const Context = function (parameters) {
         // the patternRatio inside the artoolkit marker - artoolkit only
         patternRatio: 0.5,
 
+        // orientation of the screen 
+        orientation: 'portrait',
+
         // enable image smoothing or not for canvas copy - default to true
         // https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/imageSmoothingEnabled
         imageSmoothingEnabled: false,
@@ -212,6 +215,9 @@ Context.prototype._initArtoolkit = function (onCompleted) {
             arController.ctx.webkitImageSmoothingEnabled = _this.parameters.imageSmoothingEnabled;
             arController.ctx.msImageSmoothingEnabled = _this.parameters.imageSmoothingEnabled;
             arController.ctx.imageSmoothingEnabled = _this.parameters.imageSmoothingEnabled;
+            arController.orientation = _this.parameters.orientation;
+            arController.options.orientation = _this.parameters.orientation;
+            console.log('arController orientation is: ', arController.orientation);
 
             // honor this.parameters.debug
             if (_this.parameters.debug === true) {
