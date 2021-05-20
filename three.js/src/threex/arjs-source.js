@@ -216,7 +216,7 @@ Source.prototype._initSourceWebcam = function (onReady, onError) {
             window.dispatchEvent(event);
 
             // start the video on first click if not started automatically
-            document.body.addEventListener('click', this.onInitialClick, {once:true});            
+            document.body.addEventListener('click', _this.onInitialClick, {once:true});            
 
             onReady();
         }).catch(function (error) {
