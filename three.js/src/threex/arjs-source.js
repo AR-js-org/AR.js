@@ -45,6 +45,12 @@ const Source = function (parameters) {
             _this.parameters[key] = newValue
         }
     }
+
+    this.onInitialClick = function() {
+        if( this.domElement && this.domElement.play ) {
+            this.domElement.play().then( () => {});
+        }
+    }
 }
 
 //////////////////////////////////////////////////////////////////////////////
@@ -124,11 +130,8 @@ Source.prototype._initSourceVideo = function (onReady) {
     domElement.loop = true;
     domElement.muted = true;
 
-    // trick to trigger the video on android
-    document.body.addEventListener('click', function onClick() {
-        document.body.removeEventListener('click', onClick);
-        domElement.play()
-    });
+    // start the video on first click if not started automatically
+    document.body.addEventListener('click', this.onInitialClick, {once:true});
 
     domElement.width = this.parameters.sourceWidth;
     domElement.height = this.parameters.sourceHeight;
@@ -211,11 +214,9 @@ Source.prototype._initSourceWebcam = function (onReady, onError) {
 
             var event = new CustomEvent('camera-init', { stream: stream });
             window.dispatchEvent(event);
-            // to start the video, when it is possible to start it only on userevent. like in android
-            document.body.addEventListener('click', function () {
-                domElement.play();
-            });
-            // domElement.play();
+
+            // start the video on first click if not started automatically
+            document.body.addEventListener('click', this.onInitialClick, {once:true});            
 
             onReady();
         }).catch(function (error) {
@@ -251,6 +252,8 @@ Source.prototype.dispose = function () {
             this._disposeSourceWebcam();
             break;
     }
+
+    document.body.removeEventListener('click', this.onInitialClick, {once:true});            
 }	
 
 ////////////////////////////////////////////////////////////////////////////////
