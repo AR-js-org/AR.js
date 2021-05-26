@@ -99,7 +99,10 @@ MarkerControls.prototype.dispose = function(){
 	this.object3d = null;
 	this.smoothMatrices = [];
 
-	this.context.arController.removeEventListener('getMarker', _this.onGetMarker)
+	if( this.context && this.context.arController ) {
+		this.context.arController.removeEventListener('getMarker', this.onGetMarker)
+		_this.context.arController
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////////
@@ -252,8 +255,17 @@ MarkerControls.prototype._initArtoolkit = function(){
 		}
 
 		// listen to the event
-		arController.addEventListener('getMarker', _this.onGetMarker)
+		arController.addEventListener('getMarker', onGetMarker)
 
+	}
+
+	function onMarkerFound(event){
+		// honor his.parameters.minConfidence
+		if( event.data.type === ARToolkit.PATTERN_MARKER && event.data.marker.cfPatt < _this.parameters.minConfidence )	return
+		if( event.data.type === ARToolkit.BARCODE_MARKER && event.data.marker.cfMatrix < _this.parameters.minConfidence )	return
+
+		var modelViewMatrix = new THREE.Matrix4().fromArray(event.data.matrix)
+		_this.updateWithModelViewMatrix(modelViewMatrix)
 	}
 
 	function onGetMarker(event){
@@ -269,14 +281,6 @@ MarkerControls.prototype._initArtoolkit = function(){
 		}
 	}
 
-	function onMarkerFound(event){
-		// honor his.parameters.minConfidence
-		if( event.data.type === ARToolkit.PATTERN_MARKER && event.data.marker.cfPatt < _this.parameters.minConfidence )	return
-		if( event.data.type === ARToolkit.BARCODE_MARKER && event.data.marker.cfMatrix < _this.parameters.minConfidence )	return
-
-		var modelViewMatrix = new THREE.Matrix4().fromArray(event.data.matrix)
-		_this.updateWithModelViewMatrix(modelViewMatrix)
-	}
 }
 
 export default MarkerControls;
