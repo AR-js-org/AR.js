@@ -304,12 +304,16 @@ Context.prototype.dispose = function () {
 	if (this.arController && this.arController.cameraParam && this.arController.cameraParam.dispose) {
 		this.arController.cameraParam.dispose();
 	}
+
 	
 	// ARController
 	if( this.arController && this.arController.dispose ) {
 		this.arController.dispose();
 	}
 	this.arController = null;
+
+    // class properties
+    this._artoolkitProjectionAxisTransformMatrix = null;
 
 	// artoolkit
 	// NOTE: since the instance of ARToolkit is created globally 

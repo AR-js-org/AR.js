@@ -239,6 +239,8 @@ Source.prototype._initSourceWebcam = function (onReady, onError) {
 ////////////////////////////////////////////////////////////////////////////////
 
 Source.prototype.dispose = function () {
+    this.ready = false;
+
     switch (this.parameters.sourceType) {
         case 'image':
             this._disposeSourceImage();
@@ -252,6 +254,8 @@ Source.prototype.dispose = function () {
             this._disposeSourceWebcam();
             break;
     }
+
+    this.domElement = null;
 
     document.body.removeEventListener('click', this.onInitialClick, {once:true});            
 }	
@@ -287,6 +291,8 @@ Source.prototype._disposeSourceVideo = function () {
     domElement.load();    
 
     domElement.remove();
+
+    
 }
 
 ////////////////////////////////////////////////////////////////////////////////
