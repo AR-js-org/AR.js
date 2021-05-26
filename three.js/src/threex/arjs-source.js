@@ -83,7 +83,7 @@ Source.prototype.init = function (onReady, onError) {
         if( !_this.domElement ) {
             return;
         }
-        
+
         document.body.appendChild(_this.domElement);
         window.dispatchEvent(new CustomEvent('arjs-video-loaded', {
             detail: {
@@ -292,7 +292,6 @@ Source.prototype._disposeSourceVideo = function () {
     // https://html.spec.whatwg.org/multipage/media.html#best-practices-for-authors-using-media-elements
     domElement.pause();
     domElement.removeAttribute('src'); 
-    domElement.load();    
 
     domElement.remove();    
 }
