@@ -80,6 +80,10 @@ Source.prototype.init = function (onReady, onError) {
 
     return this
     function onSourceReady() {
+        if( !_this.domElement ) {
+            return;
+        }
+        
         document.body.appendChild(_this.domElement);
         window.dispatchEvent(new CustomEvent('arjs-video-loaded', {
             detail: {
@@ -290,9 +294,7 @@ Source.prototype._disposeSourceVideo = function () {
     domElement.removeAttribute('src'); 
     domElement.load();    
 
-    domElement.remove();
-
-    
+    domElement.remove();    
 }
 
 ////////////////////////////////////////////////////////////////////////////////
