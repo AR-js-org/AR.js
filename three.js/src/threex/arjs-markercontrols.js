@@ -95,7 +95,7 @@ MarkerControls.prototype.dispose = function(){
 
 	this.context.removeMarker(this)
 	
-	this.context.arController.removeEventListener('getMarker', onGetMarker)
+	this.context.arController.removeEventListener('getMarker', _this.onGetMarker)
 }
 
 //////////////////////////////////////////////////////////////////////////////
@@ -248,7 +248,7 @@ MarkerControls.prototype._initArtoolkit = function(){
 		}
 
 		// listen to the event
-		arController.addEventListener('getMarker', onGetMarker)
+		arController.addEventListener('getMarker', _this.onGetMarker)
 
 	}
 
