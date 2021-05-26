@@ -90,11 +90,15 @@ MarkerControls.prototype = Object.create( ArBaseControls.prototype );
 MarkerControls.prototype.constructor = MarkerControls;
 
 MarkerControls.prototype.dispose = function(){
+	console.log( 'MarkerControls.dispose()', '1', this, _this );
+	
+	this.context.removeMarker(this)
+
+	console.log( 'MarkerControls.dispose()', '2', this, _this );
+	
 	this.object3d = null;
 	this.smoothMatrices = [];
 
-	this.context.removeMarker(this)
-	
 	this.context.arController.removeEventListener('getMarker', _this.onGetMarker)
 }
 
