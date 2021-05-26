@@ -90,10 +90,12 @@ MarkerControls.prototype = Object.create( ArBaseControls.prototype );
 MarkerControls.prototype.constructor = MarkerControls;
 
 MarkerControls.prototype.dispose = function(){
-	this.context.removeMarker(this)
+	this.object3d = null;
+	this.smoothMatrices = [];
 
-	// TODO remove the event listener if needed
-	// unloadMaker ???
+	this.context.removeMarker(this)
+	
+	this.context.arController.removeEventListener('getMarker', onGetMarker)
 }
 
 //////////////////////////////////////////////////////////////////////////////
@@ -246,19 +248,21 @@ MarkerControls.prototype._initArtoolkit = function(){
 		}
 
 		// listen to the event
-		arController.addEventListener('getMarker', function(event){
-			if( event.data.type === ARToolkit.PATTERN_MARKER && _this.parameters.type === 'pattern' ){
-				if( artoolkitMarkerId === null )	return
-				if( event.data.marker.idPatt === artoolkitMarkerId ) onMarkerFound(event)
-			}else if( event.data.type === ARToolkit.BARCODE_MARKER && _this.parameters.type === 'barcode' ){
-				// console.log('BARCODE_MARKER idMatrix', event.data.marker.idMatrix, artoolkitMarkerId )
-				if( artoolkitMarkerId === null )	return
-				if( event.data.marker.idMatrix === artoolkitMarkerId )  onMarkerFound(event)
-			}else if( event.data.type === ARToolkit.UNKNOWN_MARKER && _this.parameters.type === 'unknown'){
-				onMarkerFound(event)
-			}
-		})
+		arController.addEventListener('getMarker', onGetMarker)
 
+	}
+
+	function onGetMarker(event){
+		if( event.data.type === ARToolkit.PATTERN_MARKER && _this.parameters.type === 'pattern' ){
+			if( artoolkitMarkerId === null )	return
+			if( event.data.marker.idPatt === artoolkitMarkerId ) onMarkerFound(event)
+		}else if( event.data.type === ARToolkit.BARCODE_MARKER && _this.parameters.type === 'barcode' ){
+			// console.log('BARCODE_MARKER idMatrix', event.data.marker.idMatrix, artoolkitMarkerId )
+			if( artoolkitMarkerId === null )	return
+			if( event.data.marker.idMatrix === artoolkitMarkerId )  onMarkerFound(event)
+		}else if( event.data.type === ARToolkit.UNKNOWN_MARKER && _this.parameters.type === 'unknown'){
+			onMarkerFound(event)
+		}
 	}
 
 	function onMarkerFound(event){
