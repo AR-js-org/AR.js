@@ -89,9 +89,12 @@ const MarkerControls = function(context, object3d, parameters){
 MarkerControls.prototype = Object.create( ArBaseControls.prototype );
 MarkerControls.prototype.constructor = MarkerControls;
 
+
+//////////////////////////////////////////////////////////////////////////////
+//		dispose instance
+//////////////////////////////////////////////////////////////////////////////
 MarkerControls.prototype.dispose = function(){
 	if( this.context && this.context.arController ) {
-		console.log( 'MarkerControls.dispose()', 'removeEventListener' );
 		this.context.arController.removeEventListener('getMarker', this.onGetMarker);
 	}
 
