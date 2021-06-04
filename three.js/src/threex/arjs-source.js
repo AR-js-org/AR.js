@@ -292,6 +292,7 @@ Source.prototype._disposeSourceVideo = function () {
     // https://html.spec.whatwg.org/multipage/media.html#best-practices-for-authors-using-media-elements
     domElement.pause();
     domElement.removeAttribute('src'); 
+    domElement.load(); 
 
     domElement.remove();    
 }
