@@ -27,9 +27,20 @@ AFRAME.registerComponent('arjs-webcam-texture', {
                 this.video.srcObject = stream;    
                 this.video.play();
             })
-            .catch(e => { alert(`Webcam error: ${e}`); });
+            .catch(e => {  
+                if (!document.getElementById('error-popup')) {
+                    var errorPopup = document.createElement('div');
+                    errorPopup.innerHTML = `Webcam error: ${e}`
+                    errorPopup.setAttribute('id', 'error-popup');
+                    document.body.appendChild(errorPopup);
+                } });
         } else {
-            alert('sorry - media devices API not supported');
+            if (!document.getElementById('error-popup')) {
+                var errorPopup = document.createElement('div');
+                errorPopup.innerHTML = 'sorry - media devices API not supported'
+                errorPopup.setAttribute('id', 'error-popup');
+                document.body.appendChild(errorPopup);
+            }
         }
     },
 
