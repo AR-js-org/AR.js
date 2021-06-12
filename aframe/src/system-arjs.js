@@ -86,6 +86,10 @@ AFRAME.registerSystem('arjs', {
             type: 'number',
             default: -1
         },
+        errorPopup: {
+            type: 'string',
+            default: ''
+        }
     },
 
     //////////////////////////////////////////////////////////////////////////////
@@ -234,4 +238,18 @@ AFRAME.registerSystem('arjs', {
         // copy projection matrix to camera
         this._arSession.onResize()
     },
+
+    _displayErrorPopup: function(msg) {
+        if (this.data.errorPopup !== '') {
+            let errorPopup = document.getElementById(this.data.errorPopup);
+            if (!errorPopup) {
+                errorPopup = document.createElement('div');
+                errorPopup.setAttribute('id', this.data.errorPopup);
+                document.body.appendChild(errorPopup);
+            }
+            errorPopup.innerHTML = msg;
+        } else {
+            alert(msg);
+        }
+    }
 })
