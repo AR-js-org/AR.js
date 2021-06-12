@@ -51,7 +51,7 @@ AFRAME.registerComponent('gps-camera', {
             default: 0,
         },
     },
-    update: function() {
+    update: function () {
         if (this.data.simulateLatitude !== 0 && this.data.simulateLongitude !== 0) {
             localPosition = Object.assign({}, this.currentCoords || {});
             localPosition.longitude = this.data.simulateLongitude;
@@ -384,7 +384,7 @@ AFRAME.registerComponent('gps-camera', {
     _onDeviceOrientation: function (event) {
         if (event.webkitCompassHeading !== undefined) {
             if (event.webkitCompassAccuracy < 50) {
-                this.heading = event.webkitCompassHeading;
+                this.heading = event.webkitCompassHeading + window.orientation;
             } else {
                 console.warn('webkitCompassAccuracy is event.webkitCompassAccuracy');
             }
