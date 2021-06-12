@@ -44,9 +44,12 @@ function load(msg) {
         } else if (reM == false) {
             nftMarkerUrl = basePath + '/' + msg.marker;
         }
-        ar.loadNFTMarker(nftMarkerUrl, function (markerId) {
-            ar.trackNFTMarkerId(markerId);
+        ar.loadNFTMarker(nftMarkerUrl, function (nft) {
+            postMessage({ type: 'nftData',  nft: JSON.stringify(nft) })
+            ar.trackNFTMarkerId(nft.id);
             postMessage({ type: 'endLoading' })
+            console.log("loadNFTMarker -> ", nft.id);
+            console.log("nftMarker struct: ", nft);
         }, function (err) {
             console.log('Error in loading marker on Worker', err)
         });
