@@ -12,7 +12,7 @@
                 marker.addEventListener('markerFound', function () {
                     this.vid.play();
                 }.bind(this));
-    
+
 		marker.addEventListener('markerLost', function() {
 			this.vid.pause();
 			this.vid.currentTime = 0;
@@ -53,7 +53,7 @@
         embedded arjs='trackingMethod: best; sourceType: webcam; debugUIEnabled: false;'>
 
         <a-assets>
-            <video src="https://cors-anywhere.herokuapp.com/https://www.w3schools.com/html/mov_bbb.mp4"
+            <video src="mov_bbb.mp4"
                 preload="auto" id="vid" response-type="arraybuffer" loop
                 crossorigin webkit-playsinline autoplay muted playsinline>
             </video>
@@ -61,12 +61,13 @@
 
         <a-nft
             videohandler
-            type='nft' url='https://arjs-cors-proxy.herokuapp.com/https://raw.githack.com/AR-js-org/AR.js/master/data/dataNFT/pinball'
+            type='nft' url='../../data/dataNFT/pinball'
             smooth="true" smoothCount="10" smoothTolerance="0.01" smoothThreshold="5"
         >
             <a-video
                 src="#vid"
                 position='50 150 -100'
+                rotation='90 0 180'
                 width='300'
                 height='175'
                 >

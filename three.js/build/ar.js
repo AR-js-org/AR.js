@@ -2222,7 +2222,7 @@ ARjs.MarkerControls.prototype._initArtoolkit = function(){
 	function onMarkerFound(event){
 		// honor his.parameters.minConfidence
 		if( event.data.type === artoolkit.PATTERN_MARKER && event.data.marker.cfPatt < _this.parameters.minConfidence )	return
-		if( event.data.type === artoolkit.BARCODE_MARKER && event.data.marker.cfMatt < _this.parameters.minConfidence )	return
+		if( event.data.type === artoolkit.BARCODE_MARKER && event.data.marker.cfMatrix < _this.parameters.minConfidence )	return
 
 		var modelViewMatrix = new THREE.Matrix4().fromArray(event.data.matrix)
 		_this.updateWithModelViewMatrix(modelViewMatrix)
@@ -2495,7 +2495,7 @@ Object.assign(ARjs.Context.prototype, THREE.EventDispatcher.prototype);
 
 // default to github page
 ARjs.Context.baseURL = 'https://ar-js-org.github.io/AR.js/three.js/'
-ARjs.Context.REVISION = '3.1.0';
+ARjs.Context.REVISION = '3.3.3';
 
 /**
  * Create a default camera for this trackingBackend
@@ -2549,8 +2549,13 @@ ARjs.Context.prototype.update = function (srcElement) {
     }
     this._updatedAt = present
 
-    // mark all markers to invisible before processing this frame
+    var prevVisibleMarkers = []
+
+    // mark all markers to invisible before processing this frame & store prev state
     this._arMarkersControls.forEach(function (markerControls) {
+        if (markerControls.object3d.visible) {
+            prevVisibleMarkers.push(markerControls)
+        }
         markerControls.object3d.visible = false
     })
 
@@ -2565,6 +2570,22 @@ ARjs.Context.prototype.update = function (srcElement) {
     this.dispatchEvent({
         type: 'sourceProcessed'
     });
+
+    // After frame is processed, check visibility of each marker to determine if it was found or lost
+    this._arMarkersControls.forEach(function (markerControls) {
+        var wasVisible = prevVisibleMarkers.includes(markerControls);
+        var isVisible = markerControls.object3d.visible;
+
+        if (isVisible === true && wasVisible === false) {
+            window.dispatchEvent(new CustomEvent('markerFound', {
+                detail: markerControls,
+            }))
+        } else if (isVisible === false && wasVisible === true) {
+            window.dispatchEvent(new CustomEvent('markerLost', {
+                detail: markerControls,
+            }))
+        }
+})
 
 
     // return true as we processed the frame
@@ -3003,9 +3024,17 @@ ARjs.Source.prototype._initSourceWebcam = function (onReady, onError) {
 
     // init default value
     onError = onError || function (error) {
-        alert('Webcam Error\nName: ' + error.name + '\nMessage: ' + error.message)
         var event = new CustomEvent('camera-error', { error: error });
         window.dispatchEvent(event);
+
+        setTimeout(() => {
+            if (!document.getElementById('error-popup')) {
+                var errorPopup = document.createElement('div');
+                errorPopup.innerHTML = 'Webcam Error\nName: ' + error.name + '\nMessage: ' + error.message
+                errorPopup.setAttribute('id', 'error-popup');
+                document.body.appendChild(errorPopup);
+            }
+        }, 1000);
     }
 
     var domElement = document.createElement('video');
@@ -3115,7 +3144,12 @@ ARjs.Source.prototype.toggleMobileTorch = function () {
 
     var stream = arToolkitSource.domElement.srcObject
     if (stream instanceof MediaStream === false) {
-        alert('enabling mobile torch is available only on webcam')
+        if (!document.getElementById('error-popup')) {
+            var errorPopup = document.createElement('div');
+            errorPopup.innerHTML = 'enabling mobile torch is available only on webcam'
+            errorPopup.setAttribute('id', 'error-popup');
+            document.body.appendChild(errorPopup);
+        }
         return
     }
 
@@ -3127,7 +3161,12 @@ ARjs.Source.prototype.toggleMobileTorch = function () {
     var capabilities = videoTrack.getCapabilities()
 
     if (!capabilities.torch) {
-        alert('no mobile torch is available on your camera')
+        if (!document.getElementById('error-popup')) {
+            var errorPopup = document.createElement('div');
+            errorPopup.innerHTML = 'no mobile torch is available on your camera'
+            errorPopup.setAttribute('id', 'error-popup');
+            document.body.appendChild(errorPopup);
+        }
         return
     }
 

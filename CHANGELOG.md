@@ -1,6 +1,41 @@
+# 3.3.3
+
+- Fixed bug which prevents `minDistance` and `maxDistance` working with a simulated location
+
+- Fixed typo in name of `gps-entity-place-update-position` event
+
+# 3.3.2
+
+- Fixed bug in `arjs-webcam-texture component` which caused the webcam stream to freeze on iOS. Thanks to @stevenlybeck for this.
+
+- CORS proxy removed from examples
+
+- Added custom found/lost events to markerControls for three.js core (thanks to @fcor)
+
+- Deactivated GPS listener when AR.js app not in the foreground (thanks to @NVFedorov for raising this issue)
+
+- update license wording (thanks to @chingucoding)
+
+# 3.3.1
+
+- Fix minor location-based bugs
+
+# 3.3.0
+
+- Fix shaking of far/near entities on location-based using new configurable properties (thanks to @nickw1)
+
+# 3.2.1
+
+- show camera error alert after dispatching `camera-error` event
+
+# 3.2.0
+
+- support arbitrarily distant places on location-based (thanks to @nickw1, see PR #119)
+- minor bug fixes
+
 # 3.1.0
 
-- added new, alternative version for `location-based` using a projected camera based on Spherical Mercator. For this purpose we introduce two new aframe components: `gps-projected-camera` and `gps-projected-entity-place`
+- added new, alternative version for `location-based` using a projected camera based on Spherical Mercator. For this purpose we introduce two new aframe components: `gps-projected-camera` and `gps-projected-entity-place` (thanks to @nickw1)
 - added video stop on marker being lost (nft-video example)
 - fixed rotation bug on X axis see issue #59, restored shift position on y instead of z
 - removed links to old repository in the examples

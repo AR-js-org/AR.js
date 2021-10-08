@@ -74,7 +74,7 @@ Object.assign(ARjs.Context.prototype, THREE.EventDispatcher.prototype);
 
 // default to github page
 ARjs.Context.baseURL = 'https://ar-js-org.github.io/AR.js/three.js/'
-ARjs.Context.REVISION = '3.1.0';
+ARjs.Context.REVISION = '3.3.3';
 
 /**
  * Create a default camera for this trackingBackend
@@ -128,8 +128,13 @@ ARjs.Context.prototype.update = function (srcElement) {
     }
     this._updatedAt = present
 
-    // mark all markers to invisible before processing this frame
+    var prevVisibleMarkers = []
+
+    // mark all markers to invisible before processing this frame & store prev state
     this._arMarkersControls.forEach(function (markerControls) {
+        if (markerControls.object3d.visible) {
+            prevVisibleMarkers.push(markerControls)
+        }
         markerControls.object3d.visible = false
     })
 
@@ -144,6 +149,22 @@ ARjs.Context.prototype.update = function (srcElement) {
     this.dispatchEvent({
         type: 'sourceProcessed'
     });
+
+    // After frame is processed, check visibility of each marker to determine if it was found or lost
+    this._arMarkersControls.forEach(function (markerControls) {
+        var wasVisible = prevVisibleMarkers.includes(markerControls);
+        var isVisible = markerControls.object3d.visible;
+
+        if (isVisible === true && wasVisible === false) {
+            window.dispatchEvent(new CustomEvent('markerFound', {
+                detail: markerControls,
+            }))
+        } else if (isVisible === false && wasVisible === true) {
+            window.dispatchEvent(new CustomEvent('markerLost', {
+                detail: markerControls,
+            }))
+        }
+})
 
 
     // return true as we processed the frame

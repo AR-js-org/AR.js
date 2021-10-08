@@ -20,6 +20,11 @@ AFRAME.registerSystem('arjs', {
             type: 'string',
             default: '',
         },
+        // new video texture mode (location based only)
+        videoTexture: {
+            type: 'boolean',
+            default: false
+        },
         // old parameters
         debug: {
             type: 'boolean',
@@ -81,6 +86,10 @@ AFRAME.registerSystem('arjs', {
             type: 'number',
             default: -1
         },
+        errorPopup: {
+            type: 'string',
+            default: ''
+        }
     },
 
     //////////////////////////////////////////////////////////////////////////////
@@ -90,6 +99,13 @@ AFRAME.registerSystem('arjs', {
     init: function () {
         var _this = this
 
+        // If videoTexture is set, skip the remainder of the setup entirely and just use the arjs-webcam-texture component
+        if(this.data.videoTexture === true && this.data.sourceType === 'webcam') {
+            var webcamEntity = document.createElement("a-entity");
+            webcamEntity.setAttribute("arjs-webcam-texture", true);
+            this.el.sceneEl.appendChild(webcamEntity);
+            return;
+        } 
         //////////////////////////////////////////////////////////////////////////////
         //		setup arProfile
         //////////////////////////////////////////////////////////////////////////////
@@ -214,7 +230,7 @@ AFRAME.registerSystem('arjs', {
 
     tick: function () {
         // skip it if not yet isInitialised
-        if (this.isReady === false) return
+        if (this.isReady === false || this.data.videoTexture === true) return
 
         // update arSession
         this._arSession.update()
@@ -222,4 +238,18 @@ AFRAME.registerSystem('arjs', {
         // copy projection matrix to camera
         this._arSession.onResize()
     },
+
+    _displayErrorPopup: function(msg) {
+        if (this.data.errorPopup !== '') {
+            let errorPopup = document.getElementById(this.data.errorPopup);
+            if (!errorPopup) {
+                errorPopup = document.createElement('div');
+                errorPopup.setAttribute('id', this.data.errorPopup);
+                document.body.appendChild(errorPopup);
+            }
+            errorPopup.innerHTML = msg;
+        } else {
+            alert(msg);
+        }
+    }
 })

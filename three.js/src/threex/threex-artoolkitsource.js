@@ -151,9 +151,17 @@ ARjs.Source.prototype._initSourceWebcam = function (onReady, onError) {
 
     // init default value
     onError = onError || function (error) {
-        alert('Webcam Error\nName: ' + error.name + '\nMessage: ' + error.message)
         var event = new CustomEvent('camera-error', { error: error });
         window.dispatchEvent(event);
+
+        setTimeout(() => {
+            if (!document.getElementById('error-popup')) {
+                var errorPopup = document.createElement('div');
+                errorPopup.innerHTML = 'Webcam Error\nName: ' + error.name + '\nMessage: ' + error.message
+                errorPopup.setAttribute('id', 'error-popup');
+                document.body.appendChild(errorPopup);
+            }
+        }, 1000);
     }
 
     var domElement = document.createElement('video');
@@ -263,7 +271,12 @@ ARjs.Source.prototype.toggleMobileTorch = function () {
 
     var stream = arToolkitSource.domElement.srcObject
     if (stream instanceof MediaStream === false) {
-        alert('enabling mobile torch is available only on webcam')
+        if (!document.getElementById('error-popup')) {
+            var errorPopup = document.createElement('div');
+            errorPopup.innerHTML = 'enabling mobile torch is available only on webcam'
+            errorPopup.setAttribute('id', 'error-popup');
+            document.body.appendChild(errorPopup);
+        }
         return
     }
 
@@ -275,7 +288,12 @@ ARjs.Source.prototype.toggleMobileTorch = function () {
     var capabilities = videoTrack.getCapabilities()
 
     if (!capabilities.torch) {
-        alert('no mobile torch is available on your camera')
+        if (!document.getElementById('error-popup')) {
+            var errorPopup = document.createElement('div');
+            errorPopup.innerHTML = 'no mobile torch is available on your camera'
+            errorPopup.setAttribute('id', 'error-popup');
+            document.body.appendChild(errorPopup);
+        }
         return
     }
 
