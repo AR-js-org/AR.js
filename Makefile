@@ -13,4 +13,4 @@ test:
 	(cd test && make test)
 
 server:
-	http-server -c -1
+	npm run server
