@@ -178,6 +178,12 @@ AFRAME.registerComponent('arjs-anchor', {
         arWorldRoot.updateMatrixWorld(true)
         arWorldRoot.matrixWorld.decompose(this.el.object3D.position, this.el.object3D.quaternion, this.el.object3D.scale)
 
+        document.addEventListener('arjs-nft-init-data', function(ev) {
+            var msg = ev.detail;
+            this.el.object3D.position.z = -(msg.height / msg.dpi * 2.54 * 10)/2.0;
+            this.el.object3D.position.y = (msg.width / msg.dpi * 2.54 * 10)/2.0;
+        })
+
         //////////////////////////////////////////////////////////////////////////////
         //		honor visibility
         //////////////////////////////////////////////////////////////////////////////
