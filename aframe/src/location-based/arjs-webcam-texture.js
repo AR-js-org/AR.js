@@ -27,9 +27,11 @@ AFRAME.registerComponent('arjs-webcam-texture', {
                 this.video.srcObject = stream;    
                 this.video.play();
             })
-            .catch(e => { alert(`Webcam error: ${e}`); });
+            .catch(e => {  
+                this.el.sceneEl.systems['arjs']._displayErrorPopup(`Webcam error: ${e}`);
+            });
         } else {
-            alert('sorry - media devices API not supported');
+            this.el.sceneEl.systems['arjs']._displayErrorPopup('sorry - media devices API not supported');
         }
     },
 

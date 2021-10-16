@@ -3028,7 +3028,12 @@ ARjs.Source.prototype._initSourceWebcam = function (onReady, onError) {
         window.dispatchEvent(event);
 
         setTimeout(() => {
-            alert('Webcam Error\nName: ' + error.name + '\nMessage: ' + error.message)
+            if (!document.getElementById('error-popup')) {
+                var errorPopup = document.createElement('div');
+                errorPopup.innerHTML = 'Webcam Error\nName: ' + error.name + '\nMessage: ' + error.message
+                errorPopup.setAttribute('id', 'error-popup');
+                document.body.appendChild(errorPopup);
+            }
         }, 1000);
     }
 
@@ -3139,7 +3144,12 @@ ARjs.Source.prototype.toggleMobileTorch = function () {
 
     var stream = arToolkitSource.domElement.srcObject
     if (stream instanceof MediaStream === false) {
-        alert('enabling mobile torch is available only on webcam')
+        if (!document.getElementById('error-popup')) {
+            var errorPopup = document.createElement('div');
+            errorPopup.innerHTML = 'enabling mobile torch is available only on webcam'
+            errorPopup.setAttribute('id', 'error-popup');
+            document.body.appendChild(errorPopup);
+        }
         return
     }
 
@@ -3151,7 +3161,12 @@ ARjs.Source.prototype.toggleMobileTorch = function () {
     var capabilities = videoTrack.getCapabilities()
 
     if (!capabilities.torch) {
-        alert('no mobile torch is available on your camera')
+        if (!document.getElementById('error-popup')) {
+            var errorPopup = document.createElement('div');
+            errorPopup.innerHTML = 'no mobile torch is available on your camera'
+            errorPopup.setAttribute('id', 'error-popup');
+            document.body.appendChild(errorPopup);
+        }
         return
     }
 
@@ -6010,9 +6025,11 @@ AFRAME.registerComponent('arjs-webcam-texture', {
                 this.video.srcObject = stream;    
                 this.video.play();
             })
-            .catch(e => { alert(`Webcam error: ${e}`); });
+            .catch(e => {  
+                this.el.sceneEl.systems['arjs']._displayErrorPopup(`Webcam error: ${e}`);
+            });
         } else {
-            alert('sorry - media devices API not supported');
+            this.el.sceneEl.systems['arjs']._displayErrorPopup('sorry - media devices API not supported');
         }
     },
 
@@ -6135,10 +6152,10 @@ AFRAME.registerComponent('gps-camera', {
 
                 document.addEventListener('touchend', function () { handler() }, false);
 
-                alert('After camera permission prompt, please tap the screen to activate geolocation.');
+                this.el.sceneEl.systems['arjs']._displayErrorPopup( 'After camera permission prompt, please tap the screen to activate geolocation.');
             } else {
                 var timeout = setTimeout(function () {
-                    alert('Please enable device orientation in Settings > Safari > Motion & Orientation Access.')
+                      this.el.sceneEl.systems['arjs']._displayErrorPopup('Please enable device orientation in Settings > Safari > Motion & Orientation Access.');
                 }, 750);
                 window.addEventListener(eventName, function () {
                     clearTimeout(timeout);
@@ -6243,12 +6260,12 @@ AFRAME.registerComponent('gps-camera', {
 
                 if (err.code === 1) {
                     // User denied GeoLocation, let their know that
-                    alert('Please activate Geolocation and refresh the page. If it is already active, please check permissions for this website.');
+                    this.el.sceneEl.systems['arjs']._displayErrorPopup('Please activate Geolocation and refresh the page. If it is already active, please check permissions for this website.');
                     return;
                 }
 
                 if (err.code === 3) {
-                    alert('Cannot retrieve GPS position. Signal is absent.');
+                    this.el.sceneEl.systems['arjs']._displayErrorPopup('Cannot retrieve GPS position. Signal is absent.');
                     return;
                 }
             };
@@ -6355,7 +6372,7 @@ AFRAME.registerComponent('gps-camera', {
         if (isPlace && this.data.maxDistance && this.data.maxDistance > 0 && distance > this.data.maxDistance) {
             return Number.MAX_SAFE_INTEGER;
         }
-	
+    
         return distance;
     },
 
@@ -6502,7 +6519,7 @@ AFRAME.registerComponent('gps-entity-place', {
             var distanceForMsg = this._cameraGps.computeDistanceMeters(ev.detail.position, dstCoords);
 
             this.el.setAttribute('distance', distanceForMsg);
-            this.el.setAttribute('distanceMsg', formatDistance(distanceForMsg));
+            this.el.setAttribute('distanceMsg', this._formatDistance(distanceForMsg));
             this.el.dispatchEvent(new CustomEvent('gps-entity-place-update-position', { detail: { distance: distanceForMsg } }));
 
             var actualDistance = this._cameraGps.computeDistanceMeters(ev.detail.position, dstCoords, true);
@@ -6569,22 +6586,23 @@ AFRAME.registerComponent('gps-entity-place', {
         // update element's position in 3D world
         this.el.setAttribute('position', position);
     },
-});
 
-/**
- * Format distances string
- *
- * @param {String} distance
- */
-function formatDistance(distance) {
-    distance = distance.toFixed(0);
+    /**
+      * Format distances string
+      *
+      * @param {String} distance
+      */
 
-    if (distance >= 1000) {
-        return (distance / 1000) + ' kilometers';
+    _formatDistance: function(distance) {
+        distance = distance.toFixed(0);
+
+        if (distance >= 1000) {
+            return (distance / 1000) + ' kilometers';
+        }
+
+        return distance + ' meters';
     }
-
-    return distance + ' meters';
-};
+});
 /** gps-projected-camera
  *
  * based on the original gps-camera, modified by nickw 02/04/20
@@ -6704,10 +6722,11 @@ AFRAME.registerComponent('gps-projected-camera', {
 
                 document.addEventListener('touchend', function() { handler() }, false);
 
-                alert('After camera permission prompt, please tap the screen to activate geolocation.');
+                this.el.sceneEl.systems['arjs']._displayErrorPopup('After camera permission prompt, please tap the screen to activate geolocation.');
+
             } else {
                 var timeout = setTimeout(function() {
-                    alert('Please enable device orientation in Settings > Safari > Motion & Orientation Access.')
+                    this.el.sceneEl.systems['arjs']._displayErrorPopup('Please enable device orientation in Settings > Safari > Motion & Orientation Access.');
                 }, 750);
                 window.addEventListener(eventName, function() {
                     clearTimeout(timeout);
@@ -6809,12 +6828,12 @@ AFRAME.registerComponent('gps-projected-camera', {
 
                 if (err.code === 1) {
                     // User denied GeoLocation, let their know that
-                    alert('Please activate Geolocation and refresh the page. If it is already active, please check permissions for this website.');
+                    this.el.sceneEl.systems['arjs']._displayErrorPopup('Please activate Geolocation and refresh the page. If it is already active, please check permissions for this website.');
                     return;
                 }
 
                 if (err.code === 3) {
-                    alert('Cannot retrieve GPS position. Signal is absent.');
+                    this.el.sceneEl.systems['arjs']._displayErrorPopup('Cannot retrieve GPS position. Signal is absent.');
                     return;
                 }
             };
@@ -7140,7 +7159,7 @@ AFRAME.registerComponent('gps-projected-entity-place', {
             var distanceForMsg = this._cameraGps.computeDistanceMeters(dstCoords);
 
             this.el.setAttribute('distance', distanceForMsg);
-            this.el.setAttribute('distanceMsg', formatDistance(distanceForMsg));
+            this.el.setAttribute('distanceMsg', this._formatDistance(distanceForMsg));
 
             this.el.dispatchEvent(new CustomEvent('gps-entity-place-update-position', { detail: { distance: distanceForMsg } }));
 
@@ -7190,22 +7209,24 @@ AFRAME.registerComponent('gps-projected-entity-place', {
             z: worldPos[1]
         }); 
     },
+
+    /**
+      * Format distances string
+      *
+      * @param {String} distance
+      */
+
+    _formatDistance: function(distance) {
+        distance = distance.toFixed(0);
+
+        if (distance >= 1000) {
+            return (distance / 1000) + ' kilometers';
+        }
+
+        return distance + ' meters';
+    }
 });
 
-/**
- * Format distances string
- *
- * @param {String} distance
- */
-function formatDistance(distance) {
-    distance = distance.toFixed(0);
-
-    if (distance >= 1000) {
-        return (distance / 1000) + ' kilometers';
-    }
-
-    return distance + ' meters';
-};
 AFRAME.registerSystem('arjs', {
     schema: {
         trackingMethod: {
@@ -7294,6 +7315,10 @@ AFRAME.registerSystem('arjs', {
             type: 'number',
             default: -1
         },
+        errorPopup: {
+            type: 'string',
+            default: ''
+        }
     },
 
     //////////////////////////////////////////////////////////////////////////////
@@ -7421,15 +7446,40 @@ AFRAME.registerSystem('arjs', {
         //////////////////////////////////////////////////////////////////////////////
         // TODO this is crappy - code an exponential backoff - max 1 seconds
         // KLUDGE: kludge to write a 'resize' event
-        var startedAt = Date.now()
-        var timerId = setInterval(function () {
-            if (Date.now() - startedAt > 10000 * 1000) {
-                clearInterval(timerId)
-                return
+        // var startedAt = Date.now()
+        // var timerId = setInterval(function () {
+        //     if (Date.now() - startedAt > 10000 * 1000) {
+        //         clearInterval(timerId)
+        //         return
+        //     }
+        //     // onResize()
+        //     window.dispatchEvent(new Event('resize'));
+        // }, 1000 / 30)
+
+        function setBackoff(func, millisDuration = Infinity, limit = 1000) {
+            if(func == null || !(Object.prototype.toString.call(func) == '[object Function]')) {
+                return;
+            } 
+            let backoff = 33.3
+            let start = Date.now()
+            let repeat = function() {
+              return (millisDuration == Infinity || (Date.now() - start) < millisDuration)
             }
-            // onResize()
-            window.dispatchEvent(new Event('resize'));
-        }, 1000 / 30)
+            let next = function() {
+                backoff = (backoff * 2) < limit ? (backoff * 2) : limit
+                setTimeout(function() {
+                    func()
+                    if(repeat()) {
+                        next()
+                    }
+                }, backoff)
+            };
+            next()
+        }
+
+        setBackoff(() => {
+            window.dispatchEvent(new Event('resize'))
+        })
     },
 
     tick: function () {
@@ -7442,4 +7492,18 @@ AFRAME.registerSystem('arjs', {
         // copy projection matrix to camera
         this._arSession.onResize()
     },
+
+    _displayErrorPopup: function(msg) {
+        if (this.data.errorPopup !== '') {
+            let errorPopup = document.getElementById(this.data.errorPopup);
+            if (!errorPopup) {
+                errorPopup = document.createElement('div');
+                errorPopup.setAttribute('id', this.data.errorPopup);
+                document.body.appendChild(errorPopup);
+            }
+            errorPopup.innerHTML = msg;
+        } else {
+            alert(msg);
+        }
+    }
 })

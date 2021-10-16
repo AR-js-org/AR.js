@@ -86,6 +86,10 @@ AFRAME.registerSystem('arjs', {
             type: 'number',
             default: -1
         },
+        errorPopup: {
+            type: 'string',
+            default: ''
+        }
     },
 
     //////////////////////////////////////////////////////////////////////////////
@@ -213,15 +217,40 @@ AFRAME.registerSystem('arjs', {
         //////////////////////////////////////////////////////////////////////////////
         // TODO this is crappy - code an exponential backoff - max 1 seconds
         // KLUDGE: kludge to write a 'resize' event
-        var startedAt = Date.now()
-        var timerId = setInterval(function () {
-            if (Date.now() - startedAt > 10000 * 1000) {
-                clearInterval(timerId)
-                return
+        // var startedAt = Date.now()
+        // var timerId = setInterval(function () {
+        //     if (Date.now() - startedAt > 10000 * 1000) {
+        //         clearInterval(timerId)
+        //         return
+        //     }
+        //     // onResize()
+        //     window.dispatchEvent(new Event('resize'));
+        // }, 1000 / 30)
+
+        function setBackoff(func, millisDuration = Infinity, limit = 1000) {
+            if(func == null || !(Object.prototype.toString.call(func) == '[object Function]')) {
+                return;
+            } 
+            let backoff = 33.3
+            let start = Date.now()
+            let repeat = function() {
+              return (millisDuration == Infinity || (Date.now() - start) < millisDuration)
             }
-            // onResize()
-            window.dispatchEvent(new Event('resize'));
-        }, 1000 / 30)
+            let next = function() {
+                backoff = (backoff * 2) < limit ? (backoff * 2) : limit
+                setTimeout(function() {
+                    func()
+                    if(repeat()) {
+                        next()
+                    }
+                }, backoff)
+            };
+            next()
+        }
+
+        setBackoff(() => {
+            window.dispatchEvent(new Event('resize'))
+        })
     },
 
     tick: function () {
@@ -234,4 +263,18 @@ AFRAME.registerSystem('arjs', {
         // copy projection matrix to camera
         this._arSession.onResize()
     },
+
+    _displayErrorPopup: function(msg) {
+        if (this.data.errorPopup !== '') {
+            let errorPopup = document.getElementById(this.data.errorPopup);
+            if (!errorPopup) {
+                errorPopup = document.createElement('div');
+                errorPopup.setAttribute('id', this.data.errorPopup);
+                document.body.appendChild(errorPopup);
+            }
+            errorPopup.innerHTML = msg;
+        } else {
+            alert(msg);
+        }
+    }
 })
