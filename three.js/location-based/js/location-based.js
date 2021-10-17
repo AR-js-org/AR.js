@@ -57,6 +57,10 @@ class LocationBased {
             object.position.y = elev;
         }
     }
+
+    setElevation(elev) {
+        this.camera.position.y = elev;
+    }
 }
 
 export { LocationBased };
