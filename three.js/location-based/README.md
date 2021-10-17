@@ -1,15 +1,18 @@
 # AR.js Location Based Implementation with Pure Three.js
 
-This is (the basics of) an implementation of location-based AR.js using
-pure three.js.
+This is a simple, lightweight implementation of location-based AR.js using pure three.js.
 
 ## Directory structure
 
-The `js` directory contains the source files. It's written using ECMAScript 6
-modules, and assumes you already have three.js locally installed. There is a
-`package.json` provided to allow you to install three.js from NPM:
+The `js` directory contains the source files. It's written using ECMAScript 6 modules. There is a `package.json` provided to allow you to install three.js from NPM:
 
-`npm install three`
+`npm install`
+
+## Building
+
+Using Webpack is assumed. There is a simple `webpack.config.js` which is configured to place a `bundle.js` inside `example/dist`. Build with
+
+`npx webpack`
 
 ## Full docs
 
@@ -24,4 +27,4 @@ depending on the query string parameter `m` supplied to it:
 
 - `m=1` : uses a default location but does setup device orientation controls. Useful for testing on a mobile device. Move the device round and you should see a red box to the northeast, green box to the north and blue box to the west (approximately).
 
-- `m=2` : will use GPS tracking and device orientation controls. Unless you are located near the default location, you will need to modify the `ar.js` code to add meshes near your current location.
+- `m=2` : will use GPS tracking and device orientation controls. Unless you are located near the default location, you will need to modify the `index.js` code to add meshes near your current location.
