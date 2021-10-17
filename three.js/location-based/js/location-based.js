@@ -12,7 +12,7 @@ class LocationBased {
         this.proj = proj;
     }
 
-    startGps(freq = 5000) {
+    startGps(maximumAge = 0) {
         this.watchPositionId = navigator.geolocation.watchPosition( 
             position => {
                 this.setWorldPosition(
@@ -24,7 +24,7 @@ class LocationBased {
                 alert(`GPS listen error: code ${error}`);
             }, {
                 enableHighAccuracy: true,
-                maximumAge: freq
+                maximumAge: maximumAge
             }
         );
     }
