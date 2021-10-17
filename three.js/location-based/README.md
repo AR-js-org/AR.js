@@ -28,3 +28,12 @@ depending on the query string parameter `m` supplied to it:
 - `m=1` : uses a default location but does setup device orientation controls. Useful for testing on a mobile device. Move the device round and you should see a red box to the northeast, green box to the north and blue box to the west (approximately).
 
 - `m=2` : will use GPS tracking and device orientation controls. Unless you are located near the default location, you will need to modify the `index.js` code to add meshes near your current location.
+
+If `m=1` is used (default location with device orientation controls) you should see the following:
+
+- Red box a short distance to your north
+- Green box a short distance to your east
+- Yellow box a short distance to your south 
+- Blue box a short distance to your west 
+
+There are some remaining issues with device orientation controls, particularly if in portrait or using Firefox, so this may not work perfectly just yet. These are the same issues encountered on the A-Frame version of location-based.

@@ -14,11 +14,13 @@ const arjs = new Arjs.LocationBased(scene, camera);
 const cam = new Arjs.WebcamRenderer(renderer, '#video1');
 
 // If using your own GPS location, change the lon and lat of the three meshes
-arjs.add(mesh, -0.72, 51.05);
-const material2 = new THREE.MeshBasicMaterial({color: 0x0000ff});
-const material3 = new THREE.MeshBasicMaterial({color: 0x00ff00});
-arjs.add(new THREE.Mesh(geom, material2), -0.7249, 51.0492);
-arjs.add(new THREE.Mesh(geom, material3), -0.7210, 51.0509);
+arjs.add(mesh, -0.72, 51.051); // slightly north
+const material2 = new THREE.MeshBasicMaterial({color: 0xffff00});
+const material3 = new THREE.MeshBasicMaterial({color: 0x0000ff});
+const material4 = new THREE.MeshBasicMaterial({color: 0x00ff00});
+arjs.add(new THREE.Mesh(geom, material2), -0.72, 51.049); // slightly south
+arjs.add(new THREE.Mesh(geom, material3), -0.722, 51.05); // slightly west
+arjs.add(new THREE.Mesh(geom, material4), -0.718, 51.05); // slightly east
 
 const get = { m : 0 };
 const parts = window.location.href.split('?');
@@ -47,7 +49,7 @@ if(get.m == 1 || get.m == 2) {
 if(get.m == 2) {
     arjs.startGps();
 } else {
-    arjs.fakeGps(-0.723, 51.049);
+    arjs.fakeGps(-0.72, 51.05);
 }
 
 requestAnimationFrame(render);
