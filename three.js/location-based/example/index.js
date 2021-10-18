@@ -1,5 +1,4 @@
 import * as THREE from 'three';
-import { DeviceOrientationControls } from 'three/examples/jsm/controls/DeviceOrientationControls.js';
 import * as Arjs from '../js/arjs.js';
 
 const scene = new THREE.Scene();
@@ -44,7 +43,7 @@ let orientationControls;
 // m not 1, use a fake GPS location
 // so m other than 1 or 2 can be used to test on a desktop machine
 if(get.m == 1 || get.m == 2) {
-    orientationControls = new DeviceOrientationControls(camera);
+    orientationControls = new Arjs.DeviceOrientationControls(camera);
 }
 if(get.m == 2) {
     arjs.startGps();
