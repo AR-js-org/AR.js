@@ -1,0 +1,9 @@
+{
+    "dependencies": {
+        "three": "^0.133.0"
+    },
+    "devDependencies": {
+        "webpack": "^5.58.2",
+        "webpack-cli": "^4.9.0"
+    }
+}
