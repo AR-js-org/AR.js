@@ -1,6 +1,6 @@
 # AR.js Location Based Implementation with Pure Three.js
 
-This is a simple, lightweight implementation of location-based AR.js using pure three.js.
+This is a simple, lightweight implementation of location-based AR.js using pure three.js. **It will only work on Chrome due to limitations with obtaining compass bearing on other browsers. I believe it is possible to get it to work on Webkit-based browsers due to `webkitCompassHeading`, but I don't have any iDevices so cannot test this. However pull requests to fix this are welcome!**
 
 ## Directory structure
 
@@ -36,4 +36,3 @@ If `m=1` is used (default location with device orientation controls) you should 
 - Yellow box a short distance to your south 
 - Blue box a short distance to your west 
 
-There are some remaining issues with device orientation controls, particularly if in portrait or using Firefox, so this may not work perfectly just yet. These are the same issues encountered on the A-Frame version of location-based.
