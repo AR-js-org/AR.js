@@ -1,6 +1,6 @@
 # AR.js Location Based Implementation with Pure Three.js
 
-This is a simple, lightweight implementation of location-based AR.js using pure three.js. **It will only work on Chrome due to limitations with obtaining compass bearing on other browsers. I believe it is possible to get it to work on Webkit-based browsers due to `webkitCompassHeading`, but I don't have any iDevices so cannot test this. However pull requests to fix this are welcome!**
+This is a simple, lightweight implementation of location-based AR.js using pure three.js. **It will only work on Chrome due to limitations with obtaining compass bearing on other browsers. Also, it is only tested on Android, not iOS. I believe it is possible to get it to work on Webkit-based browsers due to `webkitCompassHeading`, but I don't have any iDevices so cannot test this. However pull requests to fix this are welcome!**
 
 ## Directory structure
 
