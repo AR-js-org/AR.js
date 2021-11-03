@@ -162,8 +162,6 @@
     })
 
 	function onResize(){
-        disposeARContext();
-        disposeARSource();
 		arToolkitSource.onResizeElement()
 		arToolkitSource.copyElementSizeTo(renderer.domElement)
 		if( arToolkitContext.arController !== null ){
@@ -171,6 +169,13 @@
 		}
 
 	}
+
+	window.close = function(){
+           
+            disposeARContext();
+            disposeARSource();
+   
+    }
 
 
 	// update artoolkit on every frame
@@ -237,4 +242,6 @@
 			onRenderFct(deltaMsec/1000, nowMsec/1000)
 		})
 	})
-</script></body>
+</script>
+<button style="position: absolute; left: 120px; top: 120px" onclick="window.close()">Close Video</button>
+</body>
