@@ -1,5 +1,5 @@
 {
-  "name": "ar.js",
+  "name": "@ar-js-org/ar.js",
   "version": "3.3.1",
   "description": "Efficient Augmented Reality for the Web",
   "main": "./aframe/build/aframe-ar.js",
