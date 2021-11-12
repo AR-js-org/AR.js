@@ -15,9 +15,9 @@ AR.js is a lightweight library for Augmented Reality on the Web, coming with fea
 
 Welcome to the official repository!
 
-This project has been created by [@jeromeetienne](https://github.com/jeromeetienne) and it is now maintained by [@nicolocarpignoli](https://github.com/nicolocarpignoli).
+This project has been created by [@jeromeetienne](https://github.com/jeromeetienne), previously managed by Nicolò Carpignoli and it is now maintained by the AR.js org.
 
-🚀For frequent updates on AR.js you can follow [@nicolocarp](https://twitter.com/nicolocarp) and Watch this repo!
+🚀For frequent updates on AR.js you can follow [@the official Twitter account](https://twitter.com/ARjs_Library) and Watch this repo!
 
 Logo is courtesy of <a href="https://twitter.com/viralinfo"> Simon Poulter </a>.
 
