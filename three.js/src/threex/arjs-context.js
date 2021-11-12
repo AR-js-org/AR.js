@@ -73,11 +73,14 @@ const Context = function (parameters) {
     }
 }
 
-Object.assign(Context.prototype, THREE.EventDispatcher.prototype);
+Context.prototype.dispatchEvent = THREE.EventDispatcher.prototype.dispatchEvent;
+Context.prototype.addEventListener = THREE.EventDispatcher.prototype.addEventListener;
+Context.prototype.hasEventListener = THREE.EventDispatcher.prototype.hasEventListener;
+Context.prototype.removeEventListener = THREE.EventDispatcher.prototype.removeEventListener;
 
 // default to github page
 Context.baseURL = 'https://ar-js-org.github.io/AR.js/three.js/'
-Context.REVISION = '3.3.1'
+Context.REVISION = '3.3.1-es6-beta-02'
 /**
  * Create a default camera for this trackingBackend
  * @param {string} trackingBackend - the tracking to user

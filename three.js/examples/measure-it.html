@@ -169,17 +169,24 @@
 		dashSize: 1,
 		gapSize: 1,
 	} );
-	var geometry = new THREE.Geometry();
-	geometry.vertices.push(new THREE.Vector3(1, 0, -3));
-	geometry.vertices.push(new THREE.Vector3(-1, 0, -3));
+	var geometry = new THREE.BufferGeometry();
+	var vertices = new Float32Array( [
+	    1.0, 0.0,  -3.0,
+	    -1.0, 0.0,  -3.0
+    ] );
+	const positionNumComponents = 3;
+	geometry.setAttribute('position',
+      new THREE.BufferAttribute(new Float32Array(vertices), positionNumComponents));
 	var lineMesh = new THREE.Line(geometry, material);
-	container.add(lineMesh)
 
 	// update lineMesh
 	onRenderFcts.push(function(){
 		var geometry = lineMesh.geometry
-		geometry.vertices[0].copy(markerRoot1.position)
-		geometry.vertices[1].copy(markerRoot2.position)
+		vertices = [
+			markerRoot1.position.x, markerRoot1.position.y, markerRoot1.position.z,
+			markerRoot2.position.x, markerRoot2.position.y, markerRoot2.position.z,
+	    ];
+		geometry.setAttribute( 'position', new THREE.Float32BufferAttribute( vertices, 3 ) );
 		geometry.verticesNeedUpdate = true
 
 		geometry.computeBoundingSphere();

@@ -1,6 +1,6 @@
 {
   "name": "@ar-js-org/ar.js",
-  "version": "3.3.1-es-beta-01",
+  "version": "3.3.1-es6-beta-02",
   "description": "Efficient Augmented Reality for the Web",
   "main": "./aframe/build/aframe-ar.js",
   "scripts": {
@@ -57,6 +57,6 @@
   "dependencies": {
     "@ar-js-org/artoolkit5-js": "^0.1.1",
     "aframe": "^1.0.4",
-    "three": "^0.127.0"
+    "three": "^0.132.2"
   }
 }
