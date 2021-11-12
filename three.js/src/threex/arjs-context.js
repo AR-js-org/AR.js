@@ -80,7 +80,7 @@ Context.prototype.removeEventListener = THREE.EventDispatcher.prototype.removeEv
 
 // default to github page
 Context.baseURL = 'https://ar-js-org.github.io/AR.js/three.js/'
-Context.REVISION = '3.3.1-es6-beta-02'
+Context.REVISION = '3.3.12-es6-beta-01'
 /**
  * Create a default camera for this trackingBackend
  * @param {string} trackingBackend - the tracking to user
