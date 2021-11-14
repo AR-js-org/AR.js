@@ -1,3 +1,9 @@
+# 3.3.3
+
+- Fixed bug which prevents `minDistance` and `maxDistance` working with a simulated location
+
+- Fixed typo in name of `gps-entity-place-update-position` event
+
 # 3.3.2
 
 - Fixed bug in `arjs-webcam-texture component` which caused the webcam stream to freeze on iOS. Thanks to @stevenlybeck for this.
