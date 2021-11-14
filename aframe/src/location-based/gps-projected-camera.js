@@ -135,6 +135,7 @@ AFRAME.registerComponent('gps-projected-camera', {
 
     play: function() {
         if (this.data.simulateLatitude !== 0 && this.data.simulateLongitude !== 0) {
+            var localPosition = Object.assign({}, this.currentCoords || {});
             localPosition.latitude = this.data.simulateLatitude;
             localPosition.longitude = this.data.simulateLongitude;
             if (this.data.simulateAltitude !== 0) {
