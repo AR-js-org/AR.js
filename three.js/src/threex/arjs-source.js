@@ -347,37 +347,37 @@ Source.prototype.hasMobileTorch = function () {
  */
 Source.prototype.toggleMobileTorch = function () {
     // sanity check
-    console.assert(this.hasMobileTorch() === true)
+    console.assert(this.hasMobileTorch() === true);
 
-    var stream = arToolkitSource.domElement.srcObject
+    var stream = arToolkitSource.domElement.srcObject;
     if (stream instanceof MediaStream === false) {
         if (!document.getElementById('error-popup')) {
             var errorPopup = document.createElement('div');
-            errorPopup.innerHTML = 'enabling mobile torch is available only on webcam'
+            errorPopup.innerHTML = 'enabling mobile torch is available only on webcam';
             errorPopup.setAttribute('id', 'error-popup');
             document.body.appendChild(errorPopup);
         }
-        return
+        return;
     }
 
     if (this._currentTorchStatus === undefined) {
-        this._currentTorchStatus = false
+        this._currentTorchStatus = false;
     }
 
     var videoTrack = stream.getVideoTracks()[0];
-    var capabilities = videoTrack.getCapabilities()
+    var capabilities = videoTrack.getCapabilities();
 
     if (!capabilities.torch) {
         if (!document.getElementById('error-popup')) {
             var errorPopup = document.createElement('div');
-            errorPopup.innerHTML = 'no mobile torch is available on your camera'
+            errorPopup.innerHTML = 'no mobile torch is available on your camera';
             errorPopup.setAttribute('id', 'error-popup');
             document.body.appendChild(errorPopup);
         }
-        return
+        return;
     }
 
-    this._currentTorchStatus = this._currentTorchStatus === false ? true : false
+    this._currentTorchStatus = this._currentTorchStatus === false ? true : false;
     videoTrack.applyConstraints({
         advanced: [{
             torch: this._currentTorchStatus

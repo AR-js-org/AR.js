@@ -1,6 +1,6 @@
 {
   "name": "@ar-js-org/ar.js",
-  "version": "3.3.3-es6-beta-01",
+  "version": "3.3.3-es6-beta-02",
   "description": "Efficient Augmented Reality for the Web",
   "main": "./aframe/build/aframe-ar.js",
   "scripts": {
@@ -51,8 +51,8 @@
   },
   "homepage": "https://github.com/AR-js-org/AR.js/",
   "devDependencies": {
-    "webpack": "^5.4.0",
-    "webpack-cli": "^4.5.0",
+    "webpack": "^5.64.1",
+    "webpack-cli": "^4.9.1",
     "worker-loader": "^3.0.8"
   },
   "dependencies": {
