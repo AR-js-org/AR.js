@@ -1,3 +1,4 @@
+
 # AR.js - Augmented Reality on the Web
 
 <a href="https://xscode.com/nicolocarpignoli/AR.js">
@@ -24,8 +25,6 @@ Logo is courtesy of <a href="https://twitter.com/viralinfo"> Simon Poulter </a>.
 ------
 
 <h2>You can get paid support and new features for AR.js. Check <a href="https://xscode.com/nicolocarpignoli/AR.js"> this link. </a></h2>
-
-------
 
 ------
 
@@ -179,7 +178,6 @@ Please follow this simple steps:
 
 ```html
 <!DOCTYPE html>
-<!DOCTYPE html>
 <html>
     <script src="https://aframe.io/releases/1.0.0/aframe.min.js"></script>
     <!-- we import arjs version without NFT but with marker + location based support -->
@@ -199,6 +197,11 @@ Please follow this simple steps:
     </body>
 </html>
 ```
+Important! Be aware that if you are referring to external resources, in any app, especially those using NFT, you will encounter CORS problems if those resources are not in the same server of the code. If you can’t see the tracking, please open your Browser Dev Tools and check if you have CORS errors in the console. If so, you have to fix those errors in order to see your content. The correct fix is to place your resources on the same server of your code.
+
+If you cannot do that, you can host a proxy anywhere server to solve that (https://github.com/Rob--W/cors-anywhere).
+Please note that several hosting services have policies that does not permit to use such server. Always check hosting services policies before using them to avoid account suspensions
+
 Important! Be aware that if you are referring to external resources, in any app, especially those using NFT, you will encounter CORS problems if those resources are not in the same server of the code. If you can’t see the tracking, please open your Browser Dev Tools and check if you have CORS errors in the console. If so, you have to fix those errors in order to see your content. The correct fix is to place your resources on the same server of your code.
 
 If you cannot do that, you can host a proxy anywhere server to solve that (https://github.com/Rob--W/cors-anywhere).

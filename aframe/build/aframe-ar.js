@@ -5195,6 +5195,7 @@ Source.prototype.toggleMobileTorch = function () {
         }
         return
     }
+});
 
     if (this._currentTorchStatus === undefined) {
         this._currentTorchStatus = false

@@ -489,3 +489,4 @@ AFRAME.registerComponent('gps-projected-camera', {
         }
     }
 });
+

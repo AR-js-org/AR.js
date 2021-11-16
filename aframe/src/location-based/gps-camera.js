@@ -323,7 +323,7 @@ AFRAME.registerComponent('gps-camera', {
         if (isPlace && this.data.maxDistance && this.data.maxDistance > 0 && distance > this.data.maxDistance) {
             return Number.MAX_SAFE_INTEGER;
         }
-
+    
         return distance;
     },
 
