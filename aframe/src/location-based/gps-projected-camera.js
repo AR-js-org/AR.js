@@ -29,6 +29,8 @@
  * location.
  */
 
+import * as AFRAME from 'aframe'
+
 AFRAME.registerComponent('gps-projected-camera', {
     _watchPositionId: null,
     originCoords: null, // original coords now in Spherical Mercator
@@ -71,7 +73,7 @@ AFRAME.registerComponent('gps-projected-camera', {
     },
     update: function() {
         if (this.data.simulateLatitude !== 0 && this.data.simulateLongitude !== 0) {
-            localPosition = Object.assign({}, this.currentCoords || {});
+            var localPosition = Object.assign({}, this.currentCoords || {});
             localPosition.longitude = this.data.simulateLongitude;
             localPosition.latitude = this.data.simulateLatitude;
             localPosition.altitude = this.data.simulateAltitude;
@@ -118,7 +120,6 @@ AFRAME.registerComponent('gps-projected-camera', {
                 document.addEventListener('touchend', function() { handler() }, false);
 
                 this.el.sceneEl.systems['arjs']._displayErrorPopup('After camera permission prompt, please tap the screen to activate geolocation.');
-
             } else {
                 var timeout = setTimeout(function() {
                     this.el.sceneEl.systems['arjs']._displayErrorPopup('Please enable device orientation in Settings > Safari > Motion & Orientation Access.');
@@ -134,6 +135,7 @@ AFRAME.registerComponent('gps-projected-camera', {
 
     play: function() {
         if (this.data.simulateLatitude !== 0 && this.data.simulateLongitude !== 0) {
+            var localPosition = Object.assign({}, this.currentCoords || {});
             localPosition.latitude = this.data.simulateLatitude;
             localPosition.longitude = this.data.simulateLongitude;
             if (this.data.simulateAltitude !== 0) {
@@ -223,7 +225,7 @@ AFRAME.registerComponent('gps-projected-camera', {
 
                 if (err.code === 1) {
                     // User denied GeoLocation, let their know that
-                    this.el.sceneEl.systems['arjs']._displayErrorPopup('Please activate Geolocation and refresh the page. If it is already active, please check permissions for this website.');
+                    this.el.sceneEl.systems['arjs']._displayErrorPopup('Please activate Geolocation and refresh the page. If it is already active, please check permissions for this website.');  
                     return;
                 }
 

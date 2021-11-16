@@ -1,5 +1,4 @@
-// @namespace
-var ARjs = ARjs || {}
+import HitTestingPlane from '../threex/threex-hittesting-plane';
 
 /**
  * Create an anchor in the real world
@@ -7,7 +6,7 @@ var ARjs = ARjs || {}
  * @param {ARjs.Session} arSession - the session on which we create the anchor
  * @param {Object} markerParameters - parameter of this anchor
  */
-ARjs.HitTesting = function (arSession) {
+const HitTesting = function (arSession) {
     var _this = this
     var arContext = arSession.arContext
     var trackingBackend = arContext.parameters.trackingBackend
@@ -15,7 +14,7 @@ ARjs.HitTesting = function (arSession) {
     this.enabled = true
     this._arSession = arSession
     this._hitTestingPlane = null
-    _this._hitTestingPlane = new THREEx.HitTestingPlane(arSession.arSource.domElement)
+    _this._hitTestingPlane = new HitTestingPlane(arSession.arSource.domElement)
 }
 
 //////////////////////////////////////////////////////////////////////////////
@@ -27,7 +26,7 @@ ARjs.HitTesting = function (arSession) {
  * @param {THREE.Camera} camera   - the camera to use
  * @param {THREE.Object3D} object3d -
  */
-ARjs.HitTesting.prototype.update = function (camera, pickingRoot, changeMatrixMode) {
+HitTesting.prototype.update = function (camera, pickingRoot, changeMatrixMode) {
     // if it isnt enabled, do nothing
     if (this.enabled === false) return
 
@@ -46,9 +45,9 @@ ARjs.HitTesting.prototype.update = function (camera, pickingRoot, changeMatrixMo
  *
  * @param {Number} mouseX - position X of the hit [-1, +1]
  * @param {Number} mouseY - position Y of the hit [-1, +1]
- * @return {[ARjs.HitTesting.Result]} - array of result
+ * @return {[HitTesting.Result]} - array of result
  */
-ARjs.HitTesting.prototype.testDomEvent = function (domEvent) {
+HitTesting.prototype.testDomEvent = function (domEvent) {
     var trackingBackend = this._arSession.arContext.parameters.trackingBackend
     var arSource = this._arSession.arSource
 
@@ -65,9 +64,9 @@ ARjs.HitTesting.prototype.testDomEvent = function (domEvent) {
  *
  * @param {Number} mouseX - position X of the hit [0, +1]
  * @param {Number} mouseY - position Y of the hit [0, +1]
- * @return {[ARjs.HitTesting.Result]} - array of result
+ * @return {[HitTesting.Result]} - array of result
  */
-ARjs.HitTesting.prototype.test = function (mouseX, mouseY) {
+HitTesting.prototype.test = function (mouseX, mouseY) {
     var arContext = this._arSession.arContext
     var trackingBackend = arContext.parameters.trackingBackend
     var hitTestResults = []
@@ -80,24 +79,24 @@ ARjs.HitTesting.prototype.test = function (mouseX, mouseY) {
     // if no result is found, return now
     if (result === null) return hitTestResults
 
-    // build a ARjs.HitTesting.Result
-    var hitTestResult = new ARjs.HitTesting.Result(result.position, result.quaternion, result.scale)
+    // build a HitTesting.Result
+    var hitTestResult = new HitTesting.Result(result.position, result.quaternion, result.scale)
     hitTestResults.push(hitTestResult)
 
     return hitTestResults
 }
 
 //////////////////////////////////////////////////////////////////////////////
-//		ARjs.HitTesting.Result
+//		HitTesting.Result
 //////////////////////////////////////////////////////////////////////////////
 /**
- * Contains the result of ARjs.HitTesting.test()
+ * Contains the result of HitTesting.test()
  *
  * @param {THREE.Vector3} position - position to use
  * @param {THREE.Quaternion} quaternion - quaternion to use
  * @param {THREE.Vector3} scale - scale
  */
-ARjs.HitTesting.Result = function (position, quaternion, scale) {
+HitTesting.Result = function (position, quaternion, scale) {
     this.position = position
     this.quaternion = quaternion
     this.scale = scale
@@ -108,7 +107,7 @@ ARjs.HitTesting.Result = function (position, quaternion, scale) {
  *
  * @param {THREE.Object3D} object3d - the result to apply
  */
-ARjs.HitTesting.Result.prototype.apply = function (object3d) {
+HitTesting.Result.prototype.apply = function (object3d) {
     object3d.position.copy(this.position)
     object3d.quaternion.copy(this.quaternion)
     object3d.scale.copy(this.scale)
@@ -121,7 +120,7 @@ ARjs.HitTesting.Result.prototype.apply = function (object3d) {
  *
  * @param {THREE.Object3D} object3d - the result to apply
  */
-ARjs.HitTesting.Result.prototype.applyPosition = function (object3d) {
+HitTesting.Result.prototype.applyPosition = function (object3d) {
     object3d.position.copy(this.position)
 
     object3d.updateMatrix()
@@ -134,10 +133,12 @@ ARjs.HitTesting.Result.prototype.applyPosition = function (object3d) {
  *
  * @param {THREE.Object3D} object3d - the result to apply
  */
-ARjs.HitTesting.Result.prototype.applyQuaternion = function (object3d) {
+HitTesting.Result.prototype.applyQuaternion = function (object3d) {
     object3d.quaternion.copy(this.quaternion)
 
     object3d.updateMatrix()
 
     return this
 }
+
+export default HitTesting;

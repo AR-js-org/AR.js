@@ -1,5 +1,9 @@
-// @namespace
-var ARjs = ARjs || {}
+import * as THREE from 'three';
+import ArMarkerControls from 'threexArmarkercontrols'; // Alias for dynamic importing
+import ArMarkerHelper from '../threex/threex-armarkerhelper';
+import ArSmoothedControls from '../threex/threex-arsmoothedcontrols';
+import MarkersAreaControls from '../markers-area/arjs-markersareacontrols';
+import MarkersAreaUtils from '../markers-area/arjs-markersareautils';
 
 // TODO this is a controls... should i give the object3d here ?
 // not according to 'no three.js dependancy'
@@ -10,7 +14,7 @@ var ARjs = ARjs || {}
  * @param {ARjs.Session} arSession - the session on which we create the anchor
  * @param {Object} markerParameters - parameter of this anchor
  */
-ARjs.Anchor = function(arSession, markerParameters){
+const Anchor = function(arSession, markerParameters){
 	var _this = this
 	var arContext = arSession.arContext
 	var scene = arSession.parameters.scene
@@ -22,7 +26,7 @@ ARjs.Anchor = function(arSession, markerParameters){
 	// log to debug
 	console.log('ARjs.Anchor -', 'changeMatrixMode:', this.parameters.changeMatrixMode, '/ markersAreaEnabled:', markerParameters.markersAreaEnabled)
 
-	var markerRoot = new THREE.Group
+	var markerRoot = new THREE.Group()
 	scene.add(markerRoot)
 
 	// set controlledObject depending on changeMatrixMode
@@ -33,7 +37,7 @@ ARjs.Anchor = function(arSession, markerParameters){
 	}else console.assert(false)
 
 	if( markerParameters.markersAreaEnabled === false ){
-		var markerControls = new THREEx.ArMarkerControls(arContext, controlledObject, markerParameters)
+		var markerControls = new ArMarkerControls(arContext, controlledObject, markerParameters)
 		this.controls = markerControls
 	}else{
 		// sanity check - MUST be a trackingBackend with markers
@@ -49,12 +53,12 @@ ARjs.Anchor = function(arSession, markerParameters){
 			var resolutionH = parseInt(matches[2])
 			var arContext = arSession.arContext
 			// generate and store the ARjsMultiMarkerFile
-			ARjs.MarkersAreaUtils.storeMarkersAreaFileFromResolution(arContext.parameters.trackingBackend, resolutionW, resolutionH)
+			MarkersAreaUtils.storeMarkersAreaFileFromResolution(arContext.parameters.trackingBackend, resolutionW, resolutionH)
 		}
 
 		// if there is no ARjsMultiMarkerFile, build a default one
 		if( localStorage.getItem('ARjsMultiMarkerFile') === null ){
-			ARjs.MarkersAreaUtils.storeDefaultMultiMarkerFile(arContext.parameters.trackingBackend)
+			MarkersAreaUtils.storeDefaultMultiMarkerFile(arContext.parameters.trackingBackend)
 		}
 
 		// get multiMarkerFile from localStorage
@@ -69,7 +73,7 @@ ARjs.Anchor = function(arSession, markerParameters){
 		}else console.assert(false)
 
 		// build a multiMarkerControls
-		var multiMarkerControls = ARjs.MarkersAreaControls.fromJSON(arContext, parent3D, controlledObject, multiMarkerFile)
+		var multiMarkerControls = MarkersAreaControls.fromJSON(arContext, parent3D, controlledObject, multiMarkerFile)
 		this.controls = multiMarkerControls
 
 		// honor markerParameters.changeMatrixMode
@@ -80,7 +84,7 @@ ARjs.Anchor = function(arSession, markerParameters){
 		var markerHelpers = []
 		multiMarkerControls.subMarkersControls.forEach(function(subMarkerControls){
 			// add an helper to visuable each sub-marker
-			var markerHelper = new THREEx.ArMarkerHelper(subMarkerControls)
+			var markerHelper = new ArMarkerHelper(subMarkerControls)
 			markerHelper.object3d.visible = false
 			// subMarkerControls.object3d.add( markerHelper.object3d )
 			subMarkerControls.object3d.add( markerHelper.object3d )
@@ -108,7 +112,7 @@ ARjs.Anchor = function(arSession, markerParameters){
 		// build a smoothedControls
 		var smoothedRoot = new THREE.Group()
 		scene.add(smoothedRoot)
-		var smoothedControls = new THREEx.ArSmoothedControls(smoothedRoot)
+		var smoothedControls = new ArSmoothedControls(smoothedRoot)
 		smoothedRoot.add(this.object3d)
 	}else{
 		markerRoot.add(this.object3d)
@@ -134,3 +138,5 @@ ARjs.Anchor = function(arSession, markerParameters){
 		}
 	}
 }
+
+export default Anchor;

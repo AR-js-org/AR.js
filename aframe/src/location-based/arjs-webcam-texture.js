@@ -1,3 +1,6 @@
+import * as AFRAME from 'aframe'
+import * as THREE from 'three'
+
 AFRAME.registerComponent('arjs-webcam-texture', {
 
     init: function() {

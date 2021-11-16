@@ -7,6 +7,9 @@
  * location.
  */
 
+import * as AFRAME from 'aframe';
+import * as THREE from 'three';
+
 AFRAME.registerComponent('gps-camera', {
     _watchPositionId: null,
     originCoords: null,
@@ -53,7 +56,7 @@ AFRAME.registerComponent('gps-camera', {
     },
     update: function() {
         if (this.data.simulateLatitude !== 0 && this.data.simulateLongitude !== 0) {
-            localPosition = Object.assign({}, this.currentCoords || {});
+            var localPosition = Object.assign({}, this.currentCoords || {});
             localPosition.longitude = this.data.simulateLongitude;
             localPosition.latitude = this.data.simulateLatitude;
             localPosition.altitude = this.data.simulateAltitude;
@@ -64,7 +67,7 @@ AFRAME.registerComponent('gps-camera', {
             this._updatePosition();
         }
     },
-    init: function () {
+    init: function () {      
         if (!this.el.components['arjs-look-controls'] && !this.el.components['look-controls']) {
             return;
         }
@@ -102,7 +105,7 @@ AFRAME.registerComponent('gps-camera', {
                 this.el.sceneEl.systems['arjs']._displayErrorPopup( 'After camera permission prompt, please tap the screen to activate geolocation.');
             } else {
                 var timeout = setTimeout(function () {
-                      this.el.sceneEl.systems['arjs']._displayErrorPopup('Please enable device orientation in Settings > Safari > Motion & Orientation Access.');
+                    this.el.sceneEl.systems['arjs']._displayErrorPopup('Please enable device orientation in Settings > Safari > Motion & Orientation Access.');
                 }, 750);
                 window.addEventListener(eventName, function () {
                     clearTimeout(timeout);
@@ -116,6 +119,7 @@ AFRAME.registerComponent('gps-camera', {
 
     play: function() {
         if (this.data.simulateLatitude !== 0 && this.data.simulateLongitude !== 0) {
+            var localPosition = Object.assign({}, this.currentCoords || {});
             localPosition.latitude = this.data.simulateLatitude;
             localPosition.longitude = this.data.simulateLongitude;
             if (this.data.simulateAltitude !== 0) {

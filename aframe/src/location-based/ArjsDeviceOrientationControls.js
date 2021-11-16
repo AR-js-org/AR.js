@@ -12,7 +12,9 @@
  * Modifications Nick Whitelegg (nickw1 github)
  */
 
-ArjsDeviceOrientationControls = function ( object ) {
+import * as THREE from "three";
+
+const ArjsDeviceOrientationControls = function ( object ) {
 
   var scope = this;
 
@@ -159,3 +161,5 @@ ArjsDeviceOrientationControls = function ( object ) {
   this.connect();
 
 };
+
+export default ArjsDeviceOrientationControls;

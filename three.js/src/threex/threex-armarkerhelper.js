@@ -1,6 +1,6 @@
-var THREEx = THREEx || {}
+import * as THREE from 'three';
 
-THREEx.ArMarkerHelper = function(markerControls){
+const ArMarkerHelper = function(markerControls){
 	this.object3d = new THREE.Group
 
 	var mesh = new THREE.AxesHelper()
@@ -37,3 +37,5 @@ THREEx.ArMarkerHelper = function(markerControls){
 	this.object3d.add(mesh)
 
 }
+
+export default ArMarkerHelper;

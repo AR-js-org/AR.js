@@ -12,6 +12,9 @@ var PI_2 = Math.PI / 2;
  * Modifications Nick Whitelegg (nickw1 github)
  */
 
+import * as AFRAME from 'aframe'
+import ArjsDeviceOrientationControls from './ArjsDeviceOrientationControls'
+
 AFRAME.registerComponent('arjs-look-controls', {
   dependencies: ['position', 'rotation'],
 

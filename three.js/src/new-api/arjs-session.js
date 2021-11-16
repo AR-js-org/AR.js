@@ -1,11 +1,13 @@
-var ARjs = ARjs || {}
+import * as THREE from 'three';
+import Source from '../threex/arjs-source';
+import Context from '../threex/arjs-context'; // TODO context build-dependent
 
 /**
- * define a ARjs.Session
+ *  * define a Session
  *
  * @param {Object} parameters - parameters for this session
  */
-ARjs.Session = function(parameters){
+const Session = function(parameters){
 	var _this = this
 	// handle default parameters
 	this.parameters = {
@@ -62,12 +64,12 @@ ARjs.Session = function(parameters){
 
 
 	// log the version
-	console.log('AR.js', ARjs.Context.REVISION, '- trackingBackend:', parameters.contextParameters.trackingBackend)
+	console.log('AR.js', Context.REVISION, '- trackingBackend:', parameters.contextParameters.trackingBackend)
 
 	//////////////////////////////////////////////////////////////////////////////
 	//		init arSource
 	//////////////////////////////////////////////////////////////////////////////
-	var arSource = _this.arSource = new ARjs.Source(parameters.sourceParameters)
+	var arSource = _this.arSource = new Source(parameters.sourceParameters)
 
 	arSource.init(function onReady(){
 		arSource.onResize(arContext, _this.parameters.renderer, _this.parameters.camera)
@@ -83,7 +85,7 @@ ARjs.Session = function(parameters){
 	//////////////////////////////////////////////////////////////////////////////
 
 	// create atToolkitContext
-	var arContext = _this.arContext = new ARjs.Context(parameters.contextParameters)
+	var arContext = _this.arContext = new Context(parameters.contextParameters)
 
 	// initialize it
 	_this.arContext.init()
@@ -103,6 +105,8 @@ ARjs.Session = function(parameters){
 	}
 }
 
-ARjs.Session.prototype.onResize = function () {
+Session.prototype.onResize = function () {
 	this.arSource.onResize(this.arContext, this.parameters.renderer, this.parameters.camera)
 };
+
+export default Session;

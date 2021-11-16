@@ -197,6 +197,10 @@ Please follow this simple steps:
     </body>
 </html>
 ```
+Important! Be aware that if you are referring to external resources, in any app, especially those using NFT, you will encounter CORS problems if those resources are not in the same server of the code. If you can’t see the tracking, please open your Browser Dev Tools and check if you have CORS errors in the console. If so, you have to fix those errors in order to see your content. The correct fix is to place your resources on the same server of your code.
+
+If you cannot do that, you can host a proxy anywhere server to solve that (https://github.com/Rob--W/cors-anywhere).
+Please note that several hosting services have policies that does not permit to use such server. Always check hosting services policies before using them to avoid account suspensions
 
 Important! Be aware that if you are referring to external resources, in any app, especially those using NFT, you will encounter CORS problems if those resources are not in the same server of the code. If you can’t see the tracking, please open your Browser Dev Tools and check if you have CORS errors in the console. If so, you have to fix those errors in order to see your content. The correct fix is to place your resources on the same server of your code.
 
@@ -205,6 +209,13 @@ Please note that several hosting services have policies that does not permit to 
 
 Learn more on the [AR.js Official Documentation](https://ar-js-org.github.io/AR.js-Docs/).
 
+## Experimental ES6 npm package
+
+Even if not yet in the master branch, you can install **AR.js** with NPM:
+
+```
+npm install @ar-js-org/ar.js
+```
 ## Troubleshooting, feature requests, community
 
 **You can find a lot of help on the old [AR.js repositories issues](https://github.com/jeromeetienne/AR.js/issues). Please search on open/closed issues, you may find interesting stuff.**

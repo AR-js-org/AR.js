@@ -1,4 +1,5 @@
-var THREEx = THREEx || {}
+import * as THREE from 'three';
+
 /**
  * - videoTexture
  * - cloakWidth
@@ -6,15 +7,15 @@ var THREEx = THREEx || {}
  * - cloakSegmentsHeight
  * - remove all mentions of cache, for cloak
  */
-THREEx.ArMarkerCloak = function(videoTexture){
+const ArMarkerCloak = function(videoTexture){
         var updateInShaderEnabled = true
 
         // build cloakMesh
         // TODO if webgl2 use repeat warp, and not multi segment, this will reduce the geometry to draw
 	var geometry = new THREE.PlaneGeometry(1.3+0.25,1.85+0.25, 1, 8).translate(0,-0.3,0)
 	var material = new THREE.ShaderMaterial( {
-		vertexShader: THREEx.ArMarkerCloak.vertexShader,
-		fragmentShader: THREEx.ArMarkerCloak.fragmentShader,
+		vertexShader: ArMarkerCloak.vertexShader,
+		fragmentShader: ArMarkerCloak.fragmentShader,
                 transparent: true,
 		uniforms: {
 			texture: {
@@ -172,7 +173,7 @@ THREEx.ArMarkerCloak = function(videoTexture){
 //                Shaders
 //////////////////////////////////////////////////////////////////////////////
 
-THREEx.ArMarkerCloak.markerSpaceShaderFunction = '\n'+
+ArMarkerCloak.markerSpaceShaderFunction = '\n'+
 '        vec2 transformUvToMarkerSpace(vec2 originalUv){\n'+
 '                vec3 transformedUv;\n'+
 '                // set transformedUv - from UV coord to clip coord\n'+
@@ -195,7 +196,7 @@ THREEx.ArMarkerCloak.markerSpaceShaderFunction = '\n'+
 '                return transformedUv.xy;\n'+
 '        }'
 
-THREEx.ArMarkerCloak.vertexShader = THREEx.ArMarkerCloak.markerSpaceShaderFunction +
+ArMarkerCloak.vertexShader = ArMarkerCloak.markerSpaceShaderFunction +
 '	varying vec2 vUv;\n'+
 '\n'+
 '	void main(){\n'+
@@ -211,7 +212,7 @@ THREEx.ArMarkerCloak.vertexShader = THREEx.ArMarkerCloak.markerSpaceShaderFuncti
 '		gl_Position = projectionMatrix * mvPosition;\n'+
 '	}';
 
-THREEx.ArMarkerCloak.fragmentShader = '\n'+
+ArMarkerCloak.fragmentShader = '\n'+
 '	varying vec2 vUv;\n'+
 '	uniform sampler2D texture;\n'+
 '	uniform float opacity;\n'+
@@ -221,3 +222,5 @@ THREEx.ArMarkerCloak.fragmentShader = '\n'+
 '\n'+
 '		gl_FragColor = vec4( color, opacity);\n'+
 '	}'
+
+export default ArMarkerCloak;

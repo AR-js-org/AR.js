@@ -1,0 +1,8 @@
+aframe/examples/**/**/*
+aframe/examples/**/*
+aframe/examples/*
+three.js/examples/**/**/*
+three.js/examples/**/*
+three.js/examples/*
+test/**/*
+test/*

@@ -2,3 +2,5 @@
 .atom-live-server.json
 node_modules/*
 package-lock.json
+aframe/build/*.txt
+three.js/build/*.txt

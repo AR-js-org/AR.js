@@ -1,3 +1,5 @@
+import * as AFRAME from 'aframe';
+
 AFRAME.registerComponent('gps-entity-place', {
     _cameraGps: null,
     schema: {

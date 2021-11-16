@@ -1,0 +1,18 @@
+<html>
+    <head>
+        <title>AR.js Peakfinder (2D - no elevation)</title>
+        <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+        <script src="https://unpkg.com/aframe-look-at-component@0.8.0/dist/aframe-look-at-component.min.js"></script>
+        <script type='text/javascript' src='../../../build/aframe-ar-nft.js'></script>
+        <script type='text/javascript' src='index.js'></script>
+    </head>
+    <body>
+    <a-scene
+        vr-mode-ui="enabled: false"
+        arjs='sourceType: webcam; videoTexture: true; debugUIEnabled: false;'
+        renderer='antialias: true; alpha: true'>
+            <a-camera gps-projected-camera='simulateLatitude: 51.049; simulateLongitude: -0.723' rotation-reader></a-camera>
+            <a-entity peakfinder></a-entity>
+    </a-scene>
+    </body>
+</html>

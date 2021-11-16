@@ -1,3 +1,8 @@
+import * as AFRAME from 'aframe';
+import Profile from '../../three.js/src/threex/arjs-profile';
+import Session from '../../three.js/src/new-api/arjs-session';
+import { SessionDebugUI } from '../../three.js/src/new-api/arjs-debugui';
+
 AFRAME.registerSystem('arjs', {
     schema: {
         trackingMethod: {
@@ -105,12 +110,13 @@ AFRAME.registerSystem('arjs', {
             webcamEntity.setAttribute("arjs-webcam-texture", true);
             this.el.sceneEl.appendChild(webcamEntity);
             return;
-        } 
+        }
+
         //////////////////////////////////////////////////////////////////////////////
         //		setup arProfile
         //////////////////////////////////////////////////////////////////////////////
 
-        var arProfile = this._arProfile = new ARjs.Profile()
+        var arProfile = this._arProfile = new Profile()
             .trackingMethod(this.data.trackingMethod)
             .performance(this.data.performanceProfile)
             .defaultMarker()
@@ -158,7 +164,7 @@ AFRAME.registerSystem('arjs', {
             //////////////////////////////////////////////////////////////////////////////
             //		build ARjs.Session
             //////////////////////////////////////////////////////////////////////////////
-            var arSession = _this._arSession = new ARjs.Session({
+            var arSession = _this._arSession = new Session({
                 scene: scene,
                 renderer: renderer,
                 camera: camera,
@@ -207,7 +213,7 @@ AFRAME.registerSystem('arjs', {
                 }
 
                 // create sessionDebugUI
-                var sessionDebugUI = new ARjs.SessionDebugUI(arSession)
+                var sessionDebugUI = new SessionDebugUI(arSession)
                 containerElement.appendChild(sessionDebugUI.domElement)
             }
         })

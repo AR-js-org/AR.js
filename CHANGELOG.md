@@ -15,7 +15,7 @@
 - Deactivated GPS listener when AR.js app not in the foreground (thanks to @NVFedorov for raising this issue)
 
 - update license wording (thanks to @chingucoding)
-
+  
 # 3.3.1
 
 - Fix minor location-based bugs

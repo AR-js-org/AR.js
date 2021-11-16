@@ -1,4 +1,4 @@
-var THREEx = THREEx || {}
+import ArBaseControls from './threex-arbasecontrols';
 
 /**
  * - lerp position/quaternino/scale
@@ -7,10 +7,10 @@ var THREEx = THREEx || {}
  * @param {[type]} object3d   [description]
  * @param {[type]} parameters [description]
  */
-THREEx.ArSmoothedControls = function(object3d, parameters){
+const ArSmoothedControls = function(object3d, parameters){
 	var _this = this
 	
-	THREEx.ArBaseControls.call(this, object3d)
+	ArBaseControls.call(this, object3d)
 	
 	// copy parameters
 	this.object3d.visible = false
@@ -46,14 +46,14 @@ THREEx.ArSmoothedControls = function(object3d, parameters){
 			var newValue = parameters[ key ]
 
 			if( newValue === undefined ){
-				console.warn( "THREEx.ArSmoothedControls: '" + key + "' parameter is undefined." )
+				console.warn( "ArSmoothedControls: '" + key + "' parameter is undefined." )
 				continue
 			}
 
 			var currentValue = _this.parameters[ key ]
 
 			if( currentValue === undefined ){
-				console.warn( "THREEx.ArSmoothedControls: '" + key + "' is not a property of this material." )
+				console.warn( "ArSmoothedControls: '" + key + "' is not a property of this material." )
 				continue
 			}
 
@@ -62,14 +62,14 @@ THREEx.ArSmoothedControls = function(object3d, parameters){
 	}
 }
 	
-THREEx.ArSmoothedControls.prototype = Object.create( THREEx.ArBaseControls.prototype );
-THREEx.ArSmoothedControls.prototype.constructor = THREEx.ArSmoothedControls;
+ArSmoothedControls.prototype = Object.create( ArBaseControls.prototype );
+ArSmoothedControls.prototype.constructor = ArSmoothedControls;
 
 //////////////////////////////////////////////////////////////////////////////
 //		update function
 //////////////////////////////////////////////////////////////////////////////
 
-THREEx.ArSmoothedControls.prototype.update = function(targetObject3d){
+ArSmoothedControls.prototype.update = function(targetObject3d){
 	var object3d = this.object3d
 	var parameters = this.parameters
 	var wasVisible = object3d.visible
@@ -150,3 +150,5 @@ THREEx.ArSmoothedControls.prototype.update = function(targetObject3d){
 		object3d.scale.lerp(targetObject3d.scale, parameters.lerpScale)
 	}
 }
+
+export default ArSmoothedControls;
