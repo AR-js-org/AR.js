@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "./node_modules/.bin/webpack --mode=production",
-    "build:dev": "./node_modules/.bin/webpack --mode=development",
+    "build:dev": "./node_modules/.bin/webpack --mode=development --progress --watch",
     "server": "npx http-server -c -1"
   },
   "files": [
