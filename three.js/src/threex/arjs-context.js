@@ -1,8 +1,7 @@
 import * as THREE from 'three';
 import ArMarkerControls from 'threexArmarkercontrols'; // Alias for dynamic importing
 import jsartoolkit from 'jsartoolkit'; // TODO comment explanation
-const { ARToolkit, ARController } = jsartoolkit;
-const artoolkit = new ARToolkit();
+const { ARController } = jsartoolkit;
 
 const Context = function (parameters) {
     var _this = this
@@ -146,7 +145,7 @@ Context.prototype.update = function (srcElement) {
     // process this frame
     if (this.parameters.trackingBackend === 'artoolkit') {
         this._updateArtoolkit(srcElement);
-    }  else {
+    } else {
         console.assert(false);
     }
 
@@ -159,7 +158,7 @@ Context.prototype.update = function (srcElement) {
     this._arMarkersControls.forEach(function (markerControls) {
         var wasVisible = prevVisibleMarkers.includes(markerControls);
         var isVisible = markerControls.object3d.visible;
-    
+
         if (isVisible === true && wasVisible === false) {
             window.dispatchEvent(new CustomEvent('markerFound', {
                 detail: markerControls,
@@ -187,8 +186,8 @@ Context.prototype.addMarker = function (arMarkerControls) {
 Context.prototype.removeMarker = function (arMarkerControls) {
     console.assert(arMarkerControls instanceof ArMarkerControls)
     var index = this._arMarkersControls.indexOf(arMarkerControls);
-    if( index < 0 ) {
-    	return;
+    if (index < 0) {
+        return;
     }
     this._arMarkersControls.splice(index, 1)
 }
@@ -204,65 +203,62 @@ Context.prototype._initArtoolkit = function (onCompleted) {
     this._artoolkitProjectionAxisTransformMatrix.multiply(new THREE.Matrix4().makeRotationY(Math.PI))
     this._artoolkitProjectionAxisTransformMatrix.multiply(new THREE.Matrix4().makeRotationZ(Math.PI))
 
-    // init ARToolkit
-    artoolkit.init().then(_ => {
-        // init controller
-        ARController.initWithDimensions(_this.parameters.canvasWidth, _this.parameters.canvasHeight, _this.parameters.cameraParametersUrl).then((arController) => {
-            _this.arController = arController
+    // init controller
+    ARController.initWithDimensions(_this.parameters.canvasWidth, _this.parameters.canvasHeight, _this.parameters.cameraParametersUrl).then((arController) => {
+        _this.arController = arController
 
-            // honor this.parameters.imageSmoothingEnabled
-            arController.ctx.mozImageSmoothingEnabled = _this.parameters.imageSmoothingEnabled;
-            arController.ctx.webkitImageSmoothingEnabled = _this.parameters.imageSmoothingEnabled;
-            arController.ctx.msImageSmoothingEnabled = _this.parameters.imageSmoothingEnabled;
-            arController.ctx.imageSmoothingEnabled = _this.parameters.imageSmoothingEnabled;
+        // honor this.parameters.imageSmoothingEnabled
+        arController.ctx.mozImageSmoothingEnabled = _this.parameters.imageSmoothingEnabled;
+        arController.ctx.webkitImageSmoothingEnabled = _this.parameters.imageSmoothingEnabled;
+        arController.ctx.msImageSmoothingEnabled = _this.parameters.imageSmoothingEnabled;
+        arController.ctx.imageSmoothingEnabled = _this.parameters.imageSmoothingEnabled;
 
-            // honor this.parameters.debug
-            if (_this.parameters.debug === true) {
-                arController.debugSetup();
-                arController.canvas.style.position = 'absolute'
-                arController.canvas.style.top = '0px'
-                arController.canvas.style.opacity = '0.6'
-                arController.canvas.style.pointerEvents = 'none'
-                arController.canvas.style.zIndex = '-1'
-            }
+        // honor this.parameters.debug
+        if (_this.parameters.debug === true) {
+            arController.debugSetup();
+            arController.canvas.style.position = 'absolute'
+            arController.canvas.style.top = '0px'
+            arController.canvas.style.opacity = '0.6'
+            arController.canvas.style.pointerEvents = 'none'
+            arController.canvas.style.zIndex = '-1'
+        }
 
-            // setPatternDetectionMode
-            var detectionModes = {
-                'color': artoolkit.AR_TEMPLATE_MATCHING_COLOR,
-                'color_and_matrix': artoolkit.AR_TEMPLATE_MATCHING_COLOR_AND_MATRIX,
-                'mono': artoolkit.AR_TEMPLATE_MATCHING_MONO,
-                'mono_and_matrix': artoolkit.AR_TEMPLATE_MATCHING_MONO_AND_MATRIX,
-            }
-            var detectionMode = detectionModes[_this.parameters.detectionMode]
-            console.assert(detectionMode !== undefined)
-            arController.setPatternDetectionMode(detectionMode);
+        // setPatternDetectionMode
+        var detectionModes = {
+            'color': arController.artoolkit.AR_TEMPLATE_MATCHING_COLOR,
+            'color_and_matrix': arController.artoolkit.AR_TEMPLATE_MATCHING_COLOR_AND_MATRIX,
+            'mono': arController.artoolkit.AR_TEMPLATE_MATCHING_MONO,
+            'mono_and_matrix': arController.artoolkit.AR_TEMPLATE_MATCHING_MONO_AND_MATRIX,
+        }
+        var detectionMode = detectionModes[_this.parameters.detectionMode]
+        console.assert(detectionMode !== undefined)
+        arController.setPatternDetectionMode(detectionMode);
 
-            // setMatrixCodeType
-            var matrixCodeTypes = {
-                '3x3': artoolkit.AR_MATRIX_CODE_3x3,
-                '3x3_HAMMING63': artoolkit.AR_MATRIX_CODE_3x3_HAMMING63,
-                '3x3_PARITY65': artoolkit.AR_MATRIX_CODE_3x3_PARITY65,
-                '4x4': artoolkit.AR_MATRIX_CODE_4x4,
-                '4x4_BCH_13_9_3': artoolkit.AR_MATRIX_CODE_4x4_BCH_13_9_3,
-                '4x4_BCH_13_5_5': artoolkit.AR_MATRIX_CODE_4x4_BCH_13_5_5,
-            }
-            var matrixCodeType = matrixCodeTypes[_this.parameters.matrixCodeType]
-            console.assert(matrixCodeType !== undefined)
-            arController.setMatrixCodeType(matrixCodeType);
+        // setMatrixCodeType
+        var matrixCodeTypes = {
+            '3x3': arController.artoolkit.AR_MATRIX_CODE_3x3,
+            '3x3_HAMMING63': arController.artoolkit.AR_MATRIX_CODE_3x3_HAMMING63,
+            '3x3_PARITY65': arController.artoolkit.AR_MATRIX_CODE_3x3_PARITY65,
+            '4x4': arController.artoolkit.AR_MATRIX_CODE_4x4,
+            '4x4_BCH_13_9_3': arController.artoolkit.AR_MATRIX_CODE_4x4_BCH_13_9_3,
+            '4x4_BCH_13_5_5': arController.artoolkit.AR_MATRIX_CODE_4x4_BCH_13_5_5,
+        }
+        var matrixCodeType = matrixCodeTypes[_this.parameters.matrixCodeType]
+        console.assert(matrixCodeType !== undefined)
+        arController.setMatrixCodeType(matrixCodeType);
 
-            // set the patternRatio for artoolkit
-            arController.setPattRatio(_this.parameters.patternRatio);
+        // set the patternRatio for artoolkit
+        arController.setPattRatio(_this.parameters.patternRatio);
 
-            // set thresholding in artoolkit
-            // this seems to be the default
-            // arController.setThresholdMode(artoolkit.AR_LABELING_THRESH_MODE_MANUAL)
-            // adatative consume a LOT of cpu...
-            // arController.setThresholdMode(artoolkit.AR_LABELING_THRESH_MODE_AUTO_ADAPTIVE)
-            // arController.setThresholdMode(artoolkit.AR_LABELING_THRESH_MODE_AUTO_OTSU)
+        // set thresholding in artoolkit
+        // this seems to be the default
+        // arController.setThresholdMode(artoolkit.AR_LABELING_THRESH_MODE_MANUAL)
+        // adatative consume a LOT of cpu...
+        // arController.setThresholdMode(artoolkit.AR_LABELING_THRESH_MODE_AUTO_ADAPTIVE)
+        // arController.setThresholdMode(artoolkit.AR_LABELING_THRESH_MODE_AUTO_OTSU)
 
-            // notify
-            onCompleted()
-        });
+        // notify
+        onCompleted()
     });
     return this
 }
@@ -294,33 +290,33 @@ Context.prototype._updateArtoolkit = function (srcElement) {
 //		dispose function
 //////////////////////////////////////////////////////////////////////////////
 Context.prototype.dispose = function () {
-	this.initialized = false;
+    this.initialized = false;
 
-	// markers
-	this._arMarkersControls.forEach(function (markerControls) {
-		console.assert(markerControls instanceof ArMarkerControls);
-		markerControls.dispose();
-	} );
-	this._arMarkersControls = [];
+    // markers
+    this._arMarkersControls.forEach(function (markerControls) {
+        console.assert(markerControls instanceof ArMarkerControls);
+        markerControls.dispose();
+    });
+    this._arMarkersControls = [];
 
-	// cameraParam
-	if (this.arController && this.arController.cameraParam && this.arController.cameraParam.dispose) {
-		this.arController.cameraParam.dispose();
-	}
+    // cameraParam
+    if (this.arController && this.arController.cameraParam && this.arController.cameraParam.dispose) {
+        this.arController.cameraParam.dispose();
+    }
 
-	
-	// ARController
-	if( this.arController && this.arController.dispose ) {
-		this.arController.dispose();
-	}
-	this.arController = null;
+
+    // ARController
+    if (this.arController && this.arController.dispose) {
+        this.arController.dispose();
+    }
+    this.arController = null;
 
     // class properties
     this._artoolkitProjectionAxisTransformMatrix = null;
 
-	// artoolkit
-	// NOTE: since the instance of ARToolkit is created globally 
-	// we should probably do not call .teardown() ... ?
+    // artoolkit
+    // NOTE: since the instance of ARToolkit is created globally 
+    // we should probably do not call .teardown() ... ?
 }
 
 export default Context;
