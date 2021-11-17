@@ -1,8 +1,6 @@
 /* eslint-env worker */
 import jsartoolkit from 'jsartoolkit';
-//const { ARToolkit, ARController } = jsartoolkit;
 const { ARController } = jsartoolkit;
-//const artoolkit = new ARToolkit();
 
 onmessage = function (e) {
     var msg = e.data;
@@ -71,9 +69,7 @@ function load(msg) {
         console.error("Error while intizalizing arController", error);
     };
 
-    //artoolkit.init().then(_ => {
-      ARController.initWithDimensions(msg.pw, msg.ph, camUrl).then(onLoad).catch(onError);
-    //});
+    ARController.initWithDimensions(msg.pw, msg.ph, camUrl).then(onLoad).catch(onError);
 }
 
 function process() {
