@@ -1,5 +1,6 @@
 import * as THREE from 'three';
-import * as Arjs from '../js/arjs.js';
+// TODO import direct from AR.js npm package
+//import * as Arjs from '../js/arjs.js';
 
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(80, 2, 0.1, 50000);
