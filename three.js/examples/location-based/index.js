@@ -4,27 +4,23 @@
 
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(80, 2, 0.1, 50000);
-const canvas = document.querySelector('#canvas1');
-console.log(canvas);
 const renderer = new THREE.WebGLRenderer({ canvas: document.querySelector('#canvas1') });
 
 const geom = new THREE.BoxGeometry(20,20,20);
 const material = new THREE.MeshBasicMaterial({color: 0xff0000});
 const mesh = new THREE.Mesh(geom, material);
-console.log(THREEx);
 
-const arjs = new THREEx.LocationBased(scene, camera);
-console.log(arjs);
+const threex = new THREEx.LocationBased(scene, camera);
 const cam = new THREEx.WebcamRenderer(renderer, '#video1');
 
 // If using your own GPS location, change the lon and lat of the three meshes
-arjs.add(mesh, -0.72, 51.051); // slightly north
+threex.add(mesh, -0.72, 51.051); // slightly north
 const material2 = new THREE.MeshBasicMaterial({color: 0xffff00});
 const material3 = new THREE.MeshBasicMaterial({color: 0x0000ff});
 const material4 = new THREE.MeshBasicMaterial({color: 0x00ff00});
-arjs.add(new THREE.Mesh(geom, material2), -0.72, 51.049); // slightly south
-arjs.add(new THREE.Mesh(geom, material3), -0.722, 51.05); // slightly west
-arjs.add(new THREE.Mesh(geom, material4), -0.718, 51.05); // slightly east
+threex.add(new THREE.Mesh(geom, material2), -0.72, 51.049); // slightly south
+threex.add(new THREE.Mesh(geom, material3), -0.722, 51.05); // slightly west
+threex.add(new THREE.Mesh(geom, material4), -0.718, 51.05); // slightly east
 
 const get = { m : 0 };
 const parts = window.location.href.split('?');
@@ -48,12 +44,12 @@ let orientationControls;
 // m not 1, use a fake GPS location
 // so m other than 1 or 2 can be used to test on a desktop machine
 if(get.m == 1 || get.m == 2) {
-    orientationControls = new Arjs.DeviceOrientationControls(camera);
+    orientationControls = new THREEx.DeviceOrientationControls(camera);
 }
 if(get.m == 2) {
-    arjs.startGps();
+    threex.startGps();
 } else {
-    arjs.fakeGps(-0.72, 51.05);
+    threex.fakeGps(-0.72, 51.05);
 }
 
 requestAnimationFrame(render);
