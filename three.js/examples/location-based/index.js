@@ -1,17 +1,21 @@
-import * as THREE from 'three';
+//import * as THREE from 'three';
 // TODO import direct from AR.js npm package
 //import * as Arjs from '../js/arjs.js';
 
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(80, 2, 0.1, 50000);
+const canvas = document.querySelector('#canvas1');
+console.log(canvas);
 const renderer = new THREE.WebGLRenderer({ canvas: document.querySelector('#canvas1') });
 
 const geom = new THREE.BoxGeometry(20,20,20);
 const material = new THREE.MeshBasicMaterial({color: 0xff0000});
 const mesh = new THREE.Mesh(geom, material);
+console.log(THREEx);
 
-const arjs = new Arjs.LocationBased(scene, camera);
-const cam = new Arjs.WebcamRenderer(renderer, '#video1');
+const arjs = new THREEx.LocationBased(scene, camera);
+console.log(arjs);
+const cam = new THREEx.WebcamRenderer(renderer, '#video1');
 
 // If using your own GPS location, change the lon and lat of the three meshes
 arjs.add(mesh, -0.72, 51.051); // slightly north

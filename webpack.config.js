@@ -149,6 +149,33 @@ module.exports = (env, argv) => {
     }
   },
   {
+    name: 'threex-location-only',
+    devtool,
+    entry: './three.js/src/location-based/index.js',
+    output: {
+      library: 'THREEx',
+      path: path.resolve(__dirname, 'three.js/build'),
+      filename: 'ar-threex-location-only.js',
+      libraryTarget: 'umd',
+      globalObject: 'this'
+    },
+    resolve: {
+      alias: {
+        jsartoolkit: '@ar-js-org/artoolkit5-js',
+        threexArmarkercontrols$: path.resolve(__dirname, 'three.js/src/threex/arjs-markercontrols.js')
+      }
+    },
+    module,
+    externals: {
+      three: {
+      commonjs: 'three',
+      commonjs2: 'three',
+      amd: 'three',
+      root: 'THREE' // indicates global variable
+      }
+    }
+  },
+  {
     name: 'ar.js',
     devtool,
     entry: './three.js/src/index-arjs.js',
