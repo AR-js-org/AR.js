@@ -2,22 +2,6 @@
 
 This is a simple, lightweight implementation of location-based AR.js using pure three.js. **It will only work on Chrome due to limitations with obtaining compass bearing on other browsers. Also, it is only tested on Android, not iOS. I believe it is possible to get it to work on Webkit-based browsers due to `webkitCompassHeading`, but I don't have any iDevices so cannot test this. However pull requests to fix this are welcome!**
 
-## Directory structure
-
-The `js` directory contains the source files. It's written using ECMAScript 6 modules. There is a `package.json` provided to allow you to install three.js from NPM:
-
-`npm install`
-
-## Building
-
-Using Webpack is assumed. There is a simple `webpack.config.js` which is configured to place a `bundle.js` inside `example/dist`. Build with
-
-`npx webpack`
-
-## Full docs
-
-Will follow.
-
 ## Example
 
 Provided in the `example` directory is an example. This will behave differently

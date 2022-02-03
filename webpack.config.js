@@ -85,12 +85,6 @@ module.exports = (env, argv) => {
       libraryTarget: 'umd',
       globalObject: 'this'
     },
-    resolve: {
-      alias: {
-        jsartoolkit: '@ar-js-org/artoolkit5-js',
-        threexArmarkercontrols$: path.resolve(__dirname, 'three.js/src/threex/arjs-markercontrols-nft.js')
-      }
-    },
     module,
     externals
   },
@@ -137,6 +131,27 @@ module.exports = (env, argv) => {
         jsartoolkit: '@ar-js-org/artoolkit5-js',
         threexArmarkercontrols$: path.resolve(__dirname, 'three.js/src/threex/arjs-markercontrols-nft.js')
       }
+    },
+    module,
+    externals: {
+      three: {
+      commonjs: 'three',
+      commonjs2: 'three',
+      amd: 'three',
+      root: 'THREE' // indicates global variable
+      }
+    }
+  },
+  {
+    name: 'threex-location-only',
+    devtool,
+    entry: './three.js/src/location-based/index.js',
+    output: {
+      library: 'THREEx',
+      path: path.resolve(__dirname, 'three.js/build'),
+      filename: 'ar-threex-location-only.js',
+      libraryTarget: 'umd',
+      globalObject: 'this'
     },
     module,
     externals: {
