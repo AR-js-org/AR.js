@@ -88,9 +88,17 @@ const Session = function(parameters){
 	var arContext = _this.arContext = new Context(parameters.contextParameters)
 
 	// initialize it
-	_this.arContext.init(()=>{
-		_this.arContext.arController.orientation = 	getSourceOrientation();
-		_this.arContext.arController.options.orientation = getSourceOrientation();
+	window.addEventListener('arjs-video-loaded', function () {
+		arContext.init(() => {
+
+			arContext.arController.orientation = getSourceOrientation();
+			arContext.arController.options.orientation = getSourceOrientation();
+			//arContext.arController.orientation = 'landscape';
+			//arContext.arController.options.orientation = 'landscape';
+			//arContext.arController.orientation = 'portrait';
+			//arContext.arController.options.orientation = 'portrait';
+
+		})
 	})
 
 	function getSourceOrientation() {
@@ -101,11 +109,11 @@ const Session = function(parameters){
 
 				console.log(
 						'actual source dimensions',
-						_this.arSource.domElement.videoWidth,
-						_this.arSource.domElement.videoHeight
+						arSource.domElement.videoWidth,
+						arSource.domElement.videoHeight
 				);
 
-				if (_this.arSource.domElement.videoWidth > _this.arSource.domElement.videoHeight) {
+				if (arSource.domElement.videoWidth > arSource.domElement.videoHeight) {
 						console.log('source orientation', 'landscape');
 						return 'landscape';
 				} else {
