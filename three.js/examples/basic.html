@@ -76,9 +76,10 @@
 				initARContext();
 			});
 			window.arToolkitSource = arToolkitSource;
-			setTimeout(() => {
+			onResize()
+			/*setTimeout(() => {
 				onResize()
-			}, 2000);
+			}, 2000);*/
 		})
 
 		// handle resize
@@ -89,8 +90,8 @@
 		function onResize() {
 			arToolkitSource.onResizeElement()
 			arToolkitSource.copyElementSizeTo(renderer.domElement)
-			if (arToolkitContext.arController !== null) {
-				arToolkitSource.copyElementSizeTo(arToolkitContext.arController.canvas)
+			if (window.arToolkitContext.arController !== null) {
+				arToolkitSource.copyElementSizeTo(window.arToolkitContext.arController.canvas)
 			}
 		}
 		////////////////////////////////////////////////////////////////////////////////
