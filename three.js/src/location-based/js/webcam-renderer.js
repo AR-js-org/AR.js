@@ -5,7 +5,16 @@ class WebcamRenderer {
         this.renderer = renderer;
         this.renderer.autoClear = false;
         this.sceneWebcam = new THREE.Scene();
-        const video = document.querySelector(videoElement);
+        let video;
+        if(videoElement === undefined) {
+            video = document.createElement("video");
+            video.setAttribute("autoplay", true);
+            video.setAttribute("playsinline", true);
+            video.style.display = 'none';
+            document.body.appendChild(video);
+        } else {
+            video = document.querySelector(videoElement);
+        }
         this.geom = new THREE.PlaneBufferGeometry(); 
         this.texture = new THREE.VideoTexture(video);
         this.material = new THREE.MeshBasicMaterial( { map: this.texture } );
