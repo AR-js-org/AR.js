@@ -18,7 +18,7 @@ AFRAME.registerComponent('osm', {
     },
 
     _readOsm: function(lat, lon) {
-        fetch(`https://hikar.org/fm/ws/bsvr.php?bbox=${lon - 0.01},${lat - 0.01},${lon + 0.01},${lat + 0.01}&way=highway&format=json&outProj=3785`)
+        fetch(`https://hikar.org/webapp/map?bbox=${lon - 0.01},${lat - 0.01},${lon + 0.01},${lat + 0.01}&layers=ways`)
             .then(response => response.json())
             .then(json => {
                 const objectIds = [];
