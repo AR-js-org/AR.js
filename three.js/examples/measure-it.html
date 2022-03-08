@@ -214,6 +214,7 @@
 				geometry.setAttribute('position',
 					new THREE.BufferAttribute(new Float32Array(vertices), positionNumComponents));
 				var lineMesh = new THREE.Line(geometry, material);
+				container.add(lineMesh);
 
 				// update lineMesh
 				onRenderFcts.push(function () {
