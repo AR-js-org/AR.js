@@ -220,7 +220,7 @@ npm install @ar-js-org/ar.js
 // Install with yarn
 yarn add @ar-js-org/ar.js
 ```
-For some examples read this issue
+For some examples read this [issue](https://github.com/AR-js-org/AR.js/issues/234).
 ## Troubleshooting, feature requests, community
 
 **You can find a lot of help on the old [AR.js repositories issues](https://github.com/jeromeetienne/AR.js/issues). Please search on open/closed issues, you may find interesting stuff.**
