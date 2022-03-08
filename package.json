@@ -11,18 +11,15 @@
   },
   "files": [
     "three.js/build",
-    "aframe/build",
-    "data",
-    "three.js/examples/basic.html",
-    "three.js/examples/vendor/three.js/build/three.min.js",
-    "aframe/examples/basic.html",
-    "aframe/examples/vendor/aframe/build/aframe.min.js"
+    "aframe/build"
   ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/AR-js-org/AR.js.git"
   },
   "keywords": [
+    "AR.js",
+    "artoolkit5-js",
     "AR",
     "VR",
     "three.js",
