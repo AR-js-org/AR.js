@@ -1,11 +1,6 @@
 
 # AR.js - Augmented Reality on the Web
 
-<a href="https://xscode.com/nicolocarpignoli/AR.js">
-  <img src="./AR-JS-banner.png" />
-</a>
-
----
 
 [![Build Status](https://travis-ci.org/jeromeetienne/AR.js.svg?branch=master)](https://travis-ci.org/jeromeetienne/AR.js)
 [![Gitter chat](https://badges.gitter.im/AR-js/Lobby.png)](https://gitter.im/AR-js/Lobby)
@@ -14,17 +9,15 @@
 
 AR.js is a lightweight library for Augmented Reality on the Web, coming with features like Image Tracking, Location-based AR and Marker tracking.
 
-Welcome to the official repository!
+<i><b>30/12/21 Update:</b> There is now also a brand new OSS Web AR JS library around, called [MindAR](https://github.com/hiukim/mind-ar-js).
+If you need a great Image tracking feature (also multiple image tracking) and Face tracking, [go check it out](https://github.com/hiukim/mind-ar-js)!  
+  As for now, AR.js is still the only library providing Marker based and Location based AR features.</i>
 
 This project has been created by [@jeromeetienne](https://github.com/jeromeetienne), previously managed by Nicolò Carpignoli and it is now maintained by the AR.js org.
 
 🚀For frequent updates on AR.js you can follow [@the official Twitter account](https://twitter.com/ARjs_Library) and Watch this repo!
 
 Logo is courtesy of <a href="https://twitter.com/viralinfo"> Simon Poulter </a>.
-
-------
-
-<h2>You can get paid support and new features for AR.js. Check <a href="https://xscode.com/nicolocarpignoli/AR.js"> this link. </a></h2>
 
 ------
 
