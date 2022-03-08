@@ -6,6 +6,7 @@ class LocationBased {
         this.scene = scene;
         this.camera = camera;
         this.proj = new SphMercProjection();
+        this.eventHandlers = { };
     }
 
     setProjection(proj) {
@@ -20,6 +21,9 @@ class LocationBased {
                     position.coords.longitude,
                     position.coords.latitude
                 );
+                if(this.eventHandlers["gpsupdate"]) {
+                    this.eventHandlers["gpsupdate"](position);
+                }    
             }, error => {
                 alert(`GPS listen error: code ${error}`);
             }, {
@@ -60,6 +64,10 @@ class LocationBased {
 
     setElevation(elev) {
         this.camera.position.y = elev;
+    }
+
+    on(eventName, eventHandler) {
+        this.eventHandlers[eventName] = eventHandler;
     }
 }
 
