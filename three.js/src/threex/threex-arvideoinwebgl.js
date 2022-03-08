@@ -1,6 +1,6 @@
-var THREEx = THREEx || {}
+import * as THREE from 'three';
 
-THREEx.ArVideoInWebgl = function(videoTexture){	
+const ArVideoInWebgl = function(videoTexture){	
 	var _this = this
 	
 	//////////////////////////////////////////////////////////////////////////////
@@ -103,3 +103,5 @@ THREEx.ArVideoInWebgl = function(videoTexture){
 	// }
 
 }
+
+export default ArVideoInWebgl;

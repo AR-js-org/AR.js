@@ -29,6 +29,8 @@
  * location.
  */
 
+import * as AFRAME from 'aframe'
+
 AFRAME.registerComponent('gps-projected-camera', {
     _watchPositionId: null,
     originCoords: null, // original coords now in Spherical Mercator
@@ -71,7 +73,7 @@ AFRAME.registerComponent('gps-projected-camera', {
     },
     update: function() {
         if (this.data.simulateLatitude !== 0 && this.data.simulateLongitude !== 0) {
-            localPosition = Object.assign({}, this.currentCoords || {});
+            var localPosition = Object.assign({}, this.currentCoords || {});
             localPosition.longitude = this.data.simulateLongitude;
             localPosition.latitude = this.data.simulateLatitude;
             localPosition.altitude = this.data.simulateAltitude;
@@ -117,10 +119,10 @@ AFRAME.registerComponent('gps-projected-camera', {
 
                 document.addEventListener('touchend', function() { handler() }, false);
 
-                alert('After camera permission prompt, please tap the screen to activate geolocation.');
+                this.el.sceneEl.systems['arjs']._displayErrorPopup('After camera permission prompt, please tap the screen to activate geolocation.');
             } else {
                 var timeout = setTimeout(function() {
-                    alert('Please enable device orientation in Settings > Safari > Motion & Orientation Access.')
+                    this.el.sceneEl.systems['arjs']._displayErrorPopup('Please enable device orientation in Settings > Safari > Motion & Orientation Access.');
                 }, 750);
                 window.addEventListener(eventName, function() {
                     clearTimeout(timeout);
@@ -133,6 +135,7 @@ AFRAME.registerComponent('gps-projected-camera', {
 
     play: function() {
         if (this.data.simulateLatitude !== 0 && this.data.simulateLongitude !== 0) {
+            var localPosition = Object.assign({}, this.currentCoords || {});
             localPosition.latitude = this.data.simulateLatitude;
             localPosition.longitude = this.data.simulateLongitude;
             if (this.data.simulateAltitude !== 0) {
@@ -222,12 +225,12 @@ AFRAME.registerComponent('gps-projected-camera', {
 
                 if (err.code === 1) {
                     // User denied GeoLocation, let their know that
-                    alert('Please activate Geolocation and refresh the page. If it is already active, please check permissions for this website.');
+                    this.el.sceneEl.systems['arjs']._displayErrorPopup('Please activate Geolocation and refresh the page. If it is already active, please check permissions for this website.');  
                     return;
                 }
 
                 if (err.code === 3) {
-                    alert('Cannot retrieve GPS position. Signal is absent.');
+                    this.el.sceneEl.systems['arjs']._displayErrorPopup('Cannot retrieve GPS position. Signal is absent.');
                     return;
                 }
             };

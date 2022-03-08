@@ -1,4 +1,7 @@
-//////////////////////////////////////////////////////////////////////////////
+import * as AFRAME from 'aframe';
+import HitTesting from '../../three.js/src/new-api/arjs-hittesting';
+
+// //////////////////////////////////////////////////////////////////////////////
 //		arjs-hit-testing
 //////////////////////////////////////////////////////////////////////////////
 AFRAME.registerComponent('arjs-hit-testing', {
@@ -40,7 +43,7 @@ AFRAME.registerComponent('arjs-hit-testing', {
 			var arSession = arjsSystem._arSession
 			var renderer = arSession.parameters.renderer
 
-			var hitTesting = _this._arHitTesting = new ARjs.HitTesting(arSession)
+			var hitTesting = _this._arHitTesting = new HitTesting(arSession)
 			hitTesting.enabled = _this.data.enabled
 
 			_this.isReady = true

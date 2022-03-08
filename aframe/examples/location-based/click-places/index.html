@@ -1,38 +1,29 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <meta charset='utf-8'>
-    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>GeoAR.js demo</title>
-    <script src="https://aframe.io/releases/0.9.2/aframe.min.js"></script>
-    <script src='../../../build/aframe-ar-nft.js'></script>
-</head>
-
-<script>
-    AFRAME.registerComponent('clickhandler', {
-        init: function() {
-            this.el.addEventListener('click', () => {
-                alert('Clicked!')
-            });
-    }});
-</script>
-
-<body style='margin: 0; overflow: hidden;'>
+<html> 
+    <head>
+        <title>AR.js Click Places Example</title>
+        <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+        <script type='text/javascript' src='../../../build/aframe-ar-nft.js'></script>
+        <script>
+        AFRAME.registerComponent('clicker', {
+            init: function() {
+                this.el.addEventListener('click', e => {
+                    alert('Box clicked!');
+                });
+            }
+        });
+        </script>
+    </head>
+    <body>
     <a-scene
-        cursor='rayOrigin: mouse; fuse: true; fuseTimeout: 0;'
-        raycaster="objects: [clickhandler];"
         vr-mode-ui="enabled: false"
-		embedded
-		arjs='sourceType: webcam; debugUIEnabled: false;'>
+        cursor='rayOrigin: mouse'
+        raycaster='near: 0; far: 50000'
+        arjs='sourceType: webcam; videoTexture: true; debugUIEnabled: false;'
+        renderer='antialias: true; alpha: true'>
+            <a-camera gps-projected-camera='simulateLatitude: 51.049; simulateLongitude: -0.723' rotation-reader></a-camera>
+            <a-box gps-projected-entity-place='latitude: 51.0596; longitude: -0.7170' color='red' scale='200 200 200' clicker></a-box>
+    </a-scene>
+    </body>
+</html>
 
-        <a-box
-            clickhandler
-            material="color: red;"
-            scale="20 20 20"
-            gps-entity-place="latitude: your-latitude>; longitude: your-longitude;">
-        </a-box>
-
-        <a-camera gps-camera rotation-reader>
-		</a-camera>
-	</a-scene>
-</body>

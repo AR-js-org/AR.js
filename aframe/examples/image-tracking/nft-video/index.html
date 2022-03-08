@@ -1,6 +1,7 @@
 <script src="https://cdn.jsdelivr.net/gh/aframevr/aframe@1c2407b26c61958baa93967b5412487cd94b290b/dist/aframe-master.min.js"></script>
 
-<script src='https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js'></script>
+<script src='https://raw.githack.com/AR-js-org/AR.js/ES6/aframe/build/aframe-ar-nft.js'></script>
+
 <script>
     window.onload = function() {
         AFRAME.registerComponent('videohandler', {
@@ -49,7 +50,7 @@
     </div>
     <a-scene
         vr-mode-ui="enabled: false;"
-        renderer='antialias: true; alpha: true; precision: mediump;'
+        renderer='antialias: true; alpha: true; precision: medium;'
         embedded arjs='trackingMethod: best; sourceType: webcam; debugUIEnabled: false;'>
 
         <a-assets>

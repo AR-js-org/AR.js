@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html> 
+    <head>
+        <title>AR.js Hello World Example</title>
+        <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+        <script type='text/javascript' src='../../../build/aframe-ar-nft.js'></script>
+    </head>
+    <body>
+    <a-scene
+        vr-mode-ui="enabled: false"
+        arjs='sourceType: webcam; videoTexture: true; debugUIEnabled: false;'
+        renderer='antialias: true; alpha: true'>
+            <a-camera gps-camera rotation-reader></a-camera>
+            <a-box gps-entity-place='latitude: your-latitude; longitude: your-longitude' color='red' scale='20 20 20'></a-box>
+    </a-scene>
+    </body>
+</html>
+

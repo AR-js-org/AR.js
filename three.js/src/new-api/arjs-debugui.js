@@ -1,12 +1,12 @@
-// @namespace
-var ARjs = ARjs || {}
+import MarkersAreaUtils from '../markers-area/arjs-markersareautils';
+import Context from '../threex/arjs-context'; // TODO context build-dependent
 
 /**
  * Create an debug UI for an ARjs.Anchor
  *
  * @param {ARjs.Anchor} arAnchor - the anchor to user
  */
-ARjs.SessionDebugUI = function (arSession) {
+const SessionDebugUI = function (arSession) {
     var trackingBackend = arSession.arContext.parameters.trackingBackend
 
     this.domElement = document.createElement('div')
@@ -33,10 +33,10 @@ ARjs.SessionDebugUI = function (arSession) {
  * Url of augmented-website service - if === '' then dont include augmented-website link
  * @type {String}
  */
-ARjs.SessionDebugUI.AugmentedWebsiteURL = 'https://webxr.io/augmented-website'
+SessionDebugUI.AugmentedWebsiteURL = 'https://webxr.io/augmented-website'
 
 //////////////////////////////////////////////////////////////////////////////
-//		ARjs.AnchorDebugUI
+//		AnchorDebugUI
 //////////////////////////////////////////////////////////////////////////////
 
 /**
@@ -44,7 +44,7 @@ ARjs.SessionDebugUI.AugmentedWebsiteURL = 'https://webxr.io/augmented-website'
  *
  * @param {ARjs.Anchor} arAnchor - the anchor to user
  */
-ARjs.AnchorDebugUI = function (arAnchor) {
+const AnchorDebugUI = function (arAnchor) {
     var arSession = arAnchor.arSession
     var trackingBackend = arSession.arContext.parameters.trackingBackend
 
@@ -109,12 +109,12 @@ ARjs.AnchorDebugUI = function (arAnchor) {
         domElement.href = 'javascript:void(0)'
 
         domElement.addEventListener('click', function () {
-            if (ARjs.AnchorDebugUI.MarkersAreaLearnerURL !== null) {
-                var learnerURL = ARjs.AnchorDebugUI.MarkersAreaLearnerURL
+            if (AnchorDebugUI.MarkersAreaLearnerURL !== null) {
+                var learnerURL = AnchorDebugUI.MarkersAreaLearnerURL
             } else {
-                var learnerURL = ARjs.Context.baseURL + 'examples/multi-markers/examples/learner.html'
+                var learnerURL = Context.baseURL + 'examples/multi-markers/examples/learner.html'
             }
-            ARjs.MarkersAreaUtils.navigateToLearnerPage(learnerURL, trackingBackend)
+            MarkersAreaUtils.navigateToLearnerPage(learnerURL, trackingBackend)
         })
     }
 
@@ -132,7 +132,7 @@ ARjs.AnchorDebugUI = function (arAnchor) {
         domElement.href = 'javascript:void(0)'
 
         domElement.addEventListener('click', function () {
-            ARjs.MarkersAreaUtils.storeDefaultMultiMarkerFile(trackingBackend)
+            MarkersAreaUtils.storeDefaultMultiMarkerFile(trackingBackend)
             location.reload()
         })
     }
@@ -142,4 +142,9 @@ ARjs.AnchorDebugUI = function (arAnchor) {
  * url for the markers-area learner. if not set, take the default one
  * @type {String}
  */
-ARjs.AnchorDebugUI.MarkersAreaLearnerURL = null
+AnchorDebugUI.MarkersAreaLearnerURL = null
+
+export {
+  SessionDebugUI,
+  AnchorDebugUI
+};

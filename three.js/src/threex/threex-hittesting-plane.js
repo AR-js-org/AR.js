@@ -1,4 +1,4 @@
-var THREEx = THREEx || {}
+import * as THREE from 'three';
 
 // TODO this is useless - prefere arjs-HitTesting.js
 
@@ -7,7 +7,7 @@ var THREEx = THREEx || {}
  * - seems an easy light layer for clickable object
  * - up to 
  */
-THREEx.HitTestingPlane = function(sourceElement){
+const HitTestingPlane = function(sourceElement){
 	this._sourceElement = sourceElement
 
 	// create _pickingScene
@@ -36,7 +36,7 @@ THREEx.HitTestingPlane = function(sourceElement){
 //		update function
 //////////////////////////////////////////////////////////////////////////////
 
-THREEx.HitTestingPlane.prototype.update = function(camera, pickingRoot, changeMatrixMode){
+HitTestingPlane.prototype.update = function(camera, pickingRoot, changeMatrixMode){
 
 	this.onResize()
 	
@@ -69,7 +69,7 @@ THREEx.HitTestingPlane.prototype.update = function(camera, pickingRoot, changeMa
 //		resize camera
 //////////////////////////////////////////////////////////////////////////////
 
-THREEx.HitTestingPlane.prototype.onResize = function(){
+HitTestingPlane.prototype.onResize = function(){
 	var sourceElement = this._sourceElement
 	var pickingCamera = this._pickingCamera
 	
@@ -85,7 +85,7 @@ THREEx.HitTestingPlane.prototype.onResize = function(){
 //////////////////////////////////////////////////////////////////////////////
 //		Perform test
 //////////////////////////////////////////////////////////////////////////////
-THREEx.HitTestingPlane.prototype.test = function(mouseX, mouseY){
+HitTestingPlane.prototype.test = function(mouseX, mouseY){
 	// convert mouseX, mouseY to [-1, +1]
 	mouseX = (mouseX-0.5)*2
 	mouseY =-(mouseY-0.5)*2
@@ -117,7 +117,9 @@ THREEx.HitTestingPlane.prototype.test = function(mouseX, mouseY){
 //		render the pickingPlane for debug
 //////////////////////////////////////////////////////////////////////////////
 
-THREEx.HitTestingPlane.prototype.renderDebug = function(renderer){
+HitTestingPlane.prototype.renderDebug = function(renderer){
 	// render sceneOrtho
 	renderer.render( this._pickingScene, this._pickingCamera )
 }
+
+export default HitTestingPlane;

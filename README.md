@@ -50,7 +50,7 @@ Please import the one you need for your project, not both:
 You can also import a specific version replacing `master` keyword with version tag:
 
 ```html
-  <script src="https://raw.githack.com/AR-js-org/AR.js/3.3.3/aframe/build/aframe-ar-nft.js">
+  <script src="https://raw.githack.com/AR-js-org/AR.js/3.4.0-alpha-rc1/aframe/build/aframe-ar-nft.js">
 ```
 
 ## Get started
@@ -96,7 +96,7 @@ Please follow these simple steps:
   </div>
   <a-scene
     vr-mode-ui="enabled: false;"
-    renderer="logarithmicDepthBuffer: true;"
+    renderer="logarithmicDepthBuffer: true; precision: medium;"
     embedded
     arjs="trackingMethod: best; sourceType: webcam;debugUIEnabled: false;"
   >
@@ -112,7 +112,7 @@ Please follow these simple steps:
       <a-entity
         gltf-model="your-server/https://raw.githack.com/AR-js-org/AR.js/master/aframe/examples/image-tracking/nft/trex/scene.gltf"
         scale="5 5 5"
-        position="50 150 0"
+        position="150 300 -100"
       >
       </a-entity>
     </a-nft>
@@ -142,11 +142,10 @@ Please follow these simple steps:
     <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js"></script>
   </head>
 
-  <body style="margin: 0; overflow: hidden;">
+  <body>
     <a-scene
       vr-mode-ui="enabled: false"
-      embedded
-      arjs="sourceType: webcam; debugUIEnabled: false;"
+      arjs="sourceType: webcam; videoTexture: true; debugUIEnabled: false;"
     >
       <a-text
         value="This content will always face you."
@@ -180,7 +179,7 @@ Please follow this simple steps:
         <a-marker preset="hiro">
             <!-- we use cors proxy to avoid cross-origin problems ATTENTION! you need to set up your server -->
             <a-entity
-            position="0 -1 0"
+            position="0 0 0"
             scale="0.05 0.05 0.05"
             gltf-model="your-server/https://raw.githack.com/AR-js-org/AR.js/master/aframe/examples/image-tracking/nft/trex/scene.gltf"
             ></a-entity>
@@ -190,6 +189,10 @@ Please follow this simple steps:
     </body>
 </html>
 ```
+Important! Be aware that if you are referring to external resources, in any app, especially those using NFT, you will encounter CORS problems if those resources are not in the same server of the code. If you can’t see the tracking, please open your Browser Dev Tools and check if you have CORS errors in the console. If so, you have to fix those errors in order to see your content. The correct fix is to place your resources on the same server of your code.
+
+If you cannot do that, you can host a proxy anywhere server to solve that (https://github.com/Rob--W/cors-anywhere).
+Please note that several hosting services have policies that does not permit to use such server. Always check hosting services policies before using them to avoid account suspensions
 
 Important! Be aware that if you are referring to external resources, in any app, especially those using NFT, you will encounter CORS problems if those resources are not in the same server of the code. If you can’t see the tracking, please open your Browser Dev Tools and check if you have CORS errors in the console. If so, you have to fix those errors in order to see your content. The correct fix is to place your resources on the same server of your code.
 
@@ -198,6 +201,19 @@ Please note that several hosting services have policies that does not permit to 
 
 Learn more on the [AR.js Official Documentation](https://ar-js-org.github.io/AR.js-Docs/).
 
+## ES6 npm package
+
+You can install **AR.js** with **npm** and use in any compatible project that support npm modules (React.js, Vue.js, Next.js or whatelse), to install it run:
+
+```
+// Install with npm
+npm install @ar-js-org/ar.js
+```
+```
+// Install with yarn
+yarn add @ar-js-org/ar.js
+```
+For some examples read this [issue](https://github.com/AR-js-org/AR.js/issues/234).
 ## Troubleshooting, feature requests, community
 
 **You can find a lot of help on the old [AR.js repositories issues](https://github.com/jeromeetienne/AR.js/issues). Please search on open/closed issues, you may find interesting stuff.**
@@ -230,10 +246,10 @@ Some things that will increase the chance that your pull request is accepted:
 
 ## Licenses
 
-It is **all open-source**! jsartoolkit5 is under LGPLv3 license and additional permission.
+It is **all open-source**! artoolkit5-js is under LGPLv3 license and additional permission.
 And all my code in the AR.js repository is under MIT license. :)
 
-For legal details, be sure to check [jsartoolkit5 license](https://github.com/artoolkitx/jsartoolkit5/blob/master/LICENSE.txt)
+For legal details, be sure to check [artoolkit5-js license](https://github.com/AR-js-org/artoolkit5-js/blob/master/LICENSE)
 and [AR.js license](https://github.com/AR-js-org/AR.js/blob/master/LICENSE).
 
 Full Changelog: [AR.js changelog](https://github.com/AR-js-org/AR.js/blob/master/CHANGELOG.md)

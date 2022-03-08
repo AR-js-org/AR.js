@@ -5,22 +5,20 @@
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <title>GeoAR.js demo</title>
     <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
-    <script src="https://raw.githack.com/donmccurdy/aframe-extras/master/dist/aframe-extras.loaders.min.js"></script>
-    <script src='../../../build/aframe-ar-nft.js'></script>
+    <script type='text/javascript' src='../../../build/aframe-ar-nft.js'></script>
 </head>
 
 <body style='margin: 0; overflow: hidden;'>
     <a-scene
         vr-mode-ui="enabled: false"
-		embedded
-		arjs='sourceType: webcam; debugUIEnabled: false;'>
+		arjs='sourceType: webcam; videoTexture: true; debugUIEnabled: false;'>
 
         <!-- ~ 400m far -->
-        <!-- <a-box material="color: red;" scale="5 5 5" gps-entity-place="latitude: 44.506477; longitude: 11.301524;"></a-box> -->
+        <a-box material="color: red;" scale="5 5 5" gps-entity-place="latitude: 44.506477; longitude: 11.301524;"></a-box> 
 
         <!-- ~ 20m far -->
-        <!-- <a-image src="place.png" gps-entity-place="latitude: 44.504417; longitude: 11.301317;"
-        ></a-image> -->
+        <a-image src="place.png" gps-entity-place="latitude: 44.504417; longitude: 11.301317;"
+        ></a-image> 
 
         <!-- ~ 0m far -->
         <a-image src="place.png" gps-entity-place="latitude: 44.504348; longitude: 11.301027;"

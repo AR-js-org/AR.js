@@ -19,6 +19,8 @@
  * for many areas of the world and appear not to cause unacceptable distortions
  * when used as the units for AR apps.
  */
+import * as AFRAME from 'aframe'
+
 AFRAME.registerComponent('gps-projected-entity-place', {
     _cameraGps: null,
     schema: {
@@ -64,7 +66,7 @@ AFRAME.registerComponent('gps-projected-entity-place', {
             var distanceForMsg = this._cameraGps.computeDistanceMeters(dstCoords);
 
             this.el.setAttribute('distance', distanceForMsg);
-            this.el.setAttribute('distanceMsg', formatDistance(distanceForMsg));
+            this.el.setAttribute('distanceMsg', this._formatDistance(distanceForMsg));
 
             this.el.dispatchEvent(new CustomEvent('gps-entity-place-update-position', { detail: { distance: distanceForMsg } }));
 
@@ -114,19 +116,21 @@ AFRAME.registerComponent('gps-projected-entity-place', {
             z: worldPos[1]
         }); 
     },
+
+    /**
+      * Format distances string
+      *
+      * @param {String} distance
+      */
+
+    _formatDistance: function(distance) {
+        distance = distance.toFixed(0);
+
+        if (distance >= 1000) {
+            return (distance / 1000) + ' kilometers';
+        }
+
+        return distance + ' meters';
+    }
 });
 
-/**
- * Format distances string
- *
- * @param {String} distance
- */
-function formatDistance(distance) {
-    distance = distance.toFixed(0);
-
-    if (distance >= 1000) {
-        return (distance / 1000) + ' kilometers';
-    }
-
-    return distance + ' meters';
-};

@@ -1,0 +1,10 @@
+aframe/examples/**/**/*
+aframe/examples/**/*
+aframe/examples/*
+three.js/examples/**/**/*
+three.js/examples/**/*
+three.js/examples/*
+test/**/*
+test/*
+data/marker-generator/*
+data/images/*

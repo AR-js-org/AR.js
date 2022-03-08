@@ -1,3 +1,5 @@
+import * as AFRAME from 'aframe';
+
 AFRAME.registerComponent('gps-entity-place', {
     _cameraGps: null,
     schema: {
@@ -42,7 +44,7 @@ AFRAME.registerComponent('gps-entity-place', {
             var distanceForMsg = this._cameraGps.computeDistanceMeters(ev.detail.position, dstCoords);
 
             this.el.setAttribute('distance', distanceForMsg);
-            this.el.setAttribute('distanceMsg', formatDistance(distanceForMsg));
+            this.el.setAttribute('distanceMsg', this._formatDistance(distanceForMsg));
             this.el.dispatchEvent(new CustomEvent('gps-entity-place-update-position', { detail: { distance: distanceForMsg } }));
 
             var actualDistance = this._cameraGps.computeDistanceMeters(ev.detail.position, dstCoords, true);
@@ -109,19 +111,20 @@ AFRAME.registerComponent('gps-entity-place', {
         // update element's position in 3D world
         this.el.setAttribute('position', position);
     },
-});
 
-/**
- * Format distances string
- *
- * @param {String} distance
- */
-function formatDistance(distance) {
-    distance = distance.toFixed(0);
+    /**
+      * Format distances string
+      *
+      * @param {String} distance
+      */
 
-    if (distance >= 1000) {
-        return (distance / 1000) + ' kilometers';
+    _formatDistance: function(distance) {
+        distance = distance.toFixed(0);
+
+        if (distance >= 1000) {
+            return (distance / 1000) + ' kilometers';
+        }
+
+        return distance + ' meters';
     }
-
-    return distance + ' meters';
-};
+});

@@ -1,4 +1,9 @@
-//////////////////////////////////////////////////////////////////////////////
+import * as AFRAME from 'aframe';
+import Anchor from '../../three.js/src/new-api/arjs-anchor';
+import { AnchorDebugUI } from '../../three.js/src/new-api/arjs-debugui';
+import ArToolkitContext from '../../three.js/src/threex/arjs-context';
+
+// //////////////////////////////////////////////////////////////////////////////
 //		arjs-anchor
 //////////////////////////////////////////////////////////////////////////////
 AFRAME.registerComponent('arjs-anchor', {
@@ -92,11 +97,11 @@ AFRAME.registerComponent('arjs-anchor', {
 
             if (_this.data.preset === 'hiro') {
                 markerParameters.type = 'pattern'
-                markerParameters.patternUrl = THREEx.ArToolkitContext.baseURL + 'examples/marker-training/examples/pattern-files/pattern-hiro.patt'
+                markerParameters.patternUrl = ArToolkitContext.baseURL + 'examples/marker-training/examples/pattern-files/pattern-hiro.patt'
                 markerParameters.markersAreaEnabled = false
             } else if (_this.data.preset === 'kanji') {
                 markerParameters.type = 'pattern'
-                markerParameters.patternUrl = THREEx.ArToolkitContext.baseURL + 'examples/marker-training/examples/pattern-files/pattern-kanji.patt'
+                markerParameters.patternUrl = ArToolkitContext.baseURL + 'examples/marker-training/examples/pattern-files/pattern-kanji.patt'
                 markerParameters.markersAreaEnabled = false
             } else if (_this.data.preset === 'area') {
                 markerParameters.type = 'barcode'
@@ -114,8 +119,8 @@ AFRAME.registerComponent('arjs-anchor', {
                 markerParameters.patternUrl = _this.data.patternUrl;
                 markerParameters.markersAreaEnabled = false
             }
-
-            markerParameters.minConfidence = _this.data.minCondidence;
+            
+            markerParameters.minConfidence = _this.data.minConfidence;
             markerParameters.smooth = _this.data.smooth;
             markerParameters.smoothCount = _this.data.smoothCount;
             markerParameters.smoothTolerance = _this.data.smoothTolerance;
@@ -126,7 +131,7 @@ AFRAME.registerComponent('arjs-anchor', {
             //////////////////////////////////////////////////////////////////////////////
 
             var arSession = arjsSystem._arSession
-            var arAnchor = _this._arAnchor = new ARjs.Anchor(arSession, markerParameters)
+            var arAnchor = _this._arAnchor = new Anchor(arSession, markerParameters)
 
             // it is now considered isReady
             _this.isReady = true
@@ -144,7 +149,7 @@ AFRAME.registerComponent('arjs-anchor', {
                     document.body.appendChild(containerElement)
                 }
                 // create anchorDebugUI
-                var anchorDebugUI = new ARjs.AnchorDebugUI(arAnchor)
+                var anchorDebugUI = new AnchorDebugUI(arAnchor)
                 containerElement.appendChild(anchorDebugUI.domElement)
             }
         }, 1000 / 60)
