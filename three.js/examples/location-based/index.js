@@ -1,6 +1,10 @@
-//import * as THREE from 'three';
-// TODO import direct from AR.js npm package
-//import * as Arjs from '../js/arjs.js';
+function isMobile() {
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+        // true for mobile device
+        return true;
+    }
+    return false;
+}
 
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(80, 2, 0.1, 50000);
@@ -13,7 +17,7 @@ const mesh = new THREE.Mesh(geom, material);
 const threex = new THREEx.LocationBased(scene, camera);
 const cam = new THREEx.WebcamRenderer(renderer, '#video1');
 
-// If using your own GPS location, change the lon and lat of the three meshes
+// If using your own GPS location, change the lon and lat of the four meshes.
 threex.add(mesh, -0.72, 51.051); // slightly north
 const material2 = new THREE.MeshBasicMaterial({color: 0xffff00});
 const material3 = new THREE.MeshBasicMaterial({color: 0x0000ff});
@@ -22,34 +26,37 @@ threex.add(new THREE.Mesh(geom, material2), -0.72, 51.049); // slightly south
 threex.add(new THREE.Mesh(geom, material3), -0.722, 51.05); // slightly west
 threex.add(new THREE.Mesh(geom, material4), -0.718, 51.05); // slightly east
 
-const get = { m : 0 };
-const parts = window.location.href.split('?');
-
-if(parts.length==2) {
-    if(parts[1].endsWith('#')) { 
-        parts[1] = parts[1].slice(0, -1);
-    }
-    const params = parts[1].split('&');
-    for(let i=0; i<params.length; i++) {
-        const param = params[i].split('=');
-        get[param[0]] = param[1];
-    }
-}
-
 let orientationControls;
 
-// Use query string to control behaviour
-// m=1 or m=2, use DeviceOrientationControls (use on mobile device)
-// m=2, use actual GPS location
-// m not 1, use a fake GPS location
-// so m other than 1 or 2 can be used to test on a desktop machine
-if(get.m == 1 || get.m == 2) {
+if (isMobile()){   
     orientationControls = new THREEx.DeviceOrientationControls(camera);
-}
-if(get.m == 2) {
-    threex.startGps();
+    if(navigator.geolocation !== 'undefined') {
+        navigator.geolocation.getCurrentPosition((pos)=>{
+            if (pos !== 'undefined') {
+                console.log('geolocation works');
+                threex.startGps();
+            } else {
+                console.log('geolocation error');
+            }
+        })
+    if( navigator.geolocation.getCurrentPosition(()=>{}) == null){
+        console.log('geolocation not enabled use fakeGps');
+        threex.fakeGps(-0.72, 51.05);
+    }
+        
+    } else {
+        threex.fakeGps(-0.72, 51.05);
+    }
+
+    threex.on("gpsupdate", pos => {
+        console.log(`${pos.coords.latitude} ${pos.coords.longitude}`);
+    });
 } else {
     threex.fakeGps(-0.72, 51.05);
+
+    threex.on("gpsupdate", pos => {
+        console.log(`${pos.coords.latitude} ${pos.coords.longitude}`);
+    });
 }
 
 requestAnimationFrame(render);
