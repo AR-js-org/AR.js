@@ -1,4 +1,5 @@
 # 3.4.0-alpha-rc1
+
 - ES6 feature into master
 - new threejs location based
 - new dispose methods in arjs-context.js and arjs-source.js
