@@ -103,7 +103,7 @@ Please follow these simple steps:
   </div>
   <a-scene
     vr-mode-ui="enabled: false;"
-    renderer="logarithmicDepthBuffer: true;"
+    renderer="logarithmicDepthBuffer: true; precision: medium;"
     embedded
     arjs="trackingMethod: best; sourceType: webcam;debugUIEnabled: false;"
   >
@@ -119,7 +119,7 @@ Please follow these simple steps:
       <a-entity
         gltf-model="your-server/https://raw.githack.com/AR-js-org/AR.js/master/aframe/examples/image-tracking/nft/trex/scene.gltf"
         scale="5 5 5"
-        position="50 150 0"
+        position="150 300 -100"
       >
       </a-entity>
     </a-nft>
@@ -186,7 +186,7 @@ Please follow this simple steps:
         <a-marker preset="hiro">
             <!-- we use cors proxy to avoid cross-origin problems ATTENTION! you need to set up your server -->
             <a-entity
-            position="0 -1 0"
+            position="0 0 0"
             scale="0.05 0.05 0.05"
             gltf-model="your-server/https://raw.githack.com/AR-js-org/AR.js/master/aframe/examples/image-tracking/nft/trex/scene.gltf"
             ></a-entity>
@@ -253,10 +253,10 @@ Some things that will increase the chance that your pull request is accepted:
 
 ## Licenses
 
-It is **all open-source**! jsartoolkit5 is under LGPLv3 license and additional permission.
+It is **all open-source**! artoolkit5-js is under LGPLv3 license and additional permission.
 And all my code in the AR.js repository is under MIT license. :)
 
-For legal details, be sure to check [jsartoolkit5 license](https://github.com/artoolkitx/jsartoolkit5/blob/master/LICENSE.txt)
+For legal details, be sure to check [artoolkit5-js license](https://github.com/AR-js-org/artoolkit5-js/blob/master/LICENSE)
 and [AR.js license](https://github.com/AR-js-org/AR.js/blob/master/LICENSE).
 
 Full Changelog: [AR.js changelog](https://github.com/AR-js-org/AR.js/blob/master/CHANGELOG.md)
