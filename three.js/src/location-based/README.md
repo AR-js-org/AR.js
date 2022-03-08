@@ -4,16 +4,11 @@ This is a simple, lightweight implementation of location-based AR.js using pure 
 
 ## Example
 
-Provided in the `example` directory is an example. This will behave differently
-depending on the query string parameter `m` supplied to it:
-
-- `m` missing or `m=0`: uses a default location and does not setup device orientation controls. Useful for testing on a desktop.
-
-- `m=1` : uses a default location but does setup device orientation controls. Useful for testing on a mobile device. Move the device round and you should see a red box to the northeast, green box to the north and blue box to the west (approximately).
-
-- `m=2` : will use GPS tracking and device orientation controls. Unless you are located near the default location, you will need to modify the `index.js` code to add meshes near your current location.
-
-If `m=1` is used (default location with device orientation controls) you should see the following:
+Provided in the `example/location-based` directory is an example. It will check if a Mobile device is in use there are two cases:
+- if gps is enabled you will need to modify the `example/location-based/index.js` code to add meshes near your current location.
+- if gps is not enabled a fakeGps will start and you will see the four meshes.
+  
+In any case, it does setup device orientation controls and you will see the following:
 
 - Red box a short distance to your north
 - Green box a short distance to your east
