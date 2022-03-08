@@ -208,13 +208,19 @@ Please note that several hosting services have policies that does not permit to 
 
 Learn more on the [AR.js Official Documentation](https://ar-js-org.github.io/AR.js-Docs/).
 
-## Experimental ES6 npm package
+## ES6 npm package
 
-Even if not yet in the master branch, you can install **AR.js** with NPM:
+You can install **AR.js** with **npm** and use in any compatible project that support npm modules (React.js, Vue.js, Next.js or whatelse), to install it run:
 
 ```
+// Install with npm
 npm install @ar-js-org/ar.js
 ```
+```
+// Install with yarn
+yarn add @ar-js-org/ar.js
+```
+For some examples read this issue
 ## Troubleshooting, feature requests, community
 
 **You can find a lot of help on the old [AR.js repositories issues](https://github.com/jeromeetienne/AR.js/issues). Please search on open/closed issues, you may find interesting stuff.**
