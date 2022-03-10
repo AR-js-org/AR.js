@@ -7,7 +7,7 @@
 [![Twitter Follow](https://img.shields.io/twitter/follow/nicolocarp.svg?style=plastic&label=nicolocarpignoli-twitter&style=plastic)](https://twitter.com/nicolocarp)
 [![Twitter Follow](https://img.shields.io/twitter/follow/jerome_etienne.svg?style=plastic&label=jeromeetienne-twitter&style=plastic)](https://twitter.com/jerome_etienne)
 
-You can now own the first commit of AR.js! 👉[![GitNFT](https://img.shields.io/badge/%F0%9F%94%AE-Open%20in%20GitNFT-darkviolet?style=flat)](https://gitnft.quine.sh/app/commits/list/repo/AR.js)
+You can now own the first commit of AR.js! 👉[OpenSea](https://opensea.io/assets/matic/0xe7ea2e2be12c257d376400cb231d8ee51e972bd6/3962549295964122998537137060348053157629730105441540397501924171148500367064/)
 
 AR.js is a lightweight library for Augmented Reality on the Web, coming with features like Image Tracking, Location-based AR and Marker tracking.
 
