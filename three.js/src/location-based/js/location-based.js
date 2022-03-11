@@ -2,28 +2,59 @@ import { SphMercProjection } from './sphmerc-projection.js';
 
 class LocationBased {
 
-    constructor (scene, camera) {
-        this.scene = scene;
-        this.camera = camera;
-        this.proj = new SphMercProjection();
-        this.eventHandlers = { };
+    constructor (scene, camera, options = { }) {
+        this._scene = scene;
+        this._camera = camera;
+        this._proj = new SphMercProjection();
+        this._eventHandlers = { };
+        this._lastCoords = null;
+        this._gpsMinDistance = 0;
+        this._gpsMinAccuracy = 0;
+        this.setGpsOptions(options);
     }
 
     setProjection(proj) {
-        this.proj = proj;
+        this._proj = proj;
+    }
+
+    setGpsOptions(options = { }) {
+        if(options.gpsMinDistance !== undefined) {
+            this._gpsMinDistance = options.gpsMinDistance;
+        } 
+        if(options.gpsMinAccuracy !== undefined) {
+            this._gpsMinAccuracy = options.gpsMinAccuracy;
+        }
     }
 
     startGps(maximumAge = 0) {
-        this.watchPositionId = navigator.geolocation.watchPosition( 
+        let distMoved = Number.MAX_VALUE;
+        this._watchPositionId = navigator.geolocation.watchPosition( 
             position => {
-                this.setWorldPosition(
-                    this.camera,
-                    position.coords.longitude,
-                    position.coords.latitude
-                );
-                if(this.eventHandlers["gpsupdate"]) {
-                    this.eventHandlers["gpsupdate"](position);
-                }    
+                if(position.coords.accuracy <= this._gpsMinAccuracy) {
+                    if(this._lastCoords === null) {
+                        this._lastCoords = { 
+                            latitude: position.coords.latitude,
+                            longitude: position.coords.longitude
+                        };
+                    } else {
+                        distMoved = this._haversineDist(
+                            this._lastCoords, 
+                            position.coords
+                        );
+                        this._lastCoords.longitude = position.coords.longitude;
+                        this._lastCoords.latitude = position.coords.latitude;
+                    }
+                    if(distMoved >= this._gpsMinDistance) {
+                        this.setWorldPosition(
+                            this._camera,
+                            position.coords.longitude,
+                            position.coords.latitude
+                        );
+                        if(this._eventHandlers["gpsupdate"]) {
+                            this._eventHandlers["gpsupdate"](position, distMoved);
+                        }    
+                    }
+                }
             }, error => {
                 alert(`GPS listen error: code ${error}`);
             }, {
@@ -34,24 +65,24 @@ class LocationBased {
     }
 
     stopGps() {
-        if(this.watchPositionId) {
-            navigator.geolocation.clearWatch(this.watchPositionId);
-            this.watchPositionId = null;
+        if(this._watchPositionId) {
+            navigator.geolocation.clearWatch(this._watchPositionId);
+            this._watchPositionId = null;
         }
     }    
 
     fakeGps(lon, lat, elev) {
-        this.setWorldPosition(this.camera, lon, lat, elev);
+        this.setWorldPosition(this._camera, lon, lat, elev);
     }
 
     lonLatToWorldCoords(lon, lat) {
-        const projectedPos = this.proj.project(lon, lat);
+        const projectedPos = this._proj.project(lon, lat);
         return [projectedPos[0], -projectedPos[1]];
     }
 
     add(object, lon, lat, elev) {
         this.setWorldPosition(object, lon, lat, elev);
-        this.scene.add(object);
+        this._scene.add(object);
     }
     
     setWorldPosition(object, lon, lat, elev) {
@@ -63,11 +94,25 @@ class LocationBased {
     }
 
     setElevation(elev) {
-        this.camera.position.y = elev;
+        this._camera.position.y = elev;
     }
 
     on(eventName, eventHandler) {
-        this.eventHandlers[eventName] = eventHandler;
+        this._eventHandlers[eventName] = eventHandler;
+    }
+
+    /**
+     * Calculate haversine distance between two lat/lon pairs.
+     *
+     * Taken from original A-Frame components
+     */
+    _haversineDist(src, dest) {
+        var dlongitude = THREE.Math.degToRad(dest.longitude - src.longitude);
+        var dlatitude = THREE.Math.degToRad(dest.latitude - src.latitude);
+
+        var a = (Math.sin(dlatitude / 2) * Math.sin(dlatitude / 2)) + Math.cos(THREE.Math.degToRad(src.latitude)) * Math.cos(THREE.Math.degToRad(dest.latitude)) * (Math.sin(dlongitude / 2) * Math.sin(dlongitude / 2));
+        var angle = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        return angle * 6371000;
     }
 }
 
