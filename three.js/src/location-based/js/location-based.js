@@ -10,6 +10,7 @@ class LocationBased {
         this._lastCoords = null;
         this._gpsMinDistance = 0;
         this._gpsMinAccuracy = 0;
+        this._watchPositionId = null;
         this.setGpsOptions(options);
     }
 
@@ -27,52 +28,43 @@ class LocationBased {
     }
 
     startGps(maximumAge = 0) {
-        let distMoved = Number.MAX_VALUE;
-        this._watchPositionId = navigator.geolocation.watchPosition( 
-            position => {
-                if(position.coords.accuracy <= this._gpsMinAccuracy) {
-                    if(this._lastCoords === null) {
-                        this._lastCoords = { 
-                            latitude: position.coords.latitude,
-                            longitude: position.coords.longitude
-                        };
-                    } else {
-                        distMoved = this._haversineDist(
-                            this._lastCoords, 
-                            position.coords
-                        );
-                        this._lastCoords.longitude = position.coords.longitude;
-                        this._lastCoords.latitude = position.coords.latitude;
-                    }
-                    if(distMoved >= this._gpsMinDistance) {
-                        this.setWorldPosition(
-                            this._camera,
-                            position.coords.longitude,
-                            position.coords.latitude
-                        );
-                        if(this._eventHandlers["gpsupdate"]) {
-                            this._eventHandlers["gpsupdate"](position, distMoved);
-                        }    
-                    }
+        if(this._watchPositionId === null) {
+            this._watchPositionId = navigator.geolocation.watchPosition( 
+                position => {
+                    this._gpsReceived(position);
+                }, error => {
+                    alert(`GPS listen error: code ${error}`);
+                }, {
+                    enableHighAccuracy: true,
+                    maximumAge: maximumAge
                 }
-            }, error => {
-                alert(`GPS listen error: code ${error}`);
-            }, {
-                enableHighAccuracy: true,
-                maximumAge: maximumAge
-            }
-        );
+            
+            );
+            return true;
+        }
+        return false;
     }
 
     stopGps() {
-        if(this._watchPositionId) {
+        if(this._watchPositionId !== null) {
             navigator.geolocation.clearWatch(this._watchPositionId);
             this._watchPositionId = null;
+            return true;
         }
+        return false;
     }    
 
-    fakeGps(lon, lat, elev) {
-        this.setWorldPosition(this._camera, lon, lat, elev);
+    fakeGps(lon, lat, elev=null, acc=0) {
+        if(elev !== null) {
+            this.setElevation(elev);
+        }
+        this._gpsReceived({
+            coords: {
+                longitude: lon,
+                latitude: lat,
+                accuracy: acc
+            }
+        });
     }
 
     lonLatToWorldCoords(lon, lat) {
@@ -99,6 +91,35 @@ class LocationBased {
 
     on(eventName, eventHandler) {
         this._eventHandlers[eventName] = eventHandler;
+    }
+
+    _gpsReceived(position) {
+        let distMoved = Number.MAX_VALUE;
+        if(position.coords.accuracy <= this._gpsMinAccuracy) {
+            if(this._lastCoords === null) {
+                this._lastCoords = { 
+                    latitude: position.coords.latitude,
+                    longitude: position.coords.longitude
+                };
+            } else {
+                distMoved = this._haversineDist(
+                    this._lastCoords, 
+                    position.coords
+                );
+                this._lastCoords.longitude = position.coords.longitude;
+                this._lastCoords.latitude = position.coords.latitude;
+            }
+            if(distMoved >= this._gpsMinDistance) {
+                this.setWorldPosition(
+                    this._camera,
+                    position.coords.longitude,
+                    position.coords.latitude
+                );
+                if(this._eventHandlers["gpsupdate"]) {
+                    this._eventHandlers["gpsupdate"](position, distMoved);
+                }    
+            }
+        }
     }
 
     /**
