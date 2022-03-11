@@ -26,6 +26,8 @@ AFRAME.registerComponent('gps-new-camera', {
 
 
     init: function() {
+        this._testForOrientationControls();
+
         this.threeLoc = new THREEx.LocationBased(
             this.el.sceneEl.object3D, 
             this.el.object3D
@@ -78,6 +80,18 @@ AFRAME.registerComponent('gps-new-camera', {
                 latitude: lat
             }
         });
+    },
+
+    _testForOrientationControls: function() {
+        const arjs = this.el.sceneEl.systems['arjs'];
+        const msg = 'WARNING - No look-controls component, app will not respond to device rotation.';
+        if(!this.el.components['arjs-look-controls'] && !this.el.compoments['look-controls']) {
+            if(arjs) {
+                arjs._displayErrorPopup(msg);
+            } else {
+                alert(msg);
+            }
+        }
     },
 
     // from original gps-camera component
