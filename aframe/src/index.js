@@ -12,6 +12,7 @@ import './location-based/gps-projected-camera'
 import './location-based/gps-projected-entity-place'
 import './new-location-based/gps-new-camera'
 import './new-location-based/gps-new-entity-place'
+import './new-location-based/arjs-new-look-controls'
 
 // System
 import './system-arjs';
