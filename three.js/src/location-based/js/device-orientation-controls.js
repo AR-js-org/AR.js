@@ -43,10 +43,10 @@ class DeviceOrientationControls extends EventDispatcher {
         this.alphaOffset = 0; // radians
 
         // NW from ArjsDeviceOrientationControls
-          this.smoothingFactor = 1;
+        this.smoothingFactor = 1;
 
-          this.TWO_PI = 2 * Math.PI;
-          this.HALF_PI = 0.5 * Math.PI;
+        this.TWO_PI = 2 * Math.PI;
+        this.HALF_PI = 0.5 * Math.PI;
         // NW end from ArjsDeviceOrientationControls
 
         this.orientationChangeEventName = 'ondeviceorientationabsolute' in window ? 'deviceorientationabsolute' : 'deviceorientation';

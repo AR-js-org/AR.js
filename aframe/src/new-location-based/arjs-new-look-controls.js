@@ -17,7 +17,7 @@ var PI_2 = Math.PI / 2;
  */
 
 import * as AFRAME from 'aframe'
-//import ArjsDeviceOrientationControls from './ArjsDeviceOrientationControls'
+//import ArjsDeviceOrientationControls from '../location-based/ArjsDeviceOrientationControls'
 
 AFRAME.registerComponent('arjs-new-look-controls', {
   dependencies: ['position', 'rotation'],
