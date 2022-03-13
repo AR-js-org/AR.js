@@ -96,8 +96,8 @@ AFRAME.registerComponent('gps-new-camera', {
     },
 
     _testForOrientationControls: function() {
-        const msg = 'WARNING - No look-controls component, app will not respond to device rotation.';
-        if(!this.el.components['arjs-new-look-controls'] && !this.el.components['look-controls']) {
+        const msg = 'WARNING - No orientation controls component, app will not respond to device rotation.';
+        if(!this.el.components['arjs-device-orientation-controls'] && !this.el.components['look-controls']) {
             this._displayError(msg);
         }
     },
