@@ -37,6 +37,19 @@ AFRAME.registerComponent('gps-new-camera', {
             this._sendGpsUpdateEvent(gpspos.coords.longitude, gpspos.coords.latitude);
         });
 
+        this.threeLoc.on("gpserror", code => {
+            const msg = [
+                "User denied access to GPS.",
+                "GPS satellites not available.",
+                "Timeout communicating with GPS satellites - try moving to a more open area."
+            ];
+            if(code >= 1 && code <= 3) {
+                this._displayError(msg[code-1]);    
+            } else {
+                this._displayError(`Unknown geolocation error code ${code}.`);
+            }
+        });
+
         // from original gps-camera component
         // if Safari
         if (!!navigator.userAgent.match(/Version\/[\d.]+.*Safari/)) {
@@ -83,14 +96,18 @@ AFRAME.registerComponent('gps-new-camera', {
     },
 
     _testForOrientationControls: function() {
-        const arjs = this.el.sceneEl.systems['arjs'];
         const msg = 'WARNING - No look-controls component, app will not respond to device rotation.';
         if(!this.el.components['arjs-new-look-controls'] && !this.el.components['look-controls']) {
-            if(arjs) {
-                arjs._displayErrorPopup(msg);
-            } else {
-                alert(msg);
-            }
+            this._displayError(msg);
+        }
+    },
+
+    _displayError: function(error) {
+        const arjs = this.el.sceneEl.systems['arjs'];
+        if(arjs) {
+            arjs._displayErrorPopup(msg);
+        } else {
+            alert(msg);
         }
     },
 

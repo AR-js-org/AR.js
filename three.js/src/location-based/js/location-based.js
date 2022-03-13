@@ -33,8 +33,11 @@ class LocationBased {
                 position => {
                     this._gpsReceived(position);
                 }, error => {
-                    alert(`GPS error: code ${error}`);
-                    return false;
+                    if(this._eventHandlers["gpserror"]) {
+                        this._eventHandlers["gpserror"](error.code);
+                    } else {
+                        alert(`GPS error: code ${error.code}`);
+                    }
                 }, {
                     enableHighAccuracy: true,
                     maximumAge: maximumAge

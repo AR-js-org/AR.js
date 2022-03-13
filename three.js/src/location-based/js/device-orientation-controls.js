@@ -1,4 +1,4 @@
-// Modified version of THREE.DeviceOrientationControls from three.js
+alert// Modified version of THREE.DeviceOrientationControls from three.js
 // will use the deviceorientationabsolute event if available
 
 import {
@@ -128,12 +128,15 @@ class DeviceOrientationControls extends EventDispatcher {
 
             if ( device ) {
 
-                let alpha = device.alpha ? THREE.Math.degToRad( device.alpha ) + scope.alphaOffset : 0; // Z
+                let alpha = device.alpha ? THREE.Math.degToRad( device.alpha ) + scope.alphaOffset : null; // Z
 
-                let beta = device.beta ? THREE.Math.degToRad( device.beta ) : 0; // X'
+                let beta = device.beta ? THREE.Math.degToRad( device.beta ) : null; // X'
 
-                let gamma = device.gamma ? THREE.Math.degToRad( device.gamma ) : 0; // Y''
-
+                let gamma = device.gamma ? THREE.Math.degToRad( device.gamma ) : null; // Y''
+                if(alpha === null || beta === null || gamma === null) {
+                    return;
+                }
+              
                 const orient = scope.screenOrientation ? THREE.Math.degToRad( scope.screenOrientation ) : 0; // O
 
                 // NW Added smoothing code from ArjsDeviceOrientationControls
@@ -181,7 +184,7 @@ class DeviceOrientationControls extends EventDispatcher {
             }
         };
 
-         // NW Added from ArjsDeviceOrientationControls
+        // NW Added from ArjsDeviceOrientationControls
         this._getSmoothedAngle = function(a, b, k, range = this.TWO_PI) {
             const angles = this._orderAngle(a, b, range);
             const angleshift = angles.left;
