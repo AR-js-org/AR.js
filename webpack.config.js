@@ -89,6 +89,20 @@ module.exports = (env, argv) => {
     externals
   },
   {
+    name: 'aframe-new-location-only',
+    devtool,
+    entry: './aframe/src/new-location-based/index.js',
+    output: {
+      library: 'ARjs',
+      path: path.resolve(__dirname, 'aframe/build'),
+      filename: 'aframe-ar-new-location-only.js',
+      libraryTarget: 'umd',
+      globalObject: 'this'
+    },
+    module,
+    externals
+  },
+  {
     name: 'threex',
     devtool,
     entry: './three.js/src/index-threex.js',
