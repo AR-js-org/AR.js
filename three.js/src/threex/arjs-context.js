@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import ArMarkerControls from 'threexArmarkercontrols'; // Alias for dynamic importing
+import ArMarkerControls from './arjs-markercontrols';
 import jsartoolkit from 'jsartoolkit'; // TODO comment explanation
 const { ARController } = jsartoolkit;
 
@@ -144,7 +144,9 @@ Context.prototype.update = function (srcElement) {
         if (markerControls.object3d.visible) {
             prevVisibleMarkers.push(markerControls)
         }
-        markerControls.object3d.visible = false
+        if (!markerControls.context.arController.showObject) {
+            markerControls.object3d.visible = false;
+        }
     })
 
     // process this frame
@@ -175,7 +177,6 @@ Context.prototype.update = function (srcElement) {
         }
     })
 
-
     // return true as we processed the frame
     return true;
 }
@@ -192,7 +193,7 @@ Context.prototype.removeMarker = function (arMarkerControls) {
     console.assert(arMarkerControls instanceof ArMarkerControls)
     var index = this._arMarkersControls.indexOf(arMarkerControls);
     if (index < 0) {
-        return;
+    	return;
     }
     this._arMarkersControls.splice(index, 1)
 }
@@ -280,18 +281,18 @@ Context.prototype._initArtoolkit = function (onCompleted) {
 /**
  * return the projection matrix
  */
-Context.prototype.getProjectionMatrix = function (srcElement) {
-
-
+Context.prototype.getProjectionMatrix = function () {
     // FIXME rename this function to say it is artoolkit specific - getArtoolkitProjectMatrix
     // keep a backward compatibility with a console.warn
 
     console.assert(this.parameters.trackingBackend === 'artoolkit')
     console.assert(this.arController, 'arController MUST be initialized to call this function')
+
     // get projectionMatrixArr from artoolkit
     var projectionMatrixArr = this.arController.getCameraMatrix();
     var projectionMatrix = new THREE.Matrix4().fromArray(projectionMatrixArr)
 
+    // projectionMatrix.multiply(this._artoolkitProjectionAxisTransformMatrix)
     // return the result
     return projectionMatrix
 }
