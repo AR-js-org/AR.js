@@ -35,13 +35,33 @@ module.exports = (env, argv) => {
   };
 
   return [{
-    name: 'default',
+    name: 'aframe',
     devtool,
     entry: './aframe/src/index.js',
     output: {
       library: 'ARjs',
       path: path.resolve(__dirname, 'aframe/build'),
       filename: 'aframe-ar.js',
+      libraryTarget: 'umd',
+      globalObject: 'this'
+    },
+    resolve: {
+      alias: {
+        jsartoolkit: '@ar-js-org/artoolkit5-js',
+        threexArmarkercontrols$: path.resolve(__dirname, 'three.js/src/threex/arjs-markercontrols.js')
+      }
+    },
+    module,
+    externals
+  },
+  {
+    name: 'aframe-nft',
+    devtool,
+    entry: './aframe/src/index-nft.js',
+    output: {
+      library: 'ARjs',
+      path: path.resolve(__dirname, 'aframe/build'),
+      filename: 'aframe-ar-nft.js',
       libraryTarget: 'umd',
       globalObject: 'this'
     },

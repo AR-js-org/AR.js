@@ -89,16 +89,15 @@ const Session = function(parameters){
 
 	// initialize it
 	window.addEventListener('arjs-video-loaded', function () {
-		arContext.init(() => {
+		_this.arContext.init(() => {
 
-                arContext.arController.orientation = getSourceOrientation();
-			    arContext.arController.options.orientation = getSourceOrientation();
+                _this.arContext.arController.orientation = getSourceOrientation();
+			    _this.arContext.arController.options.orientation = getSourceOrientation();
 
 		})
 	})
 
 	function getSourceOrientation() {
-		console.log(_this);
 				if (!_this) {
 						return null;
 				}
