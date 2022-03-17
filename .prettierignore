@@ -1,3 +1,4 @@
+.github/workflows/CI.yml
 data/**
 node_modules/**
 test/**
