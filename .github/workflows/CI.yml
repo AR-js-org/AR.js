@@ -28,7 +28,8 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
       - name: Install
-        run: npm install --no-optional
+        run: npm update
+        run: npm install
 
       - name: Tests
         run: npm run format-check
