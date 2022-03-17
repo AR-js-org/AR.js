@@ -12,9 +12,6 @@ jobs:
         node:
           - 14.x
 
-    # Packages 'firefox' and 'chromium' are pre-installed.
-    #
-    # https://github.com/actions/virtual-environments/blob/ubuntu20/20210302.0/images/linux/Ubuntu2004-README.md
     runs-on: ubuntu-20.04
     name: Node.js ${{ matrix.node }}
     steps:
