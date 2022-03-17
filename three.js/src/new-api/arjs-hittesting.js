@@ -1,4 +1,4 @@
-import HitTestingPlane from '../threex/threex-hittesting-plane';
+import HitTestingPlane from "../threex/threex-hittesting-plane";
 
 /**
  * Create an anchor in the real world
@@ -7,15 +7,15 @@ import HitTestingPlane from '../threex/threex-hittesting-plane';
  * @param {Object} markerParameters - parameter of this anchor
  */
 const HitTesting = function (arSession) {
-    var _this = this
-    var arContext = arSession.arContext
-    var trackingBackend = arContext.parameters.trackingBackend
+  var _this = this;
+  var arContext = arSession.arContext;
+  var trackingBackend = arContext.parameters.trackingBackend;
 
-    this.enabled = true
-    this._arSession = arSession
-    this._hitTestingPlane = null
-    _this._hitTestingPlane = new HitTestingPlane(arSession.arSource.domElement)
-}
+  this.enabled = true;
+  this._arSession = arSession;
+  this._hitTestingPlane = null;
+  _this._hitTestingPlane = new HitTestingPlane(arSession.arSource.domElement);
+};
 
 //////////////////////////////////////////////////////////////////////////////
 //		update function
@@ -27,14 +27,13 @@ const HitTesting = function (arSession) {
  * @param {THREE.Object3D} object3d -
  */
 HitTesting.prototype.update = function (camera, pickingRoot, changeMatrixMode) {
-    // if it isnt enabled, do nothing
-    if (this.enabled === false) return
+  // if it isnt enabled, do nothing
+  if (this.enabled === false) return;
 
-
-    if (this._hitTestingPlane !== null) {
-        this._hitTestingPlane.update(camera, pickingRoot, changeMatrixMode)
-    } else console.assert(false)
-}
+  if (this._hitTestingPlane !== null) {
+    this._hitTestingPlane.update(camera, pickingRoot, changeMatrixMode);
+  } else console.assert(false);
+};
 
 //////////////////////////////////////////////////////////////////////////////
 //		actual hit testing
@@ -48,16 +47,16 @@ HitTesting.prototype.update = function (camera, pickingRoot, changeMatrixMode) {
  * @return {[HitTesting.Result]} - array of result
  */
 HitTesting.prototype.testDomEvent = function (domEvent) {
-    var trackingBackend = this._arSession.arContext.parameters.trackingBackend
-    var arSource = this._arSession.arSource
+  var trackingBackend = this._arSession.arContext.parameters.trackingBackend;
+  var arSource = this._arSession.arSource;
 
-    // if it isnt enabled, do nothing
-    if (this.enabled === false) return []
-    var mouseX = domEvent.clientX / arSource.domElementWidth()
-    var mouseY = domEvent.clientY / arSource.domElementHeight()
+  // if it isnt enabled, do nothing
+  if (this.enabled === false) return [];
+  var mouseX = domEvent.clientX / arSource.domElementWidth();
+  var mouseY = domEvent.clientY / arSource.domElementHeight();
 
-    return this.test(mouseX, mouseY)
-}
+  return this.test(mouseX, mouseY);
+};
 
 /**
  * Test the real world for intersections.
@@ -67,24 +66,28 @@ HitTesting.prototype.testDomEvent = function (domEvent) {
  * @return {[HitTesting.Result]} - array of result
  */
 HitTesting.prototype.test = function (mouseX, mouseY) {
-    var arContext = this._arSession.arContext
-    var trackingBackend = arContext.parameters.trackingBackend
-    var hitTestResults = []
+  var arContext = this._arSession.arContext;
+  var trackingBackend = arContext.parameters.trackingBackend;
+  var hitTestResults = [];
 
-    // if it isnt enabled, do nothing
-    if (this.enabled === false) return []
+  // if it isnt enabled, do nothing
+  if (this.enabled === false) return [];
 
-    var result = this._hitTestingPlane.test(mouseX, mouseY)
+  var result = this._hitTestingPlane.test(mouseX, mouseY);
 
-    // if no result is found, return now
-    if (result === null) return hitTestResults
+  // if no result is found, return now
+  if (result === null) return hitTestResults;
 
-    // build a HitTesting.Result
-    var hitTestResult = new HitTesting.Result(result.position, result.quaternion, result.scale)
-    hitTestResults.push(hitTestResult)
+  // build a HitTesting.Result
+  var hitTestResult = new HitTesting.Result(
+    result.position,
+    result.quaternion,
+    result.scale
+  );
+  hitTestResults.push(hitTestResult);
 
-    return hitTestResults
-}
+  return hitTestResults;
+};
 
 //////////////////////////////////////////////////////////////////////////////
 //		HitTesting.Result
@@ -97,10 +100,10 @@ HitTesting.prototype.test = function (mouseX, mouseY) {
  * @param {THREE.Vector3} scale - scale
  */
 HitTesting.Result = function (position, quaternion, scale) {
-    this.position = position
-    this.quaternion = quaternion
-    this.scale = scale
-}
+  this.position = position;
+  this.quaternion = quaternion;
+  this.scale = scale;
+};
 
 /**
  * Apply to a controlled object3d
@@ -108,12 +111,12 @@ HitTesting.Result = function (position, quaternion, scale) {
  * @param {THREE.Object3D} object3d - the result to apply
  */
 HitTesting.Result.prototype.apply = function (object3d) {
-    object3d.position.copy(this.position)
-    object3d.quaternion.copy(this.quaternion)
-    object3d.scale.copy(this.scale)
+  object3d.position.copy(this.position);
+  object3d.quaternion.copy(this.quaternion);
+  object3d.scale.copy(this.scale);
 
-    object3d.updateMatrix()
-}
+  object3d.updateMatrix();
+};
 
 /**
  * Apply to a controlled object3d
@@ -121,12 +124,12 @@ HitTesting.Result.prototype.apply = function (object3d) {
  * @param {THREE.Object3D} object3d - the result to apply
  */
 HitTesting.Result.prototype.applyPosition = function (object3d) {
-    object3d.position.copy(this.position)
+  object3d.position.copy(this.position);
 
-    object3d.updateMatrix()
+  object3d.updateMatrix();
 
-    return this
-}
+  return this;
+};
 
 /**
  * Apply to a controlled object3d
@@ -134,11 +137,11 @@ HitTesting.Result.prototype.applyPosition = function (object3d) {
  * @param {THREE.Object3D} object3d - the result to apply
  */
 HitTesting.Result.prototype.applyQuaternion = function (object3d) {
-    object3d.quaternion.copy(this.quaternion)
+  object3d.quaternion.copy(this.quaternion);
 
-    object3d.updateMatrix()
+  object3d.updateMatrix();
 
-    return this
-}
+  return this;
+};
 
 export default HitTesting;
