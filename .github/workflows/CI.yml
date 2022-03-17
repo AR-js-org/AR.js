@@ -27,9 +27,9 @@ jobs:
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
-      - name: Install
-        run: 
-          - npm update
-          - npm install
+      - name: Npm update
+        run: npm update
+      - name: Npm install
+        run: npm install
       - name: Tests
         run: npm run format-check
