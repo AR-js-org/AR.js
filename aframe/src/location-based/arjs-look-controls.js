@@ -1,31 +1,30 @@
 // To avoid recalculation at every mouse movement tick
 var PI_2 = Math.PI / 2;
 
-
 /**
  * look-controls. Update entity pose, factoring mouse, touch, and WebVR API data.
  */
 
-/* NOTE that this is a modified version of A-Frame's look-controls to 
+/* NOTE that this is a modified version of A-Frame's look-controls to
  * allow exponential smoothing, for use in AR.js.
  *
  * Modifications Nick Whitelegg (nickw1 github)
  */
 
-import * as AFRAME from 'aframe'
-import ArjsDeviceOrientationControls from './ArjsDeviceOrientationControls'
+import * as AFRAME from "aframe";
+import ArjsDeviceOrientationControls from "./ArjsDeviceOrientationControls";
 
-AFRAME.registerComponent('arjs-look-controls', {
-  dependencies: ['position', 'rotation'],
+AFRAME.registerComponent("arjs-look-controls", {
+  dependencies: ["position", "rotation"],
 
   schema: {
-    enabled: {default: true},
-    magicWindowTrackingEnabled: {default: true},
-    pointerLockEnabled: {default: false},
-    reverseMouseDrag: {default: false},
-    reverseTouchDrag: {default: false},
-    touchEnabled: {default: true},
-    smoothingFactor: { type: 'number', default: 1 }
+    enabled: { default: true },
+    magicWindowTrackingEnabled: { default: true },
+    pointerLockEnabled: { default: false },
+    reverseMouseDrag: { default: false },
+    reverseTouchDrag: { default: false },
+    touchEnabled: { default: true },
+    smoothingFactor: { type: "number", default: 1 },
   },
 
   init: function () {
@@ -49,11 +48,13 @@ AFRAME.registerComponent('arjs-look-controls', {
     // To save / restore camera pose
     this.savedPose = {
       position: new THREE.Vector3(),
-      rotation: new THREE.Euler()
+      rotation: new THREE.Euler(),
     };
 
     // Call enter VR handler if the scene has entered VR before the event listeners attached.
-    if (this.el.sceneEl.is('vr-mode')) { this.onEnterVR(); }
+    if (this.el.sceneEl.is("vr-mode")) {
+      this.onEnterVR();
+    }
   },
 
   setupMagicWindowControls: function () {
@@ -62,15 +63,25 @@ AFRAME.registerComponent('arjs-look-controls', {
 
     // Only on mobile devices and only enabled if DeviceOrientation permission has been granted.
     if (AFRAME.utils.device.isMobile()) {
-      magicWindowControls = this.magicWindowControls = new ArjsDeviceOrientationControls(this.magicWindowObject);
-      if (typeof DeviceOrientationEvent !== 'undefined' && DeviceOrientationEvent.requestPermission) {
+      magicWindowControls = this.magicWindowControls =
+        new ArjsDeviceOrientationControls(this.magicWindowObject);
+      if (
+        typeof DeviceOrientationEvent !== "undefined" &&
+        DeviceOrientationEvent.requestPermission
+      ) {
         magicWindowControls.enabled = false;
-        if (this.el.sceneEl.components['device-orientation-permission-ui'].permissionGranted) {
+        if (
+          this.el.sceneEl.components["device-orientation-permission-ui"]
+            .permissionGranted
+        ) {
           magicWindowControls.enabled = data.magicWindowTrackingEnabled;
         } else {
-          this.el.sceneEl.addEventListener('deviceorientationpermissiongranted', function () {
-            magicWindowControls.enabled = data.magicWindowTrackingEnabled;
-          });
+          this.el.sceneEl.addEventListener(
+            "deviceorientationpermissiongranted",
+            function () {
+              magicWindowControls.enabled = data.magicWindowTrackingEnabled;
+            }
+          );
         }
       }
     }
@@ -85,7 +96,11 @@ AFRAME.registerComponent('arjs-look-controls', {
     }
 
     // Reset magic window eulers if tracking is disabled.
-    if (oldData && !data.magicWindowTrackingEnabled && oldData.magicWindowTrackingEnabled) {
+    if (
+      oldData &&
+      !data.magicWindowTrackingEnabled &&
+      oldData.magicWindowTrackingEnabled
+    ) {
       this.magicWindowAbsoluteEuler.set(0, 0, 0);
       this.magicWindowDeltaEuler.set(0, 0, 0);
     }
@@ -99,13 +114,17 @@ AFRAME.registerComponent('arjs-look-controls', {
     if (oldData && !data.pointerLockEnabled !== oldData.pointerLockEnabled) {
       this.removeEventListeners();
       this.addEventListeners();
-      if (this.pointerLocked) { this.exitPointerLock(); }
+      if (this.pointerLocked) {
+        this.exitPointerLock();
+      }
     }
   },
 
   tick: function (t) {
     var data = this.data;
-    if (!data.enabled) { return; }
+    if (!data.enabled) {
+      return;
+    }
     this.updateOrientation();
   },
 
@@ -115,12 +134,16 @@ AFRAME.registerComponent('arjs-look-controls', {
 
   pause: function () {
     this.removeEventListeners();
-    if (this.pointerLocked) { this.exitPointerLock(); }
+    if (this.pointerLocked) {
+      this.exitPointerLock();
+    }
   },
 
   remove: function () {
     this.removeEventListeners();
-    if (this.pointerLocked) { this.exitPointerLock(); }
+    if (this.pointerLocked) {
+      this.exitPointerLock();
+    }
   },
 
   bindMethods: function () {
@@ -132,13 +155,16 @@ AFRAME.registerComponent('arjs-look-controls', {
     this.onTouchEnd = AFRAME.utils.bind(this.onTouchEnd, this);
     this.onEnterVR = AFRAME.utils.bind(this.onEnterVR, this);
     this.onExitVR = AFRAME.utils.bind(this.onExitVR, this);
-    this.onPointerLockChange = AFRAME.utils.bind(this.onPointerLockChange, this);
+    this.onPointerLockChange = AFRAME.utils.bind(
+      this.onPointerLockChange,
+      this
+    );
     this.onPointerLockError = AFRAME.utils.bind(this.onPointerLockError, this);
   },
 
- /**
-  * Set up states and Object3Ds needed to store rotation data.
-  */
+  /**
+   * Set up states and Object3Ds needed to store rotation data.
+   */
   setupMouseControls: function () {
     this.mouseDown = false;
     this.pitchObject = new THREE.Object3D();
@@ -156,29 +182,44 @@ AFRAME.registerComponent('arjs-look-controls', {
 
     // Wait for canvas to load.
     if (!canvasEl) {
-      sceneEl.addEventListener('render-target-loaded', AFRAME.utils.bind(this.addEventListeners, this));
+      sceneEl.addEventListener(
+        "render-target-loaded",
+        AFRAME.utils.bind(this.addEventListeners, this)
+      );
       return;
     }
 
     // Mouse events.
-    canvasEl.addEventListener('mousedown', this.onMouseDown, false);
-    window.addEventListener('mousemove', this.onMouseMove, false);
-    window.addEventListener('mouseup', this.onMouseUp, false);
+    canvasEl.addEventListener("mousedown", this.onMouseDown, false);
+    window.addEventListener("mousemove", this.onMouseMove, false);
+    window.addEventListener("mouseup", this.onMouseUp, false);
 
     // Touch events.
-    canvasEl.addEventListener('touchstart', this.onTouchStart);
-    window.addEventListener('touchmove', this.onTouchMove);
-    window.addEventListener('touchend', this.onTouchEnd);
+    canvasEl.addEventListener("touchstart", this.onTouchStart);
+    window.addEventListener("touchmove", this.onTouchMove);
+    window.addEventListener("touchend", this.onTouchEnd);
 
     // sceneEl events.
-    sceneEl.addEventListener('enter-vr', this.onEnterVR);
-    sceneEl.addEventListener('exit-vr', this.onExitVR);
+    sceneEl.addEventListener("enter-vr", this.onEnterVR);
+    sceneEl.addEventListener("exit-vr", this.onExitVR);
 
     // Pointer Lock events.
     if (this.data.pointerLockEnabled) {
-      document.addEventListener('pointerlockchange', this.onPointerLockChange, false);
-      document.addEventListener('mozpointerlockchange', this.onPointerLockChange, false);
-      document.addEventListener('pointerlockerror', this.onPointerLockError, false);
+      document.addEventListener(
+        "pointerlockchange",
+        this.onPointerLockChange,
+        false
+      );
+      document.addEventListener(
+        "mozpointerlockchange",
+        this.onPointerLockChange,
+        false
+      );
+      document.addEventListener(
+        "pointerlockerror",
+        this.onPointerLockError,
+        false
+      );
     }
   },
 
@@ -189,26 +230,40 @@ AFRAME.registerComponent('arjs-look-controls', {
     var sceneEl = this.el.sceneEl;
     var canvasEl = sceneEl && sceneEl.canvas;
 
-    if (!canvasEl) { return; }
+    if (!canvasEl) {
+      return;
+    }
 
     // Mouse events.
-    canvasEl.removeEventListener('mousedown', this.onMouseDown);
-    window.removeEventListener('mousemove', this.onMouseMove);
-    window.removeEventListener('mouseup', this.onMouseUp);
+    canvasEl.removeEventListener("mousedown", this.onMouseDown);
+    window.removeEventListener("mousemove", this.onMouseMove);
+    window.removeEventListener("mouseup", this.onMouseUp);
 
     // Touch events.
-    canvasEl.removeEventListener('touchstart', this.onTouchStart);
-    window.removeEventListener('touchmove', this.onTouchMove);
-    window.removeEventListener('touchend', this.onTouchEnd);
+    canvasEl.removeEventListener("touchstart", this.onTouchStart);
+    window.removeEventListener("touchmove", this.onTouchMove);
+    window.removeEventListener("touchend", this.onTouchEnd);
 
     // sceneEl events.
-    sceneEl.removeEventListener('enter-vr', this.onEnterVR);
-    sceneEl.removeEventListener('exit-vr', this.onExitVR);
+    sceneEl.removeEventListener("enter-vr", this.onEnterVR);
+    sceneEl.removeEventListener("exit-vr", this.onExitVR);
 
     // Pointer Lock events.
-    document.removeEventListener('pointerlockchange', this.onPointerLockChange, false);
-    document.removeEventListener('mozpointerlockchange', this.onPointerLockChange, false);
-    document.removeEventListener('pointerlockerror', this.onPointerLockError, false);
+    document.removeEventListener(
+      "pointerlockchange",
+      this.onPointerLockChange,
+      false
+    );
+    document.removeEventListener(
+      "mozpointerlockchange",
+      this.onPointerLockChange,
+      false
+    );
+    document.removeEventListener(
+      "pointerlockerror",
+      this.onPointerLockError,
+      false
+    );
   },
 
   /**
@@ -226,14 +281,18 @@ AFRAME.registerComponent('arjs-look-controls', {
       var sceneEl = this.el.sceneEl;
 
       // In VR mode, THREE is in charge of updating the camera pose.
-      if (sceneEl.is('vr-mode') && sceneEl.checkHeadsetConnected()) {
+      if (sceneEl.is("vr-mode") && sceneEl.checkHeadsetConnected()) {
         // With WebXR THREE applies headset pose to the object3D matrixWorld internally.
         // Reflect values back on position, rotation, scale for getAttribute to return the expected values.
         if (sceneEl.hasWebXR) {
           pose = sceneEl.renderer.xr.getCameraPose();
           if (pose) {
             poseMatrix.elements = pose.transform.matrix;
-            poseMatrix.decompose(object3D.position, object3D.rotation, object3D.scale);
+            poseMatrix.decompose(
+              object3D.position,
+              object3D.rotation,
+              object3D.scale
+            );
           }
         }
         return;
@@ -242,7 +301,8 @@ AFRAME.registerComponent('arjs-look-controls', {
       this.updateMagicWindowOrientation();
 
       // On mobile, do camera rotation with touch events and sensors.
-      object3D.rotation.x = this.magicWindowDeltaEuler.x + pitchObject.rotation.x;
+      object3D.rotation.x =
+        this.magicWindowDeltaEuler.x + pitchObject.rotation.x;
       object3D.rotation.y = this.magicWindowDeltaEuler.y + yawObject.rotation.y;
       object3D.rotation.z = this.magicWindowDeltaEuler.z;
     };
@@ -254,13 +314,17 @@ AFRAME.registerComponent('arjs-look-controls', {
     // Calculate magic window HMD quaternion.
     if (this.magicWindowControls && this.magicWindowControls.enabled) {
       this.magicWindowControls.update();
-      magicWindowAbsoluteEuler.setFromQuaternion(this.magicWindowObject.quaternion, 'YXZ');
+      magicWindowAbsoluteEuler.setFromQuaternion(
+        this.magicWindowObject.quaternion,
+        "YXZ"
+      );
       if (!this.previousMagicWindowYaw && magicWindowAbsoluteEuler.y !== 0) {
         this.previousMagicWindowYaw = magicWindowAbsoluteEuler.y;
       }
       if (this.previousMagicWindowYaw) {
         magicWindowDeltaEuler.x = magicWindowAbsoluteEuler.x;
-        magicWindowDeltaEuler.y += magicWindowAbsoluteEuler.y - this.previousMagicWindowYaw;
+        magicWindowDeltaEuler.y +=
+          magicWindowAbsoluteEuler.y - this.previousMagicWindowYaw;
         magicWindowDeltaEuler.z = magicWindowAbsoluteEuler.z;
         this.previousMagicWindowYaw = magicWindowAbsoluteEuler.y;
       }
@@ -282,7 +346,9 @@ AFRAME.registerComponent('arjs-look-controls', {
     var yawObject = this.yawObject;
 
     // Not dragging or not enabled.
-    if (!this.data.enabled || (!this.mouseDown && !this.pointerLocked)) { return; }
+    if (!this.data.enabled || (!this.mouseDown && !this.pointerLocked)) {
+      return;
+    }
 
     // Calculate delta.
     if (this.pointerLocked) {
@@ -299,7 +365,10 @@ AFRAME.registerComponent('arjs-look-controls', {
     direction = this.data.reverseMouseDrag ? 1 : -1;
     yawObject.rotation.y += movementX * 0.002 * direction;
     pitchObject.rotation.x += movementY * 0.002 * direction;
-    pitchObject.rotation.x = Math.max(-PI_2, Math.min(PI_2, pitchObject.rotation.x));
+    pitchObject.rotation.x = Math.max(
+      -PI_2,
+      Math.min(PI_2, pitchObject.rotation.x)
+    );
   },
 
   /**
@@ -307,9 +376,16 @@ AFRAME.registerComponent('arjs-look-controls', {
    */
   onMouseDown: function (evt) {
     var sceneEl = this.el.sceneEl;
-    if (!this.data.enabled || (sceneEl.is('vr-mode') && sceneEl.checkHeadsetConnected())) { return; }
+    if (
+      !this.data.enabled ||
+      (sceneEl.is("vr-mode") && sceneEl.checkHeadsetConnected())
+    ) {
+      return;
+    }
     // Handle only primary button.
-    if (evt.button !== 0) { return; }
+    if (evt.button !== 0) {
+      return;
+    }
 
     var canvasEl = sceneEl && sceneEl.canvas;
 
@@ -331,14 +407,14 @@ AFRAME.registerComponent('arjs-look-controls', {
    * Shows grabbing cursor on scene
    */
   showGrabbingCursor: function () {
-    this.el.sceneEl.canvas.style.cursor = 'grabbing';
+    this.el.sceneEl.canvas.style.cursor = "grabbing";
   },
 
   /**
    * Hides grabbing cursor on scene
    */
   hideGrabbingCursor: function () {
-    this.el.sceneEl.canvas.style.cursor = '';
+    this.el.sceneEl.canvas.style.cursor = "";
   },
 
   /**
@@ -353,12 +429,16 @@ AFRAME.registerComponent('arjs-look-controls', {
    * Register touch down to detect touch drag.
    */
   onTouchStart: function (evt) {
-    if (evt.touches.length !== 1 ||
-        !this.data.touchEnabled ||
-        this.el.sceneEl.is('vr-mode')) { return; }
+    if (
+      evt.touches.length !== 1 ||
+      !this.data.touchEnabled ||
+      this.el.sceneEl.is("vr-mode")
+    ) {
+      return;
+    }
     this.touchStart = {
       x: evt.touches[0].pageX,
-      y: evt.touches[0].pageY
+      y: evt.touches[0].pageY,
     };
     this.touchStarted = true;
   },
@@ -372,16 +452,20 @@ AFRAME.registerComponent('arjs-look-controls', {
     var deltaY;
     var yawObject = this.yawObject;
 
-    if (!this.touchStarted || !this.data.touchEnabled) { return; }
+    if (!this.touchStarted || !this.data.touchEnabled) {
+      return;
+    }
 
-    deltaY = 2 * Math.PI * (evt.touches[0].pageX - this.touchStart.x) / canvas.clientWidth;
+    deltaY =
+      (2 * Math.PI * (evt.touches[0].pageX - this.touchStart.x)) /
+      canvas.clientWidth;
 
     direction = this.data.reverseTouchDrag ? 1 : -1;
     // Limit touch orientaion to to yaw (y axis).
     yawObject.rotation.y -= deltaY * 0.5 * direction;
     this.touchStart = {
       x: evt.touches[0].pageX,
-      y: evt.touches[0].pageY
+      y: evt.touches[0].pageY,
     };
   },
 
@@ -397,7 +481,9 @@ AFRAME.registerComponent('arjs-look-controls', {
    */
   onEnterVR: function () {
     var sceneEl = this.el.sceneEl;
-    if (!sceneEl.checkHeadsetConnected()) { return; }
+    if (!sceneEl.checkHeadsetConnected()) {
+      return;
+    }
     this.saveCameraPose();
     this.el.object3D.position.set(0, 0, 0);
     this.el.object3D.rotation.set(0, 0, 0);
@@ -411,7 +497,9 @@ AFRAME.registerComponent('arjs-look-controls', {
    * Restore the pose.
    */
   onExitVR: function () {
-    if (!this.el.sceneEl.checkHeadsetConnected()) { return; }
+    if (!this.el.sceneEl.checkHeadsetConnected()) {
+      return;
+    }
     this.restoreCameraPose();
     this.previousHMDPosition.set(0, 0, 0);
     this.el.object3D.matrixAutoUpdate = true;
@@ -421,7 +509,9 @@ AFRAME.registerComponent('arjs-look-controls', {
    * Update Pointer Lock state.
    */
   onPointerLockChange: function () {
-    this.pointerLocked = !!(document.pointerLockElement || document.mozPointerLockElement);
+    this.pointerLocked = !!(
+      document.pointerLockElement || document.mozPointerLockElement
+    );
   },
 
   /**
@@ -443,14 +533,18 @@ AFRAME.registerComponent('arjs-look-controls', {
   updateGrabCursor: function (enabled) {
     var sceneEl = this.el.sceneEl;
 
-    function enableGrabCursor () { sceneEl.canvas.classList.add('a-grab-cursor'); }
-    function disableGrabCursor () { sceneEl.canvas.classList.remove('a-grab-cursor'); }
+    function enableGrabCursor() {
+      sceneEl.canvas.classList.add("a-grab-cursor");
+    }
+    function disableGrabCursor() {
+      sceneEl.canvas.classList.remove("a-grab-cursor");
+    }
 
     if (!sceneEl.canvas) {
       if (enabled) {
-        sceneEl.addEventListener('render-target-loaded', enableGrabCursor);
+        sceneEl.addEventListener("render-target-loaded", enableGrabCursor);
       } else {
-        sceneEl.addEventListener('render-target-loaded', disableGrabCursor);
+        sceneEl.addEventListener("render-target-loaded", disableGrabCursor);
       }
       return;
     }
@@ -480,11 +574,13 @@ AFRAME.registerComponent('arjs-look-controls', {
     var el = this.el;
     var savedPose = this.savedPose;
 
-    if (!this.hasSavedPose) { return; }
+    if (!this.hasSavedPose) {
+      return;
+    }
 
     // Reset camera orientation.
     el.object3D.position.copy(savedPose.position);
     el.object3D.rotation.copy(savedPose.rotation);
     this.hasSavedPose = false;
-  }
+  },
 });
