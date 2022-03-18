@@ -22,9 +22,10 @@ let orientationControls;
 
 if (isMobile()){   
     orientationControls = new THREEx.DeviceOrientationControls(camera);
-}
+} 
 
 const fake = null;
+let first = true;
 
 // Uncomment to use a fake GPS location
 // const fake = { lat: 51.05, lon : -0.72 };
@@ -33,7 +34,10 @@ if(fake) {
     threex.fakeGps(fake.lon, fake.lat);
 } else {
     threex.on("gpsupdate", pos => {
+		if(first) {
         setupObjects(pos.coords.longitude, pos.coords.latitude);
+		first = false;
+		}
     });
     threex.startGps();
 } 
@@ -73,7 +77,7 @@ if(!isMobile()) {
 
 function render(time) {
     resizeUpdate();
-    //if(orientationControls) orientationControls.update();
+    if(orientationControls) orientationControls.update();
     cam.update();
     renderer.render(scene, camera);
     requestAnimationFrame(render);
