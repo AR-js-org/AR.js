@@ -24,11 +24,11 @@ if (isMobile()){
     orientationControls = new THREEx.DeviceOrientationControls(camera);
 } 
 
-const fake = null;
+let fake = null;
 let first = true;
 
 // Uncomment to use a fake GPS location
-// const fake = { lat: 51.05, lon : -0.72 };
+// fake = { lat: 51.05, lon : -0.72 };
 if(fake) {
     setupObjects(fake.lon, fake.lat);
     threex.fakeGps(fake.lon, fake.lat);
