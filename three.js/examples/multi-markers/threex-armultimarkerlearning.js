@@ -1,1 +1,1 @@
-../../src/markers-area/threex-armultimarkerlearning.js
+../../src/markers-area/arjs-markersarealearning.js
