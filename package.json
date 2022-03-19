@@ -11,9 +11,6 @@
     "build:dev": "./node_modules/.bin/webpack --mode=development --progress --watch",
     "server": "npx http-server -c -1"
   },
-  "engines" : { 
-    "npm" : ">=7.0.0"
-  },
   "files": [
     "three.js/build",
     "aframe/build"
