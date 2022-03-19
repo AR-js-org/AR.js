@@ -64,6 +64,6 @@
     "three": "^0.133.0"
   },
   "lint-staged": {
-    "*.{js,css,md}": "prettier --write"
+    "*.js": "prettier --write"
   }
 }
