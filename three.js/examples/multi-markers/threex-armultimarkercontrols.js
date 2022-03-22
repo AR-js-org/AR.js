@@ -1,1 +1,1 @@
-../../src/markers-area/threex-armultimarkercontrols.js
+../../src/markers-area/arjs-markersareacontrols.js

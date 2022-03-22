@@ -1,4 +1,4 @@
-import Source from './arjs-source';
+import Source from "./arjs-source";
 
 const ArToolkitSource = Source;
 

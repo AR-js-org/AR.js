@@ -1,4 +1,4 @@
-import { SphMercProjection } from './sphmerc-projection.js';
+import { SphMercProjection } from "./sphmerc-projection.js";
 
 class LocationBased {
 
