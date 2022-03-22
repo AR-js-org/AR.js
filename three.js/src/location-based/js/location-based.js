@@ -8,7 +8,7 @@ class LocationBased {
     this._eventHandlers = {};
     this._lastCoords = null;
     this._gpsMinDistance = 0;
-    this._gpsMinAccuracy = 30;
+    this._gpsMinAccuracy = 1000;
     this._watchPositionId = null;
     this.setGpsOptions(options);
   }
@@ -130,15 +130,15 @@ class LocationBased {
    * Taken from original A-Frame components
    */
   _haversineDist(src, dest) {
-    var dlongitude = THREE.Math.degToRad(dest.longitude - src.longitude);
-    var dlatitude = THREE.Math.degToRad(dest.latitude - src.latitude);
+    const dlongitude = THREE.Math.degToRad(dest.longitude - src.longitude);
+    const dlatitude = THREE.Math.degToRad(dest.latitude - src.latitude);
 
-    var a =
+    const a =
       Math.sin(dlatitude / 2) * Math.sin(dlatitude / 2) +
       Math.cos(THREE.Math.degToRad(src.latitude)) *
         Math.cos(THREE.Math.degToRad(dest.latitude)) *
         (Math.sin(dlongitude / 2) * Math.sin(dlongitude / 2));
-    var angle = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    const angle = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     return angle * 6371000;
   }
 }
