@@ -13,6 +13,9 @@ const renderer = new THREE.WebGLRenderer({ canvas: document.querySelector('#canv
 const geom = new THREE.BoxGeometry(20,20,20);
 
 const threex = new THREEx.LocationBased(scene, camera);
+
+// You can change the minimum GPS accuracy needed to register a position - by default 1000m
+//const threex = new THREEx.LocationBased(scene, camera. { gpsMinAccuracy: 30 } );
 const cam = new THREEx.WebcamRenderer(renderer, '#video1');
 
 const oneDegAsRad = THREE.Math.degToRad(1);
