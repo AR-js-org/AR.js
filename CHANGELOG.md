@@ -1,10 +1,17 @@
+# 3.4.0-alpha-rc2
+
+- Fixed bug in aframe image tracking see #407
+- Enhanced three location based code #409 #410
+- Removed double build in Three.js (nft or not) #407
+- Added prettier as formatter and husky as pre-formatter #407
+- New action github script to test linting and code formatting #407
 # 3.4.0-alpha-rc1
 
 - ES6 feature into master
-- new threejs location based
-- new dispose methods in arjs-context.js and arjs-source.js
-- use of artoolkit5-js instead of old jsartoolkit5 as base code
-- other bug fixes see PR #400
+- New threejs location based
+- New dispose methods in arjs-context.js and arjs-source.js
+- Use of artoolkit5-js instead of old jsartoolkit5 as base code
+- Other bug fixes see PR #400
 # 3.3.3
 
 - Fixed bug which prevents `minDistance` and `maxDistance` working with a simulated location
