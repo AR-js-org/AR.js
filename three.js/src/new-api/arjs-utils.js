@@ -1,4 +1,4 @@
-import * as THREE from 'three';
+import * as THREE from "three";
 
 const Utils = {};
 
@@ -9,14 +9,15 @@ const Utils = {};
  * @return {THREE.Camera} the created camera
  */
 Utils.createDefaultCamera = function (trackingMethod) {
-    var trackingBackend = this.parseTrackingMethod(trackingMethod).trackingBackend
-    // Create a camera
-    if (trackingBackend === 'artoolkit') {
-        var camera = new THREE.Camera();
-    } else console.assert(false, 'unknown trackingBackend: ' + trackingBackend)
+  var trackingBackend =
+    this.parseTrackingMethod(trackingMethod).trackingBackend;
+  // Create a camera
+  if (trackingBackend === "artoolkit") {
+    var camera = new THREE.Camera();
+  } else console.assert(false, "unknown trackingBackend: " + trackingBackend);
 
-    return camera
-}
+  return camera;
+};
 
 /**
  * parse tracking method
@@ -25,22 +26,21 @@ Utils.createDefaultCamera = function (trackingMethod) {
  * @return {Object} - various field of the tracking method
  */
 Utils.parseTrackingMethod = function (trackingMethod) {
+  if (trackingMethod === "best") {
+    trackingMethod = "area-artoolkit";
+  }
 
-    if (trackingMethod === 'best') {
-        trackingMethod = 'area-artoolkit';
-    }
-
-    if (trackingMethod.startsWith('area-')) {
-        return {
-            trackingBackend: trackingMethod.replace('area-', ''),
-            markersAreaEnabled: true,
-        }
-    } else {
-        return {
-            trackingBackend: trackingMethod,
-            markersAreaEnabled: false,
-        }
-    }
-}
+  if (trackingMethod.startsWith("area-")) {
+    return {
+      trackingBackend: trackingMethod.replace("area-", ""),
+      markersAreaEnabled: true,
+    };
+  } else {
+    return {
+      trackingBackend: trackingMethod,
+      markersAreaEnabled: false,
+    };
+  }
+};
 
 export default Utils;
