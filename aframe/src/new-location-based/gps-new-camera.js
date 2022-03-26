@@ -20,7 +20,7 @@ AFRAME.registerComponent("gps-new-camera", {
     },
     positionMinAccuracy: {
       type: "number",
-      default: 100,
+      default: 1000,
     },
   },
 
@@ -48,6 +48,16 @@ AFRAME.registerComponent("gps-new-camera", {
         this._displayError(`Unknown geolocation error code ${code}.`);
       }
     });
+
+    // Use arjs-device-orientation-controls on mobile only, with standard
+    // look-controls disabled (this interferes with the readings from the
+    // sensors). On desktop, use standard look-controls instead.
+
+    const mobile = this._isMobile();
+    this.el.setAttribute("look-controls-enabled", !mobile);
+    if (mobile) {
+      el.setAttribute("arjs-device-orientation-controls", true);
+    }
 
     // from original gps-camera component
     // if Safari
@@ -148,5 +158,17 @@ AFRAME.registerComponent("gps-new-camera", {
         clearTimeout(timeout);
       });
     }
+  },
+
+  _isMobile: function () {
+    if (
+      /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+        navigator.userAgent
+      )
+    ) {
+      // true for mobile device
+      return true;
+    }
+    return false;
   },
 });
