@@ -3,8 +3,7 @@
 ```bash
 # Update following files:
 CHANGELOG.md
-three.js/src/threex/threex-artoolkitcontext.js
-three.js/src/threex/threex-artoolkitcontext-nft.js
+three.js/src/threex/arjs-context.js
 package.json
 README.md
 

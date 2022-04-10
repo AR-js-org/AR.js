@@ -1,0 +1,16 @@
+.github/workflows/CI.yml
+data/**
+node_modules/**
+test/**
+aframe/examples/**
+aframe/build/*.js
+aframe/src/component-anchor.js
+aframe/src/component-anchor-nft.js
+aframe/src/system-arjs.js
+aframe/src/system-arjs-nft.js
+aframe/src/location-based/stylesheets/*.css
+three.js/examples/**
+three.js/build/*.js
+three.js/src/location-based/README.md
+*.md
+webpack.config.js

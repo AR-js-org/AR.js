@@ -35,7 +35,7 @@ module.exports = (env, argv) => {
   };
 
   return [{
-    name: 'default',
+    name: 'aframe',
     devtool,
     entry: './aframe/src/index.js',
     output: {
@@ -68,7 +68,7 @@ module.exports = (env, argv) => {
     resolve: {
       alias: {
         jsartoolkit: '@ar-js-org/artoolkit5-js',
-        threexArmarkercontrols$: path.resolve(__dirname, 'three.js/src/threex/arjs-markercontrols-nft.js')
+        threexArmarkercontrols$: path.resolve(__dirname, 'three.js/src/threex/arjs-markercontrols.js')
       }
     },
     module,
@@ -103,33 +103,6 @@ module.exports = (env, argv) => {
       alias: {
         jsartoolkit: '@ar-js-org/artoolkit5-js',
         threexArmarkercontrols$: path.resolve(__dirname, 'three.js/src/threex/arjs-markercontrols.js')
-      }
-    },
-    module,
-    externals: {
-      three: {
-      commonjs: 'three',
-      commonjs2: 'three',
-      amd: 'three',
-      root: 'THREE' // indicates global variable
-      }
-    }
-  },
-  {
-    name: 'threex-nft',
-    devtool,
-    entry: './three.js/src/index-threex-nft.js',
-    output: {
-      library: 'THREEx',
-      path: path.resolve(__dirname, 'three.js/build'),
-      filename: 'ar-threex-nft.js',
-      libraryTarget: 'umd',
-      globalObject: 'this'
-    },
-    resolve: {
-      alias: {
-        jsartoolkit: '@ar-js-org/artoolkit5-js',
-        threexArmarkercontrols$: path.resolve(__dirname, 'three.js/src/threex/arjs-markercontrols-nft.js')
       }
     },
     module,
@@ -189,32 +162,6 @@ module.exports = (env, argv) => {
       root: 'THREE' // indicates global variable
       }
     }
-  },
-  {
-    name: 'ar.js-nft',
-    devtool,
-    entry: './three.js/src/index-arjs-nft.js',
-    output: {
-      library: 'ARjs',
-      path: path.resolve(__dirname, 'three.js/build'),
-      filename: 'ar-nft.js',
-      libraryTarget: 'umd',
-      globalObject: 'this'
-    },
-    resolve: {
-      alias: {
-        jsartoolkit: '@ar-js-org/artoolkit5-js',
-        threexArmarkercontrols$: path.resolve(__dirname, 'three.js/src/threex/arjs-markercontrols-nft.js')
-      }
-    },
-    module,
-    externals: {
-      three: {
-      commonjs: 'three',
-      commonjs2: 'three',
-      amd: 'three',
-      root: 'THREE' // indicates global variable
-      }
-    }
-  }];
+  }
+ ];
 };

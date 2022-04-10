@@ -6,7 +6,7 @@
 <!-- three.js load GLTF -->
 <script src='vendor/three.js/GLTFLoader.js'></script>
 <!-- ar.js -->
-<script src='../build/ar-threex-nft.js'></script>
+<script src='../build/ar-threex.js'></script>
 
 <script>THREEx.ArToolkitContext.baseURL = '../'</script>
 
@@ -146,6 +146,7 @@
             // copy projection matrix to camera
             camera.projectionMatrix.copy( arToolkitContext.getProjectionMatrix() );
         })
+        console.log(arToolkitContext);
 
         ////////////////////////////////////////////////////////////////////////////////
         //          Create a ArMarkerControls

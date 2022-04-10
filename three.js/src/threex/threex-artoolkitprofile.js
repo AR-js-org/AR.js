@@ -1,4 +1,4 @@
-import Profile from './arjs-profile';
+import Profile from "./arjs-profile";
 /**
  * ArToolkitProfile helps you build parameters for artoolkit
  * - it is fully independent of the rest of the code
