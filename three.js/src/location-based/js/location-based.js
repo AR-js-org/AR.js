@@ -62,6 +62,7 @@ class LocationBased {
     if (elev !== null) {
       this.setElevation(elev);
     }
+
     this._gpsReceived({
       coords: {
         longitude: lon,

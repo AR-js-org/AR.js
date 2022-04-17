@@ -10,6 +10,9 @@ import "./location-based/gps-camera";
 import "./location-based/gps-entity-place";
 import "./location-based/gps-projected-camera";
 import "./location-based/gps-projected-entity-place";
+import "./new-location-based/gps-new-camera";
+import "./new-location-based/gps-new-entity-place";
+import "./new-location-based/arjs-device-orientation-controls";
 
 // System
 import "./system-arjs-nft";
