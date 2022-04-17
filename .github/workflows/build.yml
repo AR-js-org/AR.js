@@ -1,0 +1,64 @@
+name: Build AR.js libraries
+
+# Controls when the action will run. Triggers the workflow on push or pull request
+# events but only for the master branch.
+# The action script will build all the libs and will commit the files. When a new git tag is created
+# will be made a new release.
+on: push
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [14.x]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+      - name: Set output
+        id: vars
+        run: echo ::set-output name=tag::${GITHUB_REF#refs/*/}
+      - name: Check output
+        env:
+          RELEASE_VERSION: ${{ steps.vars.outputs.tag }}
+        run: |
+          echo $RELEASE_VERSION
+          echo ${{ steps.vars.outputs.tag }}
+      - run: npm update
+      - run: npm install
+      - uses: actions/upload-artifact@v2
+        with:
+          name: build
+          path: |
+            aframe/build/*.js
+            three.js/build/*.js
+      - run: |
+          npm run build
+      - name: Commit changes
+        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
+        uses: EndBug/add-and-commit@v9
+        with:
+          default_author: github_actions
+          message: new build files from action
+          add: '["aframe/build", "three.js/build"]'
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: |
+            aframe/build/aframe-ar.js
+            aframe/build/aframe-ar-nft.js
+            aframe/build/aframe-ar-location-only.js
+            three.js/build/ar.js
+            three.js/build/ar-threex.js
+            three.js/build/ar-threex-location-only.js
