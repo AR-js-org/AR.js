@@ -2,7 +2,8 @@
 # AR.js - Augmented Reality on the Web
 
 
-[![Build Status](https://travis-ci.org/jeromeetienne/AR.js.svg?branch=master)](https://travis-ci.org/jeromeetienne/AR.js)
+[![CI](https://github.com/AR-js-org/AR.js/actions/workflows/CI.yml/badge.svg)](https://github.com/AR-js-org/AR.js/actions/workflows/CI.yml)
+[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 [![Gitter chat](https://badges.gitter.im/AR-js/Lobby.png)](https://gitter.im/AR-js/Lobby)
 [![Twitter Follow](https://img.shields.io/twitter/follow/nicolocarp.svg?style=plastic&label=nicolocarpignoli-twitter&style=plastic)](https://twitter.com/nicolocarp)
 [![Twitter Follow](https://img.shields.io/twitter/follow/jerome_etienne.svg?style=plastic&label=jeromeetienne-twitter&style=plastic)](https://twitter.com/jerome_etienne)
@@ -32,27 +33,36 @@ If you want to give a first look at AR.js potential, you can continue with this 
 -----
 
 
-⚡️ AR.js is coming in two, different builds. They are both maintained. They are exclusive.
+⚡️ AR.js is coming in different builds. They are both maintained. They are exclusive.
 
 Please import the one you need for your project, not both:
 
-- **AR.js with Image Tracking + Location Based AR:**
+- **AR.js with Image Tracking + Location Based AR (AFRAME):**
 
-  - AFRAME version: https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js
+  - https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js
 
-  - three.js version: https://raw.githack.com/AR-js-org/AR.js/master/three.js/build/ar-nft.js
+- **AR.js with Marker Tracking + Location Based AR (AFRAME):**
 
-- **AR.js with Marker Tracking + Location Based AR:**
+  - https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js
 
-  - AFRAME version: https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js
 
-  - three.js version: https://raw.githack.com/AR-js-org/AR.js/master/three.js/build/ar.js
+- **AR.js with Image Tracking + Marker Tracking (Threejs):**
+
+  - https://raw.githack.com/AR-js-org/AR.js/master/three.js/build/ar-threex.js
+
+  if you need the ARjs namespace import ar.js:
+
+  - https://raw.githack.com/AR-js-org/AR.js/master/three.js/build/ar.js
+
+- **AR.js with Location Based AR (Threejs):**
+
+  - https://raw.githack.com/AR-js-org/AR.js/master/three.js/build/ar-threex-location-only.js
 
 
 You can also import a specific version replacing `master` keyword with version tag:
 
 ```html
-  <script src="https://raw.githack.com/AR-js-org/AR.js/3.4.0-alpha-rc1/aframe/build/aframe-ar-nft.js">
+  <script src="https://raw.githack.com/AR-js-org/AR.js/3.4.0-alpha-rc2/aframe/build/aframe-ar-nft.js">
 ```
 
 ## Get started

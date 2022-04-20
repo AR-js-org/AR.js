@@ -13,6 +13,9 @@ const renderer = new THREE.WebGLRenderer({ canvas: document.querySelector('#canv
 const geom = new THREE.BoxGeometry(20,20,20);
 
 const threex = new THREEx.LocationBased(scene, camera);
+
+// You can change the minimum GPS accuracy needed to register a position - by default 1000m
+//const threex = new THREEx.LocationBased(scene, camera. { gpsMinAccuracy: 30 } );
 const cam = new THREEx.WebcamRenderer(renderer, '#video1');
 
 const oneDegAsRad = THREE.Math.degToRad(1);
@@ -27,18 +30,23 @@ if (isMobile()){
 let fake = null;
 let first = true;
 
+threex.on("gpsupdate", pos => {
+    console.log('gpsupdate');
+    if(first) {
+        setupObjects(pos.coords.longitude, pos.coords.latitude);
+        first = false;
+    }
+});
+
+threex.on("gpserror", code => {
+    alert(`GPS error: code ${code}`);
+});
+
 // Uncomment to use a fake GPS location
-// fake = { lat: 51.05, lon : -0.72 };
+//fake = { lat: 51.05, lon : -0.72 };
 if(fake) {
-    setupObjects(fake.lon, fake.lat);
     threex.fakeGps(fake.lon, fake.lat);
 } else {
-    threex.on("gpsupdate", pos => {
-		if(first) {
-        setupObjects(pos.coords.longitude, pos.coords.latitude);
-		first = false;
-		}
-    });
     threex.startGps();
 } 
 
