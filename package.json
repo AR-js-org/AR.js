@@ -1,6 +1,6 @@
 {
   "name": "@ar-js-org/ar.js",
-  "version": "3.4.0-alpha-rc2",
+  "version": "3.4.0",
   "description": "Efficient Augmented Reality for the Web",
   "main": "./aframe/build/aframe-ar.js",
   "scripts": {

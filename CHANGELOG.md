@@ -1,3 +1,9 @@
+
+# 3.4.0
+
+- New gh build script to compile libs see #415
+- Restored multimarker examples (learner and player) see #419
+- New A-Frame location based code see #406
 # 3.4.0-alpha-rc2
 
 - Fixed bug in aframe image tracking see #407
