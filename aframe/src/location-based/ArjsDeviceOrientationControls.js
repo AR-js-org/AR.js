@@ -98,11 +98,18 @@ const ArjsDeviceOrientationControls = function (object) {
 
     var device = scope.deviceOrientation;
 
-    if (device) {
-      var alpha = device.alpha
-        ? THREE.Math.degToRad(device.alpha) + scope.alphaOffset
-        : 0; // Z
+    if (device) {      
+      // iOS compass-calibrated 'alpha' patch
+      // see: http://lists.w3.org/Archives/Public/public-geolocation/2011Jul/0014.html
+      var heading = device.webkitCompassHeading || device.compassHeading;
 
+      var alpha = device.alpha || heading
+          ? MathUtils.degToRad(
+              heading
+              ? 360 - heading
+              : device.alpha || 0) + scope.alphaOffset
+          : 0; // Z
+      
       var beta = device.beta ? THREE.Math.degToRad(device.beta) : 0; // X'
 
       var gamma = device.gamma ? THREE.Math.degToRad(device.gamma) : 0; // Y''
