@@ -405,6 +405,14 @@ MarkerControls.prototype._initArtoolkit = function () {
           setMatrix(_this.object3d.matrix, proj);
         }
 
+        if (ev && ev.data && ev.data.type === "markerInfos") {
+          var nft = JSON.parse(ev.data.marker);
+          var nftEvent = new CustomEvent("arjs-nft-init-data", {
+            detail: { dpi: nft.dpi, width: nft.width, height: nft.height },
+          });
+          window.dispatchEvent(nftEvent);
+        }
+
         if (ev && ev.data && ev.data.type === "found") {
           var matrix = JSON.parse(ev.data.matrix);
 
