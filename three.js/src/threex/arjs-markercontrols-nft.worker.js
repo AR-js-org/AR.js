@@ -51,6 +51,9 @@ function load(msg) {
     ar.loadNFTMarker(nftMarkerUrl)
       .then(function (markerId) {
         ar.trackNFTMarkerId(markerId);
+        let marker = ar.getNFTData(ar.id, 0);
+        console.log("nftMarker data: ", marker);
+        postMessage({ type: "markerInfos", marker: JSON.stringify(marker) });
         postMessage({ type: "endLoading" });
       })
       .catch(function (err) {
