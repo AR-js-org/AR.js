@@ -88,10 +88,6 @@ AFRAME.registerComponent("gps-new-camera", {
     }
   },
 
-  remove: function () {
-    window;
-  },
-
   play: function () {
     if (this.data.simulateLatitude === 0 && this.data.simulateLongitude === 0) {
       this.threeLoc.startGps();
