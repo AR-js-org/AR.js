@@ -289,6 +289,8 @@ Context.prototype._initArtoolkit = function (onCompleted) {
       "4x4": arController.artoolkit.AR_MATRIX_CODE_4x4,
       "4x4_BCH_13_9_3": arController.artoolkit.AR_MATRIX_CODE_4x4_BCH_13_9_3,
       "4x4_BCH_13_5_5": arController.artoolkit.AR_MATRIX_CODE_4x4_BCH_13_5_5,
+      "5x5": arController.artoolkit.AR_MATRIX_CODE_5x5,
+      "6x6": arController.artoolkit.AR_MATRIX_CODE_6x6,
     };
     var matrixCodeType = matrixCodeTypes[_this.parameters.matrixCodeType];
     console.assert(matrixCodeType !== undefined);
