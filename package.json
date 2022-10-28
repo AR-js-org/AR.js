@@ -59,9 +59,9 @@
     "worker-loader": "^3.0.8"
   },
   "dependencies": {
-    "@ar-js-org/artoolkit5-js": "https://github.com/AR-js-org/artoolkit5-js.git#0bec31d74b735166d5cf2522226b530d87729ed8",
+    "@ar-js-org/artoolkit5-js": "^0.2.0",
     "aframe": "^1.0.4",
-    "three": "^0.145.0"
+    "three": "^0.146.0"
   },
   "lint-staged": {
     "*.js": "prettier --write"
