@@ -184,12 +184,13 @@
             root.matrixAutoUpdate = false;
             root.add(model);
 
-            model.position.y = 100;
+            model.position.z = -100;
+            //model.position.z = 100;
 
             window.addEventListener('arjs-nft-init-data', function(nft) {
               console.log(nft);
               var msg = nft.detail;
-              model.position.z = -(msg.height / msg.dpi * 2.54 * 10)/2.0; //y axis?
+              model.position.y = (msg.height / msg.dpi * 2.54 * 10)/2.0; //y axis?
               model.position.x = (msg.width / msg.dpi * 2.54 * 10)/2.0; //x axis?
             })
 
