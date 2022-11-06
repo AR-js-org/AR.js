@@ -1,4 +1,13 @@
+# 3.4.1
 
+- Support for other Barcode Markers #469:
+  - AR_MATRIX_CODE_5x5_BCH_22_12_5
+  - AR_MATRIX_CODE_5x5_BCH_22_7_7
+  - AR_MATRIX_CODE_5x5
+  - AR_MATRIX_CODE_6x6
+- New `arjs-nft-init-data` event to get importan NFT marker data (width, height and dpi) #469;
+- Fix for oriantation on iOS #432
+- Typo fix in an example #431
 # 3.4.0
 
 - New gh build script to compile libs see #415
