@@ -44,10 +44,16 @@ class WebcamRenderer {
           video.play();
         })
         .catch((e) => {
-          alert(`Webcam error: ${e}`);
+          setTimeout(() => {
+            this.createErrorPopup(
+              "Webcam Error\nName: " + e.name + "\nMessage: " + e.message
+            );
+          }, 1000);
         });
     } else {
-      alert("sorry - media devices API not supported");
+      setTimeout(() => {
+        this.createErrorPopup("sorry - media devices API not supported");
+      }, 1000);
     }
   }
 
@@ -61,6 +67,15 @@ class WebcamRenderer {
     this.material.dispose();
     this.texture.dispose();
     this.geom.dispose();
+  }
+
+  createErrorPopup(msg) {
+    if (!document.getElementById("error-popup")) {
+      var errorPopup = document.createElement("div");
+      errorPopup.innerHTML = msg;
+      errorPopup.setAttribute("id", "error-popup");
+      document.body.appendChild(errorPopup);
+    }
   }
 }
 
