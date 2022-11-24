@@ -130,7 +130,9 @@ AFRAME.registerComponent("gps-new-camera", {
   // from original gps-camera component
   _setupSafariOrientationPermissions: function () {
     // iOS 13+
-    if (typeof DeviceOrientationEvent.requestPermission === "function") {
+    if (
+      typeof window.DeviceOrientationEvent?.requestPermission === "function"
+    ) {
       var handler = function () {
         console.log("Requesting device orientation permissions...");
         DeviceOrientationEvent.requestPermission();
@@ -149,14 +151,18 @@ AFRAME.registerComponent("gps-new-camera", {
         "After camera permission prompt, please tap the screen to activate geolocation."
       );
     } else {
-      var timeout = setTimeout(function () {
+      var timeout = setTimeout(() => {
         this.el.sceneEl.systems["arjs"]._displayErrorPopup(
           "Please enable device orientation in Settings > Safari > Motion & Orientation Access."
         );
       }, 750);
-      window.addEventListener(eventName, function () {
-        clearTimeout(timeout);
-      });
+      window.addEventListener(
+        "deviceorientation",
+        function () {
+          clearTimeout(timeout);
+        },
+        { once: true }
+      );
     }
   },
 
