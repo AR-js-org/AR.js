@@ -45,24 +45,14 @@ class WebcamRenderer {
         })
         .catch((e) => {
           setTimeout(() => {
-            if (!document.getElementById("error-popup")) {
-              var errorPopup = document.createElement("div");
-              errorPopup.innerHTML =
-                "Webcam Error\nName: " + e.name + "\nMessage: " + e.message;
-              errorPopup.setAttribute("id", "error-popup");
-              document.body.appendChild(errorPopup);
-            }
+            this.createErrorPopup(
+              "Webcam Error\nName: " + e.name + "\nMessage: " + e.message
+            );
           }, 1000);
         });
     } else {
       setTimeout(() => {
-        if (!document.getElementById("error-popup")) {
-          var errorPopup = document.createElement("div");
-          errorPopup.innerHTML =
-            "sorry - media devices API not supported";
-          errorPopup.setAttribute("id", "error-popup");
-          document.body.appendChild(errorPopup);
-        }
+        this.createErrorPopup("sorry - media devices API not supported");
       }, 1000);
     }
   }
@@ -77,6 +67,15 @@ class WebcamRenderer {
     this.material.dispose();
     this.texture.dispose();
     this.geom.dispose();
+  }
+
+  createErrorPopup(msg) {
+    if (!document.getElementById("error-popup")) {
+      var errorPopup = document.createElement("div");
+      errorPopup.innerHTML = msg;
+      errorPopup.setAttribute("id", "error-popup");
+      document.body.appendChild(errorPopup);
+    }
   }
 }
 
