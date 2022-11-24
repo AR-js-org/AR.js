@@ -89,7 +89,7 @@ class DeviceOrientationControls extends EventDispatcher {
                 onScreenOrientationChangeEvent
               );
               window.addEventListener(
-                this.orientationChangeEventName,
+                scope.orientationChangeEventName,
                 onDeviceOrientationChangeEvent
               );
             }
@@ -106,7 +106,7 @@ class DeviceOrientationControls extends EventDispatcher {
           onScreenOrientationChangeEvent
         );
         window.addEventListener(
-          this.orientationChangeEventName,
+          scope.orientationChangeEventName,
           onDeviceOrientationChangeEvent
         );
       }
@@ -120,7 +120,7 @@ class DeviceOrientationControls extends EventDispatcher {
         onScreenOrientationChangeEvent
       );
       window.removeEventListener(
-        this.orientationChangeEventName,
+        scope.orientationChangeEventName,
         onDeviceOrientationChangeEvent
       );
 
