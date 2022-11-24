@@ -44,10 +44,26 @@ class WebcamRenderer {
           video.play();
         })
         .catch((e) => {
-          alert(`Webcam error: ${e}`);
+          setTimeout(() => {
+            if (!document.getElementById("error-popup")) {
+              var errorPopup = document.createElement("div");
+              errorPopup.innerHTML =
+                "Webcam Error\nName: " + e.name + "\nMessage: " + e.message;
+              errorPopup.setAttribute("id", "error-popup");
+              document.body.appendChild(errorPopup);
+            }
+          }, 1000);
         });
     } else {
-      alert("sorry - media devices API not supported");
+      setTimeout(() => {
+        if (!document.getElementById("error-popup")) {
+          var errorPopup = document.createElement("div");
+          errorPopup.innerHTML =
+            "sorry - media devices API not supported";
+          errorPopup.setAttribute("id", "error-popup");
+          document.body.appendChild(errorPopup);
+        }
+      }, 1000);
     }
   }
 
