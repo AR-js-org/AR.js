@@ -1,3 +1,9 @@
+# 3.4.2
+
+- Display webcam errors via DOM element rather than alert box in three.js location based #429
+- Bugfix for undefined `this.orientationChangeEventName` in new A-Frame location based #464
+- Bugfix for undefined `this.el` and `eventName` in AR.js fork of three.js DeviceOrientationControls #471
+- Tweaks to location-based three.js example
 # 3.4.1
 
 - Support for other Barcode Markers #469:
