@@ -1,3 +1,5 @@
+import * as THREE from "three";
+
 import { SphMercProjection } from "./sphmerc-projection.js";
 
 class LocationBased {
