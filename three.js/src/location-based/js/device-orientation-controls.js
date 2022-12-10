@@ -48,6 +48,8 @@ class DeviceOrientationControls extends EventDispatcher {
         ? "deviceorientationabsolute"
         : "deviceorientation";
 
+    this.smoothingFactor = 1;
+
     const onDeviceOrientationChangeEvent = function (event) {
       scope.deviceOrientation = event;
     };
@@ -147,7 +149,7 @@ class DeviceOrientationControls extends EventDispatcher {
           ? MathUtils.degToRad(scope.screenOrientation)
           : 0; // O
 
-        if (this.smoothingFactor !== undefined) {
+        if (this.smoothingFactor < 1) {
           if (this.lastOrientation) {
             const k = this.smoothingFactor;
             alpha = this._getSmoothedAngle(
