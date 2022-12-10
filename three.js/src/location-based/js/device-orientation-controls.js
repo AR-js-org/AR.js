@@ -183,8 +183,8 @@ class DeviceOrientationControls extends EventDispatcher {
         setObjectQuaternion(
           scope.object.quaternion,
           alpha,
-          beta,
-          gamma,
+          this.smoothingFactor < 1 ? beta - Math.PI : beta,
+          this.smoothingFactor < 1 ? gamma - this.HALF_PI : gamma,
           orient
         );
 
