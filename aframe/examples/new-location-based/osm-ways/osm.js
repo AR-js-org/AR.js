@@ -11,6 +11,17 @@ AFRAME.registerComponent('osm', {
         }
     },
 
+    init: function() {
+        this.downloaded = false;
+        this.camera = document.querySelector("[gps-new-camera]");
+        this.camera.addEventListener("gps-camera-update-position", e=> {
+            if(!this.downloaded) {
+                this._readOsm(e.detail.position.latitude, e.detail.position.longitude);
+                this.downloaded = true;
+            }
+        });
+    },
+
     update: function() {
         if (this.data.latitude >= -90 && this.data.latitude <= 90 && this.data.longitude >= -180 && this.data.longitude <= 180) {
             this._readOsm(this.data.latitude, this.data.longitude);
@@ -18,8 +29,7 @@ AFRAME.registerComponent('osm', {
     },
 
     _readOsm: function(lat, lon) {
-        const camera = document.querySelector("[gps-new-camera]");
-        const gpsCameraComponent = camera.components["gps-new-camera"];
+        const gpsCameraComponent = this.camera.components["gps-new-camera"];
         if(!gpsCameraComponent) {
             alert('gps-new-camera component not initialised');
             return;
@@ -36,7 +46,7 @@ AFRAME.registerComponent('osm', {
                     'track': { color: '#ff8080' },
                     'cycleway': { color: '#00ffff' },
                 };
-                const features = [];
+                const objectIds = [];
                 json.features.forEach((f, i) => {
                     const line = [];
                     let projectedCoords;
@@ -56,8 +66,12 @@ AFRAME.registerComponent('osm', {
                                     color: color
                                 }));
                             this.el.setObject3D(f.properties.osm_id, mesh);
+                            objectIds.push(f.properties.osm_id);
                         }
                     }
+                });
+                this.el.emit('vector-ways-loaded', {
+                    objectIds: objectIds
                 });
             });
     }
