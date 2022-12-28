@@ -18,6 +18,4 @@ These examples have been written specifically, or adapted, for the `new-location
 
 - `osm-ways` : A more complex example showing how more specialised geodata can be rendered with AR.js. Downloads OpenStreetMap ways (roads, paths) from a GeoJSON API, reprojects them into Spherical Mercator, and adds them to the scene as polylines made up of individual triangles.
 
-## Coming soon!
-
-The use of smoothing to reduce "shaking" artefacts, currently implemented in the "classic" AR.js location-based components, has been implemented as a PR for the `new-location-based` components. It is likely to be available in the next release (3.4.3).
+- `smoothing` : A version of `basic-js` with a smoothing factor applied.
