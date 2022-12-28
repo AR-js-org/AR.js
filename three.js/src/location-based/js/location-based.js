@@ -1,4 +1,5 @@
 import { SphMercProjection } from "./sphmerc-projection.js";
+import * as THREE from "three";
 
 class LocationBased {
   constructor(scene, camera, options = {}) {
