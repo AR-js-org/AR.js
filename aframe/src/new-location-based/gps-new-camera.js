@@ -98,6 +98,10 @@ AFRAME.registerComponent("gps-new-camera", {
     this.threeLoc.stopGps();
   },
 
+  latLonToWorld: function (lat, lon) {
+    return this.threeLoc.lonLatToWorldCoords(lon, lat);
+  },
+
   _sendGpsUpdateEvent: function (lon, lat) {
     this.el.emit("gps-camera-update-position", {
       position: {
