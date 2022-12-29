@@ -9,7 +9,8 @@ class LocationBased {
     this._eventHandlers = {};
     this._lastCoords = null;
     this._gpsMinDistance = 0;
-    this._gpsMinAccuracy = 1000;
+    this._gpsMinAccuracy = 100;
+    this._maximumAge = 0;
     this._watchPositionId = null;
     this.setGpsOptions(options);
   }
@@ -24,6 +25,9 @@ class LocationBased {
     }
     if (options.gpsMinAccuracy !== undefined) {
       this._gpsMinAccuracy = options.gpsMinAccuracy;
+    }
+    if (options.maximumAge !== undefined) {
+      this._maximumAge = options.maximumAge;
     }
   }
 
@@ -42,7 +46,7 @@ class LocationBased {
         },
         {
           enableHighAccuracy: true,
-          maximumAge: maximumAge,
+          maximumAge: maximumAge != 0 ? maximumAge : this._maximumAge,
         }
       );
       return true;

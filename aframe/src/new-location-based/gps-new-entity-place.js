@@ -1,3 +1,4 @@
+import * as THREE from "three";
 import * as AFRAME from "aframe";
 
 AFRAME.registerComponent("gps-new-entity-place", {
@@ -13,6 +14,7 @@ AFRAME.registerComponent("gps-new-entity-place", {
   },
 
   init: function () {
+    this.distance = Number.MAX_VALUE;
     const camera = document.querySelector("[gps-new-camera]");
     if (!camera.components["gps-new-camera"]) {
       console.error("gps-new-camera not initialised");

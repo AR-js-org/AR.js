@@ -21,7 +21,11 @@ AFRAME.registerComponent("gps-new-camera", {
     },
     positionMinAccuracy: {
       type: "number",
-      default: 1000,
+      default: 100,
+    },
+    gpsTimeInterval: {
+      type: "number",
+      default: 0,
     },
   },
 
@@ -71,6 +75,7 @@ AFRAME.registerComponent("gps-new-camera", {
     this.threeLoc.setGpsOptions({
       gpsMinAccuracy: this.data.positionMinAccuracy,
       gpsMinDistance: this.data.gpsMinDistance,
+      maximumAge: this.data.gpsTimeInterval,
     });
     if (
       (this.data.simulateLatitude !== 0 || this.data.simulateLongitude !== 0) &&
