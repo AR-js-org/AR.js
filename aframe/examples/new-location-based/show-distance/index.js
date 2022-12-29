@@ -1,12 +1,3 @@
-AFRAME.registerComponent("clicker", {
-    init: function() {
-        this.el.addEventListener("click", e=> {
-            const dist = this.el.components["gps-new-entity-place"].distance;
-            alert(dist === undefined ? "Please move to a new location to obtain the distance" : `This object is ${dist} metres away.`);
-        });
-    }
-});
-
 window.onload = () => {
     let testEntitiesAdded = false;
     alert('If testing the lat/lon manual input on a mobile device, please turn off your GPS to avoid the real location being detected.');
