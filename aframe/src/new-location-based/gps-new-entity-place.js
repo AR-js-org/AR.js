@@ -14,7 +14,6 @@ AFRAME.registerComponent("gps-new-entity-place", {
   },
 
   init: function () {
-    this.distance = Number.MAX_VALUE;
     const camera = document.querySelector("[gps-new-camera]");
     if (!camera.components["gps-new-camera"]) {
       console.error("gps-new-camera not initialised");
@@ -22,7 +21,7 @@ AFRAME.registerComponent("gps-new-entity-place", {
     }
     this._cameraGps = camera.components["gps-new-camera"];
 
-    this.el.addEventListener("gps-camera-update-position", (e) => {
+    camera.addEventListener("gps-camera-update-position", (e) => {
       this.distance = this._haversineDist(e.detail.position, this.data);
     });
   },

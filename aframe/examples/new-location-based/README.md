@@ -14,10 +14,12 @@ These examples have been written specifically, or adapted, for the `new-location
 
 - `basic-js-modules` : version of `basic-js` which uses an ES6 import to include AR.js. Requires building using Webpack: a `webpack.config.js` is provided.
 
+- `show-distance` : version of `basic-js` which shows the distance to a given object when you click on it.
+
 - `poi` : Demonstrates downloading POIs from an OpenStreetMap-based GeoJSON API and adding them to the scene as objects, with text labels.
 
 - `poi-component` : Similar to `poi`, but demonstrating the use of a custom A-Frame component to download and display the POIs.
 
 - `osm-ways` : A more complex example showing how more specialised geodata can be rendered with AR.js. Downloads OpenStreetMap ways (roads, paths) from a GeoJSON API, reprojects them into Spherical Mercator, and adds them to the scene as polylines made up of individual triangles.
 
-- `smoothing` : A version of `basic-js` with a smoothing factor applied.
+- `avoid-shaking` : A version of `basic-js` with a smoothing factor applied to reduce shaking effects.
