@@ -1,3 +1,12 @@
+# 3.4.3
+
+- Add the "reduce shaking" feature (using sensor smoothing) to the `new-location-based` A-Frame components #483
+- Include missing `THREEx` import in `gps-new-camera`, to allow use of ES6 modules #484
+- Add `latLonToWorld()` method to `gps-new-camera`, for compatibility with `gps-projected-camera` #485
+- Enable the `gpsTimeInterval` property in `gps-new-camera` (this sets the geolocation `maximumAge` property)
+- Add a `distance` property to `gps-new-entity-place`, representing the distance in metres from the GPS position to the entity. This is dynamically updated as the GPS position changes.
+- Enhanced `new-location-based` examples.
+
 # 3.4.2
 
 - Display webcam errors via DOM element rather than alert box in three.js location based #429
