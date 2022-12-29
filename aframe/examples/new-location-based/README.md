@@ -12,6 +12,8 @@ These examples have been written specifically, or adapted, for the `new-location
 
 - `basic-js` : Basic JavaScript example which dynamically creates four boxes to the north, south, east and west of your initial GPS position (whatever that is). Allows you to enter a "fake" latitude and longitude for testing on a desktop.
 
+- `basic-js-modules` : version of `basic-js` which uses an ES6 import to include AR.js. Requires building using Webpack: a `webpack.config.js` is provided.
+
 - `poi` : Demonstrates downloading POIs from an OpenStreetMap-based GeoJSON API and adding them to the scene as objects, with text labels.
 
 - `poi-component` : Similar to `poi`, but demonstrating the use of a custom A-Frame component to download and display the POIs.

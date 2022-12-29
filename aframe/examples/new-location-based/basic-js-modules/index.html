@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>AR.js A-Frame</title>
+<script src='dist/bundle.js'></script>
+</head>
+<body>
+<a-scene vr-mode-ui='enabled: false' arjs='sourceType: webcam; videoTexture: true; debugUIEnabled: false' renderer='antialias: true; alpha: true'>
+	<a-camera gps-new-camera='gpsMinDistance: 5'></a-camera>
+</a-scene>
+<div id='setloc' style='position:absolute; left: 10px; bottom: 2%; z-index:999; background-color: blue; color: white; padding: 10px'>
+Lat:<input id="lat" value="51.049" /> 
+Lon: <input id="lon" value="-0.723"/> 
+Min Acc: <input id='minacc' value='1000' /> <input type='button' id='go' value='go' />
+</div>
+</body>
+</html>
