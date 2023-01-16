@@ -3,8 +3,8 @@ import Source from "../threex/arjs-source";
 import Context from "../threex/arjs-context"; // TODO context build-dependent
 
 /**
- *  * define a Session
- *
+ * define a Session
+ * @type Class
  * @param {Object} parameters - parameters for this session
  */
 const Session = function (parameters) {

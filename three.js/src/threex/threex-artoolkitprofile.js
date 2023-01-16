@@ -5,8 +5,8 @@ import Profile from "./arjs-profile";
  * - all the other classes are still expecting normal parameters
  * - you can use this class to understand how to tune your specific usecase
  * - it is made to help people to build parameters without understanding all the underlying details.
+ * @type Class
  */
-
 const ArToolkitProfile = Profile;
 
 export default ArToolkitProfile;

@@ -1,5 +1,10 @@
 import ArMultiMarkerControls from "./arjs-markersareacontrols";
 
+/**
+ * @type Class
+ * @param {any} arToolkitContext
+ * @param {any} subMarkersControls
+ */
 const MarkersAreaLearning = function (arToolkitContext, subMarkersControls) {
   var _this = this;
   this._arToolkitContext = arToolkitContext;

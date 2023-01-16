@@ -2,7 +2,10 @@ import * as THREE from "three";
 import ArMarkerControls from "./arjs-markercontrols";
 import jsartoolkit from "jsartoolkit"; // TODO comment explanation
 const { ARController } = jsartoolkit;
-
+/**
+ * @type Class
+ * @param {object} parameters
+ */
 const Context = function (parameters) {
   var _this = this;
 

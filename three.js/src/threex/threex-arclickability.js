@@ -6,6 +6,8 @@ import * as THREE from "three";
  * - maybe support .onClickFcts in each object3d
  * - seems an easy light layer for clickable object
  * - up to
+ * @type Class
+ * @param {any} sourceElement
  */
 const ARClickability = function (sourceElement) {
   this._sourceElement = sourceElement;

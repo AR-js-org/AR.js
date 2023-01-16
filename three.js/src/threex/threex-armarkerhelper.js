@@ -1,5 +1,9 @@
 import * as THREE from "three";
 
+/**
+ * @type Class
+ * @param {any} markerControls
+ */
 const ArMarkerHelper = function (markerControls) {
   this.object3d = new THREE.Group();
 

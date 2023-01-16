@@ -4,6 +4,13 @@ import Worker from "./arjs-markercontrols-nft.worker.js";
 import jsartoolkit from "jsartoolkit"; // TODO comment explanation
 const { ARToolkit } = jsartoolkit;
 
+/**
+ *
+ * @param {any} context
+ * @param {any} object3d
+ * @param {object} parameters
+ * @type Class
+ */
 const MarkerControls = function (context, object3d, parameters) {
   var _this = this;
 
@@ -99,7 +106,7 @@ const MarkerControls = function (context, object3d, parameters) {
 };
 
 MarkerControls.prototype = Object.create(ArBaseControls.prototype);
-MarkerControls.prototype.constructor = MarkerControls;
+//MarkerControls.prototype.constructor = MarkerControls;
 
 //////////////////////////////////////////////////////////////////////////////
 //		dispose instance

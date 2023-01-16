@@ -1,5 +1,9 @@
 import * as THREE from "three";
 
+/**
+ * @type Class
+ * @param {any} object3d
+ */
 const ArBaseControls = function (object3d) {
   this.id = ArBaseControls.id++;
 

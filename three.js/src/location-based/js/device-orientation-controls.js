@@ -16,6 +16,9 @@ const _q1 = new Quaternion(-Math.sqrt(0.5), 0, 0, Math.sqrt(0.5)); // - PI/2 aro
 
 const _changeEvent = { type: "change" };
 
+/**
+ * @type Class
+ */
 class DeviceOrientationControls extends EventDispatcher {
   constructor(object) {
     super();

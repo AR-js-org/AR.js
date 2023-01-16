@@ -1,3 +1,7 @@
+/**
+ * @type Class
+ * @param {object} parameters
+ */
 const Source = function (parameters) {
   var _this = this;
 

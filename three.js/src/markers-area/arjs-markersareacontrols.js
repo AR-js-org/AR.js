@@ -3,6 +3,12 @@ import ArBaseControls from "../threex/threex-arbasecontrols";
 import ArMarkerControls from "../threex/arjs-markercontrols";
 import ArMultiMarkerControls from "./arjs-markersareacontrols";
 
+/**
+ * @type Class
+ * @param {any} arToolkitContext
+ * @param {any} object3d
+ * @param {any} parameters
+ */
 const MarkersAreaControls = function (arToolkitContext, object3d, parameters) {
   var _this = this;
   ArBaseControls.call(this, object3d);
@@ -36,7 +42,7 @@ const MarkersAreaControls = function (arToolkitContext, object3d, parameters) {
 };
 
 MarkersAreaControls.prototype = Object.create(ArBaseControls.prototype);
-MarkersAreaControls.prototype.constructor = MarkersAreaControls;
+//MarkersAreaControls.prototype.constructor = MarkersAreaControls;
 
 //////////////////////////////////////////////////////////////////////////////
 //		Code Separator

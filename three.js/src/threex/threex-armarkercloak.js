@@ -6,6 +6,8 @@ import * as THREE from "three";
  * - cloakHeight
  * - cloakSegmentsHeight
  * - remove all mentions of cache, for cloak
+ * @type Class
+ * @param {any} videoTexture
  */
 const ArMarkerCloak = function (videoTexture) {
   var updateInShaderEnabled = true;

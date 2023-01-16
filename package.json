@@ -9,6 +9,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "./node_modules/.bin/webpack --mode=production",
     "build:dev": "./node_modules/.bin/webpack --mode=development --progress --watch",
+    "build-types": "tsc",
     "server": "npx http-server -c -1",
     "prepare": "husky install"
   },
@@ -51,17 +52,18 @@
   },
   "homepage": "https://github.com/AR-js-org/AR.js/",
   "devDependencies": {
-    "husky": "^8.0.1",
-    "lint-staged": "^13.0.3",
-    "prettier": "^2.7.1",
-    "webpack": "^5.74.0",
-    "webpack-cli": "^4.10.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.1.0",
+    "prettier": "^2.8.3",
+    "typescript": "^4.9.4",
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.1",
     "worker-loader": "^3.0.8"
   },
   "dependencies": {
     "@ar-js-org/artoolkit5-js": "^0.2.0",
     "aframe": "^1.0.4",
-    "three": "^0.146.0"
+    "three": "^0.148.0"
   },
   "lint-staged": {
     "*.js": "prettier --write"

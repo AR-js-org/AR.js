@@ -4,6 +4,7 @@ import ArBaseControls from "./threex-arbasecontrols";
  * - lerp position/quaternino/scale
  * - minDelayDetected
  * - minDelayUndetected
+ * @type Class
  * @param {[type]} object3d   [description]
  * @param {[type]} parameters [description]
  */

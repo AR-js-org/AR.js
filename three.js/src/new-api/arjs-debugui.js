@@ -3,7 +3,7 @@ import Context from "../threex/arjs-context"; // TODO context build-dependent
 
 /**
  * Create an debug UI for an ARjs.Anchor
- *
+ * @type Class
  * @param {ARjs.Anchor} arAnchor - the anchor to user
  */
 const SessionDebugUI = function (arSession) {
@@ -41,7 +41,7 @@ SessionDebugUI.AugmentedWebsiteURL = "https://webxr.io/augmented-website";
 
 /**
  * Create an debug UI for an ARjs.Anchor
- *
+ * @type Class
  * @param {ARjs.Anchor} arAnchor - the anchor to user
  */
 const AnchorDebugUI = function (arAnchor) {

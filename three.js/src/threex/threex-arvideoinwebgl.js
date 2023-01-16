@@ -1,5 +1,9 @@
 import * as THREE from "three";
 
+/**
+ * @type Class
+ * @param {any} videoTexture
+ */
 const ArVideoInWebgl = function (videoTexture) {
   var _this = this;
 
