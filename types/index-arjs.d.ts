@@ -7,5 +7,15 @@ import Utils from "./new-api/arjs-utils";
 import Context from "./threex/arjs-context";
 import Profile from "./threex/arjs-profile";
 import Source from "./threex/arjs-source";
-export { Anchor, HitTesting, AnchorDebugUI, SessionDebugUI, Session, Utils, Context, Profile, Source };
+export {
+  Anchor,
+  HitTesting,
+  AnchorDebugUI,
+  SessionDebugUI,
+  Session,
+  Utils,
+  Context,
+  Profile,
+  Source,
+};
 //# sourceMappingURL=index-arjs.d.ts.map
