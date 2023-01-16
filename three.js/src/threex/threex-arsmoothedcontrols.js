@@ -5,8 +5,8 @@ import ArBaseControls from "./threex-arbasecontrols";
  * - minDelayDetected
  * - minDelayUndetected
  * @type Class
- * @param {[type]} object3d   [description]
- * @param {[type]} parameters [description]
+ * @param {any} object3d   [description]
+ * @param {any} parameters [description]
  */
 const ArSmoothedControls = function (object3d, parameters) {
   var _this = this;
@@ -70,7 +70,7 @@ const ArSmoothedControls = function (object3d, parameters) {
 };
 
 ArSmoothedControls.prototype = Object.create(ArBaseControls.prototype);
-ArSmoothedControls.prototype.constructor = ArSmoothedControls;
+//ArSmoothedControls.prototype.constructor = ArSmoothedControls;
 
 //////////////////////////////////////////////////////////////////////////////
 //		update function
