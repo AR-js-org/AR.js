@@ -3,6 +3,7 @@
   "version": "3.4.3",
   "description": "Efficient Augmented Reality for the Web",
   "main": "./aframe/build/aframe-ar.js",
+  "types": "./types/aframe/index.d.ts",
   "scripts": {
     "format-check": "prettier --check .",
     "format": "prettier --write .",
