@@ -16,7 +16,8 @@
   },
   "files": [
     "three.js/build",
-    "aframe/build"
+    "aframe/build",
+    "types"
   ],
   "repository": {
     "type": "git",
