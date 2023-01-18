@@ -4,5 +4,15 @@ import { AnchorDebugUI } from "./new-api/arjs-debugui";
 import { SessionDebugUI } from "./new-api/arjs-debugui";
 import Session from "./new-api/arjs-session";
 import Utils from "./new-api/arjs-utils";
-export { Anchor, HitTesting, AnchorDebugUI, SessionDebugUI, Session, Utils, Context, Profile, Source };
+export {
+  Anchor,
+  HitTesting,
+  AnchorDebugUI,
+  SessionDebugUI,
+  Session,
+  Utils,
+  Context,
+  Profile,
+  Source,
+};
 //# sourceMappingURL=index-arjs.d.ts.map
