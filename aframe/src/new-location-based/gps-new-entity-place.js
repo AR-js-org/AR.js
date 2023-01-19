@@ -24,6 +24,10 @@ AFRAME.registerComponent("gps-new-entity-place", {
     camera.addEventListener("gps-camera-update-position", (e) => {
       this.distance = this._haversineDist(e.detail.position, this.data);
     });
+
+    this.el.sceneEl.emit("gps-entity-place-added", {
+      component: this.el,
+    });
   },
 
   update: function () {
@@ -37,6 +41,11 @@ AFRAME.registerComponent("gps-new-entity-place", {
       projCoords[1]
     );
   },
+
+  setDistanceFrom: function (position) {
+    this.distance = this._haversineDist(position, this.data);
+  },
+
   /**
    * Calculate haversine distance between two lat/lon pairs.
    *

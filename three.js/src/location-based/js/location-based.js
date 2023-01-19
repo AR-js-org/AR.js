@@ -124,6 +124,7 @@ class LocationBased {
           position.coords.latitude
         );
         if (this._eventHandlers["gpsupdate"]) {
+          console.log(`Calling gpsupdate event handler...`);
           this._eventHandlers["gpsupdate"](position, distMoved);
         }
       }
