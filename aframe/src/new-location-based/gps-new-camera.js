@@ -27,6 +27,10 @@ AFRAME.registerComponent("gps-new-camera", {
       type: "number",
       default: 0,
     },
+    initialPositionAsOrigin: {
+      type: "boolean",
+      default: false,
+    },
   },
 
   init: function () {
@@ -34,7 +38,10 @@ AFRAME.registerComponent("gps-new-camera", {
 
     this.threeLoc = new THREEx.LocationBased(
       this.el.sceneEl.object3D,
-      this.el.object3D
+      this.el.object3D,
+      {
+        initialPositionAsOrigin: this.data.initialPositionAsOrigin,
+      }
     );
 
     this.threeLoc.on("gpsupdate", (gpspos) => {
@@ -106,6 +113,10 @@ AFRAME.registerComponent("gps-new-camera", {
 
   latLonToWorld: function (lat, lon) {
     return this.threeLoc.lonLatToWorldCoords(lon, lat);
+  },
+
+  getInitialPosition: function () {
+    return this.threeLoc.initialPosition;
   },
 
   _sendGpsUpdateEvent: function (lon, lat) {
