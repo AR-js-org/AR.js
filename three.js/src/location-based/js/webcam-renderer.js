@@ -28,20 +28,24 @@ class WebcamRenderer {
       0,
       10
     );
+
+    const constraints = {
+      video: {
+        facingMode: "environment",
+      },
+    };
+
     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-      const constraints = {
-        video: {
-          width: 1280,
-          height: 720,
-          facingMode: "environment",
-        },
-      };
       navigator.mediaDevices
         .getUserMedia(constraints)
         .then((stream) => {
           console.log(`using the webcam successfully...`);
           video.srcObject = stream;
-          video.play();
+          video.addEventListener("loadedmetadata", () => {
+            video.setAttribute("width", video.videoWidth);
+            video.setAttribute("height", video.videoHeight);
+            video.play();
+          });
         })
         .catch((e) => {
           setTimeout(() => {

@@ -30,8 +30,13 @@ AFRAME.registerComponent("arjs-webcam-texture", {
       navigator.mediaDevices
         .getUserMedia(constraints)
         .then((stream) => {
+          // Video dimensions fix taken from mind-ar-js, see issue #498
+          this.video.addEventListener("loadedmetadata", (e) => {
+            this.video.setAttribute("width", this.video.videoWidth);
+            this.video.setAttribute("height", this.video.videoHeight);
+            this.video.play();
+          });
           this.video.srcObject = stream;
-          this.video.play();
         })
         .catch((e) => {
           this.el.sceneEl.systems["arjs"]._displayErrorPopup(
