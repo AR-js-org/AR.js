@@ -143,9 +143,9 @@ AFRAME.registerComponent("gps-new-camera", {
   _displayError: function (error) {
     const arjs = this.el.sceneEl.systems["arjs"];
     if (arjs) {
-      arjs._displayErrorPopup(msg);
+      arjs._displayErrorPopup(error);
     } else {
-      alert(msg);
+      alert(error);
     }
   },
 
