@@ -38,6 +38,10 @@ AFRAME.registerComponent("gps-new-camera", {
     );
 
     this.threeLoc.on("gpsupdate", (gpspos) => {
+      this._currentPosition = {
+        longitude: gpspos.coords.longitude,
+        latitude: gpspos.coords.latitude,
+      };
       this._sendGpsUpdateEvent(gpspos.coords.longitude, gpspos.coords.latitude);
     });
 
@@ -69,6 +73,13 @@ AFRAME.registerComponent("gps-new-camera", {
     if (!!navigator.userAgent.match(/Version\/[\d.]+.*Safari/)) {
       this._setupSafariOrientationPermissions();
     }
+
+    this.el.sceneEl.addEventListener("gps-entity-place-added", (e) => {
+      const entityPlace = e.detail.component.components["gps-new-entity-place"];
+      if (this._currentPosition) {
+        entityPlace.setDistanceFrom(this._currentPosition);
+      }
+    });
   },
 
   update: function (oldData) {
@@ -82,6 +93,7 @@ AFRAME.registerComponent("gps-new-camera", {
       (this.data.simulateLatitude != oldData.simulateLatitude ||
         this.data.simulateLongitude != oldData.simulateLongitude)
     ) {
+      this.threeLoc.stopGps();
       this.threeLoc.fakeGps(
         this.data.simulateLongitude,
         this.data.simulateLatitude
@@ -131,9 +143,9 @@ AFRAME.registerComponent("gps-new-camera", {
   _displayError: function (error) {
     const arjs = this.el.sceneEl.systems["arjs"];
     if (arjs) {
-      arjs._displayErrorPopup(msg);
+      arjs._displayErrorPopup(error);
     } else {
-      alert(msg);
+      alert(error);
     }
   },
 
