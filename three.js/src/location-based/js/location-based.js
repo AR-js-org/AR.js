@@ -13,6 +13,8 @@ class LocationBased {
     this._maximumAge = 0;
     this._watchPositionId = null;
     this.setGpsOptions(options);
+    this.initialPosition = null;
+    this.initialPositionAsOrigin = options.initialPositionAsOrigin || false;
   }
 
   setProjection(proj) {
@@ -79,6 +81,14 @@ class LocationBased {
 
   lonLatToWorldCoords(lon, lat) {
     const projectedPos = this._proj.project(lon, lat);
+    if (this.initialPositionAsOrigin) {
+      if (this.initialPosition) {
+        projectedPos[0] -= this.initialPosition[0];
+        projectedPos[1] -= this.initialPosition[1];
+      } else {
+        throw "Trying to use 'initial position as origin' mode with no initial position determined";
+      }
+    }
     return [projectedPos[0], -projectedPos[1]];
   }
 
@@ -89,10 +99,10 @@ class LocationBased {
 
   setWorldPosition(object, lon, lat, elev) {
     const worldCoords = this.lonLatToWorldCoords(lon, lat);
-    [object.position.x, object.position.z] = worldCoords;
     if (elev !== undefined) {
       object.position.y = elev;
     }
+    [object.position.x, object.position.z] = worldCoords;
   }
 
   setElevation(elev) {
@@ -101,6 +111,10 @@ class LocationBased {
 
   on(eventName, eventHandler) {
     this._eventHandlers[eventName] = eventHandler;
+  }
+
+  setWorldOrigin(lon, lat) {
+    this.initialPosition = this._proj.project(lon, lat);
   }
 
   _gpsReceived(position) {
@@ -118,11 +132,19 @@ class LocationBased {
         this._lastCoords.longitude = position.coords.longitude;
         this._lastCoords.latitude = position.coords.latitude;
 
+        if (this.initialPositionAsOrigin && !this.initialPosition) {
+          this.setWorldOrigin(
+            position.coords.longitude,
+            position.coords.latitude
+          );
+        }
+
         this.setWorldPosition(
           this._camera,
           position.coords.longitude,
           position.coords.latitude
         );
+
         if (this._eventHandlers["gpsupdate"]) {
           this._eventHandlers["gpsupdate"](position, distMoved);
         }
