@@ -1,3 +1,9 @@
+# 3.4.4
+
+- Make the distance property of `gps-new-entity-place` available as soon as it's added #507
+- Add option to use the initial GPS location as the world origin, restoring the behaviour of the "classic" components and lessening the possibilty of precision errors due to large values for world coordinates #508
+- Update `artoolkit5-js` to 0.3.0
+
 # 3.4.3
 
 - Add the "reduce shaking" feature (using sensor smoothing) to the `new-location-based` A-Frame components #483
