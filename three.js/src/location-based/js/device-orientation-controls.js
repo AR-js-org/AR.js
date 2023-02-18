@@ -1,13 +1,7 @@
 // Modified version of THREE.DeviceOrientationControls from three.js
 // will use the deviceorientationabsolute event if available
 
-import {
-  Euler,
-  EventDispatcher,
-  Math as MathUtils,
-  Quaternion,
-  Vector3,
-} from "three";
+import { Euler, EventDispatcher, MathUtils, Quaternion, Vector3 } from "three";
 
 const _zee = new Vector3(0, 0, 1);
 const _euler = new Euler();
