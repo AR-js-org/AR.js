@@ -14,7 +14,7 @@ function main() {
     //const arjs = new THREEx.LocationBased(scene, camera. { gpsMinAccuracy: 30 } );
     const cam = new THREEx.WebcamRenderer(renderer, '#video1');
 
-    const mouseStep = THREE.Math.degToRad(5);
+    const mouseStep = THREE.MathUtils.degToRad(5);
 
 
     let orientationControls;

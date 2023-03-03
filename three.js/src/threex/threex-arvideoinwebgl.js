@@ -42,8 +42,9 @@ const ArVideoInWebgl = function (videoTexture) {
 
     // extract the fov from the projectionMatrix
     var fov =
-      THREE.Math.radToDeg(Math.atan(1 / camera.projectionMatrix.elements[5])) *
-      2;
+      THREE.MathUtils.radToDeg(
+        Math.atan(1 / camera.projectionMatrix.elements[5])
+      ) * 2;
     // console.log('fov', fov)
 
     var elementWidth = parseFloat(
@@ -65,7 +66,7 @@ const ArVideoInWebgl = function (videoTexture) {
 
     // get seethruPlane height relative to fov
     seethruPlane.scale.y =
-      Math.tan((THREE.Math.DEG2RAD * fov) / 2) * position.length();
+      Math.tan((THREE.MathUtils.DEG2RAD * fov) / 2) * position.length();
     // get seethruPlane aspect
     seethruPlane.scale.x = seethruPlane.scale.y * aspect;
   };

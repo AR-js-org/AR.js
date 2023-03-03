@@ -12,6 +12,8 @@
  */
 
 import * as AFRAME from "aframe";
+import * as THREEx from "../../../three.js/build/ar-threex-location-only.js";
+
 AFRAME.registerComponent("arjs-device-orientation-controls", {
   schema: {
     smoothingFactor: {

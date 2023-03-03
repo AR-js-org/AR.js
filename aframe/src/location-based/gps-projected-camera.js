@@ -518,11 +518,11 @@ AFRAME.registerComponent("gps-projected-camera", {
   _updateRotation: function () {
     var heading = 360 - this.heading;
     var cameraRotation = this.el.getAttribute("rotation").y;
-    var yawRotation = THREE.Math.radToDeg(
+    var yawRotation = THREE.MathUtils.radToDeg(
       this.lookControls.yawObject.rotation.y
     );
     var offset = (heading - (cameraRotation - yawRotation)) % 360;
-    this.lookControls.yawObject.rotation.y = THREE.Math.degToRad(offset);
+    this.lookControls.yawObject.rotation.y = THREE.MathUtils.degToRad(offset);
   },
 
   /**
@@ -531,13 +531,13 @@ AFRAME.registerComponent("gps-projected-camera", {
    * Taken from gps-camera
    */
   _haversineDist: function (src, dest) {
-    var dlongitude = THREE.Math.degToRad(dest.longitude - src.longitude);
-    var dlatitude = THREE.Math.degToRad(dest.latitude - src.latitude);
+    var dlongitude = THREE.MathUtils.degToRad(dest.longitude - src.longitude);
+    var dlatitude = THREE.MathUtils.degToRad(dest.latitude - src.latitude);
 
     var a =
       Math.sin(dlatitude / 2) * Math.sin(dlatitude / 2) +
-      Math.cos(THREE.Math.degToRad(src.latitude)) *
-        Math.cos(THREE.Math.degToRad(dest.latitude)) *
+      Math.cos(THREE.MathUtils.degToRad(src.latitude)) *
+        Math.cos(THREE.MathUtils.degToRad(dest.latitude)) *
         (Math.sin(dlongitude / 2) * Math.sin(dlongitude / 2));
     var angle = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     return angle * 6371000;

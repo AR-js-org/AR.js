@@ -158,13 +158,13 @@ class LocationBased {
    * Taken from original A-Frame components
    */
   _haversineDist(src, dest) {
-    const dlongitude = THREE.Math.degToRad(dest.longitude - src.longitude);
-    const dlatitude = THREE.Math.degToRad(dest.latitude - src.latitude);
+    const dlongitude = THREE.MathUtils.degToRad(dest.longitude - src.longitude);
+    const dlatitude = THREE.MathUtils.degToRad(dest.latitude - src.latitude);
 
     const a =
       Math.sin(dlatitude / 2) * Math.sin(dlatitude / 2) +
-      Math.cos(THREE.Math.degToRad(src.latitude)) *
-        Math.cos(THREE.Math.degToRad(dest.latitude)) *
+      Math.cos(THREE.MathUtils.degToRad(src.latitude)) *
+        Math.cos(THREE.MathUtils.degToRad(dest.latitude)) *
         (Math.sin(dlongitude / 2) * Math.sin(dlongitude / 2));
     const angle = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     return angle * 6371000;
