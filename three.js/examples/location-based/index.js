@@ -2,8 +2,8 @@
 function main() {
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(80, 2, 0.1, 50000);
-    const renderer = new THREE.WebGLRenderer({ 
-        canvas: document.querySelector('#canvas1') 
+    const renderer = new THREE.WebGLRenderer({
+        canvas: document.querySelector('#canvas1')
     });
 
     const geom = new THREE.BoxGeometry(20,20,20);
@@ -14,15 +14,15 @@ function main() {
     //const arjs = new THREEx.LocationBased(scene, camera. { gpsMinAccuracy: 30 } );
     const cam = new THREEx.WebcamRenderer(renderer, '#video1');
 
-    const mouseStep = THREE.Math.degToRad(5);
+    const mouseStep = THREE.MathUtils.degToRad(5);
 
 
     let orientationControls;
 
     // Orientation controls only work on mobile device
-    if (isMobile()){   
+    if (isMobile()){
         orientationControls = new THREEx.DeviceOrientationControls(camera);
-    } 
+    }
 
     let fake = null;
     let first = true;
@@ -44,7 +44,7 @@ function main() {
         arjs.fakeGps(fake.lon, fake.lat);
     } else {
         arjs.startGps();
-    } 
+    }
 
 
     let mousedown = false, lastX = 0;
@@ -62,7 +62,7 @@ function main() {
         window.addEventListener("mousemove", e=> {
             if(!mousedown) return;
             if(e.clientX < lastX) {
-                camera.rotation.y += mouseStep; 
+                camera.rotation.y += mouseStep;
                 if(camera.rotation.y < 0) {
                     camera.rotation.y += 2 * Math.PI;
                 }

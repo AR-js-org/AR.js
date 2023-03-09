@@ -60,7 +60,7 @@
   },
   "dependencies": {
     "@ar-js-org/artoolkit5-js": "^0.3.0",
-    "aframe": "^1.0.4",
+    "aframe": "^1.3.0",
     "three": "^0.146.0"
   },
   "lint-staged": {
