@@ -85,7 +85,7 @@ MarkersAreaLearning.prototype._onSourceProcessed = function () {
       //////////////////////////////////////////////////////////////////////////////
 
       // compute markerControls2 position/quaternion/scale in relation with markerControls1
-      tmpMatrix.getInverse(markerControls1.object3d.matrix);
+      tmpMatrix.copy(markerControls1.object3d.matrix).invert();
       tmpMatrix.multiply(markerControls2.object3d.matrix);
       tmpMatrix.decompose(positionDelta, quaternionDelta, scaleDelta);
 
@@ -281,9 +281,9 @@ MarkersAreaLearning.prototype.toJSON = function () {
   };
 
   var originSubControls = this.subMarkersControls[0];
-  var originMatrixInverse = new THREE.Matrix4().getInverse(
-    originSubControls.object3d.matrix
-  );
+  var originMatrixInverse = new THREE.Matrix4()
+    .copy(originSubControls.object3d.matrix)
+    .invert();
   this.subMarkersControls.forEach(function (subMarkerControls, index) {
     // if a subMarkerControls has no result, ignore it
     if (subMarkerControls.object3d.userData.result === undefined) return;
