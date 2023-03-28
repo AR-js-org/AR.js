@@ -77,7 +77,7 @@ MarkersAreaControls.prototype._onSourceProcessed = function () {
     // transformation matrix of this.object3d according to this sub-markers
     var matrix = markerObject3d.matrix.clone();
     var markerPose = _this.parameters.subMarkerPoses[markerIndex];
-    matrix.multiply(new THREE.Matrix4().getInverse(markerPose));
+    matrix.multiply(new THREE.Matrix4().copy(markerPose).invert());
 
     // decompose the matrix into .position, .quaternion, .scale
     var position = new THREE.Vector3();
@@ -130,7 +130,7 @@ MarkersAreaControls.prototype._onSourceProcessed = function () {
     if (this.parameters.changeMatrixMode === "modelViewMatrix") {
       _this.object3d.matrix.copy(modelViewMatrix);
     } else if (this.parameters.changeMatrixMode === "cameraTransformMatrix") {
-      _this.object3d.matrix.getInverse(modelViewMatrix);
+      _this.object3d.matrix.copy(modelViewMatrix).invert();
     } else {
       console.assert(false);
     }
