@@ -51,11 +51,11 @@
   },
   "homepage": "https://github.com/AR-js-org/AR.js/",
   "devDependencies": {
-    "husky": "^8.0.1",
-    "lint-staged": "^13.0.3",
-    "prettier": "^2.7.1",
-    "webpack": "^5.74.0",
-    "webpack-cli": "^4.10.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.2.0",
+    "prettier": "^2.8.7",
+    "webpack": "^5.76.3",
+    "webpack-cli": "^5.0.1",
     "worker-loader": "^3.0.8"
   },
   "dependencies": {
