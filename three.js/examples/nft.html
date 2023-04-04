@@ -146,7 +146,6 @@
             // copy projection matrix to camera
             camera.projectionMatrix.copy( arToolkitContext.getProjectionMatrix() );
         })
-        console.log(arToolkitContext);
 
         ////////////////////////////////////////////////////////////////////////////////
         //          Create a ArMarkerControls
@@ -174,11 +173,13 @@
         threeGLTFLoader.load("./resources/Flamingo.glb", function (gltf) {
             model = gltf.scene.children[0];
             model.name = 'Flamingo';
+            const clips = gltf.animations;
 
             var animation = gltf.animations[0];
-            var mixer = new THREE.AnimationMixer(model);
+            var mixer = new THREE.AnimationMixer(gltf.scene);
             mixers.push(mixer);
-            var action = mixer.clipAction(animation);
+            const clip = THREE.AnimationClip.findByName( clips, 'flamingo_flyA_' );
+            var action = mixer.clipAction(clip);
             action.play();
 
             root.matrixAutoUpdate = false;
