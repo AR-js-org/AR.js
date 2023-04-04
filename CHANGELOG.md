@@ -1,3 +1,6 @@
+# 3.4.5
+- Fix for MathUtils issue see #523 #532
+
 # 3.4.4
 
 - Make the distance property of `gps-new-entity-place` available as soon as it's added #507
