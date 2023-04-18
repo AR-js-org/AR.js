@@ -71,7 +71,7 @@ You can also import a specific version replacing `master` keyword with version t
 
 Please follow these simple steps:
 
-- Create a new project with the code below (or [open this live example](https://ar-js-org.github.io/AR.js/aframe/examples/image-tracking/nft/) and go directly to the last step)
+- Create a new project with the code below (or [open this live example](https://ar-js-org.github.io/.github/profile/aframe/examples/image-tracking/nft/) and go directly to the last step)
 - Run it on a server
 - Open the website on your phone
 - Scan [this picture](https://raw.githubusercontent.com/AR-js-org/AR.js/master/aframe/examples/image-tracking/nft/trex-image-big.jpeg) to see content through the camera.
@@ -175,7 +175,7 @@ Please follow these simple steps:
 
 Please follow this simple steps:
 
-- Create a new project with the code below (or [open this live example](https://ar-js-org.github.io/AR.js/aframe/examples/marker-based/basic.html) and go directly to the last step)
+- Create a new project with the code below (or [open this live example](https://ar-js-org.github.io/.github/profile/aframe/examples/marker-based/basic.html) and go directly to the last step)
 - Run it on a server
 - Open the website on your phone
 - Scan [this picture](https://raw.githubusercontent.com/AR-js-org/AR.js/master/data/images/hiro.png) to see content through the camera.
