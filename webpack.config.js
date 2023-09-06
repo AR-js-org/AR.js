@@ -133,21 +133,22 @@ module.exports = (env, argv) => {
     name: 'threex-location-only',
     devtool,
     entry: './three.js/src/location-based/index.js',
+    experiments: {
+      outputModule: true,
+    },
     output: {
-      library: 'THREEx',
+      library: {
+        type: 'module',
+      },
       path: path.resolve(__dirname, 'three.js/build'),
       filename: 'ar-threex-location-only.js',
-      libraryTarget: 'umd',
-      globalObject: 'this'
+      // libraryTarget: 'umd',
+      // globalObject: 'this'
     },
     module,
+    externalsType: 'module',
     externals: {
-      three: {
-      commonjs: 'three',
-      commonjs2: 'three',
-      amd: 'three',
-      root: 'THREE' // indicates global variable
-      }
+      three: 'three',
     }
   },
   {

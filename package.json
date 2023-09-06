@@ -7,8 +7,8 @@
     "format-check": "prettier --check .",
     "format": "prettier --write .",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "./node_modules/.bin/webpack --mode=production",
-    "build:dev": "./node_modules/.bin/webpack --mode=development --progress --watch",
+    "build": "webpack --mode=production",
+    "build:dev": "webpack --mode=development --progress --watch",
     "server": "npx http-server -c -1",
     "prepare": "husky install"
   },
