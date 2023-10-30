@@ -5,8 +5,8 @@
 [![CI](https://github.com/AR-js-org/AR.js/actions/workflows/CI.yml/badge.svg)](https://github.com/AR-js-org/AR.js/actions/workflows/CI.yml)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 [![Gitter chat](https://badges.gitter.im/AR-js/Lobby.png)](https://gitter.im/AR-js/Lobby)
-[![Twitter Follow](https://img.shields.io/twitter/follow/nicolocarp.svg?style=plastic&label=nicolocarpignoli-twitter&style=plastic)](https://twitter.com/nicolocarp)
-[![Twitter Follow](https://img.shields.io/twitter/follow/jerome_etienne.svg?style=plastic&label=jeromeetienne-twitter&style=plastic)](https://twitter.com/jerome_etienne)
+[![Twitter Follow](https://img.shields.io/twitter/follow/nicolocarp.svg?style=plastic&label=nicolocarpignoli-𝕏(Twitter)&style=plastic)](https://twitter.com/nicolocarp)
+[![Twitter Follow](https://img.shields.io/twitter/follow/jerome_etienne.svg?style=plastic&label=jeromeetienne-𝕏(Twitter)&style=plastic)](https://twitter.com/jerome_etienne)
 
 You can now own the first commit of AR.js! 👉[OpenSea](https://opensea.io/assets/matic/0xe7ea2e2be12c257d376400cb231d8ee51e972bd6/3962549295964122998537137060348053157629730105441540397501924171148500367064/)
 
@@ -18,7 +18,7 @@ If you need a great Image tracking feature (also multiple image tracking) and Fa
 
 This project has been created by [@jeromeetienne](https://github.com/jeromeetienne), previously managed by Nicolò Carpignoli and it is now maintained by the AR.js org.
 
-🚀For frequent updates on AR.js you can follow [@the official Twitter account](https://twitter.com/ARjs_Library) and Watch this repo!
+🚀For frequent updates on AR.js you can follow [@the official 𝕏(Twitter) account](https://twitter.com/ARjs_Library) and Watch this repo!
 
 Logo is courtesy of <a href="https://twitter.com/viralinfo"> Simon Poulter </a>.
 
