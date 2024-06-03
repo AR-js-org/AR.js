@@ -131,8 +131,15 @@ class DeviceOrientationControls extends EventDispatcher {
       const device = scope.deviceOrientation;
 
       if (device) {
-        let alpha = device.alpha
-          ? MathUtils.degToRad(device.alpha) + scope.alphaOffset
+       // iOS compass-calibrated 'alpha' patch
+      // see: http://lists.w3.org/Archives/Public/public-geolocation/2011Jul/0014.html
+      var heading = device.webkitCompassHeading || device.compassHeading;
+
+      var alpha = device.alpha || heading
+          ? MathUtils.degToRad(
+              heading
+              ? 360 - heading
+              : device.alpha || 0) + scope.alphaOffset
           : 0; // Z
 
         let beta = device.beta ? MathUtils.degToRad(device.beta) : 0; // X'
