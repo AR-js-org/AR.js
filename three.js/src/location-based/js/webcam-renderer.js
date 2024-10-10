@@ -15,7 +15,7 @@ class WebcamRenderer {
     } else {
       video = document.querySelector(videoElement);
     }
-    this.geom = new THREE.PlaneBufferGeometry();
+    this.geom = new THREE.PlaneGeometry();
     this.texture = new THREE.VideoTexture(video);
     this.material = new THREE.MeshBasicMaterial({ map: this.texture });
     const mesh = new THREE.Mesh(this.geom, this.material);
