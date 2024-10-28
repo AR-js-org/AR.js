@@ -1,16 +1,14 @@
 <!DOCTYPE html>
 <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-<!-- import three.js library as a module-->
+<!-- import three.js and ar-threex library as a module-->
 <script type="importmap">
 	{
       "imports": {
-        "three": "./vendor/three.js/build/three.module.min.js",
+		"threex": "../build/ar-threex.module.js",
+        "three": "./vendor/three.js/build/three.module.min.js"
       }
     }
 </script>
-<!-- ar.js -->
-<script src="../build/ar-threex.js"></script>
-<script>THREEx.ArToolkitContext.baseURL = '../'</script>
 
 <body style='font-family: Monospace;'>
 	<div style='position: absolute; top: 10px; width:100%; text-align: center; z-index: 1;'>
@@ -20,6 +18,9 @@
 	</div>
 	<script type="module">
 		import * as THREE from 'three'
+		import { ArToolkitSource, ArToolkitContext, ArMarkerControls }  from 'threex'
+
+		ArToolkitContext.baseURL = '../'
 
 		//////////////////////////////////////////////////////////////////////////////////
 		//		Init
@@ -56,7 +57,7 @@
 		//          handle arToolkitSource
 		////////////////////////////////////////////////////////////////////////////////
 
-		var arToolkitSource = new THREEx.ArToolkitSource({
+		var arToolkitSource = new ArToolkitSource({
 			// to read from the webcam
 			sourceType: 'webcam',
 
@@ -107,8 +108,8 @@
 
 
 		function initARContext() { // create atToolkitContext
-			arToolkitContext = new THREEx.ArToolkitContext({
-				cameraParametersUrl: THREEx.ArToolkitContext.baseURL + '../data/data/camera_para.dat',
+			arToolkitContext = new ArToolkitContext({
+				cameraParametersUrl: ArToolkitContext.baseURL + '../data/data/camera_para.dat',
 				detectionMode: 'mono'
 			})
 			// initialize it
@@ -123,9 +124,9 @@
 			})
 
 			// MARKER
-			arMarkerControls = new THREEx.ArMarkerControls(arToolkitContext, camera, {
+			arMarkerControls = new ArMarkerControls(arToolkitContext, camera, {
 				type: 'pattern',
-				patternUrl: THREEx.ArToolkitContext.baseURL + '../data/data/patt.hiro',
+				patternUrl: ArToolkitContext.baseURL + '../data/data/patt.hiro',
 				// patternUrl : THREEx.ArToolkitContext.baseURL + '../data/data/patt.kanji',
 				// as we controls the camera, set changeMatrixMode: 'cameraTransformMatrix'
 				changeMatrixMode: 'cameraTransformMatrix'
