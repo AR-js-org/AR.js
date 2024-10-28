@@ -1,7 +1,13 @@
 <!DOCTYPE html>
 <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-<!-- three.js library -->
-<script src='vendor/three.js/build/three.min.js'></script>
+<!-- import three.js library as a module-->
+<script type="importmap">
+	{
+      "imports": {
+        "three": "./vendor/three.js/build/three.module.min.js",
+      }
+    }
+</script>
 <!-- ar.js -->
 <script src="../build/ar-threex.js"></script>
 <script>THREEx.ArToolkitContext.baseURL = '../'</script>
@@ -12,7 +18,9 @@
 		<br />
 		Contact me any time at <a href='https://twitter.com/nicolocarp' target='_blank'>@nicolocarp</a>
 	</div>
-	<script>
+	<script type="module">
+		import * as THREE from 'three'
+
 		//////////////////////////////////////////////////////////////////////////////////
 		//		Init
 		//////////////////////////////////////////////////////////////////////////////////
