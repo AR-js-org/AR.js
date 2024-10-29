@@ -1,10 +1,14 @@
 <!DOCTYPE html>
 <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-<!-- three.js library -->
-<script src='vendor/three.js/build/three.js'></script>
-<!-- include threex.artoolkit -->
-<script src="../build/ar-threex.js"></script>
-<script>THREEx.ArToolkitContext.baseURL = '../'</script>
+<!-- include threex.artoolkit and three.js -->
+<script type="importmap">
+	{
+      "imports": {
+		"threex": "../build/ar-threex.module.js",
+        "three": "./vendor/three.js/build/three.module.min.js"
+      }
+    }
+</script>
 
 <body style='margin : 0px; overflow: hidden; font-family: Monospace;'>
 	<div style='position: absolute; top: 10px; width:100%; text-align: center; z-index: 1;'>
@@ -83,7 +87,11 @@
 			}
 		}
 	</style>
-	<script>
+	<script type="module">
+		import * as THREE from 'three'
+		import { ArToolkitSource, ArToolkitContext, ArMarkerControls }  from 'threex'
+
+		ArToolkitContext.baseURL = '../'
 		//////////////////////////////////////////////////////////////////////////////////
 		//		Init
 		//////////////////////////////////////////////////////////////////////////////////
@@ -124,7 +132,7 @@
 		//          handle arToolkitSource
 		////////////////////////////////////////////////////////////////////////////////
 
-		var arToolkitSource = new THREEx.ArToolkitSource({
+		var arToolkitSource = new ArToolkitSource({
 			// to read from the webcam
 			sourceType: 'webcam',
 
@@ -159,8 +167,8 @@
 		function initARContext() {
 			console.log('initARContext()');
 			// create atToolkitContext
-			arToolkitContext = new THREEx.ArToolkitContext({
-				cameraParametersUrl: THREEx.ArToolkitContext.baseURL + '../data/data/camera_para.dat',
+			arToolkitContext = new ArToolkitContext({
+				cameraParametersUrl: ArToolkitContext.baseURL + '../data/data/camera_para.dat',
 				detectionMode: 'mono',
 			})
 			// initialize it
@@ -174,16 +182,16 @@
 				window.arToolkitContext = arToolkitContext;
 			})
 			// build markerControls for markerRoot1
-			markerControls = new THREEx.ArMarkerControls(arToolkitContext, markerRoot1, {
+			markerControls = new ArMarkerControls(arToolkitContext, markerRoot1, {
 				type: 'pattern',
-				patternUrl: THREEx.ArToolkitContext.baseURL + '../data/data/patt.hiro',
+				patternUrl: ArToolkitContext.baseURL + '../data/data/patt.hiro',
 				// patternUrl : THREEx.ArToolkitContext.baseURL + '../data/data/patt.kanji',
 			})
 			// build markerControls for markerRoot2
-			markerControls = new THREEx.ArMarkerControls(arToolkitContext, markerRoot2, {
+			markerControls = new ArMarkerControls(arToolkitContext, markerRoot2, {
 				type: 'pattern',
 				// patternUrl : THREEx.ArToolkitContext.baseURL + '../data/data/patt.hiro',
-				patternUrl: THREEx.ArToolkitContext.baseURL + '../data/data/patt.kanji',
+				patternUrl: ArToolkitContext.baseURL + '../data/data/patt.kanji',
 			})
 		}
 
