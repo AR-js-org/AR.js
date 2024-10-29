@@ -1,23 +1,32 @@
 <!DOCTYPE html>
 <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 <link rel="import" href="resources/index.css">
-<!-- three.js library -->
-<script src='vendor/three.js/build/three.min.js'></script>
-<!-- ar.js -->
-<script src="../build/ar-threex.js"></script>
-<script>THREEx.ArToolkitContext.baseURL = '../'</script>
+<!-- three.js and threex library -->
+<script type="importmap">
+	{
+      "imports": {
+		"threex": "../build/ar-threex.module.js",
+        "three": "./vendor/three.js/build/three.module.min.js"
+      }
+    }
+</script>
 
 <body style='font-family: Monospace;'><div style='position: absolute; top: 10px; width:100%; text-align: center; z-index: 1;'>
 	<a href="https://github.com/AR-js-org/AR.js/" target="_blank">AR.js</a> - three.js camera transform
 	<br/>
 	Contact me any time at <a href='https://twitter.com/nicolocarp' target='_blank'>@nicolocarp</a>
-</div><script>
+</div>
+<script type="module">
+	import * as THREE from 'three'
+	import { ArToolkitSource, ArToolkitContext, ArMarkerControls }  from 'threex'
+
+	ArToolkitContext.baseURL = '../'
 	//////////////////////////////////////////////////////////////////////////////////
 	//		Init
 	//////////////////////////////////////////////////////////////////////////////////
 
     const cameraParam = "../../data/data/camera_para.dat"
-    var arToolkitSource, arToolkitContext;
+    var arToolkitSource, arToolkitContext, arMarkerControls;
 
 	// init renderer
 	var renderer	= new THREE.WebGLRenderer({
@@ -49,7 +58,7 @@
 	//          handle arToolkitSource
 	////////////////////////////////////////////////////////////////////////////////
 
-	arToolkitSource = new THREEx.ArToolkitSource({
+	arToolkitSource = new ArToolkitSource({
 		// to read from the webcam
 		sourceType : 'webcam',
         sourceWidth: window.innerWidth > window.innerHeight ? 640 : 480,
@@ -77,7 +86,7 @@
         console.log('initARContext()');
 
         // CONTEXT
-        arToolkitContext = new THREEx.ArToolkitContext({
+        arToolkitContext = new ArToolkitContext({
             cameraParametersUrl: cameraParam,
             detectionMode: 'mono_and_matrix',
             matrixCodeType: '3x3',
@@ -98,7 +107,7 @@
         });
 
         // MARKER
-        arMarkerControls = new THREEx.ArMarkerControls(arToolkitContext, camera, {
+        arMarkerControls = new ArMarkerControls(arToolkitContext, camera, {
            type: 'barcode',
            barcodeValue: 0,
            smooth: true,
