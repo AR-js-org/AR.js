@@ -36,8 +36,6 @@ AFRAME.registerComponent("gps-new-camera", {
   init: function () {
     this._testForOrientationControls();
 
-    this.fakeGpsStarted = false;
-
     this.threeLoc = new THREEx.LocationBased(
       this.el.sceneEl.object3D,
       this.el.object3D,
@@ -98,7 +96,6 @@ AFRAME.registerComponent("gps-new-camera", {
       maximumAge: this.data.gpsTimeInterval,
     });
     if (
-      !this.fakeGpsStarted &&
       (this.data.simulateLatitude !== 0 || this.data.simulateLongitude !== 0) &&
       (this.data.simulateLatitude != oldData.simulateLatitude ||
         this.data.simulateLongitude != oldData.simulateLongitude)
@@ -108,7 +105,8 @@ AFRAME.registerComponent("gps-new-camera", {
         this.data.simulateLongitude,
         this.data.simulateLatitude
       );
-      this.fakeGpsStarted = true;
+      this.data.simulateLatitude = 0;
+      this.data.simulateLongitude = 0;
     }
     if (this.data.simulateAltitude > -Number.MAX_VALUE) {
       this.threeLoc.setElevation(this.data.simulateAltitude + 1.6);
