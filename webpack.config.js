@@ -204,6 +204,35 @@ module.exports = (env, argv) => {
       root: 'THREE' // indicates global variable
       }
     }
+  },
+  {
+    name: 'ar.js.module',
+    devtool,
+    experiments: {
+      outputModule: true,
+    },
+    entry: './three.js/src/index-arjs.js',
+    output: {
+      //library: 'ARjs',
+      library: {
+        type: 'module',
+      },
+      path: path.resolve(__dirname, 'three.js/build'),
+      filename: 'ar.module.js',
+      //libraryTarget: 'umd',
+      //globalObject: 'this'
+    },
+    resolve: {
+      alias: {
+        jsartoolkit: '@ar-js-org/artoolkit5-js',
+        threexArmarkercontrols$: path.resolve(__dirname, 'three.js/src/threex/arjs-markercontrols.js')
+      }
+    },
+    module,
+    externalsType: 'module',
+    externals: {
+      three: 'three',
+    }
   }
  ];
 };
