@@ -11,12 +11,20 @@
     </style>
 </head>
 
+<script type="importmap">
+    {
+      "imports": {
+        "ar-threex-location-only": "./../../build/ar-threex-location-only.module.js",
+         "threex": "./../../build/ar-threex.module.js",
+        "three": "./../vendor/three.js/build/three.module.min.js"
+      }
+    }
+</script>
+
 <body>
     <video id='video1' autoplay playsinline style='display:none'></video>
     <canvas id="canvas1" style='background-color: black; width:100%; height:100%; display:block'></canvas>
-    <script src='../vendor/three.js/build/three.js'></script>
-    <script src="../../build/ar-threex-location-only.js"></script>
-    <script src="index.js"></script>
+    <script type="module" src="index.js"></script>
 </body>
 
 </html>

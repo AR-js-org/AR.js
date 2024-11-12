@@ -142,8 +142,6 @@ module.exports = (env, argv) => {
       },
       path: path.resolve(__dirname, 'three.js/build'),
       filename: 'ar-threex.module.js',
-      //libraryTarget: 'umd',
-      //globalObject: 'this'
     },
     resolve: {
       alias: {
@@ -178,6 +176,26 @@ module.exports = (env, argv) => {
       }
     }
   },
+    {
+      name: 'threex-location-only.module',
+      devtool,
+      experiments: {
+        outputModule: true,
+      },
+      entry: './three.js/src/location-based/index.js',
+      output: {
+        library: {
+          type: 'module',
+        },
+        path: path.resolve(__dirname, 'three.js/build'),
+        filename: 'ar-threex-location-only.module.js',
+      },
+      module,
+      externalsType: 'module',
+      externals: {
+        three: 'three',
+      }
+    },
   {
     name: 'ar.js',
     devtool,
@@ -219,8 +237,6 @@ module.exports = (env, argv) => {
       },
       path: path.resolve(__dirname, 'three.js/build'),
       filename: 'ar.module.js',
-      //libraryTarget: 'umd',
-      //globalObject: 'this'
     },
     resolve: {
       alias: {
