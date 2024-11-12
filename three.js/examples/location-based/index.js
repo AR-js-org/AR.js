@@ -1,3 +1,5 @@
+import * as THREE from 'three';
+import { LocationBased, WebcamRenderer, DeviceOrientationControls } from 'ar-threex-location-only';
 
 function main() {
     const scene = new THREE.Scene();
@@ -8,11 +10,11 @@ function main() {
 
     const geom = new THREE.BoxGeometry(20,20,20);
 
-    const arjs = new THREEx.LocationBased(scene, camera);
+    const arjs = new LocationBased(scene, camera);
 
     // You can change the minimum GPS accuracy needed to register a position - by default 1000m
-    //const arjs = new THREEx.LocationBased(scene, camera. { gpsMinAccuracy: 30 } );
-    const cam = new THREEx.WebcamRenderer(renderer, '#video1');
+    //const arjs = new LocationBased(scene, camera. { gpsMinAccuracy: 30 } );
+    const cam = new WebcamRenderer(renderer, '#video1');
 
     const mouseStep = THREE.MathUtils.degToRad(5);
 
@@ -21,7 +23,7 @@ function main() {
 
     // Orientation controls only work on mobile device
     if (isMobile()){   
-        orientationControls = new THREEx.DeviceOrientationControls(camera);
+        orientationControls = new DeviceOrientationControls(camera);
     } 
 
     let fake = null;
