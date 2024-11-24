@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 
-<!-- three.js library -->
-<script src='vendor/three.js/build/three.min.js'></script>
-<!-- three.js load GLTF -->
-<script src='vendor/three.js/GLTFLoader.js'></script>
-<!-- ar.js -->
-<script src='../build/ar-threex.js'></script>
-
-<script>THREEx.ArToolkitContext.baseURL = '../'</script>
+<!-- import  ar-trheex.moule.js and three.js libraries -->
+<script type="importmap">
+	{
+      "imports": {
+		"threex": "../build/ar-threex.module.js",
+        "three": "./vendor/three.js/build/three.module.min.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@v0.169.0/examples/jsm/"
+      }
+    }
+</script>
 
 <body style='position: absolute; top: 0; left: 0; width: 100%; height: 100%; margin : 0px; overflow: hidden;'>
     <style>
@@ -54,25 +56,37 @@
     <div class="arjs-loader">
         <div class="arjs-loader-spinner"></div>
     </div>
-    <script>
+    <script type="module">
+		import * as THREE from 'three'
+        import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+		import { ArToolkitProfile, ArToolkitSource, ArToolkitContext, ArMarkerControls }  from 'threex'
+
+		ArToolkitContext.baseURL = '../'
+
         //////////////////////////////////////////////////////////////////////////////////
         //		Init
         //////////////////////////////////////////////////////////////////////////////////
 
-        var renderer = new THREE.WebGLRenderer({
+        const renderer = new THREE.WebGLRenderer({
             antialias: true,
             alpha: true,
             precision: 'mediump',
+            premultipliedAlpha: true,
+            stencil: true,
+            depth: true,
+            logarithmicDepthBuffer: true,
         });
 
-        var clock = new THREE.Clock();
+        const clock = new THREE.Clock();
 
-        var mixers = [];
+        const mixers = [];
 
         renderer.setPixelRatio(window.devicePixelRatio);
 
         renderer.setClearColor(new THREE.Color('lightgrey'), 0)
         renderer.setSize( window.innerWidth, window.innerHeight );
+        renderer.outputEncoding = THREE.sRGBEncoding;
+        renderer.physicallyCorrectLights = true;
         renderer.domElement.style.position = 'absolute'
         renderer.domElement.style.top = '0px'
         renderer.domElement.style.left = '0px'
@@ -86,17 +100,23 @@
         //////////////////////////////////////////////////////////////////////////////////
 
         // Create a camera
-        var camera = new THREE.Camera();
+        let fov = (0.8 * 180) / Math.PI;
+        let ratio = 640 / 480;
+        const camera = new THREE.PerspectiveCamera(fov, ratio);
         scene.add(camera);
 
-        var light = new THREE.AmbientLight(0xffffff);
+        const light = new THREE.AmbientLight(0xffffff);
         scene.add(light);
+
+        let directionalLight = new THREE.DirectionalLight("#fff", 0.4);
+        directionalLight.position.set(0.5, 0, 0.866);
+        scene.add(directionalLight);
 
         ////////////////////////////////////////////////////////////////////////////////
         //          handle arToolkitSource
         ////////////////////////////////////////////////////////////////////////////////
 
-        var arToolkitSource = new THREEx.ArToolkitSource({
+        const arToolkitSource = new ArToolkitSource({
             sourceType : 'webcam',
             sourceWidth: 480,
             sourceHeight: 640,
@@ -132,7 +152,7 @@
         ////////////////////////////////////////////////////////////////////////////////
 
         // create atToolkitContext
-        var arToolkitContext = new THREEx.ArToolkitContext({
+        const arToolkitContext = new ArToolkitContext({
             detectionMode: 'mono',
             canvasWidth: 480,
             canvasHeight: 640,
@@ -152,47 +172,45 @@
         ////////////////////////////////////////////////////////////////////////////////
 
         // init controls for camera
-        var markerControls = new THREEx.ArMarkerControls(arToolkitContext, camera, {
-            type : 'nft',
-            descriptorsUrl : 'data/dataNFT/pinball',
+        const markerControls = new ArMarkerControls(arToolkitContext, camera, {
+            type: 'nft',
+            descriptorsUrl: 'data/dataNFT/pinball',
             changeMatrixMode: 'cameraTransformMatrix'
-        })
+        });
 
         scene.visible = false
 
-        var root = new THREE.Object3D();
+        const root = new THREE.Object3D();
         scene.add(root);
 
         //////////////////////////////////////////////////////////////////////////////////
         //		add an object in the scene
         //////////////////////////////////////////////////////////////////////////////////
 
-        var threeGLTFLoader = new THREE.GLTFLoader();
-        var model;
+        const threeGLTFLoader = new GLTFLoader();
+        let model;
 
         threeGLTFLoader.load("./resources/Flamingo.glb", function (gltf) {
             model = gltf.scene.children[0];
-            model.name = 'Flamingo';
-            const clips = gltf.animations;
+            //model.name = 'Flamingo';
+            //const clips = gltf.animations;
 
-            var animation = gltf.animations[0];
-            var mixer = new THREE.AnimationMixer(gltf.scene);
+            const animation = gltf.animations[0];
+
+            const mixer = new THREE.AnimationMixer(model);
             mixers.push(mixer);
-            const clip = THREE.AnimationClip.findByName( clips, 'flamingo_flyA_' );
-            var action = mixer.clipAction(clip);
+
+            const action = mixer.clipAction(animation);
             action.play();
 
-            root.matrixAutoUpdate = false;
             root.add(model);
-
+            root.matrixAutoUpdate = false;
             model.position.z = -100;
-            //model.position.z = 100;
 
             window.addEventListener('arjs-nft-init-data', function(nft) {
-              console.log(nft);
-              var msg = nft.detail;
-              model.position.y = (msg.height / msg.dpi * 2.54 * 10)/2.0; //y axis?
-              model.position.x = (msg.width / msg.dpi * 2.54 * 10)/2.0; //x axis?
+                const msg = nft.detail;
+                model.position.y = (msg.height / msg.dpi * 2.54 * 10)/2.0; //y axis?
+                model.position.x = (msg.width / msg.dpi * 2.54 * 10)/2.0; //x axis?
             })
 
 
@@ -204,7 +222,7 @@
                 requestAnimationFrame(animate);
 
                 if (mixers.length > 0) {
-                    for (var i = 0; i < mixers.length; i++) {
+                    for (let i = 0; i < mixers.length; i++) {
                         mixers[i].update(clock.getDelta());
                     }
                 }
