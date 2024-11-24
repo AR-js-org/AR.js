@@ -13,7 +13,7 @@ AFRAME.registerComponent("arjs-webcam-texture", {
     this.video.setAttribute("playsinline", true);
     this.video.setAttribute("display", "none");
     document.body.appendChild(this.video);
-    this.geom = new THREE.PlaneBufferGeometry(); //0.5, 0.5);
+    this.geom = new THREE.PlaneGeometry(); //0.5, 0.5);
     this.texture = new THREE.VideoTexture(this.video);
     this.material = new THREE.MeshBasicMaterial({ map: this.texture });
     const mesh = new THREE.Mesh(this.geom, this.material);
