@@ -10,7 +10,7 @@
     "build": "webpack --mode=production",
     "build:dev": "webpack --mode=development --progress --watch",
     "server": "npx http-server -c -1",
-    "prepare": "husky install"
+    "prepare": "husky"
   },
   "files": [
     "three.js/build",
@@ -59,7 +59,7 @@
     "worker-loader": "^3.0.8"
   },
   "dependencies": {
-    "@ar-js-org/artoolkit5-js": "^0.3.0",
+    "@ar-js-org/artoolkit5-js": "^0.3.1",
     "aframe": "^1.6.0",
     "three": "^0.164.0"
   },
