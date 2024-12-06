@@ -1,21 +1,25 @@
-# Location-based examples
+# Examples for A-Frame `new-location-based` components
 
-A brief summary of each example follows below. Aside from `hello-world`, the majority of the applications have a simulated lattitude and longitude; please modify the code to use your actual latitude and longitude.
+These examples have been written specifically, or adapted, for the `new-location-based` components available in AR.js 3.4.0 upwards.
 
-- `hello-world`: a simple example placing a cube at a given latitude and longitude. You must edit the code to supply your latitude and longitude.
+- `hello-world` : A basic Hello World example, using only HTML, which shows a box 0.001 degrees north of your location.
 
-- `projected-based-camera` : version of `hello-world` using `gps-projected-camera` and `gps-projected-entity-place`.
+- `multiple-boxes` : An extension of the `hello-world` example with four boxes, to the north, south, east and west of your current location.
 
-- `click-places` -  a version of `hello-world` which demonstrates click events on entities. Please look at the code and note how the raycaster is working.
+- `always-face-user` : Displays text 0.001 degrees north of your current location, using the third-party A-Frame look-at component to make the text always face the camera.
 
-- `always-face-user` - shows how you can use A-Frame's `look-at` component to create an entity which always faces the user.
+- `click-places` : Demonstrates how you can add click events to your AR objects, making use of A-Frame's `cursor` and `raycaster` components.
 
-- `avoid-shaking` - demonstrates the parameters needed to minimise shaking effects. Please look at the source code for full details.
+- `basic-js` : Basic JavaScript example which dynamically creates four boxes to the north, south, east and west of your initial GPS position (whatever that is). Allows you to enter a "fake" latitude and longitude for testing on a desktop.
 
-- `show-arbitrary-distant-places` - shows how you can view AR content many kilometres away using the `videoTexture` component. (In fact, currently, all working examples use `videoTexture` due to an issue - pending investigation - which occurs if it's not set)
+- `basic-js-modules` : version of `basic-js` which uses an ES6 import to include AR.js. Requires building using Webpack: a `webpack.config.js` is provided.
 
-- `places-name` - shows the use of a web API to download local POIs but currently non-operational due to the CORS proxy no longer being available.
+- `show-distance` : version of `basic-js` which shows the distance to a given object when you click on it.
 
-- `peakfinder-2d` - shows the use of an OpenStreetMap based web API to download local summits. Does *not* include elevation though, hence the `2d`. Uses a working proxy.
+- `poi` : Demonstrates downloading POIs from an OpenStreetMap-based GeoJSON API and adding them to the scene as objects, with text labels.
 
-- `osm-ways` - shows how you can use AR.js to show not just simple point features but more complex geodata such as polylines. Downloads OpenStreetMap ways (roads, footpaths etc) from a server and renders them as polylines.
+- `poi-component` : Similar to `poi`, but demonstrating the use of a custom A-Frame component to download and display the POIs.
+
+- `osm-ways` : A more complex example showing how more specialised geodata can be rendered with AR.js. Downloads OpenStreetMap ways (roads, paths) from a GeoJSON API, reprojects them into Spherical Mercator, and adds them to the scene as polylines made up of individual triangles.
+
+- `avoid-shaking` : A version of `basic-js` with a smoothing factor applied to reduce shaking effects.

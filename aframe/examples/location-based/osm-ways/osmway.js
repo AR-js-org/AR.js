@@ -42,7 +42,6 @@ class OsmWay {
         realVertices.push(vertices[k][1]);
         realVertices.push(vertices[k][2] + dzperp);
 
-
         let indices = [];
         for (let i = 0; i < k; i++) {
             indices.push(i * 2, i * 2 + 1, i * 2 + 2);
