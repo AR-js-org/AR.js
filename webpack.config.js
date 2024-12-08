@@ -77,7 +77,6 @@ module.exports = (env, argv) => {
             module,
             externalsType: 'module',
             externals: {
-                three: 'three',
                 aframe: 'aframe'
             }
         },
@@ -124,7 +123,6 @@ module.exports = (env, argv) => {
             module,
             externalsType: 'module',
             externals: {
-                three: 'three',
                 aframe: 'aframe'
             }
         },
@@ -159,7 +157,6 @@ module.exports = (env, argv) => {
             module,
             externalsType: 'module',
             externals: {
-                three: 'three',
                 aframe: 'aframe'
             }
         },
@@ -178,7 +175,7 @@ module.exports = (env, argv) => {
             externals
         },
         {
-            name: 'aframe-new-location-only',
+            name: 'aframe-new-location-only.module',
             devtool,
             experiments: {
                 outputModule: true,
@@ -194,7 +191,6 @@ module.exports = (env, argv) => {
             module,
             externalsType: 'module',
             externals: {
-                three: 'three',
                 aframe: 'aframe'
             }
         },
