@@ -72,7 +72,7 @@ AFRAME.registerComponent("arjs-hit-testing", {
     hitTesting.update(
       camera,
       arAnchor.object3d,
-      arAnchor.parameters.changeMatrixMode
+      arAnchor.parameters.changeMatrixMode,
     );
   },
 });

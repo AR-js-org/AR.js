@@ -16,7 +16,7 @@ const ArMarkerCloak = function (videoTexture) {
     1.3 + 0.25,
     1.85 + 0.25,
     1,
-    8
+    8,
   ).translate(0, -0.3, 0);
   var material = new THREE.ShaderMaterial({
     vertexShader: ArMarkerCloak.vertexShader,
@@ -146,7 +146,7 @@ const ArMarkerCloak = function (videoTexture) {
         // copy the trasnformedUv into the geometry
         cloakMesh.geometry.faceVertexUvs[0][faceIndex][uvIndex].set(
           transformedUv.x,
-          transformedUv.y
+          transformedUv.y,
         );
       });
     });

@@ -43,20 +43,20 @@ const Context = function (parameters) {
   console.assert(
     ["artoolkit"].indexOf(this.parameters.trackingBackend) !== -1,
     "invalid parameter trackingBackend",
-    this.parameters.trackingBackend
+    this.parameters.trackingBackend,
   );
   console.assert(
     ["color", "color_and_matrix", "mono", "mono_and_matrix"].indexOf(
-      this.parameters.detectionMode
+      this.parameters.detectionMode,
     ) !== -1,
     "invalid parameter detectionMode",
-    this.parameters.detectionMode
+    this.parameters.detectionMode,
   );
   console.assert(
     ["black_region", "white_region"].indexOf(this.parameters.labelingMode) !==
       -1,
     "invalid parameter labelingMode",
-    this.parameters.labelingMode
+    this.parameters.labelingMode,
   );
 
   this.arController = null;
@@ -83,7 +83,7 @@ const Context = function (parameters) {
 
       if (currentValue === undefined) {
         console.warn(
-          "Context: '" + key + "' is not a property of this material."
+          "Context: '" + key + "' is not a property of this material.",
         );
         continue;
       }
@@ -193,13 +193,13 @@ Context.prototype.update = function (srcElement) {
       window.dispatchEvent(
         new CustomEvent("markerFound", {
           detail: markerControls,
-        })
+        }),
       );
     } else if (isVisible === false && wasVisible === true) {
       window.dispatchEvent(
         new CustomEvent("markerLost", {
           detail: markerControls,
-        })
+        }),
       );
     }
   });
@@ -234,17 +234,17 @@ Context.prototype._initArtoolkit = function (onCompleted) {
   // set this._artoolkitProjectionAxisTransformMatrix to change artoolkit projection matrix axis to match usual webgl one
   this._artoolkitProjectionAxisTransformMatrix = new THREE.Matrix4();
   this._artoolkitProjectionAxisTransformMatrix.multiply(
-    new THREE.Matrix4().makeRotationY(Math.PI)
+    new THREE.Matrix4().makeRotationY(Math.PI),
   );
   this._artoolkitProjectionAxisTransformMatrix.multiply(
-    new THREE.Matrix4().makeRotationZ(Math.PI)
+    new THREE.Matrix4().makeRotationZ(Math.PI),
   );
 
   // init controller
   ARController.initWithDimensions(
     _this.parameters.canvasWidth,
     _this.parameters.canvasHeight,
-    _this.parameters.cameraParametersUrl
+    _this.parameters.cameraParametersUrl,
   ).then((arController) => {
     _this.arController = arController;
 
@@ -333,7 +333,7 @@ Context.prototype.getProjectionMatrix = function () {
   console.assert(this.parameters.trackingBackend === "artoolkit");
   console.assert(
     this.arController,
-    "arController MUST be initialized to call this function"
+    "arController MUST be initialized to call this function",
   );
 
   // get projectionMatrixArr from artoolkit

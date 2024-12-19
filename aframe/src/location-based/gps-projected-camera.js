@@ -104,7 +104,7 @@ AFRAME.registerComponent("gps-projected-camera", {
     this.onGpsEntityPlaceAdded = this._onGpsEntityPlaceAdded.bind(this);
     window.addEventListener(
       "gps-entity-place-added",
-      this.onGpsEntityPlaceAdded
+      this.onGpsEntityPlaceAdded,
     );
 
     this.lookControls =
@@ -130,16 +130,16 @@ AFRAME.registerComponent("gps-projected-camera", {
           function () {
             handler();
           },
-          false
+          false,
         );
 
         this.el.sceneEl.systems["arjs"]._displayErrorPopup(
-          "After camera permission prompt, please tap the screen to activate geolocation."
+          "After camera permission prompt, please tap the screen to activate geolocation.",
         );
       } else {
         var timeout = setTimeout(function () {
           this.el.sceneEl.systems["arjs"]._displayErrorPopup(
-            "Please enable device orientation in Settings > Safari > Motion & Orientation Access."
+            "Please enable device orientation in Settings > Safari > Motion & Orientation Access.",
           );
         }, 750);
         window.addEventListener(eventName, function () {
@@ -179,7 +179,7 @@ AFRAME.registerComponent("gps-projected-camera", {
           this.currentCoords = localPosition;
           var distMoved = this._haversineDist(
             this.lastPosition,
-            this.currentCoords
+            this.currentCoords,
           );
 
           if (distMoved >= this.data.gpsMinDistance || !this.originCoords) {
@@ -189,7 +189,7 @@ AFRAME.registerComponent("gps-projected-camera", {
               latitude: this.currentCoords.latitude,
             };
           }
-        }.bind(this)
+        }.bind(this),
       );
     }
   },
@@ -213,7 +213,7 @@ AFRAME.registerComponent("gps-projected-camera", {
     window.removeEventListener(eventName, this._onDeviceOrientation, false);
     window.removeEventListener(
       "gps-entity-place-added",
-      this.onGpsEntityPlaceAdded
+      this.onGpsEntityPlaceAdded,
     );
   },
 
@@ -249,14 +249,14 @@ AFRAME.registerComponent("gps-projected-camera", {
         if (err.code === 1) {
           // User denied GeoLocation, let their know that
           this.el.sceneEl.systems["arjs"]._displayErrorPopup(
-            "Please activate Geolocation and refresh the page. If it is already active, please check permissions for this website."
+            "Please activate Geolocation and refresh the page. If it is already active, please check permissions for this website.",
           );
           return;
         }
 
         if (err.code === 3) {
           this.el.sceneEl.systems["arjs"]._displayErrorPopup(
-            "Cannot retrieve GPS position. Signal is absent."
+            "Cannot retrieve GPS position. Signal is absent.",
           );
           return;
         }
@@ -311,7 +311,7 @@ AFRAME.registerComponent("gps-projected-camera", {
       // we can set the world origin to the original position in "metres"
       this.originCoords = this._project(
         this.currentCoords.latitude,
-        this.currentCoords.longitude
+        this.currentCoords.longitude,
       );
       this._setPosition();
 
@@ -334,7 +334,7 @@ AFRAME.registerComponent("gps-projected-camera", {
 
     var worldCoords = this.latLonToWorld(
       this.currentCoords.latitude,
-      this.currentCoords.longitude
+      this.currentCoords.longitude,
     );
 
     position.x = worldCoords[0];
@@ -347,7 +347,7 @@ AFRAME.registerComponent("gps-projected-camera", {
     window.dispatchEvent(
       new CustomEvent("gps-camera-update-position", {
         detail: { position: this.currentCoords, origin: this.originCoords },
-      })
+      }),
     );
   },
   /**
@@ -500,7 +500,7 @@ AFRAME.registerComponent("gps-projected-camera", {
         this.heading = this._computeCompassHeading(
           event.alpha,
           event.beta,
-          event.gamma
+          event.gamma,
         );
       } else {
         console.warn("event.absolute === false");
@@ -519,7 +519,7 @@ AFRAME.registerComponent("gps-projected-camera", {
     var heading = 360 - this.heading;
     var cameraRotation = this.el.getAttribute("rotation").y;
     var yawRotation = THREE.MathUtils.radToDeg(
-      this.lookControls.yawObject.rotation.y
+      this.lookControls.yawObject.rotation.y,
     );
     var offset = (heading - (cameraRotation - yawRotation)) % 360;
     this.lookControls.yawObject.rotation.y = THREE.MathUtils.degToRad(offset);

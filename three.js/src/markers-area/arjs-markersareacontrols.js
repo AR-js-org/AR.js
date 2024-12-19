@@ -66,48 +66,47 @@ MarkersAreaControls.prototype._onSourceProcessed = function () {
   var firstQuaternion =
     _this.parameters.subMarkersControls[0].object3d.quaternion;
 
-  this.parameters.subMarkersControls.forEach(function (
-    markerControls,
-    markerIndex
-  ) {
-    var markerObject3d = markerControls.object3d;
-    // if this marker is not visible, ignore it
-    if (markerObject3d.visible === false) return;
+  this.parameters.subMarkersControls.forEach(
+    function (markerControls, markerIndex) {
+      var markerObject3d = markerControls.object3d;
+      // if this marker is not visible, ignore it
+      if (markerObject3d.visible === false) return;
 
-    // transformation matrix of this.object3d according to this sub-markers
-    var matrix = markerObject3d.matrix.clone();
-    var markerPose = _this.parameters.subMarkerPoses[markerIndex];
-    matrix.multiply(new THREE.Matrix4().copy(markerPose).invert());
+      // transformation matrix of this.object3d according to this sub-markers
+      var matrix = markerObject3d.matrix.clone();
+      var markerPose = _this.parameters.subMarkerPoses[markerIndex];
+      matrix.multiply(new THREE.Matrix4().copy(markerPose).invert());
 
-    // decompose the matrix into .position, .quaternion, .scale
-    var position = new THREE.Vector3();
-    var quaternion = new THREE.Quaternion();
-    var scale = new THREE.Vector3();
-    matrix.decompose(position, quaternion, scale);
+      // decompose the matrix into .position, .quaternion, .scale
+      var position = new THREE.Vector3();
+      var quaternion = new THREE.Quaternion();
+      var scale = new THREE.Vector3();
+      matrix.decompose(position, quaternion, scale);
 
-    // http://wiki.unity3d.com/index.php/Averaging_Quaternions_and_Vectors
-    stats.count++;
+      // http://wiki.unity3d.com/index.php/Averaging_Quaternions_and_Vectors
+      stats.count++;
 
-    MarkersAreaControls.averageVector3(
-      stats.position.sum,
-      position,
-      stats.count,
-      stats.position.average
-    );
-    MarkersAreaControls.averageQuaternion(
-      stats.quaternion.sum,
-      quaternion,
-      firstQuaternion,
-      stats.count,
-      stats.quaternion.average
-    );
-    MarkersAreaControls.averageVector3(
-      stats.scale.sum,
-      scale,
-      stats.count,
-      stats.scale.average
-    );
-  });
+      MarkersAreaControls.averageVector3(
+        stats.position.sum,
+        position,
+        stats.count,
+        stats.position.average,
+      );
+      MarkersAreaControls.averageQuaternion(
+        stats.quaternion.sum,
+        quaternion,
+        firstQuaternion,
+        stats.count,
+        stats.quaternion.average,
+      );
+      MarkersAreaControls.averageVector3(
+        stats.scale.sum,
+        scale,
+        stats.count,
+        stats.scale.average,
+      );
+    },
+  );
 
   // honor _this.object3d.visible
   if (stats.count > 0) {
@@ -123,7 +122,7 @@ MarkersAreaControls.prototype._onSourceProcessed = function () {
     modelViewMatrix.compose(
       stats.position.average,
       stats.quaternion.average,
-      stats.scale.average
+      stats.scale.average,
     );
 
     // change _this.object3d.matrix based on parameters.changeMatrixMode
@@ -139,7 +138,7 @@ MarkersAreaControls.prototype._onSourceProcessed = function () {
     _this.object3d.matrix.decompose(
       _this.object3d.position,
       _this.object3d.quaternion,
-      _this.object3d.scale
+      _this.object3d.scale,
     );
   }
 };
@@ -156,7 +155,7 @@ MarkersAreaControls.averageQuaternion = function (
   newQuaternion,
   firstQuaternion,
   count,
-  quaternionAverage
+  quaternionAverage,
 ) {
   quaternionAverage = quaternionAverage || new THREE.Quaternion();
   // sanity check
@@ -168,7 +167,7 @@ MarkersAreaControls.averageQuaternion = function (
       -newQuaternion.x,
       -newQuaternion.y,
       -newQuaternion.z,
-      -newQuaternion.w
+      -newQuaternion.w,
     );
   }
 
@@ -191,7 +190,7 @@ MarkersAreaControls.averageVector3 = function (
   vector3Sum,
   vector3,
   count,
-  vector3Average
+  vector3Average,
 ) {
   vector3Average = vector3Average || new THREE.Vector3();
 
@@ -247,20 +246,20 @@ MarkersAreaControls.computeCenter = function (jsonData) {
       stats.position.sum,
       position,
       stats.count,
-      stats.position.average
+      stats.position.average,
     );
     MarkersAreaControls.averageQuaternion(
       stats.quaternion.sum,
       quaternion,
       firstQuaternion,
       stats.count,
-      stats.quaternion.average
+      stats.quaternion.average,
     );
     MarkersAreaControls.averageVector3(
       stats.scale.sum,
       scale,
       stats.count,
-      stats.scale.average
+      stats.scale.average,
     );
   });
 
@@ -268,7 +267,7 @@ MarkersAreaControls.computeCenter = function (jsonData) {
   averageMatrix.compose(
     stats.position.average,
     stats.quaternion.average,
-    stats.scale.average
+    stats.scale.average,
   );
 
   return averageMatrix;
@@ -297,7 +296,7 @@ MarkersAreaControls.computeBoundingBox = function (jsonData) {
 
 MarkersAreaControls.prototype.updateSmoothedControls = function (
   smoothedControls,
-  lerpsValues
+  lerpsValues,
 ) {
   // handle default values
   if (lerpsValues === undefined) {
@@ -315,13 +314,12 @@ MarkersAreaControls.prototype.updateSmoothedControls = function (
   }
   // count how many subMarkersControls are visible
   var nVisible = 0;
-  this.parameters.subMarkersControls.forEach(function (
-    markerControls,
-    markerIndex
-  ) {
-    var markerObject3d = markerControls.object3d;
-    if (markerObject3d.visible === true) nVisible++;
-  });
+  this.parameters.subMarkersControls.forEach(
+    function (markerControls, markerIndex) {
+      var markerObject3d = markerControls.object3d;
+      if (markerObject3d.visible === true) nVisible++;
+    },
+  );
 
   // find the good lerpValues
   if (lerpsValues[nVisible - 1] !== undefined) {
@@ -345,7 +343,7 @@ MarkersAreaControls.fromJSON = function (
   parent3D,
   markerRoot,
   jsonData,
-  parameters
+  parameters,
 ) {
   var multiMarkerFile = JSON.parse(jsonData);
   // declare variables
@@ -364,7 +362,7 @@ MarkersAreaControls.fromJSON = function (
     var subMarkerControls = new ArMarkerControls(
       arToolkitContext,
       markerRoot,
-      item.parameters
+      item.parameters,
     );
 
     // if( true ){
@@ -399,7 +397,7 @@ MarkersAreaControls.fromJSON = function (
   var multiMarkerControls = new ArMultiMarkerControls(
     arToolkitContext,
     markerRoot,
-    parameters
+    parameters,
   );
 
   // return it

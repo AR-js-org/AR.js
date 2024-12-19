@@ -33,7 +33,7 @@ const HitTestingPlane = function (sourceElement) {
     42,
     fullWidth / fullHeight,
     0.1,
-    30
+    30,
   );
 };
 
@@ -44,7 +44,7 @@ const HitTestingPlane = function (sourceElement) {
 HitTestingPlane.prototype.update = function (
   camera,
   pickingRoot,
-  changeMatrixMode
+  changeMatrixMode,
 ) {
   this.onResize();
 
@@ -57,7 +57,7 @@ HitTestingPlane.prototype.update = function (
     pickingPlane.matrix.decompose(
       pickingPlane.position,
       pickingPlane.quaternion,
-      pickingPlane.scale
+      pickingPlane.scale,
     );
   } else if (changeMatrixMode === "cameraTransformMatrix") {
     // set pickingPlane position
@@ -68,7 +68,7 @@ HitTestingPlane.prototype.update = function (
     pickingCamera.matrix.decompose(
       pickingCamera.position,
       pickingCamera.quaternion,
-      pickingCamera.scale
+      pickingCamera.scale,
     );
   } else console.assert(false);
 
