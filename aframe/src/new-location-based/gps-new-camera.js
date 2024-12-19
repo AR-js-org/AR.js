@@ -43,7 +43,7 @@ AFRAME.registerComponent("gps-new-camera", {
       this.el.object3D,
       {
         initialPositionAsOrigin: this.data.initialPositionAsOrigin,
-      }
+      },
     );
 
     this.threeLoc.on("gpsupdate", (gpspos) => {
@@ -106,7 +106,7 @@ AFRAME.registerComponent("gps-new-camera", {
       this.threeLoc.stopGps();
       this.threeLoc.fakeGps(
         this.data.simulateLongitude,
-        this.data.simulateLatitude
+        this.data.simulateLatitude,
       );
       this.fakeGpsStarted = true;
     }
@@ -179,16 +179,16 @@ AFRAME.registerComponent("gps-new-camera", {
         function () {
           handler();
         },
-        false
+        false,
       );
 
       this.el.sceneEl.systems["arjs"]._displayErrorPopup(
-        "After camera permission prompt, please tap the screen to activate geolocation."
+        "After camera permission prompt, please tap the screen to activate geolocation.",
       );
     } else {
       var timeout = setTimeout(() => {
         this.el.sceneEl.systems["arjs"]._displayErrorPopup(
-          "Please enable device orientation in Settings > Safari > Motion & Orientation Access."
+          "Please enable device orientation in Settings > Safari > Motion & Orientation Access.",
         );
       }, 750);
       window.addEventListener(
@@ -196,7 +196,7 @@ AFRAME.registerComponent("gps-new-camera", {
         function () {
           clearTimeout(timeout);
         },
-        { once: true }
+        { once: true },
       );
     }
   },
@@ -204,7 +204,7 @@ AFRAME.registerComponent("gps-new-camera", {
   _isMobile: function () {
     if (
       /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-        navigator.userAgent
+        navigator.userAgent,
       )
     ) {
       // true for mobile device

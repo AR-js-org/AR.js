@@ -39,7 +39,7 @@ const Source = function (parameters) {
 
       if (currentValue === undefined) {
         console.warn(
-          "ArToolkitSource: '" + key + "' is not a property of this material."
+          "ArToolkitSource: '" + key + "' is not a property of this material.",
         );
         continue;
       }
@@ -92,7 +92,7 @@ Source.prototype.init = function (onReady, onError) {
         detail: {
           component: document.querySelector("#arjs-video"),
         },
-      })
+      }),
     );
 
     _this.ready = true;
@@ -501,7 +501,7 @@ Source.prototype.copyElementSizeTo = function (otherElement) {
 
 Source.prototype.copySizeTo = function () {
   console.warn(
-    "obsolete function arToolkitSource.copySizeTo. Use arToolkitSource.copyElementSizeTo"
+    "obsolete function arToolkitSource.copySizeTo. Use arToolkitSource.copyElementSizeTo",
   );
   this.copyElementSizeTo.apply(this, arguments);
 };
@@ -513,7 +513,7 @@ Source.prototype.copySizeTo = function () {
 Source.prototype.onResize = function (arToolkitContext, renderer, camera) {
   if (arguments.length !== 3) {
     console.warn(
-      "obsolete function arToolkitSource.onResize. Use arToolkitSource.onResizeElement"
+      "obsolete function arToolkitSource.onResize. Use arToolkitSource.onResizeElement",
     );
     return this.onResizeElement.apply(this, arguments);
   }

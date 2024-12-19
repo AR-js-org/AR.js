@@ -47,7 +47,7 @@ const ArSmoothedControls = function (object3d, parameters) {
 
       if (newValue === undefined) {
         console.warn(
-          "ArSmoothedControls: '" + key + "' parameter is undefined."
+          "ArSmoothedControls: '" + key + "' parameter is undefined.",
         );
         continue;
       }
@@ -58,7 +58,7 @@ const ArSmoothedControls = function (object3d, parameters) {
         console.warn(
           "ArSmoothedControls: '" +
             key +
-            "' is not a property of this material."
+            "' is not a property of this material.",
         );
         continue;
       }
@@ -118,7 +118,7 @@ ArSmoothedControls.prototype.update = function (targetObject3d) {
     this._lastLerpStepAt = present;
   } else {
     var nStepsToDo = Math.floor(
-      (present - this._lastLerpStepAt) / this.parameters.lerpStepDelay
+      (present - this._lastLerpStepAt) / this.parameters.lerpStepDelay,
     );
     for (var i = 0; i < nStepsToDo; i++) {
       applyOneSlerpStep();
@@ -157,7 +157,7 @@ ArSmoothedControls.prototype.update = function (targetObject3d) {
     object3d.position.lerp(targetObject3d.position, parameters.lerpPosition);
     object3d.quaternion.slerp(
       targetObject3d.quaternion,
-      parameters.lerpQuaternion
+      parameters.lerpQuaternion,
     );
     object3d.scale.lerp(targetObject3d.scale, parameters.lerpScale);
   }

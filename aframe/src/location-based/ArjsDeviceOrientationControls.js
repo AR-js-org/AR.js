@@ -67,12 +67,12 @@ const ArjsDeviceOrientationControls = function (object) {
     window.addEventListener(
       "orientationchange",
       onScreenOrientationChangeEvent,
-      false
+      false,
     );
     window.addEventListener(
       "deviceorientation",
       onDeviceOrientationChangeEvent,
-      false
+      false,
     );
 
     scope.enabled = true;
@@ -82,12 +82,12 @@ const ArjsDeviceOrientationControls = function (object) {
     window.removeEventListener(
       "orientationchange",
       onScreenOrientationChangeEvent,
-      false
+      false,
     );
     window.removeEventListener(
       "deviceorientation",
       onDeviceOrientationChangeEvent,
-      false
+      false,
     );
 
     scope.enabled = false;
@@ -119,13 +119,13 @@ const ArjsDeviceOrientationControls = function (object) {
         beta = this._getSmoothedAngle(
           beta + Math.PI,
           this.lastOrientation.beta,
-          k
+          k,
         );
         gamma = this._getSmoothedAngle(
           gamma + this.HALF_PI,
           this.lastOrientation.gamma,
           k,
-          Math.PI
+          Math.PI,
         );
       } else {
         beta += Math.PI;
@@ -142,7 +142,7 @@ const ArjsDeviceOrientationControls = function (object) {
         alpha,
         beta - Math.PI,
         gamma - this.HALF_PI,
-        orient
+        orient,
       );
     }
   };

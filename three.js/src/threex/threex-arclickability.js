@@ -16,7 +16,7 @@ const ARClickability = function (sourceElement) {
     42,
     fullWidth / fullHeight,
     0.1,
-    100
+    100,
   );
 
   console.warn("ARClickability works only in modelViewMatrix");

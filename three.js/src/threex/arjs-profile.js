@@ -134,7 +134,7 @@ Profile.prototype.sourceImage = function (url) {
 //////////////////////////////////////////////////////////////////////////////
 Profile.prototype.trackingBackend = function (trackingBackend) {
   console.warn(
-    "stop profile.trackingBackend() obsolete function. use .trackingMethod instead"
+    "stop profile.trackingBackend() obsolete function. use .trackingMethod instead",
   );
   this.contextParameters.trackingBackend = trackingBackend;
   return this;
