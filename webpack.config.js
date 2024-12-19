@@ -66,7 +66,7 @@ module.exports = (env, argv) => {
                     type: 'module',
                 },
                 path: path.resolve(__dirname, 'aframe/build'),
-                filename: 'aframe-ar.module.js',
+                filename: 'aframe-ar.mjs',
             },
             resolve: {
                 alias: {
@@ -112,7 +112,7 @@ module.exports = (env, argv) => {
                     type: 'module',
                 },
                 path: path.resolve(__dirname, 'aframe/build'),
-                filename: 'aframe-ar-nft.module.js',
+                filename: 'aframe-ar-nft.mjs',
             },
             resolve: {
                 alias: {
@@ -152,7 +152,7 @@ module.exports = (env, argv) => {
                     type: 'module',
                 },
                 path: path.resolve(__dirname, 'aframe/build'),
-                filename: 'aframe-ar-location-only.module.js',
+                filename: 'aframe-ar-location-only.mjs',
             },
             module,
             externalsType: 'module',
@@ -186,7 +186,7 @@ module.exports = (env, argv) => {
                     type: 'module',
                 },
                 path: path.resolve(__dirname, 'aframe/build'),
-                filename: 'aframe-ar-new-location-only.module.js',
+                filename: 'aframe-ar-new-location-only.mjs',
             },
             module,
             externalsType: 'module',
@@ -233,7 +233,7 @@ module.exports = (env, argv) => {
                     type: 'module',
                 },
                 path: path.resolve(__dirname, 'three.js/build'),
-                filename: 'ar-threex.module.js',
+                filename: 'ar-threex.mjs',
             },
             resolve: {
                 alias: {
@@ -280,7 +280,7 @@ module.exports = (env, argv) => {
                     type: 'module',
                 },
                 path: path.resolve(__dirname, 'three.js/build'),
-                filename: 'ar-threex-location-only.module.js',
+                filename: 'ar-threex-location-only.mjs',
             },
             module,
             externalsType: 'module',
@@ -328,7 +328,7 @@ module.exports = (env, argv) => {
                     type: 'module',
                 },
                 path: path.resolve(__dirname, 'three.js/build'),
-                filename: 'ar.module.js',
+                filename: 'ar.mjs',
             },
             resolve: {
                 alias: {
