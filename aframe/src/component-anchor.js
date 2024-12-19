@@ -1,7 +1,14 @@
 import * as AFRAME from 'aframe';
-import Anchor from '../../three.js/src/new-api/arjs-anchor';
-import { AnchorDebugUI } from '../../three.js/src/new-api/arjs-debugui';
-import ArToolkitContext from '../../three.js/src/threex/arjs-context';
+//import {ARjsCore} from '@ar-js-org/arjs-core';
+import ARjsCore from '@ar-js-org/arjs-core';
+import { log } from 'aframe';
+const {Anchor, AnchorDebugUI, Context} = ARjsCore;
+//import { AnchorDebugUI } from '@ar-js-org/arjs-core';
+//import {ArToolkitContext} from '@ar-js-org/arjs-core';
+
+
+
+//console.log(Anchor)
 
 ////////////////////////////////////////////////////////////////////////////////
 //		arjs-anchor
@@ -59,6 +66,9 @@ AFRAME.registerComponent('arjs-anchor', {
     init: function () {
         var _this = this
 
+        console.log(this.el.sceneEl.systems.arjs);
+        
+
         // get arjsSystem
         var arjsSystem = this.el.sceneEl.systems.arjs || this.el.sceneEl.systems.artoolkit
 
@@ -97,11 +107,11 @@ AFRAME.registerComponent('arjs-anchor', {
 
             if (_this.data.preset === 'hiro') {
                 markerParameters.type = 'pattern'
-                markerParameters.patternUrl = ArToolkitContext.baseURL + 'examples/marker-training/examples/pattern-files/pattern-hiro.patt'
+                markerParameters.patternUrl = Context.baseURL + 'examples/marker-training/examples/pattern-files/pattern-hiro.patt'
                 markerParameters.markersAreaEnabled = false
             } else if (_this.data.preset === 'kanji') {
                 markerParameters.type = 'pattern'
-                markerParameters.patternUrl = ArToolkitContext.baseURL + 'examples/marker-training/examples/pattern-files/pattern-kanji.patt'
+                markerParameters.patternUrl = Context.baseURL + 'examples/marker-training/examples/pattern-files/pattern-kanji.patt'
                 markerParameters.markersAreaEnabled = false
             } else if (_this.data.preset === 'area') {
                 markerParameters.type = 'barcode'
@@ -174,7 +184,7 @@ AFRAME.registerComponent('arjs-anchor', {
         //////////////////////////////////////////////////////////////////////////////
         var arWorldRoot = this._arAnchor.object3d
         arWorldRoot.updateMatrixWorld(true)
-        arWorldRoot.matrixWorld.decompose(this.el.object3D.position, this.el.object3D.quaternion, this.el.object3D.scale)
+        //arWorldRoot.matrixWorld.decompose(this.el.object3D.position, this.el.object3D.quaternion, this.el.object3D.scale)
 
         //////////////////////////////////////////////////////////////////////////////
         //		honor visibility

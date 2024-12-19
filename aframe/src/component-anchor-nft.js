@@ -1,8 +1,9 @@
 import * as AFRAME from 'aframe';
-import Anchor from '../../three.js/src/new-api/arjs-anchor';
-import { AnchorDebugUI } from '../../three.js/src/new-api/arjs-debugui';
-import ArToolkitContext from '../../three.js/src/threex/arjs-context';
-
+//import Anchor from '../../three.js/src/new-api/arjs-anchor';
+//import {Anchor} from '@ar-js-org/arjs-core';
+import ARjsCore from '@ar-js-org/arjs-core';
+const { Anchor, AnchorDebugUI, Context} = ARjsCore;
+console.log(Anchor)
 ////////////////////////////////////////////////////////////////////////////////
 //		arjs-anchor
 //////////////////////////////////////////////////////////////////////////////
@@ -100,11 +101,11 @@ AFRAME.registerComponent('arjs-anchor', {
 
             if (_this.data.preset === 'hiro') {
                 markerParameters.type = 'pattern'
-                markerParameters.patternUrl = ArToolkitContext.baseURL + 'examples/marker-training/examples/pattern-files/pattern-hiro.patt'
+                markerParameters.patternUrl = Context.baseURL + 'examples/marker-training/examples/pattern-files/pattern-hiro.patt'
                 markerParameters.markersAreaEnabled = false
             } else if (_this.data.preset === 'kanji') {
                 markerParameters.type = 'pattern'
-                markerParameters.patternUrl = ArToolkitContext.baseURL + 'examples/marker-training/examples/pattern-files/pattern-kanji.patt'
+                markerParameters.patternUrl = Context.baseURL + 'examples/marker-training/examples/pattern-files/pattern-kanji.patt'
                 markerParameters.markersAreaEnabled = false
             } else if (_this.data.preset === 'area') {
                 markerParameters.type = 'barcode'

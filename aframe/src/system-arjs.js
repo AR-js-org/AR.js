@@ -1,7 +1,11 @@
 import * as AFRAME from 'aframe';
-import Profile from '../../three.js/src/threex/arjs-profile';
-import Session from '../../three.js/src/new-api/arjs-session';
-import { SessionDebugUI } from '../../three.js/src/new-api/arjs-debugui';
+import ARjsCore from '@ar-js-org/arjs-core';
+const {Profile, Session, SessionDebugUI} = ARjsCore;
+/*import {Profile} from '@ar-js-org/arjs-core';
+import {Session} from '@ar-js-org/arjs-core';
+import { SessionDebugUI } from '@ar-js-org/arjs-core';*/
+
+console.log(Profile)
 
 AFRAME.registerSystem('arjs', {
     schema: {
@@ -103,6 +107,7 @@ AFRAME.registerSystem('arjs', {
 
     init: function () {
         var _this = this
+        console.info("init")
 
         // If videoTexture is set, skip the remainder of the setup entirely and just use the arjs-webcam-texture component
         if(this.data.videoTexture === true && this.data.sourceType === 'webcam') {

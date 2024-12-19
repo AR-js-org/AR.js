@@ -52,14 +52,15 @@
   "homepage": "https://github.com/AR-js-org/AR.js/",
   "devDependencies": {
     "husky": "^9.1.7",
-    "lint-staged": "^13.3.0",
-    "prettier": "^2.8.8",
-    "webpack": "^5.96.1",
-    "webpack-cli": "^5.1.4",
+    "lint-staged": "15.2.11",
+    "prettier": "3.4.2",
+    "webpack": "5.97.1",
+    "webpack-cli": "^6.0.0",
     "worker-loader": "^3.0.8"
   },
   "dependencies": {
     "@ar-js-org/artoolkit5-js": "^0.3.1",
+    "@ar-js-org/arjs-core": "https://github.com/AR-js-org/AR.js-core.git#851c6f6c0dcb0ddbcca63e9de11202800215b179",
     "aframe": "^1.6.0",
     "three": "^0.164.0"
   },
