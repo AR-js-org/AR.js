@@ -224,15 +224,15 @@ For some examples read this [issue](https://github.com/AR-js-org/AR.js/issues/23
 ### New Import Syntax for `ar-threex.mjs` and `ar.mjs`
 
 With the latest updates (3.4.6), `three.js` can now be imported using the ES module syntax. 
-To align with this standard, `ar-threex.mjs` and `ar.mjs` should also be imported in the same way using an import map. Here is an example of how to import these modules in your project:
+To align with this standard, `ar-threex.mjs`,`ar.mjs` and `ar-threex-location-only.mjs` should also be imported in the same way using an import map. Here is an example of how to import these modules in your project:
 
 ```html
+// Example importing ar-threex.mjs
 <script type="importmap">
 {
   "imports": {
     "three": "https://cdn.jsdelivr.net/npm/three@0.164.0/build/three.module.js",
     "threex": "./path/to/ar-threex.mjs",
-    "arjs": "./path/to/ar.mjs",
   }
 }
 </script>
@@ -240,7 +240,6 @@ To align with this standard, `ar-threex.mjs` and `ar.mjs` should also be importe
 <script type="module">
 import * as THREE from 'three';
 import { ArToolkitSource, ArToolkitContext, ArMarkerControls }  from 'threex'
-import { Context, Profile, Session, Anchor, HitTesting, Utils, SessionDebugUI, AnchorDebugUI } from 'arjs'
 
 // Your AR.js code here
 </script>
