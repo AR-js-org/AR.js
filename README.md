@@ -244,7 +244,7 @@ import { ArToolkitSource, ArToolkitContext, ArMarkerControls }  from 'threex'
 // Your AR.js code here
 </script>
 ```
-read the examples included in this repository for more information.
+Read the examples included in this repository for more information, but basically the only change is the import syntax.
 
 ## Troubleshooting, feature requests, community
 
