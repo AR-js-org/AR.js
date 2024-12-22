@@ -37,7 +37,7 @@ AFRAME.registerComponent("gps-projected-entity-place", {
     // cleaning listeners when the entity is removed from the DOM
     window.removeEventListener(
       "gps-camera-update-position",
-      this.updatePositionListener
+      this.updatePositionListener,
     );
   },
   init: function () {
@@ -72,12 +72,12 @@ AFRAME.registerComponent("gps-projected-entity-place", {
       this.el.dispatchEvent(
         new CustomEvent("gps-entity-place-update-position", {
           detail: { distance: distanceForMsg },
-        })
+        }),
       );
 
       var actualDistance = this._cameraGps.computeDistanceMeters(
         dstCoords,
-        true
+        true,
       );
 
       if (actualDistance === Number.MAX_SAFE_INTEGER) {
@@ -90,11 +90,11 @@ AFRAME.registerComponent("gps-projected-entity-place", {
     // Retain as this event is fired when the GPS camera is set up
     window.addEventListener(
       "gps-camera-origin-coord-set",
-      this.coordSetListener
+      this.coordSetListener,
     );
     window.addEventListener(
       "gps-camera-update-position",
-      this.updatePositionListener
+      this.updatePositionListener,
     );
 
     this._positionXDebug = 0;
@@ -102,7 +102,7 @@ AFRAME.registerComponent("gps-projected-entity-place", {
     window.dispatchEvent(
       new CustomEvent("gps-entity-place-added", {
         detail: { component: this.el },
-      })
+      }),
     );
   },
   /**
@@ -125,7 +125,7 @@ AFRAME.registerComponent("gps-projected-entity-place", {
   _updatePosition: function () {
     var worldPos = this._cameraGps.latLonToWorld(
       this.data.latitude,
-      this.data.longitude
+      this.data.longitude,
     );
     var position = this.el.getAttribute("position");
 

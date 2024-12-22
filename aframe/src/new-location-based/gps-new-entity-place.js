@@ -33,12 +33,12 @@ AFRAME.registerComponent("gps-new-entity-place", {
   update: function () {
     const projCoords = this._cameraGps.threeLoc.lonLatToWorldCoords(
       this.data.longitude,
-      this.data.latitude
+      this.data.latitude,
     );
     this.el.object3D.position.set(
       projCoords[0],
       this.el.object3D.position.y,
-      projCoords[1]
+      projCoords[1],
     );
   },
 

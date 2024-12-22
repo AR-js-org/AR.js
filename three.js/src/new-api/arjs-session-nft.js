@@ -36,7 +36,7 @@ const Session = function (parameters) {
 
       if (currentValue === undefined) {
         console.warn(
-          "THREEx.Session: '" + key + "' is not a property of this material."
+          "THREEx.Session: '" + key + "' is not a property of this material.",
         );
         continue;
       }
@@ -74,7 +74,7 @@ const Session = function (parameters) {
     "AR.js",
     Context.REVISION,
     "- trackingBackend:",
-    parameters.contextParameters.trackingBackend
+    parameters.contextParameters.trackingBackend,
   );
 
   //////////////////////////////////////////////////////////////////////////////
@@ -86,7 +86,7 @@ const Session = function (parameters) {
     arSource.onResize(
       arContext,
       _this.parameters.renderer,
-      _this.parameters.camera
+      _this.parameters.camera,
     );
   });
 
@@ -95,7 +95,7 @@ const Session = function (parameters) {
     arSource.onResize(
       arContext,
       _this.parameters.renderer,
-      _this.parameters.camera
+      _this.parameters.camera,
     );
   });
 
@@ -113,7 +113,7 @@ const Session = function (parameters) {
     arSource.onResize(
       arContext,
       _this.parameters.renderer,
-      _this.parameters.camera
+      _this.parameters.camera,
     );
   });
 
@@ -132,7 +132,7 @@ Session.prototype.onResize = function () {
   this.arSource.onResize(
     this.arContext,
     this.parameters.renderer,
-    this.parameters.camera
+    this.parameters.camera,
   );
 };
 

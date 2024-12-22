@@ -4,6 +4,7 @@ node_modules/**
 test/**
 aframe/examples/**
 aframe/build/*.js
+aframe/build/*.mjs
 aframe/src/component-anchor.js
 aframe/src/component-anchor-nft.js
 aframe/src/system-arjs.js
@@ -11,6 +12,7 @@ aframe/src/system-arjs-nft.js
 aframe/src/location-based/stylesheets/*.css
 three.js/examples/**
 three.js/build/*.js
+three.js/build/*.mjs
 three.js/src/location-based/README.md
 *.md
 webpack.config.js

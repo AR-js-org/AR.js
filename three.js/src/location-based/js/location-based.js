@@ -49,7 +49,7 @@ class LocationBased {
         {
           enableHighAccuracy: true,
           maximumAge: maximumAge != 0 ? maximumAge : this._maximumAge,
-        }
+        },
       );
       return true;
     }
@@ -135,14 +135,14 @@ class LocationBased {
         if (this.initialPositionAsOrigin && !this.initialPosition) {
           this.setWorldOrigin(
             position.coords.longitude,
-            position.coords.latitude
+            position.coords.latitude,
           );
         }
 
         this.setWorldPosition(
           this._camera,
           position.coords.longitude,
-          position.coords.latitude
+          position.coords.latitude,
         );
 
         if (this._eventHandlers["gpsupdate"]) {

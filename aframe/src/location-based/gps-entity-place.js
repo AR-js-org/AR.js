@@ -16,11 +16,11 @@ AFRAME.registerComponent("gps-entity-place", {
     // cleaning listeners when the entity is removed from the DOM
     window.removeEventListener(
       "gps-camera-origin-coord-set",
-      this.coordSetListener
+      this.coordSetListener,
     );
     window.removeEventListener(
       "gps-camera-update-position",
-      this.updatePositionListener
+      this.updatePositionListener,
     );
   },
   init: function () {
@@ -49,7 +49,7 @@ AFRAME.registerComponent("gps-entity-place", {
       // it's actually a 'distance place', but we don't call it with last param, because we want to retrieve distance even if it's < minDistance property
       var distanceForMsg = this._cameraGps.computeDistanceMeters(
         ev.detail.position,
-        dstCoords
+        dstCoords,
       );
 
       this.el.setAttribute("distance", distanceForMsg);
@@ -57,13 +57,13 @@ AFRAME.registerComponent("gps-entity-place", {
       this.el.dispatchEvent(
         new CustomEvent("gps-entity-place-update-position", {
           detail: { distance: distanceForMsg },
-        })
+        }),
       );
 
       var actualDistance = this._cameraGps.computeDistanceMeters(
         ev.detail.position,
         dstCoords,
-        true
+        true,
       );
 
       if (actualDistance === Number.MAX_SAFE_INTEGER) {
@@ -75,11 +75,11 @@ AFRAME.registerComponent("gps-entity-place", {
 
     window.addEventListener(
       "gps-camera-origin-coord-set",
-      this.coordSetListener
+      this.coordSetListener,
     );
     window.addEventListener(
       "gps-camera-update-position",
-      this.updatePositionListener
+      this.updatePositionListener,
     );
 
     this._positionXDebug = 0;
@@ -87,7 +87,7 @@ AFRAME.registerComponent("gps-entity-place", {
     window.dispatchEvent(
       new CustomEvent("gps-entity-place-added", {
         detail: { component: this.el },
-      })
+      }),
     );
   },
   /**
@@ -116,7 +116,7 @@ AFRAME.registerComponent("gps-entity-place", {
 
     position.x = this._cameraGps.computeDistanceMeters(
       this._cameraGps.originCoords,
-      dstCoords
+      dstCoords,
     );
 
     this._positionXDebug = position.x;
@@ -132,7 +132,7 @@ AFRAME.registerComponent("gps-entity-place", {
 
     position.z = this._cameraGps.computeDistanceMeters(
       this._cameraGps.originCoords,
-      dstCoords
+      dstCoords,
     );
 
     position.z *=
