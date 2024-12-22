@@ -1,11 +1,16 @@
 <!DOCTYPE html>
 <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-<!-- three.js library -->
-<script src='vendor/three.js/build/three.js'></script>
+<!-- stats.js library -->
 <script src="vendor/three.js/examples/js/libs/stats.min.js"></script>
-<!-- include threex.artoolkit -->
-<script src="../build/ar-threex.js"></script>
-<script>THREEx.ArToolkitContext.baseURL = '../'</script>
+<!-- include three.js and threex.artoolkit -->
+<script type="importmap">
+	{
+      "imports": {
+		"threex": "../build/ar-threex.mjs",
+        "three": "./vendor/three.js/build/three.module.min.js"
+      }
+    }
+</script>
 
 <body style='margin : 0px; overflow: hidden; font-family: Monospace;'>
 	<div style='position: absolute; top: 10px; width:100%; text-align: center;z-index:1' ;>
@@ -25,7 +30,11 @@
 			</select>
 		</label>
 	</div>
-	<script>
+	<script type="module">
+		import * as THREE from 'three'
+		import { ArToolkitProfile, ArToolkitSource, ArToolkitContext, ArMarkerControls }  from 'threex'
+
+		ArToolkitContext.baseURL = '../'
 		//////////////////////////////////////////////////////////////////////////////////
 		//		Init
 		//////////////////////////////////////////////////////////////////////////////////
@@ -88,7 +97,7 @@
 		////////////////////////////////////////////////////////////////////////////////
 
 
-		var artoolkitProfile = new THREEx.ArToolkitProfile()
+		var artoolkitProfile = new ArToolkitProfile()
 		artoolkitProfile.sourceWebcam()
 		// artoolkitProfile.sourceVideo(THREEx.ArToolkitContext.baseURL + '../data/videos/headtracking.mp4').kanjiMarker();
 		// artoolkitProfile.sourceImage(THREEx.ArToolkitContext.baseURL + '../data/images/img.jpg').hiroMarker()
@@ -105,7 +114,7 @@
 		//		handle arToolkitSource
 		//////////////////////////////////////////////////////////////////////////////
 
-		var arToolkitSource = new THREEx.ArToolkitSource(artoolkitProfile.sourceParameters)
+		var arToolkitSource = new ArToolkitSource(artoolkitProfile.sourceParameters)
 
 		arToolkitSource.init(function onReady() {
 			initARContext()
@@ -130,7 +139,7 @@
 		function initARContext() {
 			console.log('initARContext()');
 			// create atToolkitContext
-			arToolkitContext = new THREEx.ArToolkitContext(artoolkitProfile.contextParameters)
+			arToolkitContext = new ArToolkitContext(artoolkitProfile.contextParameters)
 			// initialize it
 			arToolkitContext.init(function onCompleted() {
 				// copy projection matrix to camera
@@ -141,7 +150,7 @@
 				console.log('arToolkitContext', arToolkitContext);
 				window.arToolkitContext = arToolkitContext;
 			})
-			artoolkitMarker = new THREEx.ArMarkerControls(arToolkitContext, markerRoot, artoolkitProfile.defaultMarkerParameters)
+			artoolkitMarker = new ArMarkerControls(arToolkitContext, markerRoot, artoolkitProfile.defaultMarkerParameters)
 		}
 
 		function getSourceOrientation() {

@@ -1,11 +1,18 @@
 <!DOCTYPE html>
 <meta name='viewport' content='width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0'>
-<!-- three.js library -->
-<script src='vendor/three.js/build/three.js'></script>
+<!-- statsmin..js library -->
+
 <script src='vendor/three.js/examples/js/libs/stats.min.js'></script>
-<!-- ar.js -->
-<script src="../build/ar-threex.js"></script>
-<script>THREEx.ArToolkitContext.baseURL = '../'</script>
+
+<!-- import three.js and ar-threex library as a module-->
+<script type="importmap">
+	{
+      "imports": {
+		"threex": "../build/ar-threex.mjs",
+        "three": "./vendor/three.js/build/three.module.min.js"
+      }
+    }
+</script>
 
 <!-- Bind window error for error handling -->
 <script>
@@ -18,7 +25,12 @@
 	<a href='https://github.com/AR-js-org/AR.js/' target='_blank'>AR.js</a> - use a ar.js marker with pattRatio 0.9
 	<br/>
 	Contact me any time at <a href='https://twitter.com/nicolocarp' target='_blank'>@nicolocarp</a>
-</div><script>
+</div>
+<script type="module">
+	import * as THREE from 'three'
+	import { ArSmoothedControls, ArToolkitSource, ArToolkitContext, ArToolkitProfile, ArMarkerControls }  from 'threex'
+
+	ArToolkitContext.baseURL = '../'
 	//////////////////////////////////////////////////////////////////////////////////
 	//		Init
 	//////////////////////////////////////////////////////////////////////////////////
@@ -54,11 +66,11 @@
 	//          handle arToolkitSource
 	////////////////////////////////////////////////////////////////////////////////
 
-	var artoolkitProfile = new THREEx.ArToolkitProfile()
+	var artoolkitProfile = new ArToolkitProfile()
 	// artoolkitProfile.sourceWebcam()
-	artoolkitProfile.sourceImage(THREEx.ArToolkitContext.baseURL + '../test/data/images/marker-artoolkit-pattern-pattratio-09.png')
+	artoolkitProfile.sourceImage(ArToolkitContext.baseURL + '../test/data/images/marker-artoolkit-pattern-pattratio-09.png')
 
-	var arToolkitSource = new THREEx.ArToolkitSource(artoolkitProfile.sourceParameters)
+	var arToolkitSource = new ArToolkitSource(artoolkitProfile.sourceParameters)
 
 	arToolkitSource.init(function onReady(){
 		onResize()
@@ -84,7 +96,7 @@
 	artoolkitProfile.contextParameters.patternRatio = 0.9
 
 	// create atToolkitContext
-	var arToolkitContext = new THREEx.ArToolkitContext(artoolkitProfile.contextParameters)
+	var arToolkitContext = new ArToolkitContext(artoolkitProfile.contextParameters)
 	// initialize it
 	arToolkitContext.init(function onCompleted(){
 		// copy projection matrix to camera
@@ -105,17 +117,17 @@
 
 	var markerGroup = new THREE.Group
 	scene.add(markerGroup)
-	var markerControls = new THREEx.ArMarkerControls(arToolkitContext, markerGroup, {
+	var markerControls = new ArMarkerControls(arToolkitContext, markerGroup, {
 		type : 'pattern',
 		// patternUrl : THREEx.ArToolkitContext.baseURL + '../data/data/patt.hiro',
-		patternUrl : THREEx.ArToolkitContext.baseURL + 'examples/marker-training/examples/pattern-files/pattern-arjs.patt',
+		patternUrl : ArToolkitContext.baseURL + 'examples/marker-training/examples/pattern-files/pattern-arjs.patt',
 	})
 
 
 	// build a smoothedControls
 	var smoothedGroup = new THREE.Group()
 	scene.add(smoothedGroup)
-	var smoothedControls = new THREEx.ArSmoothedControls(smoothedGroup)
+	var smoothedControls = new ArSmoothedControls(smoothedGroup)
 	onRenderFcts.push(function(delta){
 		smoothedControls.update(markerGroup)
 	})

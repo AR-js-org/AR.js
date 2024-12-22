@@ -1,11 +1,15 @@
 <!DOCTYPE html>
 <meta name='viewport' content='width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0'>
-<!-- three.js library -->
-<script src='../examples/vendor/three.js/build/three.js'></script>
-<!-- include ar.js -->
-<script src="../build/ar.js"></script>
+<!-- import ar.js three.js library -->
 
-<script>ARjs.Context.baseURL = '../'</script>
+<script type="importmap">
+	{
+      "imports": {
+		"arjs": "./../build/ar.mjs",
+        "three": "./vendor/three.js/build/three.module.min.js"
+      }
+    }
+</script>
 
 <body style='margin : 0px; overflow: hidden; font-family: Monospace;'>
     <div style='position: absolute; top: 10px; width:100%; text-align: center; z-index: 1;'>
@@ -22,8 +26,12 @@
         /
         <a href='?best'>best</a>
     </div>
-    <script>
+    <script type="module">
+	import * as THREE from 'three'
+    import { Context, Profile, Session, Anchor, HitTesting, Utils, SessionDebugUI, AnchorDebugUI } from 'arjs'
+    
             ; (function () {
+                Context.baseURL = '../'          
                 // get tracking method from location.search
                 var trackingMethod = location.search.substring(1) ? location.search.substring(1) : 'best'
 
@@ -55,14 +63,14 @@
                 //		Initialize the camera
                 //////////////////////////////////////////////////////////////////////////////////
 
-                var camera = ARjs.Utils.createDefaultCamera(trackingMethod)
+                var camera = Utils.createDefaultCamera(trackingMethod)
                 scene.add(camera)
 
                 ////////////////////////////////////////////////////////////////////////////////
                 //          	Set up Arjs.Profile
                 ////////////////////////////////////////////////////////////////////////////////
 
-                var arProfile = new ARjs.Profile()
+                var arProfile = new Profile()
                     .sourceWebcam()
                     .trackingMethod(trackingMethod)
                     // .changeMatrixMode('modelViewMatrix')
@@ -74,7 +82,7 @@
                 //		build ARjs.Session
                 //////////////////////////////////////////////////////////////////////////////
 
-                var arSession = new ARjs.Session({
+                var arSession = new Session({
                     scene: scene,
                     renderer: renderer,
                     camera: camera,
@@ -89,7 +97,7 @@
                 //          Create a ARjs.Anchor
                 ////////////////////////////////////////////////////////////////////////////////
 
-                var arAnchor = new ARjs.Anchor(arSession, arProfile.defaultMarkerParameters)
+                var arAnchor = new Anchor(arSession, arProfile.defaultMarkerParameters)
                 onRenderFcts.push(function () {
                     arAnchor.update()
                 })
@@ -98,7 +106,7 @@
                 //                handle Hit Tester
                 //////////////////////////////////////////////////////////////////////////////
 
-                var hitTesting = new ARjs.HitTesting(arSession)
+                var hitTesting = new HitTesting(arSession)
                 onRenderFcts.push(function () {
                     hitTesting.update(camera, arAnchor.object3d, arAnchor.parameters.changeMatrixMode)
                 })
@@ -145,10 +153,10 @@
                 }
 
 
-                var sessionDebugUI = new ARjs.SessionDebugUI(arSession, null)
+                var sessionDebugUI = new SessionDebugUI(arSession, null)
                 document.querySelector('#arjsDebugUIContainer').appendChild(sessionDebugUI.domElement)
 
-                var anchorDebugUI = new ARjs.AnchorDebugUI(arAnchor)
+                var anchorDebugUI = new AnchorDebugUI(arAnchor)
                 document.querySelector('#arjsDebugUIContainer').appendChild(anchorDebugUI.domElement)
 
                 //////////////////////////////////////////////////////////////////////////////////

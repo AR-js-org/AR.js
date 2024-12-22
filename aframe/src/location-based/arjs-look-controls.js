@@ -80,7 +80,7 @@ AFRAME.registerComponent("arjs-look-controls", {
             "deviceorientationpermissiongranted",
             function () {
               magicWindowControls.enabled = data.magicWindowTrackingEnabled;
-            }
+            },
           );
         }
       }
@@ -157,7 +157,7 @@ AFRAME.registerComponent("arjs-look-controls", {
     this.onExitVR = AFRAME.utils.bind(this.onExitVR, this);
     this.onPointerLockChange = AFRAME.utils.bind(
       this.onPointerLockChange,
-      this
+      this,
     );
     this.onPointerLockError = AFRAME.utils.bind(this.onPointerLockError, this);
   },
@@ -184,7 +184,7 @@ AFRAME.registerComponent("arjs-look-controls", {
     if (!canvasEl) {
       sceneEl.addEventListener(
         "render-target-loaded",
-        AFRAME.utils.bind(this.addEventListeners, this)
+        AFRAME.utils.bind(this.addEventListeners, this),
       );
       return;
     }
@@ -208,17 +208,17 @@ AFRAME.registerComponent("arjs-look-controls", {
       document.addEventListener(
         "pointerlockchange",
         this.onPointerLockChange,
-        false
+        false,
       );
       document.addEventListener(
         "mozpointerlockchange",
         this.onPointerLockChange,
-        false
+        false,
       );
       document.addEventListener(
         "pointerlockerror",
         this.onPointerLockError,
-        false
+        false,
       );
     }
   },
@@ -252,17 +252,17 @@ AFRAME.registerComponent("arjs-look-controls", {
     document.removeEventListener(
       "pointerlockchange",
       this.onPointerLockChange,
-      false
+      false,
     );
     document.removeEventListener(
       "mozpointerlockchange",
       this.onPointerLockChange,
-      false
+      false,
     );
     document.removeEventListener(
       "pointerlockerror",
       this.onPointerLockError,
-      false
+      false,
     );
   },
 
@@ -291,7 +291,7 @@ AFRAME.registerComponent("arjs-look-controls", {
             poseMatrix.decompose(
               object3D.position,
               object3D.rotation,
-              object3D.scale
+              object3D.scale,
             );
           }
         }
@@ -316,7 +316,7 @@ AFRAME.registerComponent("arjs-look-controls", {
       this.magicWindowControls.update();
       magicWindowAbsoluteEuler.setFromQuaternion(
         this.magicWindowObject.quaternion,
-        "YXZ"
+        "YXZ",
       );
       if (!this.previousMagicWindowYaw && magicWindowAbsoluteEuler.y !== 0) {
         this.previousMagicWindowYaw = magicWindowAbsoluteEuler.y;
@@ -367,7 +367,7 @@ AFRAME.registerComponent("arjs-look-controls", {
     pitchObject.rotation.x += movementY * 0.002 * direction;
     pitchObject.rotation.x = Math.max(
       -PI_2,
-      Math.min(PI_2, pitchObject.rotation.x)
+      Math.min(PI_2, pitchObject.rotation.x),
     );
   },
 

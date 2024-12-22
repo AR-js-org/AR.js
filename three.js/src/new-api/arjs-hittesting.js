@@ -82,7 +82,7 @@ HitTesting.prototype.test = function (mouseX, mouseY) {
   var hitTestResult = new HitTesting.Result(
     result.position,
     result.quaternion,
-    result.scale
+    result.scale,
   );
   hitTestResults.push(hitTestResult);
 

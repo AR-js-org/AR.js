@@ -1,11 +1,17 @@
 <!DOCTYPE html>
 <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-<!-- three.js library -->
-<script src='vendor/three.js/build/three.min.js'></script>
+<!-- stats.min.js library -->
+
 <script src="vendor/three.js/examples/js/libs/stats.min.js"></script>
-<!-- ar.js -->
-<script src="../build/ar-threex.js"></script>
-<script>THREEx.ArToolkitContext.baseURL = '../'</script>
+<!-- three.js and threex library -->
+<script type="importmap">
+	{
+      "imports": {
+		"threex": "../build/ar-threex.mjs",
+        "three": "./vendor/three.js/build/three.module.min.js"
+      }
+    }
+</script>
 
 <body style='margin : 0px; overflow: hidden; font-family: Monospace;'>
 	<div style='position: absolute; top: 10px; width:100%; text-align: center; z-index: 1;'>
@@ -13,7 +19,11 @@
 		<br />
 		Contact me any time at <a href='https://twitter.com/nicolocarp' target='_blank'>@nicolocarp</a>
 	</div>
-	<script>
+	<script type="module">
+		import * as THREE from 'three'
+		import { ArSmoothedControls, ArToolkitSource, ArToolkitContext, ArMarkerControls }  from 'threex'
+	
+		ArToolkitContext.baseURL = '../'
 		//////////////////////////////////////////////////////////////////////////////////
 		//		Init
 		//////////////////////////////////////////////////////////////////////////////////
@@ -53,7 +63,7 @@
 		//          handle arToolkitSource
 		////////////////////////////////////////////////////////////////////////////////
 
-		var arToolkitSource = new THREEx.ArToolkitSource({
+		var arToolkitSource = new ArToolkitSource({
 			// to read from the webcam
 			sourceType: 'webcam',
 
@@ -91,8 +101,8 @@
 		function initARContext() {
 			console.log('initARContext()');
 
-			arToolkitContext = new THREEx.ArToolkitContext({
-				cameraParametersUrl: THREEx.ArToolkitContext.baseURL + '../data/data/camera_para.dat',
+			arToolkitContext = new ArToolkitContext({
+				cameraParametersUrl: ArToolkitContext.baseURL + '../data/data/camera_para.dat',
 				detectionMode: 'mono',
 				maxDetectionRate: 30,
 				canvasWidth: 80 * 3,
@@ -108,9 +118,9 @@
 				console.log('arToolkitContext', arToolkitContext);
 				window.arToolkitContext = arToolkitContext;
 			})
-			artoolkitMarker = new THREEx.ArMarkerControls(arToolkitContext, markerRoot, {
+			artoolkitMarker = new ArMarkerControls(arToolkitContext, markerRoot, {
 				type: 'pattern',
-				patternUrl: THREEx.ArToolkitContext.baseURL + '../data/data/patt.hiro'
+				patternUrl: ArToolkitContext.baseURL + '../data/data/patt.hiro'
 				// patternUrl : THREEx.ArToolkitContext.baseURL + '../data/data/patt.kanji'
 			})
 		}
@@ -156,7 +166,7 @@
 		// build a smoothedControls
 		var smoothedRoot = new THREE.Group()
 		scene.add(smoothedRoot)
-		var smoothedControls = new THREEx.ArSmoothedControls(smoothedRoot, {
+		var smoothedControls = new ArSmoothedControls(smoothedRoot, {
 			lerpPosition: 0.4,
 			lerpQuaternion: 0.3,
 			lerpScale: 1,

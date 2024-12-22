@@ -29,7 +29,7 @@ const Anchor = function (arSession, markerParameters) {
     "changeMatrixMode:",
     this.parameters.changeMatrixMode,
     "/ markersAreaEnabled:",
-    markerParameters.markersAreaEnabled
+    markerParameters.markersAreaEnabled,
   );
 
   var markerRoot = new THREE.Group();
@@ -46,7 +46,7 @@ const Anchor = function (arSession, markerParameters) {
     var markerControls = new ArMarkerControls(
       arContext,
       controlledObject,
-      markerParameters
+      markerParameters,
     );
     this.controls = markerControls;
   } else {
@@ -60,7 +60,7 @@ const Anchor = function (arSession, markerParameters) {
       // get resolutionW/resolutionH from url
       var markerPageResolution = location.hash.substring(1);
       var matches = markerPageResolution.match(
-        /markers-page-resolution=(\d+)x(\d+)/
+        /markers-page-resolution=(\d+)x(\d+)/,
       );
       console.assert(matches.length === 3);
       var resolutionW = parseInt(matches[1]);
@@ -70,14 +70,14 @@ const Anchor = function (arSession, markerParameters) {
       MarkersAreaUtils.storeMarkersAreaFileFromResolution(
         arContext.parameters.trackingBackend,
         resolutionW,
-        resolutionH
+        resolutionH,
       );
     }
 
     // if there is no ARjsMultiMarkerFile, build a default one
     if (localStorage.getItem("ARjsMultiMarkerFile") === null) {
       MarkersAreaUtils.storeDefaultMultiMarkerFile(
-        arContext.parameters.trackingBackend
+        arContext.parameters.trackingBackend,
       );
     }
 
@@ -97,7 +97,7 @@ const Anchor = function (arSession, markerParameters) {
       arContext,
       parent3D,
       controlledObject,
-      multiMarkerFile
+      multiMarkerFile,
     );
     this.controls = multiMarkerControls;
 
@@ -108,17 +108,17 @@ const Anchor = function (arSession, markerParameters) {
     // TODO put subMarkerControls visibility into an external file. with 2 handling for three.js and babylon.js
     // create ArMarkerHelper - useful to debug - super three.js specific
     var markerHelpers = [];
-    multiMarkerControls.subMarkersControls.forEach(function (
-      subMarkerControls
-    ) {
-      // add an helper to visuable each sub-marker
-      var markerHelper = new ArMarkerHelper(subMarkerControls);
-      markerHelper.object3d.visible = false;
-      // subMarkerControls.object3d.add( markerHelper.object3d )
-      subMarkerControls.object3d.add(markerHelper.object3d);
-      // add it to markerHelpers
-      markerHelpers.push(markerHelper);
-    });
+    multiMarkerControls.subMarkersControls.forEach(
+      function (subMarkerControls) {
+        // add an helper to visuable each sub-marker
+        var markerHelper = new ArMarkerHelper(subMarkerControls);
+        markerHelper.object3d.visible = false;
+        // subMarkerControls.object3d.add( markerHelper.object3d )
+        subMarkerControls.object3d.add(markerHelper.object3d);
+        // add it to markerHelpers
+        markerHelpers.push(markerHelper);
+      },
+    );
     // define API specific to markersArea
     this.markersArea = {};
     this.markersArea.setSubMarkersVisibility = function (visible) {

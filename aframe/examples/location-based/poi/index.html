@@ -1,0 +1,17 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>AR.js A-Frame - Points of Interest Example</title>
+<script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
+<script type='text/javascript' src='../../../../three.js/build/ar-threex-location-only.js'></script>
+<script type='text/javascript' src='../../../build/aframe-ar.js'></script>
+<script type='text/javascript' src='index.js'></script>
+</head>
+<body>
+<a-scene vr-mode-ui='enabled: false' arjs='sourceType: webcam; videoTexture: true; debugUIEnabled: false' renderer='antialias: true; alpha: true'>
+	<a-camera gps-new-camera='gpsMinDistance: 5'></a-camera>
+</a-scene>
+	
+</body>
+</html>

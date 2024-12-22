@@ -36,24 +36,24 @@ const ArVideoInWebgl = function (videoTexture) {
     camera.matrixWorld.decompose(
       camera.position,
       camera.quaternion,
-      camera.scale
+      camera.scale,
     );
     seethruPlane.quaternion.copy(camera.quaternion);
 
     // extract the fov from the projectionMatrix
     var fov =
       THREE.MathUtils.radToDeg(
-        Math.atan(1 / camera.projectionMatrix.elements[5])
+        Math.atan(1 / camera.projectionMatrix.elements[5]),
       ) * 2;
     // console.log('fov', fov)
 
     var elementWidth = parseFloat(
       arToolkitSource.domElement.style.width.replace(/px$/, ""),
-      10
+      10,
     );
     var elementHeight = parseFloat(
       arToolkitSource.domElement.style.height.replace(/px$/, ""),
-      10
+      10,
     );
 
     var aspect = elementWidth / elementHeight;

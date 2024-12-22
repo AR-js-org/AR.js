@@ -62,7 +62,7 @@ Please import the one you need for your project, not both:
 You can also import a specific version replacing `master` keyword with version tag:
 
 ```html
-  <script src="https://raw.githack.com/AR-js-org/AR.js/3.4.5/aframe/build/aframe-ar-nft.js">
+  <script src="https://raw.githack.com/AR-js-org/AR.js/3.4.6/aframe/build/aframe-ar-nft.js">
 ```
 
 ## Get started
@@ -77,7 +77,7 @@ Please follow these simple steps:
 - Scan [this picture](https://raw.githubusercontent.com/AR-js-org/AR.js/master/aframe/examples/image-tracking/nft/trex-image-big.jpeg) to see content through the camera.
 
 ```html
-<script src="https://cdn.jsdelivr.net/gh/aframevr/aframe@1.3.0/dist/aframe-master.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/aframevr/aframe@1.6.0/dist/aframe-master.min.js"></script>
 <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js"></script>
 
 <style>
@@ -149,8 +149,8 @@ Please follow these simple steps:
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>GeoAR.js demo</title>
-    <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
-    <script src="https://unpkg.com/aframe-look-at-component@0.8.0/dist/aframe-look-at-component.min.js"></script>
+    <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
+    <script src="https://unpkg.com/aframe-look-at-component@1.0.0/dist/aframe-look-at-component.min.js"></script>
     <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js"></script>
   </head>
 
@@ -183,7 +183,7 @@ Please follow this simple steps:
 ```html
 <!DOCTYPE html>
 <html>
-    <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
+    <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
     <!-- we import arjs version without NFT but with marker + location based support -->
     <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
     <body style="margin : 0px; overflow: hidden;">
@@ -221,6 +221,31 @@ npm install @ar-js-org/ar.js
 yarn add @ar-js-org/ar.js
 ```
 For some examples read this [issue](https://github.com/AR-js-org/AR.js/issues/234).
+### New Import Syntax for `ar-threex.mjs` and `ar.mjs`
+
+With the latest updates (3.4.6), `three.js` can now be imported using the ES module syntax. 
+To align with this standard, `ar-threex.mjs`,`ar.mjs` and `ar-threex-location-only.mjs` should also be imported in the same way using an import map. Here is an example of how to import these modules in your project:
+
+```html
+// Example importing ar-threex.mjs
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.164.0/build/three.module.js",
+    "threex": "./path/to/ar-threex.mjs",
+  }
+}
+</script>
+
+<script type="module">
+import * as THREE from 'three';
+import { ArToolkitSource, ArToolkitContext, ArMarkerControls }  from 'threex'
+
+// Your AR.js code here
+</script>
+```
+Read the examples included in this repository for more information, but basically the only change is the import syntax.
+
 ## Troubleshooting, feature requests, community
 
 **You can find a lot of help on the old [AR.js repositories issues](https://github.com/jeromeetienne/AR.js/issues). Please search on open/closed issues, you may find interesting stuff.**

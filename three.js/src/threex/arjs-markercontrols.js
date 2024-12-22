@@ -41,13 +41,13 @@ const MarkerControls = function (context, object3d, parameters) {
   console.assert(
     possibleValues.indexOf(this.parameters.type) !== -1,
     "illegal value",
-    this.parameters.type
+    this.parameters.type,
   );
   var possibleValues = ["modelViewMatrix", "cameraTransformMatrix"];
   console.assert(
     possibleValues.indexOf(this.parameters.changeMatrixMode) !== -1,
     "illegal value",
-    this.parameters.changeMatrixMode
+    this.parameters.changeMatrixMode,
   );
 
   // create the marker Root
@@ -73,7 +73,7 @@ const MarkerControls = function (context, object3d, parameters) {
 
       if (currentValue === undefined) {
         console.warn(
-          "ArMarkerControls: '" + key + "' is not a property of this material."
+          "ArMarkerControls: '" + key + "' is not a property of this material.",
         );
         continue;
       }
@@ -108,7 +108,7 @@ MarkerControls.prototype.dispose = function () {
   if (this.context && this.context.arController) {
     this.context.arController.removeEventListener(
       "getMarker",
-      this.onGetMarker
+      this.onGetMarker,
     );
   }
 
@@ -127,7 +127,7 @@ MarkerControls.prototype.dispose = function () {
  * of things. it is done here.
  */
 MarkerControls.prototype.updateWithModelViewMatrix = function (
-  modelViewMatrix
+  modelViewMatrix,
 ) {
   var markerObject3D = this.object3d;
 
@@ -137,7 +137,7 @@ MarkerControls.prototype.updateWithModelViewMatrix = function (
   if (this.context.parameters.trackingBackend === "artoolkit") {
     // apply context._axisTransformMatrix - change artoolkit axis to match usual webgl one
     var tmpMatrix = new THREE.Matrix4().copy(
-      this.context._artoolkitProjectionAxisTransformMatrix
+      this.context._artoolkitProjectionAxisTransformMatrix,
     );
     tmpMatrix.multiply(modelViewMatrix);
 
@@ -148,7 +148,7 @@ MarkerControls.prototype.updateWithModelViewMatrix = function (
 
   // change axis orientation on marker - artoolkit say Z is normal to the marker - ar.js say Y is normal to the marker
   var markerAxisTransformMatrix = new THREE.Matrix4().makeRotationX(
-    Math.PI / 2
+    Math.PI / 2,
   );
   modelViewMatrix.multiply(markerAxisTransformMatrix);
 
@@ -212,7 +212,7 @@ MarkerControls.prototype.updateWithModelViewMatrix = function (
   markerObject3D.matrix.decompose(
     markerObject3D.position,
     markerObject3D.quaternion,
-    markerObject3D.scale
+    markerObject3D.scale,
   );
 
   // dispatchEvent
@@ -280,14 +280,14 @@ MarkerControls.prototype._initArtoolkit = function () {
           artoolkitMarkerId = markerId;
           arController.trackPatternMarkerId(
             artoolkitMarkerId,
-            _this.parameters.size
+            _this.parameters.size,
           );
         });
     } else if (_this.parameters.type === "barcode") {
       artoolkitMarkerId = _this.parameters.barcodeValue;
       arController.trackBarcodeMarkerId(
         artoolkitMarkerId,
-        _this.parameters.size
+        _this.parameters.size,
       );
     } else if (_this.parameters.type === "nft") {
       // use workers as default

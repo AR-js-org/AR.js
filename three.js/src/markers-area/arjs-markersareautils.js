@@ -15,7 +15,7 @@ const MarkersAreaUtils = {};
  */
 MarkersAreaUtils.navigateToLearnerPage = function (
   learnerBaseURL,
-  trackingBackend
+  trackingBackend,
 ) {
   var learnerParameters = {
     backURL: location.href,
@@ -96,7 +96,7 @@ MarkersAreaUtils.createDefaultMultiMarkerFile = function (trackingBackend) {
  * @return {Object} - json object containing the controls parameters
  */
 MarkersAreaUtils.createDefaultMarkersControlsParameters = function (
-  trackingBackend
+  trackingBackend,
 ) {
   // create absoluteBaseURL
   var link = document.createElement("a");
@@ -156,13 +156,13 @@ MarkersAreaUtils.createDefaultMarkersControlsParameters = function (
 MarkersAreaUtils.storeMarkersAreaFileFromResolution = function (
   trackingBackend,
   resolutionW,
-  resolutionH
+  resolutionH,
 ) {
   // generate areaFile
   var areaFile = this.buildMarkersAreaFileFromResolution(
     trackingBackend,
     resolutionW,
-    resolutionH
+    resolutionH,
   );
   // store areaFile in localStorage
   localStorage.setItem("ARjsMultiMarkerFile", JSON.stringify(areaFile));
@@ -175,7 +175,7 @@ MarkersAreaUtils.storeMarkersAreaFileFromResolution = function (
 MarkersAreaUtils.buildMarkersAreaFileFromResolution = function (
   trackingBackend,
   resolutionW,
-  resolutionH
+  resolutionH,
 ) {
   // create the base file
   var file = {
@@ -217,14 +217,14 @@ MarkersAreaUtils.buildMarkersAreaFileFromResolution = function (
   var subMarkerControls = buildSubMarkerControls(
     "bottomleft",
     -deltaX,
-    +deltaZ
+    +deltaZ,
   );
   file.subMarkersControls.push(subMarkerControls);
 
   var subMarkerControls = buildSubMarkerControls(
     "bottomright",
     +deltaX,
-    +deltaZ
+    +deltaZ,
   );
   file.subMarkersControls.push(subMarkerControls);
 
@@ -260,23 +260,23 @@ MarkersAreaUtils.buildMarkersAreaFileFromResolution = function (
     var layout2PatternUrl = {
       center: convertRelativeUrlToAbsolute(
         absoluteBaseURL +
-          "examples/marker-training/examples/pattern-files/pattern-hiro.patt"
+          "examples/marker-training/examples/pattern-files/pattern-hiro.patt",
       ),
       topleft: convertRelativeUrlToAbsolute(
         absoluteBaseURL +
-          "examples/marker-training/examples/pattern-files/pattern-letterA.patt"
+          "examples/marker-training/examples/pattern-files/pattern-letterA.patt",
       ),
       topright: convertRelativeUrlToAbsolute(
         absoluteBaseURL +
-          "examples/marker-training/examples/pattern-files/pattern-letterB.patt"
+          "examples/marker-training/examples/pattern-files/pattern-letterB.patt",
       ),
       bottomleft: convertRelativeUrlToAbsolute(
         absoluteBaseURL +
-          "examples/marker-training/examples/pattern-files/pattern-letterC.patt"
+          "examples/marker-training/examples/pattern-files/pattern-letterC.patt",
       ),
       bottomright: convertRelativeUrlToAbsolute(
         absoluteBaseURL +
-          "examples/marker-training/examples/pattern-files/pattern-letterF.patt"
+          "examples/marker-training/examples/pattern-files/pattern-letterF.patt",
       ),
     };
     console.assert(layout2PatternUrl[layout] !== undefined);

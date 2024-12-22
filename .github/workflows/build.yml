@@ -7,21 +7,28 @@ name: Build AR.js libraries
 on: push
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [18.x]
+  check-and-test:
+    runs-on: ubuntu-20.04
     steps:
-      - uses: actions/checkout@v3
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
+      - name: Checkout repository
+        uses: actions/checkout@v4
         with:
-          node-version: ${{ matrix.node-version }}
-      - uses: actions/cache@v3
+          ssh-key: ${{ secrets.DEPLOY_KEY }}
+
+      - name: Use Node.js from .nvmrc
+        uses: actions/setup-node@v4
         with:
-          path: ~/.npm
+          node-version-file: ".nvmrc"
+
+      - name: Get npm cache directory
+        id: npm-cache-dir
+        shell: bash
+        run: echo "dir=$(npm config get cache)" >> ${GITHUB_OUTPUT}
+
+      - uses: actions/cache@v4
+        id: npm-cache # use this to check for `cache-hit` ==> if: steps.npm-cache.outputs.cache-hit != 'true'
+        with:
+          path: ${{ steps.npm-cache-dir.outputs.dir }}
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
@@ -36,7 +43,7 @@ jobs:
           echo ${{ steps.vars.outputs.tag }}
       - run: npm update
       - run: npm install
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: build
           path: |
@@ -52,7 +59,7 @@ jobs:
           message: new build files from action
           add: '["aframe/build", "three.js/build"]'
       - name: Release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         if: startsWith(github.ref, 'refs/tags/')
         with:
           files: |
@@ -60,5 +67,8 @@ jobs:
             aframe/build/aframe-ar-nft.js
             aframe/build/aframe-ar-location-only.js
             three.js/build/ar.js
+            three.js/build/ar.module.js
             three.js/build/ar-threex.js
+            three.js/build/ar-threex.module.js
             three.js/build/ar-threex-location-only.js
+            three.js/build/ar-threex-location-only.module.js

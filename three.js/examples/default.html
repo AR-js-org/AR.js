@@ -1,11 +1,19 @@
 <!DOCTYPE html>
 <meta name='viewport' content='width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0'>
-<!-- three.js library -->
-<script src='vendor/three.js/build/three.js'></script>
+<!-- stats.min.js library -->
+
 <script src='vendor/three.js/examples/js/libs/stats.min.js'></script>
-<!-- ar.js -->
-<script src="../build/ar-threex.js"></script>
-<script>THREEx.ArToolkitContext.baseURL = '../'</script>
+
+<!-- import three.js and ar-threex library as a module-->
+
+<script type="importmap">
+	{
+      "imports": {
+		"threex": "../build/ar-threex.mjs",
+        "three": "./vendor/three.js/build/three.module.min.js"
+      }
+    }
+</script>
 
 <!-- Bind window error for error handling -->
 <script>
@@ -21,7 +29,11 @@
 		<br />
 		Contact me any time at <a href='https://twitter.com/nicolocarp' target='_blank'>@nicolocarp</a>
 	</div>
-	<script>
+	<script type="module">
+		import * as THREE from 'three'
+		import { ArToolkitProfile, ArToolkitSource, ArToolkitContext, ArMarkerControls }  from 'threex'
+
+		ArToolkitContext.baseURL = '../'
 		//////////////////////////////////////////////////////////////////////////////////
 		//		Init
 		//////////////////////////////////////////////////////////////////////////////////
@@ -61,12 +73,12 @@
 		//          handle arToolkitSource
 		////////////////////////////////////////////////////////////////////////////////
 
-		var artoolkitProfile = new THREEx.ArToolkitProfile()
+		var artoolkitProfile = new ArToolkitProfile()
 		artoolkitProfile.sourceWebcam()
 		// artoolkitProfile.sourceVideo(THREEx.ArToolkitContext.baseURL + '../data/videos/headtracking.mp4').kanjiMarker();
 		// artoolkitProfile.sourceImage(THREEx.ArToolkitContext.baseURL + '../data/images/img.jpg').hiroMarker()
 
-		var arToolkitSource = new THREEx.ArToolkitSource(artoolkitProfile.sourceParameters)
+		var arToolkitSource = new ArToolkitSource(artoolkitProfile.sourceParameters)
 
 		arToolkitSource.init(() => {
 			arToolkitSource.domElement.addEventListener('canplay', () => {
@@ -103,7 +115,7 @@
 			console.log('initARContext()');
 
 			// CONTEXT
-			arToolkitContext = new THREEx.ArToolkitContext(artoolkitProfile.contextParameters)
+			arToolkitContext = new ArToolkitContext(artoolkitProfile.contextParameters)
 
 			arToolkitContext.init(() => {
 				camera.projectionMatrix.copy(arToolkitContext.getProjectionMatrix());
@@ -118,9 +130,9 @@
 
 
 			// MARKER
-			arMarkerControls = new THREEx.ArMarkerControls(arToolkitContext, markerGroup, {
+			arMarkerControls = new ArMarkerControls(arToolkitContext, markerGroup, {
 				type: 'pattern',
-				patternUrl: THREEx.ArToolkitContext.baseURL + '../data/data/patt.hiro',
+				patternUrl: ArToolkitContext.baseURL + '../data/data/patt.hiro',
 			})
 
 			console.log('ArMarkerControls', arMarkerControls);

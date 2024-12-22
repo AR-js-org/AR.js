@@ -15,7 +15,7 @@ class WebcamRenderer {
     } else {
       video = document.querySelector(videoElement);
     }
-    this.geom = new THREE.PlaneBufferGeometry();
+    this.geom = new THREE.PlaneGeometry();
     this.texture = new THREE.VideoTexture(video);
     this.material = new THREE.MeshBasicMaterial({ map: this.texture });
     const mesh = new THREE.Mesh(this.geom, this.material);
@@ -26,7 +26,7 @@ class WebcamRenderer {
       0.5,
       -0.5,
       0,
-      10
+      10,
     );
     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
       const constraints = {
@@ -46,7 +46,7 @@ class WebcamRenderer {
         .catch((e) => {
           setTimeout(() => {
             this.createErrorPopup(
-              "Webcam Error\nName: " + e.name + "\nMessage: " + e.message
+              "Webcam Error\nName: " + e.name + "\nMessage: " + e.message,
             );
           }, 1000);
         });

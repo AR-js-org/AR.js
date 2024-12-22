@@ -30,11 +30,11 @@ MarkersAreaLearning.prototype._onSourceProcessed = function () {
   if (this.enabled === false) return;
 
   // keep only the visible markers
-  var visibleMarkerControls = this.subMarkersControls.filter(function (
-    markerControls
-  ) {
-    return markerControls.object3d.visible === true;
-  });
+  var visibleMarkerControls = this.subMarkersControls.filter(
+    function (markerControls) {
+      return markerControls.object3d.visible === true;
+    },
+  );
 
   var count = Object.keys(visibleMarkerControls).length;
 
@@ -101,20 +101,20 @@ MarkersAreaLearning.prototype._onSourceProcessed = function () {
         stats.position.sum,
         positionDelta,
         stats.count,
-        stats.position.average
+        stats.position.average,
       );
       ArMultiMarkerControls.averageQuaternion(
         stats.quaternion.sum,
         quaternionDelta,
         originQuaternion,
         stats.count,
-        stats.quaternion.average
+        stats.quaternion.average,
       );
       ArMultiMarkerControls.averageVector3(
         stats.scale.sum,
         scaleDelta,
         stats.count,
-        stats.scale.average
+        stats.scale.average,
       );
     }
   }
@@ -179,7 +179,7 @@ MarkersAreaLearning.prototype.computeResult = function () {
       averageMatrix.compose(
         seenCoupleStats.position.average,
         seenCoupleStats.quaternion.average,
-        seenCoupleStats.scale.average
+        seenCoupleStats.scale.average,
       );
 
       var otherAverageMatrix =
@@ -217,7 +217,7 @@ MarkersAreaLearning.prototype.computeResult = function () {
  * get a _this.subMarkersControls id based on markerControls.id
  */
 MarkersAreaLearning.prototype._getLearnedCoupleStats = function (
-  subMarkerControls
+  subMarkerControls,
 ) {
   // if this subMarkerControls has never been seen with another subMarkerControls
   if (subMarkerControls.object3d.userData.seenCouples === undefined)
@@ -249,7 +249,7 @@ MarkersAreaLearning.prototype._getLearnedCoupleStats = function (
  * get a _this.subMarkersControls based on markerControls.id
  */
 MarkersAreaLearning.prototype._getSubMarkerControlsByID = function (
-  controlsID
+  controlsID,
 ) {
   for (var i = 0; i < this.subMarkersControls.length; i++) {
     var subMarkerControls = this.subMarkersControls[i];
@@ -318,12 +318,12 @@ MarkersAreaLearning.prototype.toJSON = function () {
   if (humanReadable === true) {
     var tmp = JSON.parse(strJSON);
     tmp.subMarkersControls.forEach(function (markerControls) {
-      markerControls.poseMatrix = markerControls.poseMatrix.map(function (
-        value
-      ) {
-        var roundingFactor = 100;
-        return Math.round(value * roundingFactor) / roundingFactor;
-      });
+      markerControls.poseMatrix = markerControls.poseMatrix.map(
+        function (value) {
+          var roundingFactor = 100;
+          return Math.round(value * roundingFactor) / roundingFactor;
+        },
+      );
     });
     strJSON = JSON.stringify(tmp, null, "\t");
   }
