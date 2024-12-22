@@ -64,11 +64,16 @@ jobs:
         with:
           files: |
             aframe/build/aframe-ar.js
+            aframe/build/aframe-ar.mjs
             aframe/build/aframe-ar-nft.js
+            aframe/build/aframe-ar-nft.mjs
             aframe/build/aframe-ar-location-only.js
+            aframe/build/aframe-ar-location-only.mjs
+            aframe/build/aframe-ar-new-location-only.js
+            aframe/build/aframe-ar-new-location-only.mjs
             three.js/build/ar.js
-            three.js/build/ar.module.js
+            three.js/build/ar.mjs
             three.js/build/ar-threex.js
-            three.js/build/ar-threex.module.js
+            three.js/build/ar-threex.mjs
             three.js/build/ar-threex-location-only.js
-            three.js/build/ar-threex-location-only.module.js
+            three.js/build/ar-threex-location-only.mjs
