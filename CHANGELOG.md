@@ -1,3 +1,10 @@
+# 3.4.6
+- Upgraded Three.js and Aframe version to 0.164.0 and 1.6.0 respectively. importmap is now used to import Three.js (see three.js examples) #615 #625 
+- Simplified location based examples #615.
+- Updated `artoolkit5-js` to 0.3.1.
+- Improved `CI` and `build` gitHub action scripts. Upgraded node version in .nvmrc file (v20.18.0).
+- Updated dependencies and devDependencies in package.json.
+
 # 3.4.5
 - Fix for MathUtils issue see #523 #532
 
