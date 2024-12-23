@@ -61,7 +61,7 @@
   "dependencies": {
     "@ar-js-org/artoolkit5-js": "^0.3.1",
     "aframe": "^1.6.0",
-    "three": "^0.164.0"
+    "three": "^0.171.0"
   },
   "lint-staged": {
     "*.js": "prettier --write"
