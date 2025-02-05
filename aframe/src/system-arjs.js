@@ -1,11 +1,6 @@
 import * as AFRAME from 'aframe';
 import ARjsCore from '@ar-js-org/arjs-core';
 const {Profile, Session, SessionDebugUI} = ARjsCore;
-/*import {Profile} from '@ar-js-org/arjs-core';
-import {Session} from '@ar-js-org/arjs-core';
-import { SessionDebugUI } from '@ar-js-org/arjs-core';*/
-
-console.log(Profile)
 
 AFRAME.registerSystem('arjs', {
     schema: {
@@ -126,6 +121,9 @@ AFRAME.registerSystem('arjs', {
             .performance(this.data.performanceProfile)
             .defaultMarker()
 
+           // console.log(arProfile);
+            
+
         //////////////////////////////////////////////////////////////////////////////
         //		honor this.data and setup arProfile with it
         //////////////////////////////////////////////////////////////////////////////
@@ -165,6 +163,8 @@ AFRAME.registerSystem('arjs', {
             var scene = _this.el.sceneEl.object3D
             var camera = _this.el.sceneEl.camera
             var renderer = _this.el.sceneEl.renderer
+            //console.log(renderer);
+            
 
             //////////////////////////////////////////////////////////////////////////////
             //		build ARjs.Session
@@ -176,6 +176,8 @@ AFRAME.registerSystem('arjs', {
                 sourceParameters: arProfile.sourceParameters,
                 contextParameters: arProfile.contextParameters
             })
+            //console.log(arSession);
+            
 
             //////////////////////////////////////////////////////////////////////////////
             //		Code Separator
@@ -190,6 +192,8 @@ AFRAME.registerSystem('arjs', {
             window.addEventListener('resize', onResize)
             function onResize() {
                 var arSource = _this._arSession.arSource
+                //console.log(arSource);
+                
 
                 // ugly kludge to get resize on aframe... not even sure it works
                 if (arProfile.contextParameters.trackingBackend !== 'tango') {

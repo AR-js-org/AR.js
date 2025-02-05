@@ -1,9 +1,7 @@
 import * as AFRAME from 'aframe';
-//import Anchor from '../../three.js/src/new-api/arjs-anchor';
-//import {Anchor} from '@ar-js-org/arjs-core';
 import ARjsCore from '@ar-js-org/arjs-core';
-const { Anchor, AnchorDebugUI, Context} = ARjsCore;
-console.log(Anchor)
+const {Anchor, AnchorDebugUI, Context} = ARjsCore;
+//console.log(Anchor)
 ////////////////////////////////////////////////////////////////////////////////
 //		arjs-anchor
 //////////////////////////////////////////////////////////////////////////////

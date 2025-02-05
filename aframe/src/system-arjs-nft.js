@@ -1,7 +1,6 @@
 import * as AFRAME from 'aframe';
-import {Profile} from '@ar-js-org/arjs-core';
-import {Session} from '@ar-js-org/arjs-core';
-import { SessionDebugUI } from '@ar-js-org/arjs-core';
+import ARjsCore from '@ar-js-org/arjs-core';
+const {Profile, Session, SessionDebugUI} = ARjsCore;
 
 AFRAME.registerSystem('arjs', {
     schema: {

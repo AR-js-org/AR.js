@@ -1,5 +1,5 @@
 // Components
-//import "./component-anchor";
+import "./component-anchor";
 //import "./component-hit-testing";
 
 // Location-based components
