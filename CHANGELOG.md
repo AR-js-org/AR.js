@@ -1,3 +1,7 @@
+# 3.4.7
+- remove deprecated PlaneBufferGeometry see PR 640
+- upgraded packages
+
 # 3.4.6
 - Upgraded Three.js and Aframe version to 0.164.0 and 1.6.0 respectively. importmap is now used to import Three.js (see three.js examples) #615 #625 
 - Simplified location based examples #615.

@@ -62,7 +62,7 @@ Please import the one you need for your project, not both:
 You can also import a specific version replacing `master` keyword with version tag:
 
 ```html
-  <script src="https://raw.githack.com/AR-js-org/AR.js/3.4.6/aframe/build/aframe-ar-nft.js">
+  <script src="https://raw.githack.com/AR-js-org/AR.js/3.4.7/aframe/build/aframe-ar-nft.js">
 ```
 
 ## Get started
@@ -223,7 +223,7 @@ yarn add @ar-js-org/ar.js
 For some examples read this [issue](https://github.com/AR-js-org/AR.js/issues/234).
 ### New Import Syntax for `ar-threex.mjs` and `ar.mjs`
 
-With the latest updates (3.4.6), `three.js` can now be imported using the ES module syntax. 
+With the updates 3.4.6, `three.js` can now be imported using the ES module syntax. 
 To align with this standard, `ar-threex.mjs`,`ar.mjs` and `ar-threex-location-only.mjs` should also be imported in the same way using an import map. Here is an example of how to import these modules in your project:
 
 ```html
