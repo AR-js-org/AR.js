@@ -6,7 +6,7 @@ import Utils from "./new-api/arjs-utils";
 import Context from "./threex/arjs-context";
 import Profile from "./threex/arjs-profile";
 import Source from "./threex/arjs-source";
-
+import isIOS  from "./threex/threejs-ios_Orientation"
 export {
   Anchor,
   HitTesting,
@@ -17,4 +17,5 @@ export {
   Context,
   Profile,
   Source,
+  isIOS,
 };
