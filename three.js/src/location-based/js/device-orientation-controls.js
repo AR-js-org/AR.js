@@ -3,6 +3,8 @@
 
 import { Euler, EventDispatcher, MathUtils, Quaternion, Vector3 } from "three";
 
+const isIOS = navigator.userAgent.match(/iPhone|iPad|iPod/i);
+
 const _zee = new Vector3(0, 0, 1);
 const _euler = new Euler();
 const _q0 = new Quaternion();
@@ -30,7 +32,7 @@ class DeviceOrientationControls extends EventDispatcher {
 
     this.enabled = true;
 
-    this.deviceOrientation = {};
+    this.deviceOrientation = null;
     this.screenOrientation = 0;
 
     this.alphaOffset = 0; // radians
@@ -44,8 +46,25 @@ class DeviceOrientationControls extends EventDispatcher {
 
     this.smoothingFactor = 1;
 
-    const onDeviceOrientationChangeEvent = function (event) {
-      scope.deviceOrientation = event;
+    const onDeviceOrientationChangeEvent = function ({
+      alpha,
+      beta,
+      gamma,
+      webkitCompassHeading,
+    }) {
+      if (isIOS) {
+        const ccwNorthHeading = 360 - webkitCompassHeading;
+        scope.alphaOffset = MathUtils.degToRad(ccwNorthHeading - alpha);
+        scope.deviceOrientation = { alpha, beta, gamma, webkitCompassHeading };
+      } else {
+        if (alpha < 0) alpha += 360;
+        scope.deviceOrientation = { alpha, beta, gamma };
+      }
+      window.dispatchEvent(
+        new CustomEvent("camera-rotation-change", {
+          detail: { cameraRotation: object.rotation },
+        }),
+      );
     };
 
     const onScreenOrientationChangeEvent = function () {
@@ -123,9 +142,10 @@ class DeviceOrientationControls extends EventDispatcher {
       );
 
       scope.enabled = false;
+      scope.deviceOrientation = null;
     };
 
-    this.update = function () {
+    this.update = function ({ theta = 0 } = { theta: 0 }) {
       if (scope.enabled === false) return;
 
       const device = scope.deviceOrientation;
@@ -143,45 +163,63 @@ class DeviceOrientationControls extends EventDispatcher {
           ? MathUtils.degToRad(scope.screenOrientation)
           : 0; // O
 
-        if (this.smoothingFactor < 1) {
-          if (this.lastOrientation) {
-            const k = this.smoothingFactor;
-            alpha = this._getSmoothedAngle(
-              alpha,
-              this.lastOrientation.alpha,
-              k,
-            );
-            beta = this._getSmoothedAngle(
-              beta + Math.PI,
-              this.lastOrientation.beta,
-              k,
-            );
-            gamma = this._getSmoothedAngle(
-              gamma + this.HALF_PI,
-              this.lastOrientation.gamma,
-              k,
-              Math.PI,
-            );
-          } else {
-            beta += Math.PI;
-            gamma += this.HALF_PI;
-          }
+        if (isIOS) {
+          const currentQuaternion = new THREE.Quaternion();
+          setObjectQuaternion(currentQuaternion, alpha, beta, gamma, orient);
+          // Extract the Euler angles from the quaternion and add the heading angle to the Y-axis rotation of the Euler angles
+          // (If we replace only the alpha value of the quaternion without using Euler angles, the camera will rotate unexpectedly. This is because a quaternion does not represent rotation values individually but rather through a combination of rotation axes and weights.)
+          const currentEuler = new THREE.Euler().setFromQuaternion(
+            currentQuaternion,
+            "YXZ",
+          );
+          console.log(currentEuler.x, currentEuler.y, currentEuler.z);
+          // Replace the current alpha value of the Euler angles and reset the quaternion
+          currentEuler.y = THREE.MathUtils.degToRad(
+            360 - device.webkitCompassHeading,
+          );
+          currentQuaternion.setFromEuler(currentEuler);
+          scope.object.quaternion.copy(currentQuaternion);
+        } else {
+          if (this.smoothingFactor < 1) {
+            if (this.lastOrientation) {
+              const k = this.smoothingFactor;
+              alpha = this._getSmoothedAngle(
+                alpha,
+                this.lastOrientation.alpha,
+                k,
+              );
+              beta = this._getSmoothedAngle(
+                beta + Math.PI,
+                this.lastOrientation.beta,
+                k,
+              );
+              gamma = this._getSmoothedAngle(
+                gamma + this.HALF_PI,
+                this.lastOrientation.gamma,
+                k,
+                Math.PI,
+              );
+            } else {
+              beta += Math.PI;
+              gamma += this.HALF_PI;
+            }
 
-          this.lastOrientation = {
-            alpha: alpha,
-            beta: beta,
-            gamma: gamma,
-          };
+            this.lastOrientation = {
+              alpha,
+              beta,
+              gamma,
+            };
+          }
+          setObjectQuaternion(
+            scope.object.quaternion,
+            alpha + theta,
+            this.smoothingFactor < 1 ? beta - Math.PI : beta,
+            this.smoothingFactor < 1 ? gamma - this.HALF_PI : gamma,
+            orient,
+          );
         }
 
-        setObjectQuaternion(
-          scope.object.quaternion,
-          alpha,
-          this.smoothingFactor < 1 ? beta - Math.PI : beta,
-          this.smoothingFactor < 1 ? gamma - this.HALF_PI : gamma,
-          orient,
-        );
-
+        // NB - NOT present in IOS fixed version
         if (8 * (1 - lastQuaternion.dot(scope.object.quaternion)) > EPS) {
           lastQuaternion.copy(scope.object.quaternion);
           scope.dispatchEvent(_changeEvent);
