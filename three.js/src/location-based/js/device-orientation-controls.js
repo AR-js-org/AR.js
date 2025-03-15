@@ -36,6 +36,7 @@ class DeviceOrientationControls extends EventDispatcher {
     this.screenOrientation = 0;
 
     this.alphaOffset = 0; // radians
+    this.initialOffset = null; // used in fix provided in issue #466, iOS related
 
     this.TWO_PI = 2 * Math.PI;
     this.HALF_PI = 0.5 * Math.PI;
@@ -142,6 +143,7 @@ class DeviceOrientationControls extends EventDispatcher {
       );
 
       scope.enabled = false;
+      scope.initialOffset = false;
       scope.deviceOrientation = null;
     };
 
@@ -164,17 +166,17 @@ class DeviceOrientationControls extends EventDispatcher {
           : 0; // O
 
         if (isIOS) {
-          const currentQuaternion = new THREE.Quaternion();
+          const currentQuaternion = new Quaternion();
           setObjectQuaternion(currentQuaternion, alpha, beta, gamma, orient);
           // Extract the Euler angles from the quaternion and add the heading angle to the Y-axis rotation of the Euler angles
           // (If we replace only the alpha value of the quaternion without using Euler angles, the camera will rotate unexpectedly. This is because a quaternion does not represent rotation values individually but rather through a combination of rotation axes and weights.)
-          const currentEuler = new THREE.Euler().setFromQuaternion(
+          const currentEuler = new Euler().setFromQuaternion(
             currentQuaternion,
             "YXZ",
           );
           console.log(currentEuler.x, currentEuler.y, currentEuler.z);
           // Replace the current alpha value of the Euler angles and reset the quaternion
-          currentEuler.y = THREE.MathUtils.degToRad(
+          currentEuler.y = MathUtils.degToRad(
             360 - device.webkitCompassHeading,
           );
           currentQuaternion.setFromEuler(currentEuler);
@@ -219,7 +221,8 @@ class DeviceOrientationControls extends EventDispatcher {
           );
         }
 
-        // NB - NOT present in IOS fixed version
+        // NB - NOT present in IOS fixed version issue #466
+        // Is it needed?
         if (8 * (1 - lastQuaternion.dot(scope.object.quaternion)) > EPS) {
           lastQuaternion.copy(scope.object.quaternion);
           scope.dispatchEvent(_changeEvent);
@@ -256,8 +259,27 @@ class DeviceOrientationControls extends EventDispatcher {
       return newangle;
     };
 
+    // Provided in fix on issue #466 - iOS related
+    this.updateAlphaOffset = function () {
+      scope.initialOffset = false;
+    };
+
     this.dispose = function () {
       scope.disconnect();
+    };
+
+    // provided with fix on issue #466
+    this.getAlpha = function () {
+      const { deviceOrientation: device } = scope;
+      return device && device.alpha
+        ? MathUtils.degToRad(device.alpha) + scope.alphaOffset
+        : 0;
+    };
+
+    // provided with fix on issue #466
+    this.getBeta = function () {
+      const { deviceOrientation: device } = scope;
+      return device && device.beta ? MathUtils.degToRad(device.beta) : 0;
     };
 
     this.connect();
