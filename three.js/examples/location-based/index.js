@@ -22,9 +22,22 @@ function main() {
     let orientationControls;
 
     // Orientation controls only work on mobile device
-    if (isMobile()){   
-        orientationControls = new DeviceOrientationControls(camera);
-    } 
+    if (isMobile()){
+        if (
+            window.DeviceOrientationEvent !== undefined &&
+            typeof window.DeviceOrientationEvent.requestPermission === "function"
+        ) {
+            document.getElementById("startModal").style.display = "flex";
+            const onStartClick = () => {
+                orientationControls = new DeviceOrientationControls(camera);
+                document.getElementById("startModal").style.display = "none";
+            }
+            document.getElementById("startModal").addEventListener("click", onStartClick);
+            document.getElementById("startButton").addEventListener("click", onStartClick);
+        } else {
+            orientationControls = new DeviceOrientationControls(camera);
+        }
+    }
 
     let fake = null;
     let first = true;
