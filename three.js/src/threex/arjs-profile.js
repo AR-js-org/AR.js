@@ -20,6 +20,9 @@ Profile.prototype._guessPerformanceLabel = function () {
     navigator.userAgent.match(/webOS/i) ||
     navigator.userAgent.match(/iPhone/i) ||
     navigator.userAgent.match(/iPad/i) ||
+    (navigator.userAgent.match(/Macintosh/i) &&
+      navigator.maxTouchPoints != null &&
+      navigator.maxTouchPoints > 1) || // for iPad Safari
     navigator.userAgent.match(/iPod/i) ||
     navigator.userAgent.match(/BlackBerry/i) ||
     navigator.userAgent.match(/Windows Phone/i)

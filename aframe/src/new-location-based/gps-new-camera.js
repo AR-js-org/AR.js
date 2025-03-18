@@ -203,7 +203,10 @@ AFRAME.registerComponent("gps-new-camera", {
     if (
       /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
         navigator.userAgent,
-      )
+      ) ||
+      (/Macintosh/i.test(navigator.userAgent) &&
+        navigator.maxTouchPoints != null &&
+        navigator.maxTouchPoints > 1) // for iPad Safari
     ) {
       // true for mobile device
       return true;
