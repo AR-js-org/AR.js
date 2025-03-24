@@ -17,7 +17,11 @@
 
 import { Euler, EventDispatcher, MathUtils, Quaternion, Vector3 } from "three";
 
-const isIOS = navigator.userAgent.match(/iPhone|iPad|iPod/i);
+const isIOS =
+  navigator.userAgent.match(/iPhone|iPad|iPod/i) ||
+  (/Macintosh/i.test(navigator.userAgent) &&
+    navigator.maxTouchPoints != null &&
+    navigator.maxTouchPoints > 1); // for iPad Safari
 
 const _zee = new Vector3(0, 0, 1);
 const _euler = new Euler();
