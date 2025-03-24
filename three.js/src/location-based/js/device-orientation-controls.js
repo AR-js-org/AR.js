@@ -197,7 +197,6 @@ class DeviceOrientationControls extends EventDispatcher {
             currentQuaternion,
             "YXZ",
           );
-          console.log(currentEuler.x, currentEuler.y, currentEuler.z);
           // Replace the current alpha value of the Euler angles and reset the quaternion
           currentEuler.y = MathUtils.degToRad(
             360 - device.webkitCompassHeading,
