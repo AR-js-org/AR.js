@@ -5431,7 +5431,7 @@ Util.lerp = function(a, b, t) {
 };
 
 Util.isIOS = (function() {
-  var isIOS = /iPad|iPhone|iPod/.test(navigator.platform);
+  var isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (/Macintosh/.test(navigator.userAgent) && navigator.maxTouchPoints != null && navigator.maxTouchPoints > 1);
   return function() {
     return isIOS;
   };
