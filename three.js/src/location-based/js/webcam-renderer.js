@@ -28,11 +28,20 @@ class WebcamRenderer {
       0,
       10,
     );
+    // fix provided by @k15z in #498
+    let idealWidth = window.innerWidth;
+    let idealHeight = window.innerHeight;
+    const isPortrait = screen.availHeight > screen.availWidth;
+    if (isPortrait) {
+      idealWidth = window.innerHeight;
+      idealHeight = window.innerWidth;
+    }
+
     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
       const constraints = {
         video: {
-          width: 1280,
-          height: 720,
+          width: { ideal: idealWidth },
+          height: { ideal: idealHeight },
           facingMode: "environment",
         },
       };

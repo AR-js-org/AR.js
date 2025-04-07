@@ -22,9 +22,18 @@ AFRAME.registerComponent("arjs-webcam-texture", {
 
   play: function () {
     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+      let idealWidth = window.innerWidth;
+      let idealHeight = window.innerHeight;
+      const isPortrait = screen.availHeight > screen.availWidth;
+      if (isPortrait) {
+        idealWidth = window.innerHeight;
+        idealHeight = window.innerWidth;
+      }
       const constraints = {
         video: {
           facingMode: "environment",
+          width: { ideal: idealWidth },
+          height: { ideal: idealHeight },
         },
       };
       navigator.mediaDevices
