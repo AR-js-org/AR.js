@@ -40,8 +40,8 @@ class WebcamRenderer {
     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
       const constraints = {
         video: {
-          width: { ideal: idealWidth },
-          height: { ideal: idealHeight },
+          width: { ideal: idealWidth * window.devicePixelRatio },
+          height: { ideal: idealHeight * window.devicePixelRatio },
           facingMode: "environment",
         },
       };
