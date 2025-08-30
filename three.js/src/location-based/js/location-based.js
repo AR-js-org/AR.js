@@ -15,6 +15,7 @@ class LocationBased {
     this.setGpsOptions(options);
     this.initialPosition = null;
     this.initialPositionAsOrigin = options.initialPositionAsOrigin || false;
+    this.useAltitude = options.useAltitude || false;
   }
 
   setProjection(proj) {
@@ -143,6 +144,9 @@ class LocationBased {
           this._camera,
           position.coords.longitude,
           position.coords.latitude,
+          this.useAltitude && position.coords.altitude != null
+            ? position.coords.altitude
+            : undefined,
         );
 
         if (this._eventHandlers["gpsupdate"]) {
