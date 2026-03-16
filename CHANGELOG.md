@@ -1,4 +1,5 @@
 # 3.4.8
+- Fix for npm pkg's security issues
 - Upgrade dependencies and implement simple-git-hooks for linting  PR #682
 - Enable altitude in location-based code PR #671
 - Fix Prettier configuration file name PR #662
