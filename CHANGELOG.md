@@ -1,3 +1,10 @@
+# 3.4.8
+- Upgrade dependencies and implement simple-git-hooks for linting  PR #682
+- Enable altitude in location-based code PR #671
+- Fix Prettier configuration file name PR #662
+- Support for navigator in Safari on iPad with iOS 13 or later PR #660
+- Make Three.js location-based examples available on iPhone #659
+
 # 3.4.7
 - remove deprecated PlaneBufferGeometry see PR 640
 - upgraded packages
