@@ -58,7 +58,7 @@
     "prettier": "^3.4.2",
     "simple-git-hooks": "^2.13.1",
     "webpack": "^5.105.4",
-    "webpack-cli": "7.0.0",
+    "webpack-cli": "7.0.2",
     "worker-loader": "^3.0.8"
   },
   "dependencies": {
