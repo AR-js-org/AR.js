@@ -13,7 +13,7 @@ const Profile = function () {
 
   this.performance("default");
 };
-
+// using oreantation_ios code we can fix the ios oreantation issue in webAR
 Profile.prototype._guessPerformanceLabel = function () {
   var isMobile =
     navigator.userAgent.match(/Android/i) ||
