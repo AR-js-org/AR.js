@@ -55,7 +55,7 @@ AFRAME.registerComponent("gps-camera", {
     },
   },
   update: function () {
-    if (this.data.simulateLatitude !== 0 && this.data.simulateLongitude !== 0) {
+    if (this.data.simulateLatitude !== 0 || this.data.simulateLongitude !== 0) {
       var localPosition = Object.assign({}, this.currentCoords || {});
       localPosition.longitude = this.data.simulateLongitude;
       localPosition.latitude = this.data.simulateLatitude;
@@ -135,7 +135,7 @@ AFRAME.registerComponent("gps-camera", {
   },
 
   play: function () {
-    if (this.data.simulateLatitude !== 0 && this.data.simulateLongitude !== 0) {
+    if (this.data.simulateLatitude !== 0 || this.data.simulateLongitude !== 0) {
       var localPosition = Object.assign({}, this.currentCoords || {});
       localPosition.latitude = this.data.simulateLatitude;
       localPosition.longitude = this.data.simulateLongitude;
